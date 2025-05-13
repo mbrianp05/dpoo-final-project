@@ -14,4 +14,15 @@ public class PostgraduateCourse {
 
     public void emitirNota() {}
     public void giveCredits() {}
+    
+	public ArrayList<Profesor> getProfesors() {
+		return profesors;
+	}
+	public int getCredits() {
+		return credits;
+	}
+	public void setCredits(int credits) {
+		this.credits = credits;
+	}
+
 }

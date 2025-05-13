@@ -1,4 +1,5 @@
 public class Profesor extends Researcher {
+	
 	private int credits;
 	private Degree degree;
     private ProfesorCategory category;
@@ -16,4 +17,9 @@ public class Profesor extends Researcher {
     	
     	this.credits = credits;
     }
+
+	public int getCredits() {
+		// TODO Auto-generated method stub
+		return credits;
+	}
 }
