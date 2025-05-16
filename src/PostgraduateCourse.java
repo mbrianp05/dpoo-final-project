@@ -2,17 +2,16 @@ import java.util.ArrayList;
 
 public class PostgraduateCourse {
     private String topic;
-    // Le puse descripción en vez de objetivos que me parece un nombre
-    // más intuitivo
+    // Le puse descripciï¿½n en vez de objetivos que me parece un nombre
+    // mï¿½s intuitivo
     private String description;
     private Profesor instructor;
     
-    // Necesimatos una propiedad para saber cuántos créditos aporta el curso
+    // Necesimatos una propiedad para saber cuï¿½ntos crï¿½ditos aporta el curso
     private int credits;
 
     private ArrayList<Profesor> profesors;
-
-    public void emitirNota() {}
+    
     public void giveCredits() {}
     
 	public ArrayList<Profesor> getProfesors() {

@@ -1,9 +1,11 @@
-public class Paper {
+public class Paper implements ScorableBreakthrough {
     private String title;
     private int no;
     private int volume;
     private int year;
     private TargetedGroup group;
+
+    private final int score;
 
     public Paper(String title, int no, int volume, int year, TargetedGroup group) {
         this.title = title;
@@ -11,11 +13,37 @@ public class Paper {
         this.volume = volume;
         this.year = year;
         this.group = group;
+
+        setScore();
+    }
+
+    private void setScore() {
+        score = 0;
+
+        switch (group) {
+            case Wos:
+                score += 10;
+                break;
+            case Group1:
+                score += 8;
+                break;
+            case Group2:
+                score += 6;
+                break;
+            case Group3:
+            case Group4:
+                score += 4;
+                break;
+        }
+    }
+
+    public int getScore() {
+        return score;
     }
 
     public void setTitle(String title) {
         if (title.trim().isEmpty()) {
-            throw new IllegalArgumentException("El título del artículo no puede estar vacío");
+            throw new IllegalArgumentException("El tï¿½tulo del artï¿½culo no puede estar vacï¿½o");
         }
 
         this.title = title;
@@ -23,7 +51,7 @@ public class Paper {
 
     public void setNo(int no) {
         if (no < 0) {
-            throw new IllegalArgumentException("El número del artículo no puede estar vacío");
+            throw new IllegalArgumentException("El nï¿½mero del artï¿½culo no puede estar vacï¿½o");
         }
 
         this.no = no;
@@ -31,7 +59,7 @@ public class Paper {
 
     public void setVolume(int volume) {
         if (volume < 0) {
-            throw new IllegalArgumentException("El volumen del artículo no puede estar vacío");
+            throw new IllegalArgumentException("El volumen del artï¿½culo no puede estar vacï¿½o");
         }
 
         this.volume = volume;
@@ -39,7 +67,7 @@ public class Paper {
 
     public void setYear(int year) {
         if (year < 0) {
-            throw new IllegalArgumentException("El año del artículo no puede estar vacío");
+            throw new IllegalArgumentException("El aï¿½o del artï¿½culo no puede estar vacï¿½o");
         }
 
         this.year = year;

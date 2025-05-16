@@ -4,7 +4,7 @@ public class Faculty {
 	private ArrayList<ResearchLine> researchLines;
 	private ArrayList<Researcher> researchers;
 
-	// Método para filtrar a los profesores de los investigadores
+	// Mï¿½todo para filtrar a los profesores de los investigadores
 	public ArrayList<Profesor> getProfesors() {
 		ArrayList<Profesor> profesors = new ArrayList<Profesor>();
 
@@ -17,18 +17,16 @@ public class Faculty {
 		return profesors;
 	}
 
-	// REPORTE 1: (Brian): Los investigadores con más puntos por ponencias/capítulos/artículos
+	// REPORTE 1: (Brian): Los investigadores con mï¿½s puntos por ponencias/capï¿½tulos/artï¿½culos
 	public ArrayList<Researcher> bestResearchers() {}
-	// REPORTE 2: (Brian): Los temas de investigación con más investigadores
+	// REPORTE 2: (Brian): Los temas de investigaciï¿½n con mï¿½s investigadores
 	public ArrayList<ResearchMatter> trendingMatter() {}
-	// REPORTE 3: (Brian): La mayor cantidad de artículos publicado por un mismo investigador
+	// REPORTE 3: (Brian): La mayor cantidad de artï¿½culos publicado por un mismo investigador
 	public int mostPaperPublished() {}
 
-	// REPORTE 4: (Aleksandr): Los profesores que tienen los créditos necesarios para aprobar su maestría
+	// REPORTE 4: (Aleksandr): Los profesores que tienen los crï¿½ditos necesarios para aprobar su maestrï¿½a
 	public ArrayList<Profesor> profesorsWithMasteryReady() {
-
 		ArrayList<Profesor> ready = new ArrayList<Profesor>();
-
 
 		for(ResearchLine rl: researchLines){
 			for(MasteryPlan mp: rl.getMastPlans()){
@@ -47,7 +45,6 @@ public class Faculty {
 	}
 	// REPORTE 5: (Aleksandr): Total de cursos de postgrado proporcionados por el vicedecanato
 	public int totalPostgradeCourses() {
-
 		int total = 0;
 
 		for(ResearchLine r: researchLines){
@@ -57,5 +54,5 @@ public class Faculty {
 		}
 		return total;
 	}
-	// Añadir más reportes relacionados a los cursos de considerar necesario
+	// Aï¿½adir mï¿½s reportes relacionados a los cursos de considerar necesario
 }

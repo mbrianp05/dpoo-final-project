@@ -1,12 +1,14 @@
 import java.util.Date;
 
-public class Presentation {
+public class Presentation implements ScorableBreakthrough {
     private String name;
-    // Le quité la propiedad año ya que como tambíen tenia la propiedad fecha pues la fecha ya incluye el año
-    // El objeto Date facilita la manipulación y validaciones con fechas.
+    // Le quitï¿½ la propiedad aï¿½o ya que como tambï¿½en tenia la propiedad fecha pues la fecha ya incluye el aï¿½o
+    // El objeto Date facilita la manipulaciï¿½n y validaciones con fechas.
     private Date date;
     private String ISBN;
     private String location;
+
+    private final static int score = 1;
 
     public Presentation(String name, Date date, String ISBN, String location) {
         setName(name);
@@ -15,9 +17,13 @@ public class Presentation {
         setLocation(location);
     }
 
+    public int getScore() {
+        return score;
+    }
+
     public void setName(String name) {
         if (name.trim().isEmpty()) {
-            throw new IllegalArgumentException("El nombre de la presentación no puede estar vacío");
+            throw new IllegalArgumentException("El nombre de la presentaciï¿½n no puede estar vacï¿½o");
         }
 
         this.name = name;
@@ -27,10 +33,10 @@ public class Presentation {
         this.date = date;
     }
 
-    // Hay que investigar si el ISBN tiene una validación específica
+    // Hay que investigar si el ISBN tiene una validaciï¿½n especï¿½fica
     public void setISBN(String ISBN) {
         if (ISBN.trim().isEmpty()) {
-            throw new IllegalArgumentException("El ISBN de la presentación no puede estar vacío");
+            throw new IllegalArgumentException("El ISBN de la presentaciï¿½n no puede estar vacï¿½o");
         }
 
         this.ISBN = ISBN;
@@ -38,7 +44,7 @@ public class Presentation {
 
     public void setLocation(String location) {
         if (location.trim().isEmpty()) {
-            throw new IllegalArgumentException("La ubicación de la presentación no puede estar vacío");
+            throw new IllegalArgumentException("La ubicaciï¿½n de la presentaciï¿½n no puede estar vacï¿½o");
         }
 
         this.location = location;

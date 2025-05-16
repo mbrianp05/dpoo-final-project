@@ -45,36 +45,24 @@ public abstract class Researcher {
 	}
 
 	public void addPaper(String title, int no, int volume, int year, TargetedGroup group) {
-		papers.add(new Paper(title, no, volume, year, group));
+        Paper paper = new Paper(title, no, volume, year, group);
+        papers.add(paper);
 
-		// Calcular la puntuación que da el artículo
-		switch (group) {
-		case Wos:
-			score += 10;
-			break;
-		case Group1:
-			score += 8;
-			break;
-		case Group2:
-			score += 6;
-			break;
-		case Group3:
-		case Group4:
-			score += 4;
-			break;
-		}
+        score += paper.getScore();
 	}
 
 	public void addPresentation(String name, Date date, String ISBN, String location) {
-		presentations.add(new Presentation(name, date, ISBN, location));
+		Presentation presentation = new Presentation(name, date, ISBN, location);
+        presentations.add(presentation);
 
-		score += 1;
+        score += presentation.getScore();
 	}
 
 	public void addBookChapter(String title, ArrayList<String> authors, ArrayList<String> editors, String editorial, String ISSN, String bookName, int volume) {
-		chapters.add(new Chapter(title, authors, editors, editorial, ISSN, bookName, volume));
+        Chapter chapter = new Chapter(title, authors, editors, editorial, ISSN, bookName, volume);
+        chapters.add(chapter);
 
-		score += 3;
+        score += chapter.getScore();
 	}
 
 	public ArrayList<Paper> getPapers() {

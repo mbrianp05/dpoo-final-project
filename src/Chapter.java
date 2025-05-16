@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Chapter {
+public class Chapter implements ScorableBreakthrough {
     private String title;
     private ArrayList<String> authors;
     private ArrayList<String> editors;
@@ -8,6 +8,8 @@ public class Chapter {
     private String ISSN;
     private String bookName;
     private int volume;
+
+    private final static int score = 3;
 
     public Chapter(String title, ArrayList<String> authors, ArrayList<String> editors, String editorial, String ISSN, String bookName, int volume) {
         setTitle(title);
@@ -17,6 +19,10 @@ public class Chapter {
         setISSN(ISSN);
         setBookName(bookName);
         setVolume(volume);
+    }
+
+    public int getScore() {
+        return score;
     }
 
     public void setTitle(String title) {
@@ -67,7 +73,7 @@ public class Chapter {
         this.editors = editors;
     }
 
-    // Hay que investigar si el ISSN tiene una validación específica
+    // Hay que investigar si el ISSN tiene una validaciï¿½n especï¿½fica
     public void setISSN(String ISSN) {
         if (ISSN.trim().isEmpty()) {
             throw new IllegalArgumentException("El ISSN del libro no puede estar vacÃ­o");

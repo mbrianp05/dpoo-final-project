@@ -1,5 +1,4 @@
 public class Profesor extends Researcher {
-	
 	private int credits;
 	private Degree degree;
     private ProfesorCategory category;
@@ -12,7 +11,7 @@ public class Profesor extends Researcher {
 
     public void setCredits(int credits) {
     	if (credits < 0) {
-    		throw new IllegalArgumentException("Los créditos no pueden ser un número negativo");
+    		throw new IllegalArgumentException("Los crï¿½ditos no pueden ser un nï¿½mero negativo");
     	}
     	
     	this.credits = credits;
