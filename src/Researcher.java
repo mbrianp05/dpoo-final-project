@@ -7,10 +7,6 @@ public abstract class Researcher {
 
     protected ArrayList<ScorableBreakthrough> breakthoughs;
 
-	protected ArrayList<Paper> papers;
-	protected ArrayList<Chapter> chapters;
-	protected ArrayList<Presentation> presentations;
-
 	// Propiedad comodin para hacer que el ID sea autoincremental
 	protected static int lastID = 1;
 
@@ -65,14 +61,38 @@ public abstract class Researcher {
 	}
 
 	public ArrayList<Paper> getPapers() {
+        ArrayList<Paper> papers = new ArrayList<Paper>();
+
+        for (ScorableBreakthrough b: breakthoughs) {
+            if (b instanceof Paper) {
+                papers.add((Paper)b);
+            }
+        }
+
 		return papers;
 	}
 
 	public ArrayList<Presentation> getPresentations() {
+        ArrayList<Presentation> presentations = new ArrayList<Presentation>();
+
+        for (ScorableBreakthrough b: breakthoughs) {
+            if (b instanceof Presentation) {
+                presentations.add((Presentation)b);
+            }
+        }
+
 		return presentations;
 	}
 
 	public ArrayList<Chapter> getBookChapter() {
+        ArrayList<Chapter> chapters = new ArrayList<Chapter>();
+
+        for (ScorableBreakthrough b: breakthoughs) {
+            if (b instanceof Chapter) {
+                chapters.add((Chapter)b);
+            }
+        }
+
 		return chapters;
 	}
 
