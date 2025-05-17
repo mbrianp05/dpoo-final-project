@@ -5,6 +5,8 @@ public abstract class Researcher {
 	protected int score;
 	protected String name;
 
+    protected ArrayList<ScorableBreakthrough> breakthoughs;
+
 	protected ArrayList<Paper> papers;
 	protected ArrayList<Chapter> chapters;
 	protected ArrayList<Presentation> presentations;
@@ -21,12 +23,9 @@ public abstract class Researcher {
 		ID = lastID;
 		lastID++;
 
-		papers = new ArrayList<Paper>();
-		chapters = new ArrayList<Chapter>();
-		presentations = new ArrayList<Presentation>();
+		breakthoughs = new ArrayList<ScorableBreakthrough>();
 	}
 
-	// No puse un setScore porque la puntuación se aumentará directamente en los addArticle, addPresentation y addBookChapter
 	public int getScore() {
 		return score;
 	}
@@ -46,21 +45,21 @@ public abstract class Researcher {
 
 	public void addPaper(String title, int no, int volume, int year, TargetedGroup group) {
         Paper paper = new Paper(title, no, volume, year, group);
-        papers.add(paper);
+        breakthoughs.add(paper);
 
         score += paper.getScore();
 	}
 
 	public void addPresentation(String name, Date date, String ISBN, String location) {
 		Presentation presentation = new Presentation(name, date, ISBN, location);
-        presentations.add(presentation);
+        breakthoughs.add(presentation);
 
         score += presentation.getScore();
 	}
 
 	public void addBookChapter(String title, ArrayList<String> authors, ArrayList<String> editors, String editorial, String ISSN, String bookName, int volume) {
         Chapter chapter = new Chapter(title, authors, editors, editorial, ISSN, bookName, volume);
-        chapters.add(chapter);
+        breakthoughs.add(chapter);
 
         score += chapter.getScore();
 	}
