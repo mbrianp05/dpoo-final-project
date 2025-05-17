@@ -18,11 +18,61 @@ public class Faculty {
 	}
 
 	// REPORTE 1: (Brian): Los investigadores con m�s puntos por ponencias/cap�tulos/art�culos
-	public ArrayList<Researcher> bestResearchers() {}
+	public ArrayList<Researcher> bestResearchers() {
+        ArrayList<Researcher> researchers = new ArrayList<>();
+        int highestScore = -1;
+
+        for (Researcher r: researchers) {
+            int score = r.getScore();
+
+            if (score > highestScore) {
+                highestScore = score;
+                researchers.clear();
+            }
+
+            if (score == highestScore) {
+                researchers.add(r);
+            }
+        }
+
+        return researchers;
+    }
+
 	// REPORTE 2: (Brian): Los temas de investigaci�n con m�s investigadores
-	public ArrayList<ResearchMatter> trendingMatter() {}
+	public ArrayList<ResearchMatter> trendingMatter() {
+        ArrayList<ResearchMatter> matters = new ArrayList<>();
+        int mostResearchers = -1;
+
+        for (ResearchLine line: researchLines) {
+            for (ResearchMatter matter: researchLines.getMatters()) {
+                int researchersCount = matter.getResearchers().size();
+
+                if (researchersCount > mostResearchers) {
+                    mostResearchers = researchersCount;
+                    matters.clear();
+                }
+
+                if (researchersCount == mostResearchers) {
+                    matters.add(matter);
+                }
+            }
+        }
+
+        return matters;
+    }
+
 	// REPORTE 3: (Brian): La mayor cantidad de art�culos publicado por un mismo investigador
-	public int mostPaperPublished() {}
+	public int mostPaperPublished() {
+        int highest = 0;
+
+        for (Researcher r: researchers) {
+            if (r.getPapers().size() > highest) {
+                highest = r.getPapers().size();
+            }
+        }
+
+        return highest;
+    }
 
 	// REPORTE 4: (Aleksandr): Los profesores que tienen los cr�ditos necesarios para aprobar su maestr�a
 	public ArrayList<Profesor> profesorsWithMasteryReady() {
