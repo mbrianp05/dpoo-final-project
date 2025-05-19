@@ -2,6 +2,7 @@ import java.util.ArrayList;
 
 public class MasteryPlan {
     private int minCredit;
+	private ArrayList<Matriculation> matriculations;
     private ArrayList<PostgraduateCourse> courses;
     
 	public ArrayList<PostgraduateCourse> getCourses() {
