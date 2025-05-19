@@ -1,7 +1,7 @@
 # Proyecto Final de Diseño y Programación Orientada a Objetos
 
 ## Autores
-*   [Aleksand Castañeda](https://github.com/Alter001c)
+*   [Aleksandr Castañeda](https://github.com/Alter001c)
 *   [Brian Monteagudo](https://github.com/mbrianp05/)
 
 ## Diagrama de clases
