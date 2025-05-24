@@ -1,27 +1,51 @@
-import java.util.ArrayList;
-
 public class PostgraduateCourse {
-    private String topic;
-    // Le puse descripciï¿½n en vez de objetivos que me parece un nombre
-    // mï¿½s intuitivo
+    private String name;
     private String description;
     private Profesor instructor;
-    
-    // Necesimatos una propiedad para saber cuï¿½ntos crï¿½ditos aporta el curso
     private int credits;
 
-    private ArrayList<Profesor> profesors;
-    
-    public void giveCredits() {}
-    
-	public ArrayList<Profesor> getProfesors() {
-		return profesors;
+	public PostgraduateCourse(String name, String description, Profesor instructor, int credits) {
+		setName(name);
+		setDescription(description);
+		setInstructor(instructor);
+		setCredits(credits);
 	}
+	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) { 
+		if (name.trim().isEmpty()) throw new IllegalArgumentException("El nombre del curso no puede estar vacío");
+		
+		this.name = name;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		if (name.trim().isEmpty()) throw new IllegalArgumentException("La descripción del curso no puede estar vacío");
+		
+		this.description = description;
+	}
+
+	public Profesor getInstructor() {
+		return instructor;
+	}
+
+	public void setInstructor(Profesor instructor) {
+		this.instructor = instructor;
+	}
+
 	public int getCredits() {
 		return credits;
 	}
+
 	public void setCredits(int credits) {
+		if (credits < 1) throw new IllegalArgumentException("El curso debe aportar al menos 1 crédito");
+		
 		this.credits = credits;
 	}
-
 }

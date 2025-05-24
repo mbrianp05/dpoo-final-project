@@ -1,9 +1,7 @@
-import java.util.ArrayList;
-
 public class Chapter implements ScorableBreakthrough {
     private String title;
-    private ArrayList<String> authors;
-    private ArrayList<String> editors;
+    private String[] authors;
+    private String[] editors;
     private String editorial;
     private String ISSN;
     private String bookName;
@@ -11,7 +9,7 @@ public class Chapter implements ScorableBreakthrough {
 
     private final static int score = 3;
 
-    public Chapter(String title, ArrayList<String> authors, ArrayList<String> editors, String editorial, String ISSN, String bookName, int volume) {
+    public Chapter(String title, String[] authors, String[] editors, String editorial, String ISSN, String bookName, int volume) {
         setTitle(title);
         setAuthors(authors);
         setEditors(editors);
@@ -33,8 +31,8 @@ public class Chapter implements ScorableBreakthrough {
         this.title = title;
     }
 
-    public void setAuthors(ArrayList<String> authors) {
-        if (authors.isEmpty()) {
+    public void setAuthors(String[] authors) {
+        if (authors.length == 0) {
             throw new IllegalArgumentException("El capítulo no tiene autores");
         }
 
@@ -65,8 +63,8 @@ public class Chapter implements ScorableBreakthrough {
         this.editorial = editorial;
     }
 
-    public void setEditors(ArrayList<String> editors) {
-        if (editors.isEmpty()) {
+    public void setEditors(String[] editors) {
+        if (editors.length == 0) {
             throw new IllegalArgumentException("El libro no tiene editores");
         }
 
@@ -86,11 +84,11 @@ public class Chapter implements ScorableBreakthrough {
         return title;
     }
 
-    public ArrayList<String> getAuthors() {
+    public String[] getAuthors() {
         return authors;
     }
 
-    public ArrayList<String> getEditors() {
+    public String[] getEditors() {
         return editors;
     }
 

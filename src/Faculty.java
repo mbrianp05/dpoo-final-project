@@ -4,7 +4,6 @@ public class Faculty {
 	private ArrayList<ResearchLine> researchLines;
 	private ArrayList<Researcher> researchers;
 
-	// M�todo para filtrar a los profesores de los investigadores
 	public ArrayList<Profesor> getProfesors() {
 		ArrayList<Profesor> profesors = new ArrayList<Profesor>();
 
@@ -78,18 +77,7 @@ public class Faculty {
 	public ArrayList<Profesor> profesorsWithMasteryReady() {
 		ArrayList<Profesor> ready = new ArrayList<Profesor>();
 
-		for(ResearchLine rl: researchLines){
-			for(MasteryPlan mp: rl.getMastPlans()){
-				for(PostgraduateCourse pc: mp.getCourses()){
-					for(Profesor p: pc.getProfesors()){
-						if(p.getCredits() >= mp.getMinCredit()){
-							ready.add(p);
-						}
-					}
-				}
-			}
-		}
-
+	
 		return ready;
 	}
 	
@@ -97,13 +85,6 @@ public class Faculty {
 	public int totalPostgradeCourses() {
 		int total = 0;
 
-		for(ResearchLine r: researchLines){
-			for(MasteryPlan m: r.getMastPlans()){
-				total += m.getCourses().size();
-			}
-		}
-		
 		return total;
 	}
-	// A�adir m�s reportes relacionados a los cursos de considerar necesario
 }
