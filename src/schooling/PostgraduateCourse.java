@@ -1,3 +1,5 @@
+package schooling;
+
 public class PostgraduateCourse {
     private String name;
     private String description;
@@ -36,6 +38,8 @@ public class PostgraduateCourse {
 	}
 
 	public void setInstructor(Profesor instructor) {
+		if (instructor.getDegree() != Degree.Doctor) throw new IllegalArgumentException("Solo los profesores con categoría Doctor pueden impartir cursos de postgrado");
+		
 		this.instructor = instructor;
 	}
 

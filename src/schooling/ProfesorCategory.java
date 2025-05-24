@@ -1,3 +1,5 @@
+package schooling;
+
 public enum ProfesorCategory {
     Instructor,
     Assistant,

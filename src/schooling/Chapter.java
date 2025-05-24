@@ -1,3 +1,5 @@
+package schooling;
+
 public class Chapter implements ScorableBreakthrough {
     private String title;
     private String[] authors;

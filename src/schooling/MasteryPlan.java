@@ -1,3 +1,5 @@
+package schooling;
+
 import java.util.ArrayList;
 
 public class MasteryPlan {

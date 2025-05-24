@@ -1,3 +1,5 @@
+package schooling;
+
 public class Profesor extends Researcher {
 	private int credits;
 	private Degree degree;

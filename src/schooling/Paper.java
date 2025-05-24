@@ -1,3 +1,5 @@
+package schooling;
+
 public class Paper implements ScorableBreakthrough {
     private String title;
     private int no;
