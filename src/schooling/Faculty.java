@@ -3,27 +3,28 @@ package schooling;
 import java.util.ArrayList;
 
 public class Faculty {
-	private ArrayList<ResearchLine> researchLines;
-	private ArrayList<Researcher> researchers;
+    private ArrayList<ResearchLine> researchLines;
+    private ArrayList<Researcher> researchers;
 
-	public ArrayList<Profesor> getProfesors() {
-		ArrayList<Profesor> profesors = new ArrayList<Profesor>();
+    public ArrayList<Profesor> getProfesors() {
+        ArrayList<Profesor> profesors = new ArrayList<Profesor>();
 
-		for (Researcher r: researchers) {
-			if (r instanceof Profesor) {
-				profesors.add((Profesor)r);
-			}
-		}
+        for (Researcher r : researchers) {
+            if (r instanceof Profesor) {
+                profesors.add((Profesor) r);
+            }
+        }
 
-		return profesors;
-	}
+        return profesors;
+    }
 
-	// REPORTE 1: (Brian): Los investigadores con m�s puntos por ponencias/cap�tulos/art�culos
-	public ArrayList<Researcher> bestResearchers() {
+    // REPORTE 1: (Brian): Los investigadores con m�s puntos por
+    // ponencias/cap�tulos/art�culos
+    public ArrayList<Researcher> bestResearchers() {
         ArrayList<Researcher> researchers = new ArrayList<>();
         int highestScore = -1;
 
-        for (Researcher r: researchers) {
+        for (Researcher r : researchers) {
             int score = r.getScore();
 
             if (score > highestScore) {
@@ -39,13 +40,13 @@ public class Faculty {
         return researchers;
     }
 
-	// REPORTE 2: (Brian): Los temas de investigaci�n con m�s investigadores
-	public ArrayList<ResearchMatter> trendingMatters() {
+    // REPORTE 2: (Brian): Los temas de investigaci�n con m�s investigadores
+    public ArrayList<ResearchMatter> trendingMatters() {
         ArrayList<ResearchMatter> matters = new ArrayList<>();
         int mostResearchers = -1;
 
-        for (ResearchLine line: researchLines) {
-            for (ResearchMatter matter: line.getMatters()) {
+        for (ResearchLine line : researchLines) {
+            for (ResearchMatter matter : line.getMatters()) {
                 int researchersCount = matter.getResearchers().size();
 
                 if (researchersCount > mostResearchers) {
@@ -62,11 +63,12 @@ public class Faculty {
         return matters;
     }
 
-	// REPORTE 3: (Brian): La mayor cantidad de art�culos publicado por un mismo investigador
-	public int mostPaperPublished() {
+    // REPORTE 3: (Brian): La mayor cantidad de art�culos publicado por un mismo
+    // investigador
+    public int mostPaperPublished() {
         int highest = 0;
 
-        for (Researcher r: researchers) {
+        for (Researcher r : researchers) {
             if (r.getPapers().size() > highest) {
                 highest = r.getPapers().size();
             }
@@ -75,23 +77,25 @@ public class Faculty {
         return highest;
     }
 
-	// REPORTE 4: (Aleksandr): Los profesores que tienen los cr�ditos necesarios para aprobar su maestr�a
-	public ArrayList<Profesor> profesorsWithMasteryReady() {
-		ArrayList<Profesor> ready = new ArrayList<Profesor>();
+    // REPORTE 4: (Aleksandr): Los profesores que tienen los cr�ditos necesarios
+    // para aprobar su maestr�a
+    public ArrayList<Profesor> profesorsWithMasteryReady() {
+        ArrayList<Profesor> ready = new ArrayList<Profesor>();
 
-		// TODO
-		
-		return ready;
-	}
-	
-	// REPORTE 5: (Aleksandr): Total de cursos de postgrado proporcionados por el vicedecanato
-	public int totalPostgradeCourses() {
-		int total = 0;
-		
-		for (ResearchLine line: researchLines) {
-			total += line.getMasteryPlan().getCourses().size();
-		}
+        // TODO
 
-		return total;
-	}
+        return ready;
+    }
+
+    // REPORTE 5: (Aleksandr): Total de cursos de postgrado proporcionados por el
+    // vicedecanato
+    public int totalPostgradeCourses() {
+        int total = 0;
+
+        for (ResearchLine line : researchLines) {
+            total += line.getMasteryPlan().getCourses().size();
+        }
+
+        return total;
+    }
 }
