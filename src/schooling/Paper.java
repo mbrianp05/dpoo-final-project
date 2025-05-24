@@ -67,8 +67,8 @@ public class Paper implements ScorableBreakthrough {
     }
 
     public void setYear(int year) {
-        if (year < 0) {
-            throw new IllegalArgumentException("El aï¿½o del artï¿½culo no puede estar vacï¿½o");
+        if (year < 1) {
+            throw new IllegalArgumentException("El año no puede ser negativo");
         }
 
         this.year = year;
