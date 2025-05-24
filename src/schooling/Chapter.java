@@ -1,5 +1,7 @@
 package schooling;
 
+import utils.Validation;
+
 public class Chapter implements ScorableBreakthrough {
     private String title;
     private String[] authors;
@@ -72,11 +74,14 @@ public class Chapter implements ScorableBreakthrough {
 
         this.editors = editors;
     }
-
-    // Hay que investigar si el ISSN tiene una validaciï¿½n especï¿½fica
+    
     public void setISSN(String ISSN) {
-        if (ISSN.trim().isEmpty()) {
-            throw new IllegalArgumentException("El ISSN del libro no puede estar vacÃ­o");
+        if (!Validation.notEmpty(ISSN)) {
+            throw new IllegalArgumentException("El ISSN del libro no puede estar vacío");
+        }
+        
+        if (!Validation.validISSN(ISSN)) {
+        	throw new IllegalArgumentException("El ISSN del libro sigue el patrón ISSN NNNN-NNNN");
         }
 
         this.ISSN = ISSN;
@@ -94,7 +99,7 @@ public class Chapter implements ScorableBreakthrough {
         return editors;
     }
 
-    public String getISSN() {
+    public String getISSN() {    	
         return ISSN;
     }
 

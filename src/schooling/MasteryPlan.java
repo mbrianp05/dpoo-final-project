@@ -4,10 +4,13 @@ import java.util.ArrayList;
 
 public class MasteryPlan {
     private int minCredit;
+    
 	private ArrayList<Matriculation> matriculations;
     private ArrayList<PostgraduateCourse> courses;
     
-    public MasteryPlan() {
+    public MasteryPlan(int minCredit) {
+    	setMinCredit(minCredit);
+    	
     	matriculations = new ArrayList<>();
     	courses = new ArrayList<>();
     }
@@ -20,8 +23,8 @@ public class MasteryPlan {
     	return matriculations;
     }
     
-    public void addCourse() {
-    	
+    public void addCourse(String name, String description, Profesor instructor, int credits) {
+    	courses.add(new PostgraduateCourse(name, description, instructor, credits));
     }
     
 	public ArrayList<PostgraduateCourse> getCourses() {
@@ -33,6 +36,8 @@ public class MasteryPlan {
 	}
 
 	public void setMinCredit(int minCredit) {
+		if (minCredit < 1) throw new IllegalArgumentException("El crédito necesario tiene que ser mayor que 0");
+		
 		this.minCredit = minCredit;
 	}
 }

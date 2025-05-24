@@ -79,13 +79,18 @@ public class Faculty {
 	public ArrayList<Profesor> profesorsWithMasteryReady() {
 		ArrayList<Profesor> ready = new ArrayList<Profesor>();
 
-	
+		// TODO
+		
 		return ready;
 	}
 	
 	// REPORTE 5: (Aleksandr): Total de cursos de postgrado proporcionados por el vicedecanato
 	public int totalPostgradeCourses() {
 		int total = 0;
+		
+		for (ResearchLine line: researchLines) {
+			total += line.getMasteryPlan().getCourses().size();
+		}
 
 		return total;
 	}

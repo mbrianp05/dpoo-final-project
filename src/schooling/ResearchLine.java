@@ -41,7 +41,7 @@ public class ResearchLine {
 		masteryPlan = mastPlan;
 	}
 
-	public MasteryPlan getMastPlans() {
+	public MasteryPlan getMasteryPlan() {
 		return masteryPlan;
 	}	
     
