@@ -14,26 +14,23 @@ public class Paper implements ScorableBreakthrough {
         this.year = year;
         this.group = group;
 
-        setScore();
-    }
-
-    private void setScore() {
-        score = 0;
-
         switch (group) {
-            case Wos:
-                score += 10;
-                break;
-            case Group1:
-                score += 8;
-                break;
-            case Group2:
-                score += 6;
-                break;
-            case Group3:
-            case Group4:
-                score += 4;
-                break;
+        case Wos:
+        	score = 10;
+        	break;
+        case Group1:
+        	score = 8;
+        	break;
+        case Group2:
+        	score = 6;
+        	break;
+        case Group3:
+        case Group4:
+        	score = 4;
+        	break;
+        default:
+        	// Solo ocurre cuando el group es null
+        	score = 0;
         }
     }
 

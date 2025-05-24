@@ -39,12 +39,12 @@ public class Faculty {
     }
 
 	// REPORTE 2: (Brian): Los temas de investigaci�n con m�s investigadores
-	public ArrayList<ResearchMatter> trendingMatter() {
+	public ArrayList<ResearchMatter> trendingMatters() {
         ArrayList<ResearchMatter> matters = new ArrayList<>();
         int mostResearchers = -1;
 
         for (ResearchLine line: researchLines) {
-            for (ResearchMatter matter: researchLines.getMatters()) {
+            for (ResearchMatter matter: line.getMatters()) {
                 int researchersCount = matter.getResearchers().size();
 
                 if (researchersCount > mostResearchers) {
@@ -82,7 +82,6 @@ public class Faculty {
 			for(MasteryPlan mp: rl.getMastPlans()){
 				for(PostgraduateCourse pc: mp.getCourses()){
 					for(Profesor p: pc.getProfesors()){
-
 						if(p.getCredits() >= mp.getMinCredit()){
 							ready.add(p);
 						}
@@ -93,6 +92,7 @@ public class Faculty {
 
 		return ready;
 	}
+	
 	// REPORTE 5: (Aleksandr): Total de cursos de postgrado proporcionados por el vicedecanato
 	public int totalPostgradeCourses() {
 		int total = 0;
@@ -102,6 +102,7 @@ public class Faculty {
 				total += m.getCourses().size();
 			}
 		}
+		
 		return total;
 	}
 	// A�adir m�s reportes relacionados a los cursos de considerar necesario
