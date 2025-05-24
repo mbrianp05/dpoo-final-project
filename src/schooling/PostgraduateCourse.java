@@ -3,10 +3,10 @@ package schooling;
 import utils.Validation;
 
 public class PostgraduateCourse {
-    private String name;
-    private String description;
-    private Profesor instructor;
-    private int credits;
+	private String name;
+	private String description;
+	private Profesor instructor;
+	private int credits;
 
 	public PostgraduateCourse(String name, String description, Profesor instructor, int credits) {
 		setName(name);
@@ -14,14 +14,15 @@ public class PostgraduateCourse {
 		setInstructor(instructor);
 		setCredits(credits);
 	}
-	
+
 	public String getName() {
 		return name;
 	}
 
-	public void setName(String name) { 
-		if (!Validation.notEmpty(name)) throw new IllegalArgumentException("El nombre del curso no puede estar vacío");
-		
+	public void setName(String name) {
+		if (!Validation.notEmpty(name))
+			throw new IllegalArgumentException("El nombre del curso no puede estar vacï¿½o");
+
 		this.name = name;
 	}
 
@@ -30,8 +31,9 @@ public class PostgraduateCourse {
 	}
 
 	public void setDescription(String description) {
-		if (!Validation.notEmpty(description)) throw new IllegalArgumentException("La descripción del curso no puede estar vacío");
-		
+		if (!Validation.notEmpty(description))
+			throw new IllegalArgumentException("La descripciï¿½n del curso no puede estar vacï¿½o");
+
 		this.description = description;
 	}
 
@@ -40,8 +42,10 @@ public class PostgraduateCourse {
 	}
 
 	public void setInstructor(Profesor instructor) {
-		if (instructor.getDegree() != Degree.Doctor) throw new IllegalArgumentException("Solo los profesores con categoría Doctor pueden impartir cursos de postgrado");
-		
+		if (instructor.getDegree() != Degree.Doctor)
+			throw new IllegalArgumentException(
+					"Solo los profesores con categorï¿½a Doctor pueden impartir cursos de postgrado");
+
 		this.instructor = instructor;
 	}
 
@@ -50,8 +54,9 @@ public class PostgraduateCourse {
 	}
 
 	public void setCredits(int credits) {
-		if (credits < 1) throw new IllegalArgumentException("El curso debe aportar al menos 1 crédito");
-		
+		if (credits < 1)
+			throw new IllegalArgumentException("El curso debe aportar al menos 1 crï¿½dito");
+
 		this.credits = credits;
 	}
 }

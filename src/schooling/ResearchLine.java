@@ -5,11 +5,11 @@ import java.util.ArrayList;
 import utils.Validation;
 
 public class ResearchLine {
-    private String name;
-    private Profesor chief;
-    private MasteryPlan masteryPlan;
-    private ArrayList<ResearchMatter> matters;
-    
+	private String name;
+	private Profesor chief;
+	private MasteryPlan masteryPlan;
+	private ArrayList<ResearchMatter> matters;
+
 	public ResearchLine(String name, Profesor chief, MasteryPlan masteryPlan) {
 		setName(name);
 		setChief(chief);
@@ -22,8 +22,9 @@ public class ResearchLine {
 	}
 
 	public void setName(String name) {
-		if (!Validation.notEmpty(name)) throw new IllegalArgumentException("El nombre no puede estar vacío");
-		
+		if (!Validation.notEmpty(name))
+			throw new IllegalArgumentException("El nombre no puede estar vacï¿½o");
+
 		this.name = name;
 	}
 
@@ -45,9 +46,9 @@ public class ResearchLine {
 
 	public MasteryPlan getMasteryPlan() {
 		return masteryPlan;
-	}	
-    
-    public ArrayList<ResearchMatter> getMatters() {
-        return matters;
-    }
+	}
+
+	public ArrayList<ResearchMatter> getMatters() {
+		return matters;
+	}
 }

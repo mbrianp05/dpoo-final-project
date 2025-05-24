@@ -6,19 +6,19 @@ import java.util.Scanner;
 public class Authentication {
 	public static boolean validateAccessCode(String code) {
 		boolean granted = false;
-		
+
 		try {
 			File srcFile = new File("passcode.txt");
 			Scanner reader = new Scanner(srcFile);
-		
+
 			String line = reader.nextLine();
-			
+
 			granted = line.equals(code);
 			reader.close();
 		} catch (Exception e) {
-			System.out.println("No se pudo encontrar la fuente del código de acceso");
+			System.out.println("No se pudo encontrar la fuente del cï¿½digo de acceso");
 		}
-		
+
 		return granted;
 	}
 }

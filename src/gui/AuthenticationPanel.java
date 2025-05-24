@@ -2,31 +2,30 @@ package gui;
 
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
-import javax.swing.JButton;
 import javax.swing.JLabel;
+
 import java.awt.Font;
 
+@SuppressWarnings("serial")
 public class AuthenticationPanel extends JPanel {
-	private JTextField txtXxxxxxxxxxxxxx;
+	private JTextField passcode;
 	private JLabel lblAutorizacin;
 	private JLabel lblIngresaElCdigo;
 	public AuthenticationPanel() {
 		setLayout(null);
-		add(getTxtXxxxxxxxxxxxxx());
+		add(getPasscode());
 		add(getLblAutorizacin());
 		add(getLblIngresaElCdigo());
 	}
-	private JTextField getTxtXxxxxxxxxxxxxx() {
-		if (txtXxxxxxxxxxxxxx == null) {
-			txtXxxxxxxxxxxxxx = new JTextField();
-			txtXxxxxxxxxxxxxx.setFont(new Font("Tahoma", Font.PLAIN, 18));
-			txtXxxxxxxxxxxxxx.setToolTipText("C\u00F3digo");
-			txtXxxxxxxxxxxxxx.setBounds(43, 79, 201, 50);
-			txtXxxxxxxxxxxxxx.setColumns(10);
+	private JTextField getPasscode() {
+		if (passcode == null) {
+			passcode = new JTextField();
+			passcode.setFont(new Font("Tahoma", Font.PLAIN, 18));
+			passcode.setToolTipText("C\u00F3digo");
+			passcode.setBounds(43, 79, 201, 50);
+			passcode.setColumns(10);
 		}
-		return txtXxxxxxxxxxxxxx;
+		return passcode;
 	}
 	private JLabel getLblAutorizacin() {
 		if (lblAutorizacin == null) {

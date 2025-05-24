@@ -19,22 +19,22 @@ public class Paper implements ScorableBreakthrough {
         setGroup(group);
 
         switch (group) {
-        case Wos:
-        	score = 10;
-        	break;
-        case Group1:
-        	score = 8;
-        	break;
-        case Group2:
-        	score = 6;
-        	break;
-        case Group3:
-        case Group4:
-        	score = 4;
-        	break;
-        default:
-        	// Solo ocurre cuando el group es null
-        	score = 0;
+            case Wos:
+                score = 10;
+                break;
+            case Group1:
+                score = 8;
+                break;
+            case Group2:
+                score = 6;
+                break;
+            case Group3:
+            case Group4:
+                score = 4;
+                break;
+            default:
+                // Solo ocurre cuando el group es null
+                score = 0;
         }
     }
 
@@ -68,7 +68,7 @@ public class Paper implements ScorableBreakthrough {
 
     public void setYear(int year) {
         if (year < 1) {
-            throw new IllegalArgumentException("El año no puede ser negativo");
+            throw new IllegalArgumentException("El aï¿½o no puede ser negativo");
         }
 
         this.year = year;

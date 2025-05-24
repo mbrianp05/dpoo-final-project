@@ -13,7 +13,8 @@ public class Chapter implements ScorableBreakthrough {
 
     private final static int score = 3;
 
-    public Chapter(String title, String[] authors, String[] editors, String editorial, String ISSN, String bookName, int volume) {
+    public Chapter(String title, String[] authors, String[] editors, String editorial, String ISSN, String bookName,
+            int volume) {
         setTitle(title);
         setAuthors(authors);
         setEditors(editors);
@@ -74,14 +75,14 @@ public class Chapter implements ScorableBreakthrough {
 
         this.editors = editors;
     }
-    
+
     public void setISSN(String ISSN) {
         if (!Validation.notEmpty(ISSN)) {
-            throw new IllegalArgumentException("El ISSN del libro no puede estar vacío");
+            throw new IllegalArgumentException("El ISSN del libro no puede estar vacï¿½o");
         }
-        
+
         if (!Validation.validISSN(ISSN)) {
-        	throw new IllegalArgumentException("El ISSN del libro sigue el patrón ISSN NNNN-NNNN");
+            throw new IllegalArgumentException("El ISSN del libro sigue el patrï¿½n ISSN NNNN-NNNN");
         }
 
         this.ISSN = ISSN;
@@ -99,7 +100,7 @@ public class Chapter implements ScorableBreakthrough {
         return editors;
     }
 
-    public String getISSN() {    	
+    public String getISSN() {
         return ISSN;
     }
 

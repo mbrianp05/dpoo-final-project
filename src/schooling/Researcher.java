@@ -7,14 +7,14 @@ import utils.Validation;
 
 public abstract class Researcher {
 	protected String name;
-    protected ArrayList<ScorableBreakthrough> breakthroughs;
-    
-    // ID autoincremental
+	protected ArrayList<ScorableBreakthrough> breakthroughs;
+
+	// ID autoincremental
 	protected static int lastID = 1;
 	protected final int ID;
-	
+
 	protected int score;
-	
+
 	public Researcher(String name) {
 		ID = lastID;
 		lastID++;
@@ -22,7 +22,7 @@ public abstract class Researcher {
 		score = 0;
 		breakthroughs = new ArrayList<>();
 	}
-	
+
 	public int getScore() {
 		return score;
 	}
@@ -40,58 +40,59 @@ public abstract class Researcher {
 	}
 
 	public void addPaper(String title, int no, int volume, int year, TargetedGroup group) {
-        Paper paper = new Paper(title, no, volume, year, group);
-        breakthroughs.add(paper);
+		Paper paper = new Paper(title, no, volume, year, group);
+		breakthroughs.add(paper);
 
-        score += paper.getScore();
+		score += paper.getScore();
 	}
 
 	public void addPresentation(String name, Date date, String ISBN, String location) {
 		Presentation presentation = new Presentation(name, date, ISBN, location);
-        breakthroughs.add(presentation);
+		breakthroughs.add(presentation);
 
-        score += presentation.getScore();
+		score += presentation.getScore();
 	}
 
-	public void addBookChapter(String title, String[] authors, String[] editors, String editorial, String ISSN, String bookName, int volume) {
-        Chapter chapter = new Chapter(title, authors, editors, editorial, ISSN, bookName, volume);
-        breakthroughs.add(chapter);
+	public void addBookChapter(String title, String[] authors, String[] editors, String editorial, String ISSN,
+			String bookName, int volume) {
+		Chapter chapter = new Chapter(title, authors, editors, editorial, ISSN, bookName, volume);
+		breakthroughs.add(chapter);
 
-        score += chapter.getScore();
+		score += chapter.getScore();
 	}
 
 	public ArrayList<Paper> getPapers() {
-        ArrayList<Paper> papers = new ArrayList<Paper>();
+		ArrayList<Paper> papers = new ArrayList<Paper>();
 
-        for (ScorableBreakthrough b: breakthroughs) {
-            if (b instanceof Paper) {
-                papers.add((Paper)b);
-            }
-        }
+		for (ScorableBreakthrough b : breakthroughs) {
+			if (b instanceof Paper) {
+				papers.add((Paper) b);
+			}
+		}
 
 		return papers;
 	}
 
 	public ArrayList<Presentation> getPresentations() {
-        ArrayList<Presentation> presentations = new ArrayList<Presentation>();
+		ArrayList<Presentation> presentations = new ArrayList<Presentation>();
 
-        for (ScorableBreakthrough b: breakthroughs) {
-            if (b instanceof Presentation) {
-                presentations.add((Presentation)b);
-            }
-        }
+		for (ScorableBreakthrough b : breakthroughs) {
+			if (b instanceof Presentation) {
+				presentations.add((Presentation) b);
+			}
+		}
 
 		return presentations;
 	}
 
 	public ArrayList<Chapter> getBookChapter() {
-        ArrayList<Chapter> chapters = new ArrayList<Chapter>();
+		ArrayList<Chapter> chapters = new ArrayList<Chapter>();
 
-        for (ScorableBreakthrough b: breakthroughs) {
-            if (b instanceof Chapter) {
-                chapters.add((Chapter)b);
-            }
-        }
+		for (ScorableBreakthrough b : breakthroughs) {
+			if (b instanceof Chapter) {
+				chapters.add((Chapter) b);
+			}
+		}
 
 		return chapters;
 	}

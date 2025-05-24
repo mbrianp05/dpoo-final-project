@@ -3,17 +3,17 @@ package schooling;
 public class Profesor extends Researcher {
 	private int credits;
 	private Degree degree;
-    private ProfesorCategory category;
-	
+	private ProfesorCategory category;
+
 	public Profesor(String name, Degree degree, ProfesorCategory profesorCategory) {
 		super(name);
 
-        setCredits(0);
-        setDegree(degree);
-        setCategory(profesorCategory);
+		setCredits(0);
+		setDegree(degree);
+		setCategory(profesorCategory);
 	}
 
-    public Degree getDegree() {
+	public Degree getDegree() {
 		return degree;
 	}
 
@@ -30,12 +30,12 @@ public class Profesor extends Researcher {
 	}
 
 	public void setCredits(int credits) {
-    	if (credits < 0) {
-    		throw new IllegalArgumentException("Los cr�ditos no pueden ser un n�mero negativo");
-    	}
-    	
-    	this.credits = credits;
-    }
+		if (credits < 0) {
+			throw new IllegalArgumentException("Los cr�ditos no pueden ser un n�mero negativo");
+		}
+
+		this.credits = credits;
+	}
 
 	public int getCredits() {
 		return credits;
