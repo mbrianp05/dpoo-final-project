@@ -3,6 +3,8 @@ package schooling;
 import java.util.ArrayList;
 import java.util.Date;
 
+import utils.Validation;
+
 public abstract class Researcher {
 	protected String name;
     protected ArrayList<ScorableBreakthrough> breakthroughs;
@@ -26,7 +28,7 @@ public abstract class Researcher {
 	}
 
 	public void setName(String name) {
-		if (name.trim().isEmpty()) {
+		if (!Validation.notEmpty(name)) {
 			throw new IllegalArgumentException("El nombre del investigador no debe estar vacío");
 		}
 

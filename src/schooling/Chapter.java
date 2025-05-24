@@ -28,7 +28,7 @@ public class Chapter implements ScorableBreakthrough {
     }
 
     public void setTitle(String title) {
-        if (title.trim().isEmpty()) {
+        if (!Validation.notEmpty(title)) {
             throw new IllegalArgumentException("El título del capítulo no puede estar vacío");
         }
 
@@ -44,7 +44,7 @@ public class Chapter implements ScorableBreakthrough {
     }
 
     public void setBookName(String bookName) {
-        if (bookName.trim().isEmpty()) {
+        if (!Validation.notEmpty(bookName)) {
             throw new IllegalArgumentException("El nombre del libro no puede estar vacío");
         }
 
@@ -60,7 +60,7 @@ public class Chapter implements ScorableBreakthrough {
     }
 
     public void setEditorial(String editorial) {
-        if (editorial.trim().isEmpty()) {
+        if (!Validation.notEmpty(editorial)) {
             throw new IllegalArgumentException("El editorial del libro no puede estar vacío");
         }
 

@@ -2,6 +2,8 @@ package schooling;
 
 import java.util.ArrayList;
 
+import utils.Validation;
+
 public class ResearchLine {
     private String name;
     private Profesor chief;
@@ -20,7 +22,7 @@ public class ResearchLine {
 	}
 
 	public void setName(String name) {
-		if (name.trim().isEmpty()) throw new IllegalArgumentException("El nombre no puede estar vacío");
+		if (!Validation.notEmpty(name)) throw new IllegalArgumentException("El nombre no puede estar vacío");
 		
 		this.name = name;
 	}

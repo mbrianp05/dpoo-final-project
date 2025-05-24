@@ -2,10 +2,10 @@ package schooling;
 
 import java.util.Date;
 
+import utils.Validation;
+
 public class Presentation implements ScorableBreakthrough {
     private String name;
-    // Le quit� la propiedad a�o ya que como tamb�en tenia la propiedad fecha pues la fecha ya incluye el a�o
-    // El objeto Date facilita la manipulaci�n y validaciones con fechas.
     private Date date;
     private String ISBN;
     private String location;
@@ -24,7 +24,7 @@ public class Presentation implements ScorableBreakthrough {
     }
 
     public void setName(String name) {
-        if (name.trim().isEmpty()) {
+        if (!Validation.notEmpty(name)) {
             throw new IllegalArgumentException("El nombre de la presentaci�n no puede estar vac�o");
         }
 
@@ -37,7 +37,7 @@ public class Presentation implements ScorableBreakthrough {
 
     // Hay que investigar si el ISBN tiene una validaci�n espec�fica
     public void setISBN(String ISBN) {
-        if (ISBN.trim().isEmpty()) {
+        if (!Validation.notEmpty(ISBN)) {
             throw new IllegalArgumentException("El ISBN de la presentaci�n no puede estar vac�o");
         }
 

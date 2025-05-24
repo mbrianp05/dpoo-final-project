@@ -1,5 +1,7 @@
 package schooling;
 
+import utils.Validation;
+
 public class Paper implements ScorableBreakthrough {
     private String title;
     private int no;
@@ -10,11 +12,11 @@ public class Paper implements ScorableBreakthrough {
     private final int score;
 
     public Paper(String title, int no, int volume, int year, TargetedGroup group) {
-        this.title = title;
-        this.no = no;
-        this.volume = volume;
-        this.year = year;
-        this.group = group;
+        setTitle(title);
+        setNo(no);
+        setVolume(volume);
+        setYear(year);
+        setGroup(group);
 
         switch (group) {
         case Wos:
@@ -41,7 +43,7 @@ public class Paper implements ScorableBreakthrough {
     }
 
     public void setTitle(String title) {
-        if (title.trim().isEmpty()) {
+        if (!Validation.notEmpty(title)) {
             throw new IllegalArgumentException("El t�tulo del art�culo no puede estar vac�o");
         }
 

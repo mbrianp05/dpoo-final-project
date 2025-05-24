@@ -1,5 +1,7 @@
 package schooling;
 
+import utils.Validation;
+
 public class PostgraduateCourse {
     private String name;
     private String description;
@@ -18,7 +20,7 @@ public class PostgraduateCourse {
 	}
 
 	public void setName(String name) { 
-		if (name.trim().isEmpty()) throw new IllegalArgumentException("El nombre del curso no puede estar vacío");
+		if (!Validation.notEmpty(name)) throw new IllegalArgumentException("El nombre del curso no puede estar vacío");
 		
 		this.name = name;
 	}
@@ -28,7 +30,7 @@ public class PostgraduateCourse {
 	}
 
 	public void setDescription(String description) {
-		if (name.trim().isEmpty()) throw new IllegalArgumentException("La descripción del curso no puede estar vacío");
+		if (!Validation.notEmpty(description)) throw new IllegalArgumentException("La descripción del curso no puede estar vacío");
 		
 		this.description = description;
 	}
