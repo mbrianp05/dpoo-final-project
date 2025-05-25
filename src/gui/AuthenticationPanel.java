@@ -20,7 +20,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class AuthenticationPanel extends JPanel {
-	private JLabel lblAutorizacin;
+	private JLabel lblAuthorization;
 	private JLabel lblIngresaElCdigo;
 	
 	private JButton submitBtn;
@@ -32,7 +32,7 @@ public class AuthenticationPanel extends JPanel {
 		setBackground(Color.WHITE);
 		setBorder(new LineBorder(new Color(204, 0, 102), 2, true));
 		setLayout(null);
-		add(getLblAutorizacin());
+		add(getLblAuthorization());
 		add(getLblIngresaElCdigo());
 		
 		add(getSubmitBtn());
@@ -50,20 +50,21 @@ public class AuthenticationPanel extends JPanel {
 
 		if (!allowAccess) {
 			errorMsg.setText("El código es incorrecto");
+			passcode.setText("");
 		} else {
 			onAuthenticateEvent.exec();
 		}
 	}
 
-	private JLabel getLblAutorizacin() {
-		if (lblAutorizacin == null) {
-			lblAutorizacin = new JLabel("Autorizaci\u00F3n");
-			lblAutorizacin.setBounds(27, 13, 199, 32);
-			lblAutorizacin.setHorizontalAlignment(SwingConstants.LEFT);
-			lblAutorizacin.setFont(new Font("Segoe UI Symbol", Font.BOLD, 23));
+	private JLabel getLblAuthorization() {
+		if (lblAuthorization == null) {
+			lblAuthorization = new JLabel("Autorizaci\u00F3n");
+			lblAuthorization.setBounds(27, 13, 199, 32);
+			lblAuthorization.setHorizontalAlignment(SwingConstants.LEFT);
+			lblAuthorization.setFont(new Font("Segoe UI Symbol", Font.BOLD, 23));
 		}
 
-		return lblAutorizacin;
+		return lblAuthorization;
 	}
 
 	private JLabel getLblIngresaElCdigo() {
@@ -83,6 +84,7 @@ public class AuthenticationPanel extends JPanel {
 			submitBtn.setForeground(Color.DARK_GRAY);
 			submitBtn.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 13));
 			submitBtn.setBackground(new Color(204, 0, 102));
+	
 			submitBtn.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent event) {
 					verifyPasscode();

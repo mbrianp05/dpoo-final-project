@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
+<<<<<<< HEAD
 	<name>dpoo-final-project-retry</name>
+=======
+	<name>dpoo_final_project</name>
+>>>>>>> 3d780a243ec7a570a128a591a7d51b99a413bfb8
 	<comment></comment>
 	<projects>
 	</projects>
@@ -16,7 +20,11 @@
 	</natures>
 	<filteredResources>
 		<filter>
+<<<<<<< HEAD
 			<id>1748204077924</id>
+=======
+			<id>1748116483496</id>
+>>>>>>> 3d780a243ec7a570a128a591a7d51b99a413bfb8
 			<name></name>
 			<type>30</type>
 			<matcher>
