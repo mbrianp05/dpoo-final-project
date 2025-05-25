@@ -6,8 +6,8 @@ import java.awt.event.KeyEvent;
 
 @SuppressWarnings("serial")
 public class LengthTextField extends JTextField {
-    private int maxLength = -1;
-	
+	private int maxLength = -1;
+
 	public LengthTextField() {
 		addKeyListener(new KeyAdapter() {
 			@Override
@@ -17,12 +17,12 @@ public class LengthTextField extends JTextField {
 				}
 			}
 		});
-    }
-	
+	}
+
 	public int getMaxLength() {
 		return maxLength;
 	}
-	
+
 	public void setMaxLength(int maxLength) {
 		if (maxLength >= -1)
 			this.maxLength = maxLength;

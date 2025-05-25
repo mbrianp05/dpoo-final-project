@@ -3,11 +3,9 @@ package gui;
 import gui.event.OnAuthenticate;
 
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.JLabel;
 
 import java.awt.Font;
-import java.awt.GridLayout;
 
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
@@ -39,7 +37,7 @@ public class AuthenticationPanel extends JPanel {
 		add(getSubmitBtn());
 		add(getErrorMsg());
 	}
-	
+
 	public void listenTo(OnAuthenticate listener) {
 		onAuthenticateEvent = listener;
 	}
@@ -47,14 +45,14 @@ public class AuthenticationPanel extends JPanel {
 	private void verifyPasscode() {
 		String input = passcode.getText();
 		boolean allowAccess = Authentication.authorize(input);
-		
+
 		if (!allowAccess) {
-			errorMsg.setText("El código es incorrecto");
+			errorMsg.setText("El cï¿½digo es incorrecto");
 		} else {
 			onAuthenticateEvent.exec();
 		}
 	}
-	
+
 	private JLabel getLblAutorizacin() {
 		if (lblAutorizacin == null) {
 			lblAutorizacin = new JLabel("Autorizaci\u00F3n");
@@ -62,7 +60,7 @@ public class AuthenticationPanel extends JPanel {
 			lblAutorizacin.setHorizontalAlignment(SwingConstants.LEFT);
 			lblAutorizacin.setFont(new Font("Segoe UI Symbol", Font.BOLD, 23));
 		}
-		
+
 		return lblAutorizacin;
 	}
 
@@ -73,20 +71,20 @@ public class AuthenticationPanel extends JPanel {
 			lblIngresaElCdigo.setBounds(27, 45, 188, 32);
 			lblIngresaElCdigo.setHorizontalAlignment(SwingConstants.LEFT);
 		}
-		
+
 		return lblIngresaElCdigo;
 	}
-	
+
 	private LengthTextField getPasscode() {
 		if (passcode == null) {
 			passcode = new LengthTextField();
 			passcode.setMaxLength(7);
 			passcode.setBounds(27, 110, 215, 32);
 		}
-		
+
 		return passcode;
 	}
-	
+
 	private JButton getSubmitBtn() {
 		if (submitBtn == null) {
 			submitBtn = new JButton("Acceder");
@@ -97,10 +95,10 @@ public class AuthenticationPanel extends JPanel {
 			});
 			submitBtn.setBounds(27, 160, 215, 32);
 		}
-		
+
 		return submitBtn;
 	}
-	
+
 	private JLabel getErrorMsg() {
 		if (errorMsg == null) {
 			errorMsg = new JLabel("");
@@ -108,7 +106,7 @@ public class AuthenticationPanel extends JPanel {
 			errorMsg.setForeground(new Color(204, 102, 102));
 			errorMsg.setBounds(27, 80, 215, 16);
 		}
-		
+
 		return errorMsg;
 	}
 }
