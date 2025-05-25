@@ -5,6 +5,10 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+@SuppressWarnings("serial")
+>>>>>>> 3d780a243ec7a570a128a591a7d51b99a413bfb8
 =======
 @SuppressWarnings("serial")
 >>>>>>> 3d780a243ec7a570a128a591a7d51b99a413bfb8
