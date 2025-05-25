@@ -11,12 +11,14 @@ public class AuthenticationPanel extends JPanel {
 	private JTextField passcode;
 	private JLabel lblAutorizacin;
 	private JLabel lblIngresaElCdigo;
+
 	public AuthenticationPanel() {
 		setLayout(null);
 		add(getPasscode());
 		add(getLblAutorizacin());
 		add(getLblIngresaElCdigo());
 	}
+
 	private JTextField getPasscode() {
 		if (passcode == null) {
 			passcode = new JTextField();
@@ -27,6 +29,7 @@ public class AuthenticationPanel extends JPanel {
 		}
 		return passcode;
 	}
+
 	private JLabel getLblAutorizacin() {
 		if (lblAutorizacin == null) {
 			lblAutorizacin = new JLabel("Autorizaci\u00F3n");
@@ -35,6 +38,7 @@ public class AuthenticationPanel extends JPanel {
 		}
 		return lblAutorizacin;
 	}
+
 	private JLabel getLblIngresaElCdigo() {
 		if (lblIngresaElCdigo == null) {
 			lblIngresaElCdigo = new JLabel("Ingresa el c\u00F3digo de acceso");
