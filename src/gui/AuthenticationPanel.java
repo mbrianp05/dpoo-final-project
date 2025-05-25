@@ -25,8 +25,8 @@ public class AuthenticationPanel extends JPanel {
 	
 	private JButton submitBtn;
 	private JLabel errorMsg;
-	private OnAuthenticate onAuthenticateEvent;
 	private LengthTextField passcode;
+	private OnAuthenticate onAuthenticateEvent;
 
 	public AuthenticationPanel() {
 		setBackground(Color.WHITE);
@@ -49,7 +49,7 @@ public class AuthenticationPanel extends JPanel {
 		boolean allowAccess = Authentication.authorize(input);
 
 		if (!allowAccess) {
-			errorMsg.setText("El c�digo es incorrecto");
+			errorMsg.setText("El código es incorrecto");
 		} else {
 			onAuthenticateEvent.exec();
 		}
