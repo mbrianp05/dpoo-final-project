@@ -4,7 +4,9 @@ import java.io.File;
 import java.util.Scanner;
 
 public class Authentication {
-	public static boolean validateAccessCode(String code) {
+	private static boolean hasAccess = false;
+
+	private static boolean validateAccessCode(String code) {
 		boolean granted = false;
 
 		try {
@@ -20,5 +22,15 @@ public class Authentication {
 		}
 
 		return granted;
+	}
+
+	public static boolean authorize(String passcode) {
+		hasAccess = validateAccessCode(passcode);
+
+		return hasAccess;
+	}
+
+	public static boolean hasAccess() {
+		return hasAccess;
 	}
 }
