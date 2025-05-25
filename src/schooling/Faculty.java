@@ -7,7 +7,7 @@ public class Faculty {
     private ArrayList<Researcher> researchers;
 
     public ArrayList<Profesor> getProfesors() {
-        ArrayList<Profesor> profesors = new ArrayList<Profesor>();
+        ArrayList<Profesor> profesors = new ArrayList<>();
 
         for (Researcher r : researchers) {
             if (r instanceof Profesor) {
@@ -79,12 +79,14 @@ public class Faculty {
 
     // REPORTE 4: (Aleksandr): Los profesores que tienen los cr�ditos necesarios
     // para aprobar su maestr�a
-    public ArrayList<Profesor> profesorsWithMasteryReady() {
-        ArrayList<Profesor> ready = new ArrayList<Profesor>();
+    public ArrayList<Profesor> pendingAprovals() {
+        ArrayList<Profesor> aprovalPendings = new ArrayList<>();
 
-        // TODO
+        for (ResearchLine line : researchLines) {
+            aprovalPendings.addAll(line.getMasteryPlan().profesorsToAproveMastery());
+        }
 
-        return ready;
+        return aprovalPendings;
     }
 
     // REPORTE 5: (Aleksandr): Total de cursos de postgrado proporcionados por el

@@ -3,13 +3,13 @@ package schooling;
 import java.util.ArrayList;
 
 public class MasteryPlan {
-	private int minCredit;
+	private int minCredits;
 
 	private ArrayList<Matriculation> matriculations;
 	private ArrayList<PostgraduateCourse> courses;
 
-	public MasteryPlan(int minCredit) {
-		setMinCredit(minCredit);
+	public MasteryPlan(int minCredits) {
+		setMinCredit(minCredits);
 
 		matriculations = new ArrayList<>();
 		courses = new ArrayList<>();
@@ -31,14 +31,40 @@ public class MasteryPlan {
 		return courses;
 	}
 
-	public int getMinCredit() {
-		return minCredit;
+	public int getMinCredits() {
+		return minCredits;
 	}
 
-	public void setMinCredit(int minCredit) {
-		if (minCredit < 1)
+	public void setMinCredit(int minCredits) {
+		if (minCredits < 1)
 			throw new IllegalArgumentException("El cr�dito necesario tiene que ser mayor que 0");
 
-		this.minCredit = minCredit;
+		this.minCredits = minCredits;
+	}
+
+	public ArrayList<Profesor> getInvolvedPrfesors() {
+		ArrayList<Profesor> profesors = new ArrayList<>();
+
+		for (Matriculation matriculation : matriculations) {
+			Profesor profesor = matriculation.getProfesor();
+
+			if (!profesors.contains(profesor)) {
+				profesors.add(profesor);
+			}
+		}
+
+		return profesors;
+	}
+
+	public ArrayList<Profesor> profesorsToAproveMastery() {
+		ArrayList<Profesor> profesors = getInvolvedPrfesors();
+
+		for (Profesor profesor : profesors) {
+			if (profesor.getCredits() < minCredits) {
+				profesors.remove(profesor);
+			}
+		}
+
+		return profesors;
 	}
 }
