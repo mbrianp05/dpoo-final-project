@@ -1,18 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-<<<<<<< HEAD
 	<name>dpoo-final-project</name>
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-	<name>dpoo-final-project-retry</name>
-=======
-	<name>dpoo_final_project</name>
->>>>>>> 3d780a243ec7a570a128a591a7d51b99a413bfb8
-=======
-	<name>dpoo_final_project</name>
->>>>>>> 3d780a243ec7a570a128a591a7d51b99a413bfb8
->>>>>>> 573a5cfe0042b557f241c88ad6015c9c7026018b
 	<comment></comment>
 	<projects>
 	</projects>
@@ -26,19 +14,9 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
-<<<<<<< HEAD
-=======
 	<filteredResources>
 		<filter>
-<<<<<<< HEAD
-<<<<<<< HEAD
-			<id>1748204077924</id>
-=======
-			<id>1748116483496</id>
->>>>>>> 3d780a243ec7a570a128a591a7d51b99a413bfb8
-=======
-			<id>1748116483496</id>
->>>>>>> 3d780a243ec7a570a128a591a7d51b99a413bfb8
+			<id>1748296685748</id>
 			<name></name>
 			<type>30</type>
 			<matcher>
@@ -47,5 +25,4 @@
 			</matcher>
 		</filter>
 	</filteredResources>
->>>>>>> 573a5cfe0042b557f241c88ad6015c9c7026018b
 </projectDescription>
