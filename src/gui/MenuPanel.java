@@ -23,6 +23,8 @@ public class MenuPanel extends JPanel {
 	private Faculty faculty;
 	private JMenuBar menuBar;
 	private JMenuItem mntmNewMenuItem;
+	private JMenuItem mntmNewMenuItem_1;
+	private JMenuItem mntmNewMenuItem_2;
 	
 	public MenuPanel(Faculty faculty) {
 		this.faculty = faculty;
@@ -42,9 +44,11 @@ public class MenuPanel extends JPanel {
 	private JMenuBar getMenuBar() {
 		if (menuBar == null) {
 			menuBar = new JMenuBar();
+			menuBar.setBounds(0, 0, 1074, 60);
 			menuBar.setBackground(Color.WHITE);
-			menuBar.setBounds(0, 0, 1066, 60);
 			menuBar.add(getMntmNewMenuItem());
+			menuBar.add(getMntmNewMenuItem_2());
+			menuBar.add(getMntmNewMenuItem_1());
 		}
 		return menuBar;
 	}
@@ -55,5 +59,17 @@ public class MenuPanel extends JPanel {
 			mntmNewMenuItem.setFont(new Font("Segoe UI", Font.PLAIN, 18));
 		}
 		return mntmNewMenuItem;
+	}
+	private JMenuItem getMntmNewMenuItem_1() {
+		if (mntmNewMenuItem_1 == null) {
+			mntmNewMenuItem_1 = new JMenuItem("Maestr\u00EDas");
+		}
+		return mntmNewMenuItem_1;
+	}
+	private JMenuItem getMntmNewMenuItem_2() {
+		if (mntmNewMenuItem_2 == null) {
+			mntmNewMenuItem_2 = new JMenuItem("L\u00EDneas de investigaci\u00F3n");
+		}
+		return mntmNewMenuItem_2;
 	}
 }
