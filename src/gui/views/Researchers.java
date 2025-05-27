@@ -1,5 +1,6 @@
 package gui.views;
 
+import gui.event.OnAddResearcher;
 import gui.tablemodel.ResearcherTableModel;
 
 import javax.swing.JPanel;
@@ -27,7 +28,15 @@ import java.awt.GridLayout;
 import javax.swing.JTextField;
 import javax.swing.JScrollPane;
 
+import schooling.Faculty;
+import schooling.Profesor;
+import schooling.Student;
+
+import javax.swing.ButtonGroup;
+
 public class Researchers extends JPanel {
+	private static final long serialVersionUID = 1L;
+	
 	private JLabel panelTitle;
 	private JCheckBox filterStudents;
 	private JCheckBox filterProfesors;
@@ -48,7 +57,12 @@ public class Researchers extends JPanel {
 	private ResearcherTableModel researcherModel;
 	private JTable table;
 	
-	public Researchers() {
+	private Faculty faculty;
+	private ButtonGroup buttonGroup;
+	
+	public Researchers(Faculty faculty) {
+		this.faculty = faculty;
+
 		setLayout(null);
 		add(getPanelTitle());
 		add(getFilterStudents());
@@ -156,7 +170,18 @@ public class Researchers extends JPanel {
 	}
 	private AddProfesorForm getAddProfesorForm() {
 		if (addProfesorForm == null) {
-			addProfesorForm = new AddProfesorForm();
+			addProfesorForm = new AddProfesorForm(faculty);
+			addProfesorForm.listenTo(new OnAddResearcher() {
+				@Override
+				public void addedStudent(Student student) {
+				}
+				
+				@Override
+				public void addedProfesor(Profesor profesor, String matter) {
+					ResearcherTableModel model = (ResearcherTableModel)table.getModel();
+					model.addNew(profesor.getName(), matter, profesor.getScore());
+				}
+			});
 			addProfesorForm.setBorder(new LineBorder(new Color(204, 0, 102)));
 			addProfesorForm.setBounds(12, 78, 783, 72);
 		}
@@ -203,5 +228,16 @@ public class Researchers extends JPanel {
 			table.setBackground(Color.WHITE);
 		}
 		return table;
+	}
+	/**
+	 * @wbp.nonvisual location=121,484
+	 */
+	private ButtonGroup getButtonGroup() {
+		if (buttonGroup == null) {
+			buttonGroup = new ButtonGroup();
+			buttonGroup.add(addProfesor);
+			buttonGroup.add(addStudent);
+		}
+		return buttonGroup;
 	}
 }

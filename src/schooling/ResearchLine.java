@@ -36,8 +36,8 @@ public class ResearchLine {
 		this.chief = chief;
 	}
 
-	public void addMatter(ResearchMatter matter) {
-		matters.add(matter);
+	public void addMatter(String name) {
+		matters.add(new ResearchMatter(name));
 	}
 
 	public void setMasteryPlan(MasteryPlan mastPlan) {

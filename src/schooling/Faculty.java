@@ -6,6 +6,26 @@ public class Faculty {
     private ArrayList<ResearchLine> researchLines;
     private ArrayList<Researcher> researchers;
 
+    public Faculty() {
+    	researchers = new ArrayList<>();
+    	researchLines = new ArrayList<>();
+    }
+    
+    public Profesor addProfesor(String name, Degree degree, ProfesorCategory cat) {
+    	Profesor profesor = new Profesor(name, degree, cat);
+    	this.researchers.add(profesor);
+    	
+    	return profesor;
+    }
+    
+    public void addResearchLine(String name, Profesor chief, MasteryPlan plan) {
+    	researchLines.add(new ResearchLine(name, chief, plan));
+    }
+    
+    public ArrayList<ResearchLine> getReseachLines() {
+    	return researchLines;
+    }
+    
     public ArrayList<Profesor> getProfesors() {
         ArrayList<Profesor> profesors = new ArrayList<>();
 
@@ -16,6 +36,38 @@ public class Faculty {
         }
 
         return profesors;
+    }
+    
+    public ArrayList<String> getResearchMattersNames() {
+    	ArrayList<String> matters = new ArrayList<>();
+    	
+    	for (ResearchLine line: researchLines) {
+    		for (ResearchMatter matter: line.getMatters()) {
+    			matters.add(matter.getName());
+    		}
+    	}
+    	
+    	return matters;
+    }
+    
+    public ResearchMatter findResearchMatter(String name) {
+		ResearchMatter matter = null;
+    	
+    	int i = 0;
+    	while (matter == null && i < researchLines.size()) {
+    		ResearchLine line = researchLines.get(i);
+    		
+    		int j = 0;
+    		while (matter == null && j < line.getMatters().size()) {
+    			if (line.getMatters().get(j).getName().equals(name)) {
+    				matter = line.getMatters().get(j);
+    			}
+    			
+    			j++;
+    		}
+    	}
+    	
+    	return matter;
     }
 
     // REPORTE 1: (Brian): Los investigadores con m�s puntos por

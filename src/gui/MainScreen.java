@@ -7,6 +7,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import schooling.Faculty;
+
 import java.awt.Color;
 import java.awt.SystemColor;
 
@@ -14,6 +17,8 @@ public class MainScreen extends JFrame {
 	private JPanel contentPane;
 	private AuthenticationPanel authenticationPanel;
 	private MenuPanel menu;
+	
+	private Faculty faculty;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -29,6 +34,12 @@ public class MainScreen extends JFrame {
 	}
 
 	public MainScreen() {
+		faculty = new Faculty();
+		// Datos de ejemplos
+		faculty.addResearchLine("Inteligencia artificial", null, null);
+		faculty.getReseachLines().get(0).addMatter("Transformers");
+		faculty.getReseachLines().get(0).addMatter("IAs Generativas");
+		
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1043, 455);
@@ -61,7 +72,7 @@ public class MainScreen extends JFrame {
 
 	private MenuPanel getMenu() {
 		if (menu == null) {
-			menu = new MenuPanel();
+			menu = new MenuPanel(faculty);
 			menu.setBounds(0, 0, 1037, 423);
 			menu.setVisible(false);
 		}

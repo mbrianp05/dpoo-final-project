@@ -2,12 +2,17 @@ package gui;
 
 import javax.swing.JPanel;
 import javax.swing.JButton;
+
 import java.awt.Color;
+
 import javax.swing.JTabbedPane;
 import javax.swing.JToggleButton;
 import javax.swing.JLayeredPane;
 import javax.swing.JToolBar;
 import javax.swing.JInternalFrame;
+
+import schooling.Faculty;
+
 import java.awt.Font;
 
 public class MenuPanel extends JPanel {
@@ -19,7 +24,11 @@ public class MenuPanel extends JPanel {
 	private JButton bremainingAprovals;
 	private SelectionPanel selectionPanel;
 	
-	public MenuPanel() {
+	private Faculty faculty;
+	
+	public MenuPanel(Faculty faculty) {
+		this.faculty = faculty;
+
 		setBackground(Color.WHITE);
 		setLayout(null);
 		add(getResearchers());
@@ -92,7 +101,7 @@ public class MenuPanel extends JPanel {
 	}
 	private SelectionPanel getSelectionPanel() {
 		if (selectionPanel == null) {
-			selectionPanel = new SelectionPanel();
+			selectionPanel = new SelectionPanel(faculty);
 			selectionPanel.setBounds(234, 0, 832, 614);
 		}
 		return selectionPanel;

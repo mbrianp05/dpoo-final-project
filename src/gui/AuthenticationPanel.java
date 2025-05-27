@@ -23,6 +23,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 public class AuthenticationPanel extends JPanel {
+	private static final long serialVersionUID = 1L;
+	
 	private JLabel lblAuthorization;
 	private JLabel lblIngresaElCdigo;
 	private JLabel errorMsg;

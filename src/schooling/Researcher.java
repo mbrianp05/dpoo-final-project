@@ -21,6 +21,8 @@ public abstract class Researcher {
 
 		score = 0;
 		breakthroughs = new ArrayList<>();
+		
+		setName(name);
 	}
 
 	public int getScore() {
