@@ -18,14 +18,16 @@ import auth.Authentication;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JProgressBar;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class AuthenticationPanel extends JPanel {
 	private JLabel lblAuthorization;
 	private JLabel lblIngresaElCdigo;
-	
-	private JButton submitBtn;
 	private JLabel errorMsg;
 	private LengthTextField passcode;
+	private JProgressBar progressBar;
 	private OnAuthenticate onAuthenticateEvent;
 
 	public AuthenticationPanel() {
@@ -34,25 +36,21 @@ public class AuthenticationPanel extends JPanel {
 		setLayout(null);
 		add(getLblAuthorization());
 		add(getLblIngresaElCdigo());
-		
-		add(getSubmitBtn());
 		add(getErrorMsg());
 		add(getPasscode());
+		add(getProgressBar());
 	}
 
 	public void listenTo(OnAuthenticate listener) {
 		onAuthenticateEvent = listener;
 	}
-
+	
 	private void verifyPasscode() {
-		String input = passcode.getText();
-		boolean allowAccess = Authentication.authorize(input);
-
-		if (!allowAccess) {
-			errorMsg.setText("El código es incorrecto");
-			passcode.setText("");
+		if (Authentication.authorize(passcode.getText())) {
+			onAuthenticateEvent.granted();
 		} else {
-			onAuthenticateEvent.exec();
+			passcode.setText("");
+			errorMsg.setVisible(true);
 		}
 	}
 	
@@ -78,30 +76,14 @@ public class AuthenticationPanel extends JPanel {
 		return lblIngresaElCdigo;
 	}
 
-	private JButton getSubmitBtn() {
-		if (submitBtn == null) {
-			submitBtn = new JButton("Acceder");
-			submitBtn.setForeground(Color.DARK_GRAY);
-			submitBtn.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 13));
-			submitBtn.setBackground(new Color(204, 0, 102));
-	
-			submitBtn.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent event) {
-					verifyPasscode();
-				}
-			});
-			submitBtn.setBounds(27, 160, 215, 32);
-		}
-
-		return submitBtn;
-	}
-
 	private JLabel getErrorMsg() {
 		if (errorMsg == null) {
-			errorMsg = new JLabel("");
+			errorMsg = new JLabel("El código no es correcto");
+			errorMsg.setBackground(Color.WHITE);
 			errorMsg.setFont(new Font("Segoe UI Symbol", Font.BOLD, 13));
 			errorMsg.setForeground(new Color(204, 102, 102));
 			errorMsg.setBounds(27, 80, 215, 16);
+			errorMsg.setVisible(false);
 		}
 
 		return errorMsg;
@@ -110,8 +92,29 @@ public class AuthenticationPanel extends JPanel {
 	private LengthTextField getPasscode() {
 		if (passcode == null) {
 			passcode = new LengthTextField();
+			passcode.setMaxLength(Authentication.accessCodeLength());
+			passcode.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyReleased(KeyEvent event) {
+					progressBar.setValue(passcode.getText().length());
+					
+					if (passcode.getText().length() == passcode.getMaxLength()) {
+						
+						verifyPasscode();
+					}
+				}
+			});
 			passcode.setBounds(27, 109, 215, 32);
 		}
 		return passcode;
+	}
+	private JProgressBar getProgressBar() {
+		if (progressBar == null) {
+			progressBar = new JProgressBar();
+			progressBar.setBackground(Color.WHITE);
+			progressBar.setBounds(27, 154, 215, 14);
+			progressBar.setMaximum(Authentication.accessCodeLength());
+		}
+		return progressBar;
 	}
 }

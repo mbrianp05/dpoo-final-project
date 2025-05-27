@@ -5,23 +5,30 @@ import java.util.Scanner;
 
 public class Authentication {
 	private static boolean hasAccess = false;
+	private static String accessCode;
+	
+	private static String fetchAccessCode() {
+		if (accessCode == null) {
+			try {
+				File srcFile = new File("passcode.txt");
+				Scanner reader = new Scanner(srcFile);
+
+				accessCode = reader.nextLine();
+				reader.close();
+			} catch (Exception e) {
+				System.out.println("No se pudo encontrar la fuente del c�digo de acceso");
+			}
+		}
+	
+		return accessCode;
+	}
+	
+	public static int accessCodeLength() {
+		return fetchAccessCode().length();
+	}
 
 	private static boolean validateAccessCode(String code) {
-		boolean granted = false;
-
-		try {
-			File srcFile = new File("passcode.txt");
-			Scanner reader = new Scanner(srcFile);
-
-			String line = reader.nextLine();
-
-			granted = line.equals(code);
-			reader.close();
-		} catch (Exception e) {
-			System.out.println("No se pudo encontrar la fuente del c�digo de acceso");
-		}
-
-		return granted;
+		return fetchAccessCode().equals(code);
 	}
 
 	public static boolean authorize(String passcode) {

@@ -1,5 +1,5 @@
 package gui.event;
 
 public interface OnAuthenticate {
-	void exec();
+	void granted();
 }
