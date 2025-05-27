@@ -1,13 +1,14 @@
 package gui;
 
-import javax.swing.JTextField;
+import javax.swing.JPasswordField;
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-public class LengthTextField extends JTextField {
+public class LengthSecretInput extends JPasswordField {
 	private int maxLength = -1;
 
-	public LengthTextField() {
+	public LengthSecretInput() {
 		addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent event) {

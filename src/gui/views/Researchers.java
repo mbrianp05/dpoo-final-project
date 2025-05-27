@@ -1,8 +1,12 @@
 package gui.views;
 
+import gui.tablemodel.ResearcherTableModel;
+
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+
 import java.awt.Font;
+
 import javax.swing.JTable;
 import javax.swing.JScrollBar;
 import javax.swing.JRadioButton;
@@ -10,17 +14,21 @@ import javax.swing.JSeparator;
 import javax.swing.JCheckBox;
 import javax.swing.JSpinner;
 import javax.swing.JButton;
+
 import java.awt.Color;
+
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.SoftBevelBorder;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
+
 import java.awt.GridLayout;
+
 import javax.swing.JTextField;
+import javax.swing.JScrollPane;
 
 public class Researchers extends JPanel {
 	private JLabel panelTitle;
-	private JTable table;
 	private JCheckBox filterStudents;
 	private JCheckBox filterProfesors;
 	private JSeparator separator;
@@ -35,10 +43,14 @@ public class Researchers extends JPanel {
 	private JPanel panel;
 	private JLabel lblNombre;
 	private JTextField filterByName;
+	private JScrollPane scrollPane;
+	
+	private ResearcherTableModel researcherModel;
+	private JTable table;
+	
 	public Researchers() {
 		setLayout(null);
 		add(getPanelTitle());
-		add(getTable());
 		add(getFilterStudents());
 		add(getFilterProfesors());
 		add(getSeparator());
@@ -51,6 +63,10 @@ public class Researchers extends JPanel {
 		add(getPanel());
 		add(getLblNombre());
 		add(getFilterByName());
+		add(getScrollPane());
+		
+		researcherModel = new ResearcherTableModel();
+		table.setModel(researcherModel);
 	}
 	private JLabel getPanelTitle() {
 		if (panelTitle == null) {
@@ -59,13 +75,6 @@ public class Researchers extends JPanel {
 			panelTitle.setBounds(12, 13, 196, 30);
 		}
 		return panelTitle;
-	}
-	private JTable getTable() {
-		if (table == null) {
-			table = new JTable();
-			table.setBounds(12, 208, 783, 204);
-		}
-		return table;
 	}
 	private JCheckBox getFilterStudents() {
 		if (filterStudents == null) {
@@ -179,5 +188,20 @@ public class Researchers extends JPanel {
 			filterByName.setColumns(10);
 		}
 		return filterByName;
+	}
+	private JScrollPane getScrollPane() {
+		if (scrollPane == null) {
+			scrollPane = new JScrollPane();
+			scrollPane.setBounds(12, 205, 783, 207);
+			scrollPane.setViewportView(getTable_1());
+		}
+		return scrollPane;
+	}
+	private JTable getTable_1() {
+		if (table == null) {
+			table = new JTable();
+			table.setBackground(Color.WHITE);
+		}
+		return table;
 	}
 }

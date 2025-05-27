@@ -26,7 +26,7 @@ public class AuthenticationPanel extends JPanel {
 	private JLabel lblAuthorization;
 	private JLabel lblIngresaElCdigo;
 	private JLabel errorMsg;
-	private LengthTextField passcode;
+	private LengthSecretInput passcode;
 	private JProgressBar progressBar;
 	private OnAuthenticate onAuthenticateEvent;
 
@@ -51,6 +51,7 @@ public class AuthenticationPanel extends JPanel {
 		} else {
 			passcode.setText("");
 			errorMsg.setVisible(true);
+			progressBar.setValue(0);
 		}
 	}
 	
@@ -89,9 +90,9 @@ public class AuthenticationPanel extends JPanel {
 		return errorMsg;
 	}
 	
-	private LengthTextField getPasscode() {
+	private LengthSecretInput getPasscode() {
 		if (passcode == null) {
-			passcode = new LengthTextField();
+			passcode = new LengthSecretInput();
 			passcode.setMaxLength(Authentication.accessCodeLength());
 			passcode.addKeyListener(new KeyAdapter() {
 				@Override

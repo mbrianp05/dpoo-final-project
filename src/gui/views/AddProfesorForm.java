@@ -18,9 +18,9 @@ public class AddProfesorForm extends JPanel {
 	private JLabel category;
 	private JComboBox profesorCatSelect;
 	private JComboBox degreeSelect;
+	private JComboBox matterSelect;
 	private JButton btnRegistrar;
 	private JLabel lblDegree;
-	private JComboBox matterSelect;
 	private JLabel lblmatter;
 	private JButton addBtn;
 	
