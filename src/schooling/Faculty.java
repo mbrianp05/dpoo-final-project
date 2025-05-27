@@ -18,6 +18,13 @@ public class Faculty {
     	return profesor;
     }
     
+    public Student addStudent(String name) {
+    	Student student = new Student(name);
+    	researchers.add(student);
+    	
+    	return student;
+    }
+    
     public void addResearchLine(String name, Profesor chief, MasteryPlan plan) {
     	researchLines.add(new ResearchLine(name, chief, plan));
     }

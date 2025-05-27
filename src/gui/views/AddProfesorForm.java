@@ -1,6 +1,6 @@
 package gui.views;
 
-import gui.event.OnAddResearcher;
+import gui.event.OnAddedResearcher;
 
 import java.awt.Color;
 
@@ -24,6 +24,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
+import java.awt.GridLayout;
 
 public class AddProfesorForm extends JPanel {
 	private JLabel lblName;
@@ -32,32 +33,34 @@ public class AddProfesorForm extends JPanel {
 	private JComboBox profesorCatSelect;
 	private JComboBox degreeSelect;
 	private JComboBox matterSelect;
-	private JButton btnRegistrar;
 	private JLabel lblDegree;
 	private JLabel lblmatter;
 	private JButton addBtn;
 	
 	private Faculty faculty;
-	private OnAddResearcher event;
+	private OnAddedResearcher event;
+	private JLabel lblElNombreEs;
+	private JLabel label;
 	
 	public AddProfesorForm(Faculty faculty) {
 		this.faculty = faculty;
 
 		setBackground(Color.WHITE);
-		setLayout(null);
+		setLayout(new GridLayout(0, 5, 0, 0));
 		add(getLblName());
-		add(getResearcherName());
 		add(getCategory());
+		add(getLblDegree());
+		add(getLblmatter());
+		add(getLabel());
+		add(getResearcherName());
 		add(getProfesorCatSelect());
 		add(getDegreeSelect());
-		add(getBtnRegistrar());
-		add(getLblDegree());
 		add(getMatterSelect());
-		add(getLblmatter());
 		add(getAddBtn());
+		add(getLblElNombreEs());
 	}
 	
-	public void listenTo(OnAddResearcher listener) {
+	public void listenTo(OnAddedResearcher listener) {
 		event = listener;
 	}
 
@@ -65,14 +68,12 @@ public class AddProfesorForm extends JPanel {
 		if (lblName == null) {
 			lblName = new JLabel("Nombre");
 			lblName.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 14));
-			lblName.setBounds(12, 13, 103, 16);
 		}
 		return lblName;
 	}
 	private JTextField getResearcherName() {
 		if (researcherName == null) {
 			researcherName = new JTextField();
-			researcherName.setBounds(12, 35, 165, 25);
 			researcherName.setColumns(10);
 		}
 		return researcherName;
@@ -81,7 +82,6 @@ public class AddProfesorForm extends JPanel {
 		if (category == null) {
 			category = new JLabel("Categor\u00EDa");
 			category.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 14));
-			category.setBounds(189, 11, 103, 21);
 		}
 		return category;
 	}
@@ -90,7 +90,6 @@ public class AddProfesorForm extends JPanel {
 			profesorCatSelect = new JComboBox();
 			profesorCatSelect.setBackground(Color.WHITE);
 			profesorCatSelect.setModel(new DefaultComboBoxModel(new String[] {"Instructor", "Asistente", "Auxiliar", "Titular"}));
-			profesorCatSelect.setBounds(189, 35, 165, 25);
 		}
 		return profesorCatSelect;
 	}
@@ -99,23 +98,13 @@ public class AddProfesorForm extends JPanel {
 			degreeSelect = new JComboBox();
 			degreeSelect.setBackground(Color.WHITE);
 			degreeSelect.setModel(new DefaultComboBoxModel(new String[] {"Ninguna", "M\u00E1ster", "Doctor"}));
-			degreeSelect.setBounds(366, 35, 165, 25);
 		}
 		return degreeSelect;
-	}
-	private JButton getBtnRegistrar() {
-		if (btnRegistrar == null) {
-			btnRegistrar = new JButton("Registrar");
-			btnRegistrar.setBackground(Color.WHITE);
-			btnRegistrar.setBounds(12, 211, 97, 25);
-		}
-		return btnRegistrar;
 	}
 	private JLabel getLblDegree() {
 		if (lblDegree == null) {
 			lblDegree = new JLabel("Categor\u00EDa");
 			lblDegree.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 14));
-			lblDegree.setBounds(366, 14, 103, 21);
 		}
 		return lblDegree;
 	}
@@ -126,7 +115,6 @@ public class AddProfesorForm extends JPanel {
 			matterSelect = new JComboBox();
 			matterSelect.setBackground(Color.WHITE);
 			matterSelect.setModel(new DefaultComboBoxModel(mattersNames));
-			matterSelect.setBounds(543, 36, 165, 25);
 		}
 		return matterSelect;
 	}
@@ -135,7 +123,6 @@ public class AddProfesorForm extends JPanel {
 		if (lblmatter == null) {
 			lblmatter = new JLabel("Tema de investigaci\u00F3n");
 			lblmatter.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 14));
-			lblmatter.setBounds(543, 14, 144, 21);
 		}
 		return lblmatter;
 	}
@@ -155,6 +142,8 @@ public class AddProfesorForm extends JPanel {
 	private JButton getAddBtn() {
 		if (addBtn == null) {
 			addBtn = new JButton("+");
+			addBtn.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 19));
+			addBtn.setForeground(Color.LIGHT_GRAY);
 			addBtn.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					if (!researcherName.getText().trim().isEmpty()) {						
@@ -164,14 +153,37 @@ public class AddProfesorForm extends JPanel {
 							ResearchMatter matter = faculty.findResearchMatter(matterName);
 							matter.addResearcher(profesor);
 							
-							event.addedProfesor(profesor, matterName);
+							event.added(profesor, matterName);
 						}
+						
+						// Reset the form
+						lblElNombreEs.setVisible(false);
+						researcherName.setText("");
+						profesorCatSelect.setSelectedIndex(0);
+						degreeSelect.setSelectedIndex(0);
+						matterSelect.setSelectedIndex(0);
+					} else {
+						lblElNombreEs.setVisible(true);
 					}
 				}
 			});
-			addBtn.setBackground(Color.WHITE);
-			addBtn.setBounds(720, 35, 49, 25);
+			addBtn.setBackground(new Color(255, 102, 153));
 		}
 		return addBtn;
+	}
+	private JLabel getLblElNombreEs() {
+		if (lblElNombreEs == null) {
+			lblElNombreEs = new JLabel("El nombre es requerido");
+			lblElNombreEs.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 13));
+			lblElNombreEs.setVisible(false);
+			lblElNombreEs.setForeground(new Color(204, 0, 102));
+		}
+		return lblElNombreEs;
+	}
+	private JLabel getLabel() {
+		if (label == null) {
+			label = new JLabel("");
+		}
+		return label;
 	}
 }

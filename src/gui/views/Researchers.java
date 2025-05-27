@@ -1,6 +1,6 @@
 package gui.views;
 
-import gui.event.OnAddResearcher;
+import gui.event.OnAddedResearcher;
 import gui.tablemodel.ResearcherTableModel;
 
 import javax.swing.JPanel;
@@ -30,9 +30,12 @@ import javax.swing.JScrollPane;
 
 import schooling.Faculty;
 import schooling.Profesor;
+import schooling.Researcher;
 import schooling.Student;
 
 import javax.swing.ButtonGroup;
+import javax.swing.JToggleButton;
+import javax.swing.JTabbedPane;
 
 public class Researchers extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -40,16 +43,12 @@ public class Researchers extends JPanel {
 	private JLabel panelTitle;
 	private JCheckBox filterStudents;
 	private JCheckBox filterProfesors;
-	private JSeparator separator;
 	private JLabel lblFiltrar;
 	private JLabel actionForm;
 	private JLabel lblPuntuacin;
 	private JSpinner spinner;
 	private JButton btnNewButton;
-	private JRadioButton addStudent;
-	private JRadioButton addProfesor;
 	private AddProfesorForm addProfesorForm;
-	private JPanel panel;
 	private JLabel lblNombre;
 	private JTextField filterByName;
 	private JScrollPane scrollPane;
@@ -59,28 +58,29 @@ public class Researchers extends JPanel {
 	
 	private Faculty faculty;
 	private ButtonGroup buttonGroup;
+	private JTabbedPane formTabs;
+	private AddStudentForm addStudentForm;
 	
 	public Researchers(Faculty faculty) {
+		setBackground(Color.WHITE);
 		this.faculty = faculty;
 
 		setLayout(null);
 		add(getPanelTitle());
 		add(getFilterStudents());
 		add(getFilterProfesors());
-		add(getSeparator());
 		add(getLblFiltrar());
 		add(getActionForm());
 		add(getLblPuntuacin());
 		add(getSpinner());
 		add(getBtnNewButton());
-		add(getAddProfesorForm());
-		add(getPanel());
 		add(getLblNombre());
 		add(getFilterByName());
 		add(getScrollPane());
 		
 		researcherModel = new ResearcherTableModel();
 		table.setModel(researcherModel);
+		add(getFormTabs());
 	}
 	private JLabel getPanelTitle() {
 		if (panelTitle == null) {
@@ -93,31 +93,26 @@ public class Researchers extends JPanel {
 	private JCheckBox getFilterStudents() {
 		if (filterStudents == null) {
 			filterStudents = new JCheckBox("Estudiantes");
+			filterStudents.setBackground(Color.WHITE);
 			filterStudents.setSelected(true);
-			filterStudents.setBounds(167, 174, 100, 25);
+			filterStudents.setBounds(167, 221, 100, 25);
 		}
 		return filterStudents;
 	}
 	private JCheckBox getFilterProfesors() {
 		if (filterProfesors == null) {
 			filterProfesors = new JCheckBox("Profesores");
+			filterProfesors.setBackground(Color.WHITE);
 			filterProfesors.setSelected(true);
-			filterProfesors.setBounds(63, 174, 100, 25);
+			filterProfesors.setBounds(63, 221, 100, 25);
 		}
 		return filterProfesors;
-	}
-	private JSeparator getSeparator() {
-		if (separator == null) {
-			separator = new JSeparator();
-			separator.setBounds(12, 163, 783, 2);
-		}
-		return separator;
 	}
 	private JLabel getLblFiltrar() {
 		if (lblFiltrar == null) {
 			lblFiltrar = new JLabel("Filtrar");
 			lblFiltrar.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 15));
-			lblFiltrar.setBounds(12, 176, 56, 16);
+			lblFiltrar.setBounds(12, 223, 56, 16);
 		}
 		return lblFiltrar;
 	}
@@ -131,16 +126,16 @@ public class Researchers extends JPanel {
 	}
 	private JLabel getLblPuntuacin() {
 		if (lblPuntuacin == null) {
-			lblPuntuacin = new JLabel("Puntuaci\u00F3n");
+			lblPuntuacin = new JLabel("Min Puntuaci\u00F3n");
 			lblPuntuacin.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 15));
-			lblPuntuacin.setBounds(486, 173, 79, 22);
+			lblPuntuacin.setBounds(486, 220, 111, 22);
 		}
 		return lblPuntuacin;
 	}
 	private JSpinner getSpinner() {
 		if (spinner == null) {
 			spinner = new JSpinner();
-			spinner.setBounds(577, 175, 50, 22);
+			spinner.setBounds(599, 222, 50, 22);
 		}
 		return spinner;
 	}
@@ -149,67 +144,36 @@ public class Researchers extends JPanel {
 			btnNewButton = new JButton("Reiniciar");
 			btnNewButton.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 13));
 			btnNewButton.setBackground(Color.WHITE);
-			btnNewButton.setBounds(684, 174, 97, 25);
+			btnNewButton.setBounds(684, 221, 97, 25);
 		}
 		return btnNewButton;
-	}
-	private JRadioButton getAddStudent() {
-		if (addStudent == null) {
-			addStudent = new JRadioButton("Estudiante");
-			addStudent.setBackground(Color.WHITE);
-		}
-		return addStudent;
-	}
-	private JRadioButton getAddProfesor() {
-		if (addProfesor == null) {
-			addProfesor = new JRadioButton("Profesor");
-			addProfesor.setBackground(Color.WHITE);
-			addProfesor.setSelected(true);
-		}
-		return addProfesor;
 	}
 	private AddProfesorForm getAddProfesorForm() {
 		if (addProfesorForm == null) {
 			addProfesorForm = new AddProfesorForm(faculty);
-			addProfesorForm.listenTo(new OnAddResearcher() {
+			addProfesorForm.listenTo(new OnAddedResearcher() {
 				@Override
-				public void addedStudent(Student student) {
-				}
-				
-				@Override
-				public void addedProfesor(Profesor profesor, String matter) {
+				public void added(Researcher profesor, String matter) {
 					ResearcherTableModel model = (ResearcherTableModel)table.getModel();
 					model.addNew(profesor.getName(), matter, profesor.getScore());
 				}
 			});
-			addProfesorForm.setBorder(new LineBorder(new Color(204, 0, 102)));
-			addProfesorForm.setBounds(12, 78, 783, 72);
+			addProfesorForm.setBorder(null);
 		}
 		return addProfesorForm;
-	}
-	private JPanel getPanel() {
-		if (panel == null) {
-			panel = new JPanel();
-			panel.setBackground(Color.WHITE);
-			panel.setBounds(167, 40, 200, 30);
-			panel.setLayout(new GridLayout(0, 2, 0, 0));
-			panel.add(getAddProfesor());
-			panel.add(getAddStudent());
-		}
-		return panel;
 	}
 	private JLabel getLblNombre() {
 		if (lblNombre == null) {
 			lblNombre = new JLabel("Nombre");
 			lblNombre.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 15));
-			lblNombre.setBounds(275, 173, 79, 22);
+			lblNombre.setBounds(275, 220, 56, 22);
 		}
 		return lblNombre;
 	}
 	private JTextField getFilterByName() {
 		if (filterByName == null) {
 			filterByName = new JTextField();
-			filterByName.setBounds(336, 175, 116, 22);
+			filterByName.setBounds(336, 222, 116, 22);
 			filterByName.setColumns(10);
 		}
 		return filterByName;
@@ -217,7 +181,7 @@ public class Researchers extends JPanel {
 	private JScrollPane getScrollPane() {
 		if (scrollPane == null) {
 			scrollPane = new JScrollPane();
-			scrollPane.setBounds(12, 205, 783, 207);
+			scrollPane.setBounds(12, 257, 783, 207);
 			scrollPane.setViewportView(getTable_1());
 		}
 		return scrollPane;
@@ -235,9 +199,33 @@ public class Researchers extends JPanel {
 	private ButtonGroup getButtonGroup() {
 		if (buttonGroup == null) {
 			buttonGroup = new ButtonGroup();
-			buttonGroup.add(addProfesor);
-			buttonGroup.add(addStudent);
 		}
 		return buttonGroup;
+	}
+	private JTabbedPane getFormTabs() {
+		if (formTabs == null) {
+			formTabs = new JTabbedPane(JTabbedPane.TOP);
+			formTabs.setBorder(null);
+			formTabs.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 15));
+			formTabs.setBackground(Color.WHITE);
+			formTabs.setBounds(12, 78, 783, 131);
+			
+			formTabs.addTab("Profesor", null, getAddProfesorForm(), null);
+			formTabs.addTab("Estudiante", null, getAddStudentForm(), null);
+		}
+		return formTabs;
+	}
+	private AddStudentForm getAddStudentForm() {
+		if (addStudentForm == null) {
+			addStudentForm = new AddStudentForm(faculty);
+			addStudentForm.listenTo(new OnAddedResearcher() {
+				@Override
+				public void added(Researcher student, String matter) {
+					ResearcherTableModel model = (ResearcherTableModel)table.getModel();
+					model.addNew(student.getName(), matter, student.getScore());
+				}
+			});
+		}
+		return addStudentForm;
 	}
 }

@@ -42,7 +42,7 @@ public class MainScreen extends JFrame {
 		
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1043, 455);
+		setBounds(100, 100, 815, 570);
 		
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
@@ -57,7 +57,7 @@ public class MainScreen extends JFrame {
 	private AuthenticationPanel getAuthenticationPanel() {
 		if (authenticationPanel == null) {
 			authenticationPanel = new AuthenticationPanel();
-			authenticationPanel.setBounds(400, 100, 270, 210);
+			authenticationPanel.setBounds(270, 100, 270, 210);
 			authenticationPanel.listenTo(new OnAuthenticate() {
 				@Override
 				public void granted() {
@@ -73,7 +73,7 @@ public class MainScreen extends JFrame {
 	private MenuPanel getMenu() {
 		if (menu == null) {
 			menu = new MenuPanel(faculty);
-			menu.setBounds(0, 0, 1037, 423);
+			menu.setBounds(0, 0, 809, 539);
 			menu.setVisible(false);
 		}
 		return menu;

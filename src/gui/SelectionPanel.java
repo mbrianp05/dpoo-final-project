@@ -23,7 +23,7 @@ public class SelectionPanel extends JPanel {
 	private Researchers getResearchers() {
 		if (researchers == null) {
 			researchers = new Researchers(faculty);
-			researchers.setBounds(0, 0, 799, 426);
+			researchers.setBounds(0, 0, 1066, 739);
 		}
 		return researchers;
 	}
