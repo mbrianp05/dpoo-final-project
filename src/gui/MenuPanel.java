@@ -69,10 +69,12 @@ public class MenuPanel extends JPanel {
 			mntmNewMenuItem = new JMenuItem("Investigadores");
 			mntmNewMenuItem.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
+					mntmNewMenuItem.setSelected(true);
+					mntmNewMenuItem_2.setSelected(false);
+					mntmNewMenuItem_1.setSelected(false);
 					selectionPanel.switchViews(View.Researchers);
 				}
-			});
-			mntmNewMenuItem.setSelected(true);
+			});			
 			mntmNewMenuItem.setBackground(Color.WHITE);
 			mntmNewMenuItem.setFont(new Font("Segoe UI", Font.PLAIN, 18));
 		}
@@ -81,6 +83,15 @@ public class MenuPanel extends JPanel {
 	private JMenuItem getMntmNewMenuItem_1() {
 		if (mntmNewMenuItem_1 == null) {
 			mntmNewMenuItem_1 = new JMenuItem("Maestr\u00EDas");
+			mntmNewMenuItem_1.addActionListener(new ActionListener() {	
+				public void actionPerformed(ActionEvent arg0) {
+					mntmNewMenuItem.setSelected(false);
+					mntmNewMenuItem_2.setSelected(false);
+					mntmNewMenuItem_1.setSelected(true);
+					selectionPanel.switchViews(View.Masters);
+					
+				}
+			});
 			mntmNewMenuItem_1.setBackground(Color.WHITE);
 			mntmNewMenuItem_1.setFont(new Font("Segoe UI", Font.PLAIN, 18));
 		}
@@ -91,9 +102,9 @@ public class MenuPanel extends JPanel {
 			mntmNewMenuItem_2 = new JMenuItem("L\u00EDneas de investigaci\u00F3n");
 			mntmNewMenuItem_2.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					mntmNewMenuItem_1.setSelected(false);
-					
 					mntmNewMenuItem_2.setSelected(true);
+					mntmNewMenuItem_1.setSelected(false);
+					mntmNewMenuItem.setSelected(false);
 					selectionPanel.switchViews(View.ResearchLines);
 				}
 			});
