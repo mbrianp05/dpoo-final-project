@@ -49,7 +49,17 @@ public class ResearcherTableModel extends DefaultTableModel {
 			String name = (String)item[0];
 			
 			if (name.startsWith(query)) {
-				addRow(new Object[] {name, (String)item[1], (int)item[2]});
+				addRow(new Object[] {name, item[1], item[2]});
+			}
+		}
+	}
+
+	public void filterByScore(int score) {
+		emptyTable();
+		
+		for (Object[] item: preFilter) {
+			if ((int)item[2] >= score) {
+				addRow(new Object[] {item[0], item[1], item[2]});
 			}
 		}
 	}

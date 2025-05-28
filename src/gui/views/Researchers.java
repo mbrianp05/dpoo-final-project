@@ -34,6 +34,11 @@ import java.util.ArrayList;
 
 import javax.swing.JDialog;
 import javax.swing.SwingConstants;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
+import javax.swing.SpinnerNumberModel;
+import java.awt.event.InputMethodListener;
+import java.awt.event.InputMethodEvent;
 
 public class Researchers extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -162,6 +167,20 @@ public class Researchers extends JPanel {
 	private JSpinner getSpinner() {
 		if (spinner == null) {
 			spinner = new JSpinner();
+			spinner.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyTyped(KeyEvent arg0) {
+					ResearcherTableModel tmodel = (ResearcherTableModel)table.getModel();
+					tmodel.filterByScore((int)spinner.getValue());
+				}
+			});
+			spinner.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
+			spinner.addChangeListener(new ChangeListener() {
+				public void stateChanged(ChangeEvent event) {
+					ResearcherTableModel tmodel = (ResearcherTableModel)table.getModel();
+					tmodel.filterByScore((int)spinner.getValue());
+				}
+			});
 			spinner.setBounds(599, 222, 50, 22);
 		}
 		
