@@ -36,13 +36,21 @@ public class ResearcherTableModel extends DefaultTableModel {
 		}
 	}
 	
-	public void emptyTable() {
-		for (int i = 0; i < getRowCount(); i++) {
-			removeRow(i);
+	public void emptyTable() {		
+		while (getRowCount() > 0) {
+			removeRow(0);
 		}
 	}
 	
 	public void filterByName(String query) {
-	
+		emptyTable();
+		
+		for (Object[] item: preFilter) {
+			String name = (String)item[0];
+			
+			if (name.startsWith(query)) {
+				addRow(new Object[] {name, (String)item[1], (int)item[2]});
+			}
+		}
 	}
 }

@@ -206,12 +206,14 @@ public class Researchers extends JPanel {
 	}
 	private JTextField getFilterByName() {
 		if (filterByName == null) {
-			filterByName = new JTextField();
+			filterByName = new JTextField("");
 			filterByName.addKeyListener(new KeyAdapter() {
 				@Override
-				public void keyReleased(KeyEvent arg0) {
-					ResearcherTableModel tmodel = (ResearcherTableModel)table.getModel();
-					tmodel.filterByName(filterByName.getText());
+				public void keyReleased(KeyEvent event) {
+					if (event.getKeyCode() != 16) {		
+						ResearcherTableModel tmodel = (ResearcherTableModel)table.getModel();
+						tmodel.filterByName(filterByName.getText());
+					}
 				}
 			});
 			filterByName.setBounds(336, 222, 116, 22);
