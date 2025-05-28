@@ -15,6 +15,12 @@ public class ResearcherTableModel extends DefaultTableModel {
 		this.setColumnIdentifiers(columns);
 	}
 
+	public void update(int row, String name, String matter, int score) {
+		setValueAt(name, row, 0);
+		setValueAt(matter, row, 1);
+		setValueAt(score, row, 2);
+	}
+	
 	public void addNew(String name, String matter, int score){
 		preFilter.add(new Object[]{name, matter, score});
 		Object[] newRow = new Object[]{name, matter, score};

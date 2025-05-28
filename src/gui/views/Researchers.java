@@ -30,8 +30,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import javax.swing.JDialog;
+import javax.swing.SwingConstants;
 
 public class Researchers extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -58,6 +60,7 @@ public class Researchers extends JPanel {
 	private AddStudentForm addStudentForm;
 	private JLabel lblInvestigadoresDestacados;
 	private JLabel lblbestResearchers;
+	private JLabel lblBestScore;
 	
 	public Researchers(Faculty faculty) {
 		this.faculty = faculty;
@@ -81,6 +84,7 @@ public class Researchers extends JPanel {
 		table.setModel(researcherModel);
 		add(getLblInvestigadoresDestacados());
 		add(getLblbestResearchers());
+		add(getLblBestScore());
 		
 		initTableData();
 	}
@@ -229,13 +233,18 @@ public class Researchers extends JPanel {
 			table.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent event) {
-					int row = table.getSelectedRow();
+					final int row = table.getSelectedRow();
 					
 					if (row >= 0) {
 						String name = (String)table.getModel().getValueAt(row, 0);
-						
 						try {
 							UpdateResearcherPopup dialog = new UpdateResearcherPopup(faculty, faculty.findProfesorByName(name));
+							dialog.listenTo(new OnAddedResearcher() {
+								@Override
+								public void added(Researcher researcher, String matter) {
+									((ResearcherTableModel)table.getModel()).update(row, researcher.getName(), matter, researcher.getScore());
+								}
+							});
 							dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 							dialog.setVisible(true);
 						} catch (Exception e) {
@@ -287,17 +296,15 @@ public class Researchers extends JPanel {
 		if (lblInvestigadoresDestacados == null) {
 			lblInvestigadoresDestacados = new JLabel("Investigadores destacados");
 			lblInvestigadoresDestacados.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 15));
-			lblInvestigadoresDestacados.setBounds(215, 20, 184, 23);
+			lblInvestigadoresDestacados.setBounds(211, 20, 186, 23);
 		}
 		return lblInvestigadoresDestacados;
 	}
 	private JLabel getLblbestResearchers() {
 		if (lblbestResearchers == null) {
-			String text = new String();
+			String text = "";
 
 			for (Researcher r: faculty.bestResearchers()) {
-				System.out.println(r.getName());
-				
 				text += r.getName() + ", ";
 			}
 			
@@ -310,5 +317,22 @@ public class Researchers extends JPanel {
 			lblbestResearchers.setBounds(397, 20, 398, 23);
 		}
 		return lblbestResearchers;
+	}
+	private JLabel getLblBestScore() {
+		if (lblBestScore == null) {
+			String text = "";
+			ArrayList<Researcher> best = faculty.bestResearchers();
+			
+			if (best.size() > 0) {
+				text = "Puntuación de " + String.valueOf(faculty.bestResearchers().get(0).getScore());
+			}
+			
+			lblBestScore = new JLabel(text);
+			lblBestScore.setBackground(new Color(0, 51, 0));
+			lblBestScore.setHorizontalAlignment(SwingConstants.RIGHT);
+			lblBestScore.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 12));
+			lblBestScore.setBounds(211, 42, 174, 23);
+		}
+		return lblBestScore;
 	}
 }

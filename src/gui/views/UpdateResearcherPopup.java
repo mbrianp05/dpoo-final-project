@@ -23,6 +23,7 @@ public class UpdateResearcherPopup extends JDialog {
 	private final JPanel contentPanel = new JPanel();
 	private AddProfesorForm addProfesorForm;
 
+	private OnAddedResearcher event;
 	private Faculty faculty;
 	private Profesor profesor;
 	
@@ -42,11 +43,16 @@ public class UpdateResearcherPopup extends JDialog {
 		{
 			JLabel lblDatosDelInvestigador = new JLabel("Datos del investigador");
 			lblDatosDelInvestigador.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 24));
-			lblDatosDelInvestigador.setBounds(12, 13, 200, 41);
+			lblDatosDelInvestigador.setBounds(12, 13, 408, 41);
 			contentPanel.add(lblDatosDelInvestigador);
 		}
 		contentPanel.add(getAddProfesorForm());
 	}
+	
+	public void listenTo(OnAddedResearcher listener) {
+		event = listener;
+	}
+	
 	private AddProfesorForm getAddProfesorForm() {
 		if (addProfesorForm == null) {
 			addProfesorForm = new AddProfesorForm(faculty, profesor);
@@ -54,6 +60,7 @@ public class UpdateResearcherPopup extends JDialog {
 				@Override
 				public void added(Researcher researcher, String matter) {
 					setVisible(false);
+					event.added(researcher, matter);
 				}
 			});
 			addProfesorForm.setBounds(0, 67, 432, 103);

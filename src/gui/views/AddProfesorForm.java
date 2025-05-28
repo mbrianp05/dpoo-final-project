@@ -184,8 +184,8 @@ public class AddProfesorForm extends JPanel {
 	private JButton getAddBtn() {
 		if (addBtn == null) {
 			addBtn = new JButton(profesor == null ? "+" : "Actualizar");
-			addBtn.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 19));
-			addBtn.setForeground(Color.LIGHT_GRAY);
+			addBtn.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 14));
+			addBtn.setForeground(Color.WHITE);
 			addBtn.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					if (!researcherName.getText().trim().isEmpty()) {						

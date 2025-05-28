@@ -41,13 +41,14 @@ public class MainScreen extends JFrame {
 		/// Datos de prueba
 		faculty.addStudent("Brian");
 		faculty.addResearchLine("Inteligencia artificial", null, null);
+		
 		ResearchLine line = faculty.getReseachLines().get(0);
 
 		line.addMatter("IAs Generativas");
 		line.addMatter("Transformers");
 		
 		line.getMatters().get(0).addResearcher(faculty.getResearchers().get(0));
-		
+		faculty.getResearchers().get(0).addBookChapter("Sample", new String[]{""}, new String[] {""}, "FESX", "ISSN 1233-032X", "Name", 1);
 		
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
