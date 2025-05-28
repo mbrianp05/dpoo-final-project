@@ -60,7 +60,7 @@ public class Masters extends JPanel {
 			
 			text = faculty.totalPostgradeCourses();
 			
-			lblTotal = new JLabel(text + "");
+			lblTotal = new JLabel(text + ".");
 			lblTotal.setVerticalAlignment(SwingConstants.TOP);
 			lblTotal.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 15));
 			lblTotal.setBackground(Color.WHITE);

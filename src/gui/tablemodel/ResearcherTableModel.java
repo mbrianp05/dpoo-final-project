@@ -5,11 +5,16 @@ import java.util.Vector;
 
 import javax.swing.table.DefaultTableModel;
 
+import schooling.Faculty;
+import schooling.Profesor;
+import schooling.Researcher;
+import schooling.Student;
+
 public class ResearcherTableModel extends DefaultTableModel {
-	private ArrayList<Object[]> preFilter;
+	private Faculty faculty;
 	
-	public ResearcherTableModel() {
-		preFilter = new ArrayList<>();
+	public ResearcherTableModel(Faculty faculty) {
+		this.faculty = faculty;
 		String[] columns = {"Nombre", "Tema", "Puntuación"};
 		
 		this.setColumnIdentifiers(columns);
@@ -21,19 +26,11 @@ public class ResearcherTableModel extends DefaultTableModel {
 		setValueAt(score, row, 2);
 	}
 	
-	public void addNew(String name, String matter, int score){
-		preFilter.add(new Object[]{name, matter, score});
-		Object[] newRow = new Object[]{name, matter, score};
+	public void addNew(Researcher r) {
+		String matter = faculty.findMatterOf(r.getName()).getName();
+		Object[] newRow = new Object[]{r.getName(), matter, r.getScore()};
 		
 		addRow(newRow);
-	}
-
-	public void removeFilters() {
-		emptyTable();
-		
-		for (Object[] data: preFilter) {
-			addRow(new Object[] { data[0], data[1], data[2] });
-		}
 	}
 	
 	public void emptyTable() {		
@@ -45,11 +42,10 @@ public class ResearcherTableModel extends DefaultTableModel {
 	public void filterByName(String query) {
 		emptyTable();
 		
-		for (Object[] item: preFilter) {
-			String name = (String)item[0];
-			
-			if (name.startsWith(query)) {
-				addRow(new Object[] {name, item[1], item[2]});
+		for (Researcher r: faculty.getResearchers()) {
+			if (r.getName().startsWith(query)) {
+				String matter = faculty.findMatterOf(r.getName()).getName();
+				addRow(new Object[] {r.getName(), matter, r.getScore()});
 			}
 		}
 	}
@@ -57,9 +53,26 @@ public class ResearcherTableModel extends DefaultTableModel {
 	public void filterByScore(int score) {
 		emptyTable();
 		
-		for (Object[] item: preFilter) {
-			if ((int)item[2] >= score) {
-				addRow(new Object[] {item[0], item[1], item[2]});
+		for (Researcher r: faculty.getResearchers()) {
+			if (r.getScore() >= score) {
+				String matter = faculty.findMatterOf(r.getName()).getName();
+				addRow(new Object[] {r.getName(), matter, r.getScore()});
+			}
+		}
+	}
+
+	public void filterByType(boolean students, boolean profesors) {
+		emptyTable();
+		
+		for (Researcher r: faculty.getResearchers()) {
+			if (profesors && r instanceof Profesor) {
+				String matter = faculty.findMatterOf(r.getName()).getName();
+				addRow(new Object[] {r.getName(), matter, r.getScore()});
+			}
+			
+			if (students && r instanceof Student) {
+				String matter = faculty.findMatterOf(r.getName()).getName();
+				addRow(new Object[] {r.getName(), matter, r.getScore()});
 			}
 		}
 	}
