@@ -9,33 +9,29 @@ import javax.swing.JLabel;
 import java.awt.Font;
 
 import javax.swing.JTable;
-import javax.swing.JScrollBar;
-import javax.swing.JRadioButton;
-import javax.swing.JSeparator;
 import javax.swing.JCheckBox;
 import javax.swing.JSpinner;
 import javax.swing.JButton;
 
 import java.awt.Color;
 
-import javax.swing.border.EtchedBorder;
-import javax.swing.border.SoftBevelBorder;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.LineBorder;
-
-import java.awt.GridLayout;
-
 import javax.swing.JTextField;
 import javax.swing.JScrollPane;
 
 import schooling.Faculty;
-import schooling.Profesor;
 import schooling.Researcher;
-import schooling.Student;
 
 import javax.swing.ButtonGroup;
-import javax.swing.JToggleButton;
 import javax.swing.JTabbedPane;
+
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+import javax.swing.JDialog;
 
 public class Researchers extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -60,11 +56,13 @@ public class Researchers extends JPanel {
 	private ButtonGroup buttonGroup;
 	private JTabbedPane formTabs;
 	private AddStudentForm addStudentForm;
+	private JLabel lblInvestigadoresDestacados;
+	private JLabel lblbestResearchers;
 	
 	public Researchers(Faculty faculty) {
-		setBackground(Color.WHITE);
 		this.faculty = faculty;
 
+		setBackground(Color.WHITE);
 		setLayout(null);
 		add(getPanelTitle());
 		add(getFilterStudents());
@@ -77,19 +75,34 @@ public class Researchers extends JPanel {
 		add(getLblNombre());
 		add(getFilterByName());
 		add(getScrollPane());
+		add(getFormTabs());
 		
 		researcherModel = new ResearcherTableModel();
 		table.setModel(researcherModel);
-		add(getFormTabs());
+		add(getLblInvestigadoresDestacados());
+		add(getLblbestResearchers());
+		
+		initTableData();
 	}
+	
+	private void initTableData() {
+		for (Researcher r: faculty.getResearchers()) {
+			String matter = faculty.findMatterOf(r.getName()).getName();
+			
+			((ResearcherTableModel)table.getModel()).addNew(r.getName(), matter, r.getScore());
+		}
+	}
+	
 	private JLabel getPanelTitle() {
 		if (panelTitle == null) {
 			panelTitle = new JLabel("Investigadores");
-			panelTitle.setFont(new Font("Segoe UI Symbol", Font.BOLD, 17));
+			panelTitle.setFont(new Font("Segoe UI Symbol", Font.BOLD, 24));
 			panelTitle.setBounds(12, 13, 196, 30);
 		}
+		
 		return panelTitle;
 	}
+	
 	private JCheckBox getFilterStudents() {
 		if (filterStudents == null) {
 			filterStudents = new JCheckBox("Estudiantes");
@@ -97,8 +110,10 @@ public class Researchers extends JPanel {
 			filterStudents.setSelected(true);
 			filterStudents.setBounds(167, 221, 100, 25);
 		}
+		
 		return filterStudents;
 	}
+	
 	private JCheckBox getFilterProfesors() {
 		if (filterProfesors == null) {
 			filterProfesors = new JCheckBox("Profesores");
@@ -106,42 +121,57 @@ public class Researchers extends JPanel {
 			filterProfesors.setSelected(true);
 			filterProfesors.setBounds(63, 221, 100, 25);
 		}
+		
 		return filterProfesors;
 	}
+	
 	private JLabel getLblFiltrar() {
 		if (lblFiltrar == null) {
 			lblFiltrar = new JLabel("Filtrar");
 			lblFiltrar.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 15));
 			lblFiltrar.setBounds(12, 223, 56, 16);
 		}
+	
 		return lblFiltrar;
 	}
+	
 	private JLabel getActionForm() {
 		if (actionForm == null) {
 			actionForm = new JLabel("A\u00F1adir investigador");
 			actionForm.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 15));
 			actionForm.setBounds(12, 42, 151, 23);
 		}
+		
 		return actionForm;
 	}
+	
 	private JLabel getLblPuntuacin() {
 		if (lblPuntuacin == null) {
 			lblPuntuacin = new JLabel("Min Puntuaci\u00F3n");
 			lblPuntuacin.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 15));
 			lblPuntuacin.setBounds(486, 220, 111, 22);
 		}
+		
 		return lblPuntuacin;
 	}
+	
 	private JSpinner getSpinner() {
 		if (spinner == null) {
 			spinner = new JSpinner();
 			spinner.setBounds(599, 222, 50, 22);
 		}
+		
 		return spinner;
 	}
+	
 	private JButton getBtnNewButton() {
 		if (btnNewButton == null) {
 			btnNewButton = new JButton("Reiniciar");
+			btnNewButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent event) {
+					((ResearcherTableModel)table.getModel()).removeFilters();
+				}
+			});
 			btnNewButton.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 13));
 			btnNewButton.setBackground(Color.WHITE);
 			btnNewButton.setBounds(684, 221, 97, 25);
@@ -150,7 +180,7 @@ public class Researchers extends JPanel {
 	}
 	private AddProfesorForm getAddProfesorForm() {
 		if (addProfesorForm == null) {
-			addProfesorForm = new AddProfesorForm(faculty);
+			addProfesorForm = new AddProfesorForm(faculty, null);
 			addProfesorForm.listenTo(new OnAddedResearcher() {
 				@Override
 				public void added(Researcher profesor, String matter) {
@@ -173,6 +203,13 @@ public class Researchers extends JPanel {
 	private JTextField getFilterByName() {
 		if (filterByName == null) {
 			filterByName = new JTextField();
+			filterByName.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyReleased(KeyEvent arg0) {
+					ResearcherTableModel tmodel = (ResearcherTableModel)table.getModel();
+					tmodel.filterByName(filterByName.getText());
+				}
+			});
 			filterByName.setBounds(336, 222, 116, 22);
 			filterByName.setColumns(10);
 		}
@@ -189,6 +226,24 @@ public class Researchers extends JPanel {
 	private JTable getTable_1() {
 		if (table == null) {
 			table = new JTable();
+			table.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent event) {
+					int row = table.getSelectedRow();
+					
+					if (row >= 0) {
+						String name = (String)table.getModel().getValueAt(row, 0);
+						
+						try {
+							UpdateResearcherPopup dialog = new UpdateResearcherPopup(faculty, faculty.findProfesorByName(name));
+							dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+							dialog.setVisible(true);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				}
+			});
 			table.setBackground(Color.WHITE);
 		}
 		return table;
@@ -227,5 +282,33 @@ public class Researchers extends JPanel {
 			});
 		}
 		return addStudentForm;
+	}
+	private JLabel getLblInvestigadoresDestacados() {
+		if (lblInvestigadoresDestacados == null) {
+			lblInvestigadoresDestacados = new JLabel("Investigadores destacados");
+			lblInvestigadoresDestacados.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 15));
+			lblInvestigadoresDestacados.setBounds(215, 20, 184, 23);
+		}
+		return lblInvestigadoresDestacados;
+	}
+	private JLabel getLblbestResearchers() {
+		if (lblbestResearchers == null) {
+			String text = new String();
+
+			for (Researcher r: faculty.bestResearchers()) {
+				System.out.println(r.getName());
+				
+				text += r.getName() + ", ";
+			}
+			
+			if (text.length() > 2) {				
+				text = text.substring(0, text.length() - 2);
+			}
+			
+			lblbestResearchers = new JLabel(text);
+			lblbestResearchers.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 15));
+			lblbestResearchers.setBounds(397, 20, 398, 23);
+		}
+		return lblbestResearchers;
 	}
 }

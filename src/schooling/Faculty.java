@@ -33,6 +33,10 @@ public class Faculty {
     	return researchLines;
     }
     
+    public ArrayList<Researcher> getResearchers() {
+    	return researchers;
+    }
+    
     public ArrayList<Profesor> getProfesors() {
         ArrayList<Profesor> profesors = new ArrayList<>();
 
@@ -57,6 +61,38 @@ public class Faculty {
     	return matters;
     }
     
+    public Profesor findProfesorByName(String name) {
+    	Profesor profesor = null;
+    	ArrayList<Profesor> profesors = getProfesors();
+    	int i = 0;
+    	
+    	while (profesor == null && i < profesors.size()) {
+    		Profesor p = profesors.get(i);
+    		
+    		if (p.getName().equals(name)) {
+    			profesor = p;
+    		}
+    	}
+    	
+    	return profesor;
+    }
+    
+    public ResearchMatter findMatterOf(String name) {
+    	ResearchMatter matter = null;
+    	
+    	for (ResearchLine line: researchLines) {
+    		for (ResearchMatter m: line.getMatters()) {
+    			for (Researcher researcher: m.getResearchers()) {
+    				if (researcher.getName().equals(name)) {
+    					matter = m;
+    				}
+    			}
+    		}
+    	}
+    	
+    	return matter;
+    }
+    
     public ResearchMatter findResearchMatter(String name) {
 		ResearchMatter matter = null;
     	
@@ -77,15 +113,13 @@ public class Faculty {
     	return matter;
     }
 
-    // REPORTE 1: (Brian): Los investigadores con m�s puntos por
-    // ponencias/cap�tulos/art�culos
     public ArrayList<Researcher> bestResearchers() {
         ArrayList<Researcher> researchers = new ArrayList<>();
-        int highestScore = -1;
+        int highestScore = Integer.MIN_VALUE;
 
-        for (Researcher r : researchers) {
+        for (Researcher r : getResearchers()) {
             int score = r.getScore();
-
+            
             if (score > highestScore) {
                 highestScore = score;
                 researchers.clear();

@@ -1,5 +1,7 @@
 package gui;
 
+import gui.views.View;
+
 import javax.swing.JPanel;
 import javax.swing.JButton;
 
@@ -14,8 +16,18 @@ import javax.swing.JInternalFrame;
 import schooling.Faculty;
 
 import java.awt.Font;
+
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
+import javax.swing.JMenu;
+import javax.swing.JRadioButtonMenuItem;
+import javax.swing.JCheckBoxMenuItem;
+
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class MenuPanel extends JPanel {
 	private SelectionPanel selectionPanel;
@@ -44,17 +56,23 @@ public class MenuPanel extends JPanel {
 	private JMenuBar getMenuBar() {
 		if (menuBar == null) {
 			menuBar = new JMenuBar();
-			menuBar.setBounds(0, 0, 1074, 60);
+			menuBar.setBounds(0, 0, 887, 60);
 			menuBar.setBackground(Color.WHITE);
 			menuBar.add(getMntmNewMenuItem());
-			menuBar.add(getMntmNewMenuItem_2());
 			menuBar.add(getMntmNewMenuItem_1());
+			menuBar.add(getMntmNewMenuItem_2());
 		}
 		return menuBar;
 	}
 	private JMenuItem getMntmNewMenuItem() {
 		if (mntmNewMenuItem == null) {
 			mntmNewMenuItem = new JMenuItem("Investigadores");
+			mntmNewMenuItem.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					selectionPanel.switchViews(View.Researchers);
+				}
+			});
+			mntmNewMenuItem.setSelected(true);
 			mntmNewMenuItem.setBackground(Color.WHITE);
 			mntmNewMenuItem.setFont(new Font("Segoe UI", Font.PLAIN, 18));
 		}
@@ -63,12 +81,24 @@ public class MenuPanel extends JPanel {
 	private JMenuItem getMntmNewMenuItem_1() {
 		if (mntmNewMenuItem_1 == null) {
 			mntmNewMenuItem_1 = new JMenuItem("Maestr\u00EDas");
+			mntmNewMenuItem_1.setBackground(Color.WHITE);
+			mntmNewMenuItem_1.setFont(new Font("Segoe UI", Font.PLAIN, 18));
 		}
 		return mntmNewMenuItem_1;
 	}
 	private JMenuItem getMntmNewMenuItem_2() {
 		if (mntmNewMenuItem_2 == null) {
 			mntmNewMenuItem_2 = new JMenuItem("L\u00EDneas de investigaci\u00F3n");
+			mntmNewMenuItem_2.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					mntmNewMenuItem_1.setSelected(false);
+					
+					mntmNewMenuItem_2.setSelected(true);
+					selectionPanel.switchViews(View.ResearchLines);
+				}
+			});
+			mntmNewMenuItem_2.setBackground(Color.WHITE);
+			mntmNewMenuItem_2.setFont(new Font("Segoe UI", Font.PLAIN, 18));
 		}
 		return mntmNewMenuItem_2;
 	}

@@ -23,7 +23,6 @@ import javax.swing.JButton;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.util.ArrayList;
 import java.awt.GridLayout;
 
 public class AddProfesorForm extends JPanel {
@@ -36,14 +35,16 @@ public class AddProfesorForm extends JPanel {
 	private JLabel lblDegree;
 	private JLabel lblmatter;
 	private JButton addBtn;
-	
+
 	private Faculty faculty;
+	private Profesor profesor;
 	private OnAddedResearcher event;
 	private JLabel lblElNombreEs;
 	private JLabel label;
-	
-	public AddProfesorForm(Faculty faculty) {
+
+	public AddProfesorForm(Faculty faculty, Profesor profesor) {
 		this.faculty = faculty;
+		this.profesor = profesor;
 
 		setBackground(Color.WHITE);
 		setLayout(new GridLayout(0, 5, 0, 0));
@@ -59,7 +60,7 @@ public class AddProfesorForm extends JPanel {
 		add(getAddBtn());
 		add(getLblElNombreEs());
 	}
-	
+
 	public void listenTo(OnAddedResearcher listener) {
 		event = listener;
 	}
@@ -74,6 +75,7 @@ public class AddProfesorForm extends JPanel {
 	private JTextField getResearcherName() {
 		if (researcherName == null) {
 			researcherName = new JTextField();
+			researcherName.setText(profesor == null ? "" : profesor.getName());
 			researcherName.setColumns(10);
 		}
 		return researcherName;
@@ -90,7 +92,30 @@ public class AddProfesorForm extends JPanel {
 			profesorCatSelect = new JComboBox();
 			profesorCatSelect.setBackground(Color.WHITE);
 			profesorCatSelect.setModel(new DefaultComboBoxModel(new String[] {"Instructor", "Asistente", "Auxiliar", "Titular"}));
+
+			if (profesor != null) {
+				int index;
+
+				switch (profesor.getCategory()) {
+				case Instructor:
+					index = 0;
+					break;
+				case Assistant:
+					index = 1;
+					break;
+				case Auxiliar:
+					index = 2;
+					break;
+				case Permanent:
+				default:
+					index = 3;
+					break;
+				}
+
+				profesorCatSelect.setSelectedIndex(index);
+			}
 		}
+
 		return profesorCatSelect;
 	}
 	private JComboBox getDegreeSelect() {
@@ -98,7 +123,24 @@ public class AddProfesorForm extends JPanel {
 			degreeSelect = new JComboBox();
 			degreeSelect.setBackground(Color.WHITE);
 			degreeSelect.setModel(new DefaultComboBoxModel(new String[] {"Ninguna", "M\u00E1ster", "Doctor"}));
+
+			if (profesor != null && profesor.getDegree() != null) {
+				int index;
+
+				switch (profesor.getDegree()) {
+				case Master:
+					index = 1;
+					break;
+				case Doctor:
+				default:
+					index = 2;
+					break;
+				}
+				
+				degreeSelect.setSelectedIndex(index);
+			}
 		}
+		
 		return degreeSelect;
 	}
 	private JLabel getLblDegree() {
@@ -111,14 +153,14 @@ public class AddProfesorForm extends JPanel {
 	private JComboBox getMatterSelect() {
 		if (matterSelect == null) {
 			Object[] mattersNames = faculty.getResearchMattersNames().toArray();
-			
+
 			matterSelect = new JComboBox();
 			matterSelect.setBackground(Color.WHITE);
 			matterSelect.setModel(new DefaultComboBoxModel(mattersNames));
 		}
 		return matterSelect;
 	}
-	
+
 	private JLabel getLblmatter() {
 		if (lblmatter == null) {
 			lblmatter = new JLabel("Tema de investigaci\u00F3n");
@@ -126,42 +168,54 @@ public class AddProfesorForm extends JPanel {
 		}
 		return lblmatter;
 	}
-	
+
 	private Degree getDegree() {
 		Degree[] degrees = new Degree[]{ null, Degree.Master, Degree.Doctor };
-		
+
 		return degrees[degreeSelect.getSelectedIndex()];
 	}
-	
+
 	private ProfesorCategory getCat() {
 		ProfesorCategory[] categories = new ProfesorCategory[]{ ProfesorCategory.Instructor, ProfesorCategory.Assistant, ProfesorCategory.Auxiliar, ProfesorCategory.Permanent };
-		
+
 		return categories[profesorCatSelect.getSelectedIndex()];
 	}
-	
+
 	private JButton getAddBtn() {
 		if (addBtn == null) {
-			addBtn = new JButton("+");
+			addBtn = new JButton(profesor == null ? "+" : "Actualizar");
 			addBtn.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 19));
 			addBtn.setForeground(Color.LIGHT_GRAY);
 			addBtn.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					if (!researcherName.getText().trim().isEmpty()) {						
-						if (event != null) {						
+						String matterName = (String)matterSelect.getModel().getElementAt(matterSelect.getSelectedIndex());
+						ResearchMatter matter = faculty.findResearchMatter(matterName);
+
+						// Si el profesor es null entonces crear uno nuevo, sino actualizarlo
+						if (profesor == null) {
 							Profesor profesor = faculty.addProfesor(researcherName.getText(), getDegree(), getCat());
-							String matterName = (String)matterSelect.getModel().getElementAt(matterSelect.getSelectedIndex());
-							ResearchMatter matter = faculty.findResearchMatter(matterName);
 							matter.addResearcher(profesor);
+
+							if (event != null) {						
+								event.added(profesor, matterName);
+							}
+
+							// Reset the form
+							lblElNombreEs.setVisible(false);
+							researcherName.setText("");
+							profesorCatSelect.setSelectedIndex(0);
+							degreeSelect.setSelectedIndex(0);
+							matterSelect.setSelectedIndex(0);
+						} else {
+							profesor.setName(researcherName.getText());
+							profesor.setCategory(getCat());
+							profesor.setDegree(getDegree());
 							
-							event.added(profesor, matterName);
+							if (event != null) {						
+								event.added(profesor, matterName);
+							}
 						}
-						
-						// Reset the form
-						lblElNombreEs.setVisible(false);
-						researcherName.setText("");
-						profesorCatSelect.setSelectedIndex(0);
-						degreeSelect.setSelectedIndex(0);
-						matterSelect.setSelectedIndex(0);
 					} else {
 						lblElNombreEs.setVisible(true);
 					}

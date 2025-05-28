@@ -9,6 +9,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import schooling.Faculty;
+import schooling.ResearchLine;
+import schooling.Student;
 
 import java.awt.Color;
 import java.awt.SystemColor;
@@ -35,10 +37,17 @@ public class MainScreen extends JFrame {
 
 	public MainScreen() {
 		faculty = new Faculty();
-		// Datos de ejemplos
+		
+		/// Datos de prueba
+		faculty.addStudent("Brian");
 		faculty.addResearchLine("Inteligencia artificial", null, null);
-		faculty.getReseachLines().get(0).addMatter("Transformers");
-		faculty.getReseachLines().get(0).addMatter("IAs Generativas");
+		ResearchLine line = faculty.getReseachLines().get(0);
+
+		line.addMatter("IAs Generativas");
+		line.addMatter("Transformers");
+		
+		line.getMatters().get(0).addResearcher(faculty.getResearchers().get(0));
+		
 		
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -57,7 +66,7 @@ public class MainScreen extends JFrame {
 	private AuthenticationPanel getAuthenticationPanel() {
 		if (authenticationPanel == null) {
 			authenticationPanel = new AuthenticationPanel();
-			authenticationPanel.setBounds(270, 100, 270, 210);
+			authenticationPanel.setBounds(270, 100, 270, 200);
 			authenticationPanel.listenTo(new OnAuthenticate() {
 				@Override
 				public void granted() {
