@@ -50,7 +50,6 @@ public class Researchers extends JPanel {
 	private JLabel actionForm;
 	private JLabel lblPuntuacin;
 	private JSpinner spinner;
-	private JButton btnNewButton;
 	private AddProfesorForm addProfesorForm;
 	private JLabel lblNombre;
 	private JTextField filterByName;
@@ -73,32 +72,30 @@ public class Researchers extends JPanel {
 		setBackground(Color.WHITE);
 		setLayout(null);
 		add(getPanelTitle());
-		add(getFilterStudents());
-		add(getFilterProfesors());
 		add(getLblFiltrar());
 		add(getActionForm());
 		add(getLblPuntuacin());
 		add(getSpinner());
-		add(getBtnNewButton());
 		add(getLblNombre());
 		add(getFilterByName());
 		add(getScrollPane());
 		add(getFormTabs());
 		
-		researcherModel = new ResearcherTableModel();
+		researcherModel = new ResearcherTableModel(faculty);
 		table.setModel(researcherModel);
+		
 		add(getLblInvestigadoresDestacados());
 		add(getLblbestResearchers());
 		add(getLblBestScore());
-		
-		initTableData();
+		add(getFilterStudents());
+		add(getFilterProfesors());
+
+		initTableData();	
 	}
 	
 	private void initTableData() {
 		for (Researcher r: faculty.getResearchers()) {
-			String matter = faculty.findMatterOf(r.getName()).getName();
-			
-			((ResearcherTableModel)table.getModel()).addNew(r.getName(), matter, r.getScore());
+			((ResearcherTableModel)table.getModel()).addNew(r);
 		}
 	}
 	
@@ -115,6 +112,14 @@ public class Researchers extends JPanel {
 	private JCheckBox getFilterStudents() {
 		if (filterStudents == null) {
 			filterStudents = new JCheckBox("Estudiantes");
+			filterStudents.addChangeListener(new ChangeListener() {
+				public void stateChanged(ChangeEvent arg0) {
+					ResearcherTableModel tmodel = (ResearcherTableModel)table.getModel();
+					boolean includeProfesors = filterProfesors != null ? filterProfesors.isSelected() : true;
+					
+					tmodel.filterByType(filterStudents.isSelected(), includeProfesors);
+				}
+			});
 			filterStudents.setBackground(Color.WHITE);
 			filterStudents.setSelected(true);
 			filterStudents.setBounds(167, 221, 100, 25);
@@ -126,6 +131,14 @@ public class Researchers extends JPanel {
 	private JCheckBox getFilterProfesors() {
 		if (filterProfesors == null) {
 			filterProfesors = new JCheckBox("Profesores");
+			filterProfesors.addChangeListener(new ChangeListener() {
+				public void stateChanged(ChangeEvent arg0) {
+					ResearcherTableModel tmodel = (ResearcherTableModel)table.getModel();
+					boolean includeStudents = filterStudents != null ? filterStudents.isSelected() : true;
+					
+					tmodel.filterByType(includeStudents, filterProfesors.isSelected());
+				}
+			});
 			filterProfesors.setBackground(Color.WHITE);
 			filterProfesors.setSelected(true);
 			filterProfesors.setBounds(63, 221, 100, 25);
@@ -158,7 +171,7 @@ public class Researchers extends JPanel {
 		if (lblPuntuacin == null) {
 			lblPuntuacin = new JLabel("Min Puntuaci\u00F3n");
 			lblPuntuacin.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 15));
-			lblPuntuacin.setBounds(486, 220, 111, 22);
+			lblPuntuacin.setBounds(630, 220, 105, 22);
 		}
 		
 		return lblPuntuacin;
@@ -181,25 +194,10 @@ public class Researchers extends JPanel {
 					tmodel.filterByScore((int)spinner.getValue());
 				}
 			});
-			spinner.setBounds(599, 222, 50, 22);
+			spinner.setBounds(745, 222, 50, 22);
 		}
 		
 		return spinner;
-	}
-	
-	private JButton getBtnNewButton() {
-		if (btnNewButton == null) {
-			btnNewButton = new JButton("Reiniciar");
-			btnNewButton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent event) {
-					((ResearcherTableModel)table.getModel()).removeFilters();
-				}
-			});
-			btnNewButton.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 13));
-			btnNewButton.setBackground(Color.WHITE);
-			btnNewButton.setBounds(684, 221, 97, 25);
-		}
-		return btnNewButton;
 	}
 	private AddProfesorForm getAddProfesorForm() {
 		if (addProfesorForm == null) {
@@ -208,7 +206,7 @@ public class Researchers extends JPanel {
 				@Override
 				public void added(Researcher profesor, String matter) {
 					ResearcherTableModel model = (ResearcherTableModel)table.getModel();
-					model.addNew(profesor.getName(), matter, profesor.getScore());
+					model.addNew(profesor);
 				}
 			});
 			addProfesorForm.setBorder(null);
@@ -235,7 +233,7 @@ public class Researchers extends JPanel {
 					}
 				}
 			});
-			filterByName.setBounds(336, 222, 116, 22);
+			filterByName.setBounds(336, 222, 274, 22);
 			filterByName.setColumns(10);
 		}
 		return filterByName;
@@ -251,6 +249,7 @@ public class Researchers extends JPanel {
 	private JTable getTable_1() {
 		if (table == null) {
 			table = new JTable();
+			table.setFillsViewportHeight(true);
 			table.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent event) {
@@ -307,7 +306,7 @@ public class Researchers extends JPanel {
 				@Override
 				public void added(Researcher student, String matter) {
 					ResearcherTableModel model = (ResearcherTableModel)table.getModel();
-					model.addNew(student.getName(), matter, student.getScore());
+					model.addNew(student);
 				}
 			});
 		}

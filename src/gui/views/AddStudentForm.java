@@ -95,7 +95,9 @@ public class AddStudentForm extends JPanel {
 							lblError.setVisible(false);
 							Student student = faculty.addStudent(studentName.getText());
 							String matterName = (String)slcMatter.getModel().getElementAt(slcMatter.getSelectedIndex());
+							ResearchMatter matter = faculty.findResearchMatter(matterName);
 							
+							matter.addResearcher(student);
 							event.added(student, matterName);
 						}
 					} else {
