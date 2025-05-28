@@ -188,7 +188,10 @@ public class Faculty {
         int total = 0;
 
         for (ResearchLine line : researchLines) {
-            total += line.getMasteryPlan().getCourses().size();
+        	MasteryPlan plan = line.getMasteryPlan();
+        	
+        	if (plan != null)
+        		total += plan.getCourses().size();
         }
 
         return total;
