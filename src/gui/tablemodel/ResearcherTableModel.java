@@ -12,11 +12,20 @@ import schooling.Student;
 
 public class ResearcherTableModel extends DefaultTableModel {
 	private Faculty faculty;
+	private int filterMinScore;
+	private String filterName;
+	private boolean includeProfesorsFilter;
+	private boolean includeStudentsFilter;
 	
 	public ResearcherTableModel(Faculty faculty) {
 		this.faculty = faculty;
-		String[] columns = {"Nombre", "Tema", "Puntuación"};
+
+		filterMinScore = 0;
+		filterName = "";
+		includeProfesorsFilter = true;
+		includeStudentsFilter = true;
 		
+		String[] columns = {"Nombre", "Tema", "Puntuación"};
 		this.setColumnIdentifiers(columns);
 	}
 
@@ -39,41 +48,84 @@ public class ResearcherTableModel extends DefaultTableModel {
 		}
 	}
 	
-	public void filterByName(String query) {
-		emptyTable();
+	public void setMinScore(int minScore) {
+		filterMinScore = minScore;
+	}
+	
+	public void setFilterName(String name) {
+		filterName = name;
+	}
+	
+	public void includeProfesors(boolean act) {
+		includeProfesorsFilter = act;
+	}
+	
+	public void includeStudents(boolean act) {
+		includeStudentsFilter = act;
+	}
+	
+	private ArrayList<Researcher> filterByName(ArrayList<Researcher> researchers) {
+		ArrayList<Researcher> filtered = new ArrayList<>();
 		
-		for (Researcher r: faculty.getResearchers()) {
-			if (r.getName().startsWith(query)) {
-				String matter = faculty.findMatterOf(r.getName()).getName();
-				addRow(new Object[] {r.getName(), matter, r.getScore()});
+		if (filterName.isEmpty()) {
+			filtered = researchers;
+		} else {
+			for (Researcher r: researchers) {
+				if (r.getName().startsWith(filterName)) {
+					filtered.add(r);
+				}
 			}
 		}
-	}
-
-	public void filterByScore(int score) {
-		emptyTable();
 		
-		for (Researcher r: faculty.getResearchers()) {
-			if (r.getScore() >= score) {
-				String matter = faculty.findMatterOf(r.getName()).getName();
-				addRow(new Object[] {r.getName(), matter, r.getScore()});
+		System.out.println();
+
+		return filtered;
+	}
+	
+	private ArrayList<Researcher> filterByScore(ArrayList<Researcher> researchers) {
+		ArrayList<Researcher> filtered = new ArrayList<>();
+		
+		if (filterMinScore <= 0) {
+			filtered = researchers;
+		} else {
+			for (Researcher r: researchers) {
+				if (r.getScore() > filterMinScore) {
+					filtered.add(r);
+				}
 			}
 		}
-	}
 
-	public void filterByType(boolean students, boolean profesors) {
-		emptyTable();
+		return filtered;
+	}
+	
+	private ArrayList<Researcher> filterByKind(ArrayList<Researcher> researchers) {
+		ArrayList<Researcher> filtered = new ArrayList<>();
 		
-		for (Researcher r: faculty.getResearchers()) {
-			if (profesors && r instanceof Profesor) {
-				String matter = faculty.findMatterOf(r.getName()).getName();
-				addRow(new Object[] {r.getName(), matter, r.getScore()});
+		for (Researcher r: researchers) {
+			if (includeProfesorsFilter && r instanceof Profesor) {
+				filtered.add(r);
 			}
 			
-			if (students && r instanceof Student) {
-				String matter = faculty.findMatterOf(r.getName()).getName();
-				addRow(new Object[] {r.getName(), matter, r.getScore()});
+			if (includeStudentsFilter && r instanceof Student) {
+				filtered.add(r);
 			}
+		}
+
+		return filtered;
+	}
+	
+	public void applyFilters() {
+		emptyTable();
+		
+		ArrayList<Researcher> filter = faculty.getResearchers();
+		filter = filterByName(filter);
+		filter = filterByScore(filter);
+		filter = filterByKind(filter);
+		
+		for (Researcher r: filter) {
+			String matter = faculty.findMatterOf(r.getName()).getName();
+			
+			addRow(new Object[] { r.getName(), matter, r.getScore() });
 		}
 	}
 }

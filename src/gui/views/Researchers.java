@@ -112,12 +112,11 @@ public class Researchers extends JPanel {
 	private JCheckBox getFilterStudents() {
 		if (filterStudents == null) {
 			filterStudents = new JCheckBox("Estudiantes");
-			filterStudents.addChangeListener(new ChangeListener() {
-				public void stateChanged(ChangeEvent arg0) {
+			filterStudents.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
 					ResearcherTableModel tmodel = (ResearcherTableModel)table.getModel();
-					boolean includeProfesors = filterProfesors != null ? filterProfesors.isSelected() : true;
-					
-					tmodel.filterByType(filterStudents.isSelected(), includeProfesors);
+					tmodel.includeStudents(filterStudents.isSelected());
+					tmodel.applyFilters();
 				}
 			});
 			filterStudents.setBackground(Color.WHITE);
@@ -131,12 +130,11 @@ public class Researchers extends JPanel {
 	private JCheckBox getFilterProfesors() {
 		if (filterProfesors == null) {
 			filterProfesors = new JCheckBox("Profesores");
-			filterProfesors.addChangeListener(new ChangeListener() {
-				public void stateChanged(ChangeEvent arg0) {
+			filterProfesors.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
 					ResearcherTableModel tmodel = (ResearcherTableModel)table.getModel();
-					boolean includeStudents = filterStudents != null ? filterStudents.isSelected() : true;
-					
-					tmodel.filterByType(includeStudents, filterProfesors.isSelected());
+					tmodel.includeProfesors(filterProfesors.isSelected());
+					tmodel.applyFilters();
 				}
 			});
 			filterProfesors.setBackground(Color.WHITE);
@@ -184,14 +182,16 @@ public class Researchers extends JPanel {
 				@Override
 				public void keyTyped(KeyEvent arg0) {
 					ResearcherTableModel tmodel = (ResearcherTableModel)table.getModel();
-					tmodel.filterByScore((int)spinner.getValue());
+					tmodel.setMinScore((int)spinner.getValue());
+					tmodel.applyFilters();
 				}
 			});
 			spinner.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
 			spinner.addChangeListener(new ChangeListener() {
 				public void stateChanged(ChangeEvent event) {
 					ResearcherTableModel tmodel = (ResearcherTableModel)table.getModel();
-					tmodel.filterByScore((int)spinner.getValue());
+					tmodel.setMinScore((int)spinner.getValue());
+					tmodel.applyFilters();
 				}
 			});
 			spinner.setBounds(745, 222, 50, 22);
@@ -229,7 +229,8 @@ public class Researchers extends JPanel {
 				public void keyReleased(KeyEvent event) {
 					if (event.getKeyCode() != 16) {		
 						ResearcherTableModel tmodel = (ResearcherTableModel)table.getModel();
-						tmodel.filterByName(filterByName.getText());
+						tmodel.setFilterName(filterByName.getText());
+						tmodel.applyFilters();
 					}
 				}
 			});
