@@ -8,7 +8,11 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import schooling.Degree;
 import schooling.Faculty;
+import schooling.MasteryPlan;
+import schooling.PostgraduateCourse;
+import schooling.ProfesorCategory;
 import schooling.ResearchLine;
 import schooling.Student;
 
@@ -36,10 +40,11 @@ public class MainScreen extends JFrame {
 	}
 
 	public MainScreen() {
-		faculty = new Faculty();
+		faculty = Faculty.newInstance();
 		
 		/// Datos de prueba
 		faculty.addStudent("Brian");
+		faculty.addProfesor("Juan", Degree.Doctor, ProfesorCategory.Permanent);
 		faculty.addResearchLine("Inteligencia artificial", null, null);
 		
 		ResearchLine line = faculty.getReseachLines().get(0);
@@ -48,7 +53,14 @@ public class MainScreen extends JFrame {
 		line.addMatter("Transformers");
 		
 		line.getMatters().get(0).addResearcher(faculty.getResearchers().get(0));
+		line.getMatters().get(0).addResearcher(faculty.getProfesors().get(0));
 		faculty.getResearchers().get(0).addBookChapter("Sample", new String[]{""}, new String[] {""}, "FESX", "ISSN 1233-032X", "Name", 1);
+		
+		MasteryPlan plan = new MasteryPlan(20);
+		
+		plan.addCourse("Curso 1", "test", faculty.getProfesors().get(0), 10);
+		
+		line.setMasteryPlan(plan);
 		
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

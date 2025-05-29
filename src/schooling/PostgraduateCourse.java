@@ -12,9 +12,10 @@ public class PostgraduateCourse {
 		setName(name);
 		setDescription(description);
 		setInstructor(instructor);
-		setCredits(credits);
+		setCredits(credits);		
 	}
 
+	
 	public String getName() {
 		return name;
 	}
@@ -42,7 +43,7 @@ public class PostgraduateCourse {
 	}
 
 	public void setInstructor(Profesor instructor) {
-		if (instructor.getDegree() != Degree.Doctor)
+		if (instructor.getDegree() != null && instructor.getDegree() != Degree.Doctor)
 			throw new IllegalArgumentException(
 					"Solo los profesores con categor�a Doctor pueden impartir cursos de postgrado");
 

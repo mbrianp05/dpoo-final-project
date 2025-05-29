@@ -6,7 +6,16 @@ public class Faculty {
     private ArrayList<ResearchLine> researchLines;
     private ArrayList<Researcher> researchers;
 
-    public Faculty() {
+    private static Faculty instance = null;
+    
+    public static Faculty newInstance() {
+    	if (instance == null){
+    		instance = new Faculty();
+    	}
+    	return instance;
+    }
+    
+    private Faculty() {
     	researchers = new ArrayList<>();
     	researchLines = new ArrayList<>();
     }
@@ -111,6 +120,19 @@ public class Faculty {
     	}
     	
     	return matter;
+    }
+    
+    public Researcher findResearcherByName(String name) {
+    	Researcher r = null;
+    	
+    	int i = 0;
+    	while (r == null && i < researchers.size()) {
+    		if (researchers.get(i).getName().equals(name)) {
+    			r = researchers.get(i);
+    		}
+    	}
+    	
+    	return r;
     }
 
     public ArrayList<Researcher> bestResearchers() {

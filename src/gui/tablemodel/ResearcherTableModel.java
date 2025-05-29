@@ -12,8 +12,11 @@ import schooling.Student;
 
 public class ResearcherTableModel extends DefaultTableModel {
 	private Faculty faculty;
-	private int filterMinScore;
+	
+	
+	// Filters
 	private String filterName;
+	private int filterMinScore;
 	private boolean includeProfesorsFilter;
 	private boolean includeStudentsFilter;
 	
@@ -76,8 +79,6 @@ public class ResearcherTableModel extends DefaultTableModel {
 				}
 			}
 		}
-		
-		System.out.println();
 
 		return filtered;
 	}
@@ -127,5 +128,14 @@ public class ResearcherTableModel extends DefaultTableModel {
 			
 			addRow(new Object[] { r.getName(), matter, r.getScore() });
 		}
+	}
+
+	public void removeSelectedItem(int row) {
+		String name = (String)getValueAt(row, 0);
+		removeRow(row);
+//
+//		Researcher r = faculty.findResearcherByName(name);
+//		int index = faculty.getResearchers().indexOf(r);
+//		faculty.getResearchers().remove(index);
 	}
 }

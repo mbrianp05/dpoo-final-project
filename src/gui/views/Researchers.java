@@ -68,6 +68,7 @@ public class Researchers extends JPanel {
 	private UpdateResearcherPopup dialog;
 	
 	private OnAddedResearcher event;
+	private JButton btnEliminar;
 
 	public Researchers(Faculty faculty) {
 		this.faculty = faculty;
@@ -92,6 +93,7 @@ public class Researchers extends JPanel {
 		add(getLblBestScore());
 		add(getFilterStudents());
 		add(getFilterProfesors());
+		add(getBtnEliminar());
 
 		initTableData();	
 	}
@@ -176,7 +178,7 @@ public class Researchers extends JPanel {
 		if (lblPuntuacin == null) {
 			lblPuntuacin = new JLabel("Min Puntuaci\u00F3n");
 			lblPuntuacin.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 15));
-			lblPuntuacin.setBounds(630, 220, 105, 22);
+			lblPuntuacin.setBounds(498, 220, 105, 22);
 		}
 
 		return lblPuntuacin;
@@ -201,7 +203,7 @@ public class Researchers extends JPanel {
 					tmodel.applyFilters();
 				}
 			});
-			spinner.setBounds(745, 222, 50, 22);
+			spinner.setBounds(615, 222, 50, 22);
 		}
 
 		return spinner;
@@ -242,7 +244,7 @@ public class Researchers extends JPanel {
 					}
 				}
 			});
-			filterByName.setBounds(336, 222, 274, 22);
+			filterByName.setBounds(336, 222, 139, 22);
 			filterByName.setColumns(10);
 		}
 		return filterByName;
@@ -264,22 +266,27 @@ public class Researchers extends JPanel {
 				public void mouseClicked(MouseEvent event) {
 					final int row = table.getSelectedRow();
 
+					
 					if (row >= 0) {
-						String name = (String)table.getModel().getValueAt(row, 0);
-						try {
-							dialog = new UpdateResearcherPopup(faculty, faculty.findProfesorByName(name));
-							dialog.listenTo(new OnAddedResearcher() {
-								@Override
-								public void added(Researcher researcher, String matter) {
-									((ResearcherTableModel)table.getModel()).update(row, researcher.getName(), matter, researcher.getScore());
-								}
-							});
-							dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-							dialog.setVisible(true);
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
+						btnEliminar.setVisible(true);
 					}
+					
+//					if (row >= 0) {
+//						String name = (String)table.getModel().getValueAt(row, 0);
+//						try {
+//							dialog = new UpdateResearcherPopup(faculty, faculty.findProfesorByName(name));
+//							dialog.listenTo(new OnAddedResearcher() {
+//								@Override
+//								public void added(Researcher researcher, String matter) {
+//									((ResearcherTableModel)table.getModel()).update(row, researcher.getName(), matter, researcher.getScore());
+//								}
+//							});
+//							dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+//							dialog.setVisible(true);
+//						} catch (Exception e) {
+//							e.printStackTrace();
+//						}
+//					}
 				}
 			});
 			table.setBackground(Color.WHITE);
@@ -369,5 +376,19 @@ public class Researchers extends JPanel {
 			lblBestScore.setBounds(211, 42, 174, 23);
 		}
 		return lblBestScore;
+	}
+	private JButton getBtnEliminar() {
+		if (btnEliminar == null) {
+			btnEliminar = new JButton("Eliminar");
+			btnEliminar.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent event) {
+					((ResearcherTableModel)table.getModel()).removeSelectedItem(table.getSelectedRow());
+				}
+			});
+			btnEliminar.setVisible(false);
+			btnEliminar.setBackground(Color.WHITE);
+			btnEliminar.setBounds(698, 221, 97, 25);
+		}
+		return btnEliminar;
 	}
 }

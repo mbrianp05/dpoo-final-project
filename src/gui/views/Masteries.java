@@ -56,11 +56,9 @@ public class Masteries extends JPanel {
 	private JLabel getLblTotal () {
 		
 		if(lblTotal == null){
-			int text = 0;
+			int text = faculty.totalPostgradeCourses();
 			
-			text = faculty.totalPostgradeCourses();
-			
-			lblTotal = new JLabel(text + ".");
+			lblTotal = new JLabel(text + "");
 			lblTotal.setVerticalAlignment(SwingConstants.TOP);
 			lblTotal.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 15));
 			lblTotal.setBackground(Color.WHITE);
