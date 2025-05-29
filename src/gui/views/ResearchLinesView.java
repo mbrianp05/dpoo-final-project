@@ -54,18 +54,26 @@ public class ResearchLinesView extends JPanel {
 	}
 	private JLabel getLblMatters() {
 		if (lblMatters == null) {
-			String text = "<html>";
-			
-			for (ResearchMatter matter: faculty.trendingMatters()) {
-				text += matter.getName() + "<br>";
-			}
-			
-			lblMatters = new JLabel(text + "</html>");
+			lblMatters = new JLabel("");
 			lblMatters.setVerticalAlignment(SwingConstants.TOP);
 			lblMatters.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 15));
 			lblMatters.setBackground(Color.WHITE);
 			lblMatters.setBounds(12, 53, 207, 124);
+			
+			calculateTrendings();
 		}
 		return lblMatters;
+	}
+
+	public void calculateTrendings() {
+		String text = "<html>";
+		
+		for (ResearchMatter matter: faculty.trendingMatters()) {
+			text += matter.getName() + "<br>";
+		}
+		
+		text += "</html>";
+		
+		lblMatters.setText(text);
 	}
 }

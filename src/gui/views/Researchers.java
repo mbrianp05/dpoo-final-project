@@ -66,6 +66,8 @@ public class Researchers extends JPanel {
 	private JLabel lblbestResearchers;
 	private JLabel lblBestScore;
 	private UpdateResearcherPopup dialog;
+	
+	private OnAddedResearcher event;
 
 	public Researchers(Faculty faculty) {
 		this.faculty = faculty;
@@ -94,6 +96,10 @@ public class Researchers extends JPanel {
 		initTableData();	
 	}
 
+	public void listenTo(OnAddedResearcher listener) {
+		event = listener;
+	}
+	
 	private void initTableData() {
 		for (Researcher r: faculty.getResearchers()) {
 			((ResearcherTableModel)table.getModel()).addNew(r);
@@ -208,6 +214,7 @@ public class Researchers extends JPanel {
 				public void added(Researcher profesor, String matter) {
 					ResearcherTableModel model = (ResearcherTableModel)table.getModel();
 					model.addNew(profesor);
+					event.added(profesor, matter);
 				}
 			});
 			addProfesorForm.setBorder(null);
@@ -309,6 +316,7 @@ public class Researchers extends JPanel {
 				public void added(Researcher student, String matter) {
 					ResearcherTableModel model = (ResearcherTableModel)table.getModel();
 					model.addNew(student);
+					event.added(student, matter);
 				}
 			});
 		}

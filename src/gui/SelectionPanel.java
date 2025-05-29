@@ -1,12 +1,13 @@
 package gui;
 
 import javax.swing.JPanel;
-import javax.swing.text.MaskFormatter;
 
 import schooling.Faculty;
+import schooling.Researcher;
 
 import java.awt.Color;
 
+import gui.event.OnAddedResearcher;
 import gui.views.Masteries;
 import gui.views.Researchers;
 import gui.views.ResearchLinesView;
@@ -49,6 +50,12 @@ public class SelectionPanel extends JPanel {
 	private Researchers getResearchers() {
 		if (researchers == null) {
 			researchers = new Researchers(faculty);
+			researchers.listenTo(new OnAddedResearcher() {
+				@Override
+				public void added(Researcher researcher, String matter) {
+					researchLinesView.calculateTrendings();
+				}
+			});
 			researchers.setBounds(0, 0, 1066, 739);
 		}
 		return researchers;
