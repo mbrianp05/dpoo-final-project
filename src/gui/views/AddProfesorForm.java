@@ -221,7 +221,7 @@ public class AddProfesorForm extends JPanel {
 					}
 				}
 			});
-			addBtn.setBackground(new Color(255, 102, 153));
+			addBtn.setBackground(new Color(255, 0, 102));
 		}
 		return addBtn;
 	}

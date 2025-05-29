@@ -10,13 +10,13 @@ import javax.swing.border.LineBorder;
 
 import schooling.Faculty;
 
-public class Masters extends JPanel {
+public class Masteries extends JPanel {
 	private JPanel panel;
 	private Faculty faculty;
 	private JLabel lblTotalCourses;
 	private JLabel lblTotal;
 	
-	public Masters (Faculty faculty){
+	public Masteries (Faculty faculty){
 		
 		this.faculty = faculty;
 		

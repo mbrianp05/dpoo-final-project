@@ -18,6 +18,7 @@ import javax.swing.JButton;
 
 import java.awt.GridLayout;
 import java.awt.Color;
+import java.awt.TextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -25,11 +26,11 @@ public class AddStudentForm extends JPanel {
 	private JTextField studentName;
 	private JLabel lblNombre;
 	private Faculty faculty;
-	private JComboBox slcMatter;
 	private JLabel lblTemaDeInvestigacin;
 	private JButton button;
 	private JLabel lblError;
 	private JLabel label_1;
+	private JComboBox slcMatter;
 	
 	private OnAddedResearcher event;
 	
@@ -103,10 +104,13 @@ public class AddStudentForm extends JPanel {
 					} else {
 						lblError.setVisible(true);
 					}
+					
+					studentName.setText("");
+					slcMatter.setSelectedIndex(0);
 				}
 			});
 			button.setForeground(Color.WHITE);
-			button.setBackground(new Color(255, 102, 153));
+			button.setBackground(new Color(255, 0, 102));
 			button.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 19));
 		}
 		return button;

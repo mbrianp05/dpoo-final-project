@@ -7,7 +7,7 @@ import schooling.Faculty;
 
 import java.awt.Color;
 
-import gui.views.Masters;
+import gui.views.Masteries;
 import gui.views.Researchers;
 import gui.views.ResearchLinesView;
 import gui.views.View;
@@ -16,7 +16,7 @@ public class SelectionPanel extends JPanel {
 	private Researchers researchers;
 	private Faculty faculty;
 	private ResearchLinesView researchLinesView;
-	private Masters masters;
+	private Masteries masteries;
 	
 	public SelectionPanel(Faculty faculty) {
 		this.faculty = faculty;
@@ -30,7 +30,7 @@ public class SelectionPanel extends JPanel {
 	
 	public void switchViews(View view) {
 		researchers.setVisible(false);
-		masters.setVisible(false);
+		masteries.setVisible(false);
 		researchLinesView.setVisible(false);
 		
 		switch (view) {
@@ -38,7 +38,7 @@ public class SelectionPanel extends JPanel {
 			researchers.setVisible(true);
 			break;
 		case Masters:
-			masters.setVisible(true);
+			masteries.setVisible(true);
 			break;
 		case ResearchLines:
 			researchLinesView.setVisible(true);
@@ -54,13 +54,13 @@ public class SelectionPanel extends JPanel {
 		return researchers;
 	}
 	
-	private Masters getMasters(){
-		if (masters == null) {
-			masters = new Masters(faculty);
-			masters.setBounds(0, 0, 1019, 739);
+	private Masteries getMasters(){
+		if (masteries == null) {
+			masteries = new Masteries(faculty);
+			masteries.setBounds(0, 0, 1019, 739);
 		}
 		
-		return masters;
+		return masteries;
 	}
 	
 	private ResearchLinesView getResearchLinesView() {

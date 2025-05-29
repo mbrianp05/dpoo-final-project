@@ -339,16 +339,21 @@ public class Researchers extends JPanel {
 		}
 		return lblbestResearchers;
 	}
+	
+	private String resolveBestResearchersLabelText() {
+		String text = "";
+		ArrayList<Researcher> best = faculty.bestResearchers();
+		
+		if (best.size() > 0) {
+			text = "Puntuación de " + String.valueOf(faculty.bestResearchers().get(0).getScore());
+		}
+		
+		return text;
+	}
+	
 	private JLabel getLblBestScore() {
 		if (lblBestScore == null) {
-			String text = "";
-			ArrayList<Researcher> best = faculty.bestResearchers();
-			
-			if (best.size() > 0) {
-				text = "Puntuación de " + String.valueOf(faculty.bestResearchers().get(0).getScore());
-			}
-			
-			lblBestScore = new JLabel(text);
+			lblBestScore = new JLabel(resolveBestResearchersLabelText());
 			lblBestScore.setBackground(new Color(0, 51, 0));
 			lblBestScore.setHorizontalAlignment(SwingConstants.RIGHT);
 			lblBestScore.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 12));
