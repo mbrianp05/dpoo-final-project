@@ -1,4 +1,4 @@
-package gui.tablemodel;
+package gui.model;
 
 import java.util.ArrayList;
 import java.util.Vector;

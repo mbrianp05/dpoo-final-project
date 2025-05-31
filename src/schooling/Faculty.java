@@ -12,6 +12,7 @@ public class Faculty {
     	if (instance == null){
     		instance = new Faculty();
     	}
+    	
     	return instance;
     }
     
@@ -20,18 +21,24 @@ public class Faculty {
     	researchLines = new ArrayList<>();
     }
     
-    public Profesor addProfesor(String name, Degree degree, ProfesorCategory cat) {
+    public int addProfesor(String name, Degree degree, ProfesorCategory cat, String matterName) {
     	Profesor profesor = new Profesor(name, degree, cat);
     	this.researchers.add(profesor);
     	
-    	return profesor;
+    	ResearchMatter matter = findResearchMatter(matterName);
+    	if (matter != null) matter.addResearcher(profesor);
+    	
+    	return profesor.getID();
     }
     
-    public Student addStudent(String name) {
+    public int addStudent(String name, String matterName) {
     	Student student = new Student(name);
     	researchers.add(student);
     	
-    	return student;
+    	ResearchMatter matter = findResearchMatter(matterName);
+    	if (matter != null) matter.addResearcher(student);
+    	
+    	return student.getID();
     }
     
     public void addResearchLine(String name, Profesor chief, MasteryPlan plan) {
@@ -70,29 +77,13 @@ public class Faculty {
     	return matters;
     }
     
-    public Profesor findProfesorByName(String name) {
-    	Profesor profesor = null;
-    	ArrayList<Profesor> profesors = getProfesors();
-    	int i = 0;
-    	
-    	while (profesor == null && i < profesors.size()) {
-    		Profesor p = profesors.get(i);
-    		
-    		if (p.getName().equals(name)) {
-    			profesor = p;
-    		}
-    	}
-    	
-    	return profesor;
-    }
-    
-    public ResearchMatter findMatterOf(String name) {
+    public ResearchMatter findMatterOf(int ID) {
     	ResearchMatter matter = null;
     	
     	for (ResearchLine line: researchLines) {
     		for (ResearchMatter m: line.getMatters()) {
     			for (Researcher researcher: m.getResearchers()) {
-    				if (researcher.getName().equals(name)) {
+    				if (researcher.getID() == ID) {
     					matter = m;
     				}
     			}
@@ -122,12 +113,12 @@ public class Faculty {
     	return matter;
     }
     
-    public Researcher findResearcherByName(String name) {
+    public Researcher findResearcher(int ID) {
     	Researcher r = null;
     	
     	int i = 0;
     	while (r == null && i < researchers.size()) {
-    		if (researchers.get(i).getName().equals(name)) {
+    		if (researchers.get(i).getID() == ID) {
     			r = researchers.get(i);
     		}
     	}

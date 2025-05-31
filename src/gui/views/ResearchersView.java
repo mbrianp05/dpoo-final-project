@@ -1,7 +1,7 @@
 package gui.views;
 
 import gui.event.OnAddedResearcher;
-import gui.tablemodel.ResearcherTableModel;
+import gui.model.ResearcherTableModel;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
@@ -37,10 +37,11 @@ import javax.swing.SwingConstants;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.SpinnerNumberModel;
+
 import java.awt.event.InputMethodListener;
 import java.awt.event.InputMethodEvent;
 
-public class Researchers extends JPanel {
+public class ResearchersView extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	private JLabel panelTitle;
@@ -70,7 +71,7 @@ public class Researchers extends JPanel {
 	private OnAddedResearcher event;
 	private JButton btnEliminar;
 
-	public Researchers(Faculty faculty) {
+	public ResearchersView(Faculty faculty) {
 		this.faculty = faculty;
 
 		setBackground(Color.WHITE);

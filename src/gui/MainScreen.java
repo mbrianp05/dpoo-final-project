@@ -11,17 +11,21 @@ import javax.swing.border.EmptyBorder;
 import schooling.Degree;
 import schooling.Faculty;
 import schooling.MasteryPlan;
+import schooling.Profesor;
 import schooling.ProfesorCategory;
 import schooling.ResearchLine;
 
 import java.awt.Color;
 
+import javax.swing.JLayeredPane;
+import javax.swing.BoxLayout;
+
 public class MainScreen extends JFrame {
 	private JPanel contentPane;
-	private AuthenticationPanel authenticationPanel;
-	private MenuPanel menu;
 	
 	private Faculty faculty;
+	private JLayeredPane layeredPane;
+	private MenuPanel menuPanel;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -40,61 +44,47 @@ public class MainScreen extends JFrame {
 		faculty = Faculty.newInstance();
 		
 		/// Datos de prueba
-		faculty.addStudent("Brian");
-		faculty.addProfesor("Juan", Degree.Doctor, ProfesorCategory.Permanent);
-		faculty.addResearchLine("Inteligencia artificial", null, null);
+		int profesorID = faculty.addProfesor("Juan", Degree.Doctor, ProfesorCategory.Permanent, null);
 		
+		faculty.addResearchLine("Inteligencia artificial", null, null);
 		ResearchLine line = faculty.getReseachLines().get(0);
-
+		
 		line.addMatter("IAs Generativas");
 		line.addMatter("Transformers");
 		
-		line.getMatters().get(0).addResearcher(faculty.getResearchers().get(0));
-		line.getMatters().get(0).addResearcher(faculty.getProfesors().get(0));
-		faculty.getResearchers().get(0).addBookChapter("Sample", new String[]{""}, new String[] {""}, "FESX", "ISSN 1233-032X", "Name", 1);
-		
 		MasteryPlan plan = new MasteryPlan(20);
-		
-		plan.addCourse("Curso 1", "test", faculty.getProfesors().get(0), 10);
+		plan.addCourse("Curso 1", "test", (Profesor)faculty.findResearcher(profesorID), 2);
 		
 		line.setMasteryPlan(plan);
 		
+		faculty.addStudent("Brian", "IAs Generativas");
+		
+		faculty.getResearchers().get(0).addBookChapter("Sample", new String[]{""}, new String[] {""}, "FESX", "ISSN 1233-032X", "Name", 1);
+		
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 815, 570);
+		setBounds(100, 100, 1029, 803);
 		
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
-		contentPane.add(getAuthenticationPanel());
-		contentPane.add(getMenu());
+		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.X_AXIS));
+		contentPane.add(getLayeredPane_1());
 	}
-
-	private AuthenticationPanel getAuthenticationPanel() {
-		if (authenticationPanel == null) {
-			authenticationPanel = new AuthenticationPanel();
-			authenticationPanel.setBounds(270, 100, 270, 200);
-			authenticationPanel.listenTo(new OnAuthenticate() {
-				@Override
-				public void granted() {
-					authenticationPanel.setVisible(false);
-					menu.setVisible(true);
-				}
-			});
+	private JLayeredPane getLayeredPane_1() {
+		if (layeredPane == null) {
+			layeredPane = new JLayeredPane();
+			layeredPane.setLayout(new BoxLayout(layeredPane, BoxLayout.X_AXIS));
+			layeredPane.add(getMenuPanel());
 		}
-
-		return authenticationPanel;
+		return layeredPane;
 	}
-
-	private MenuPanel getMenu() {
-		if (menu == null) {
-			menu = new MenuPanel(faculty);
-			menu.setBounds(0, 0, 809, 539);
-			menu.setVisible(false);
+	private MenuPanel getMenuPanel() {
+		if (menuPanel == null) {
+			menuPanel = new MenuPanel(faculty);
 		}
-		return menu;
+		return menuPanel;
 	}
 }
