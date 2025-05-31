@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class Authentication {
 	private static boolean hasAccess = false;
 	private static String accessCode;
-	
+
 	private static String fetchAccessCode() {
 		if (accessCode == null) {
 			try {
@@ -19,10 +19,10 @@ public class Authentication {
 				System.out.println("No se pudo encontrar la fuente del c�digo de acceso");
 			}
 		}
-	
+
 		return accessCode;
 	}
-	
+
 	public static int accessCodeLength() {
 		return fetchAccessCode().length();
 	}
