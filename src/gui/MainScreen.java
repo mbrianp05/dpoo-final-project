@@ -11,13 +11,10 @@ import javax.swing.border.EmptyBorder;
 import schooling.Degree;
 import schooling.Faculty;
 import schooling.MasteryPlan;
-import schooling.PostgraduateCourse;
 import schooling.ProfesorCategory;
 import schooling.ResearchLine;
-import schooling.Student;
 
 import java.awt.Color;
-import java.awt.SystemColor;
 
 public class MainScreen extends JFrame {
 	private JPanel contentPane;
