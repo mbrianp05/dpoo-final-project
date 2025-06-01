@@ -2,6 +2,7 @@ package gui.views;
 
 
 import gui.event.OnAddedResearcher;
+import gui.event.OnRemovedResearcher;
 import gui.model.ResearcherTableModel;
 import gui.researchers.EditResearcherJDialog;
 
@@ -14,7 +15,6 @@ import javax.swing.JDialog;
 import javax.swing.JTable;
 import javax.swing.JCheckBox;
 import javax.swing.JSpinner;
-import javax.swing.JButton;
 
 import java.awt.Color;
 
@@ -58,7 +58,6 @@ public class ResearchersTableView extends JPanel {
 	private JTable table;
 
 	private Faculty faculty;
-	private JButton btnEliminar;
 	private JLabel lblDatosDeInvestigadores;
 	
 	private EditResearcherJDialog current;
@@ -68,34 +67,33 @@ public class ResearchersTableView extends JPanel {
 
 		setBackground(Color.WHITE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{70, 100, 100, 30, 70, 100, 0, 70, 50, 0, 100, 0};
+		gridBagLayout.columnWidths = new int[]{70, 100, 100, 30, 100, 0, 0, 70, 70, 0};
 		gridBagLayout.rowHeights = new int[]{0, 26, 207, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		GridBagConstraints gbc_lblDatosDeInvestigadores = new GridBagConstraints();
 		gbc_lblDatosDeInvestigadores.fill = GridBagConstraints.BOTH;
-		gbc_lblDatosDeInvestigadores.gridwidth = 11;
-		gbc_lblDatosDeInvestigadores.insets = new Insets(0, 0, 5, 5);
+		gbc_lblDatosDeInvestigadores.gridwidth = 9;
+		gbc_lblDatosDeInvestigadores.insets = new Insets(0, 0, 5, 0);
 		gbc_lblDatosDeInvestigadores.gridx = 0;
 		gbc_lblDatosDeInvestigadores.gridy = 0;
 		add(getLblDatosDeInvestigadores(), gbc_lblDatosDeInvestigadores);
 		GridBagConstraints gbc_lblFiltrar = new GridBagConstraints();
-		gbc_lblFiltrar.fill = GridBagConstraints.HORIZONTAL;
+		gbc_lblFiltrar.fill = GridBagConstraints.BOTH;
 		gbc_lblFiltrar.insets = new Insets(0, 0, 5, 5);
 		gbc_lblFiltrar.gridx = 0;
 		gbc_lblFiltrar.gridy = 1;
 		add(getLblFiltrar(), gbc_lblFiltrar);
 		GridBagConstraints gbc_filterProfesors = new GridBagConstraints();
-		gbc_filterProfesors.fill = GridBagConstraints.HORIZONTAL;
-		gbc_filterProfesors.anchor = GridBagConstraints.SOUTH;
+		gbc_filterProfesors.fill = GridBagConstraints.BOTH;
 		gbc_filterProfesors.insets = new Insets(0, 0, 5, 5);
 		gbc_filterProfesors.gridx = 1;
 		gbc_filterProfesors.gridy = 1;
 		add(getFilterProfesors(), gbc_filterProfesors);
 		GridBagConstraints gbc_filterStudents = new GridBagConstraints();
 		gbc_filterStudents.anchor = GridBagConstraints.SOUTH;
-		gbc_filterStudents.fill = GridBagConstraints.HORIZONTAL;
+		gbc_filterStudents.fill = GridBagConstraints.BOTH;
 		gbc_filterStudents.insets = new Insets(0, 0, 5, 5);
 		gbc_filterStudents.gridx = 2;
 		gbc_filterStudents.gridy = 1;
@@ -104,13 +102,13 @@ public class ResearchersTableView extends JPanel {
 		gbc_lblNombre.anchor = GridBagConstraints.NORTH;
 		gbc_lblNombre.fill = GridBagConstraints.HORIZONTAL;
 		gbc_lblNombre.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNombre.gridx = 4;
+		gbc_lblNombre.gridx = 3;
 		gbc_lblNombre.gridy = 1;
 		add(getLblNombre(), gbc_lblNombre);
 		GridBagConstraints gbc_filterByName = new GridBagConstraints();
-		gbc_filterByName.fill = GridBagConstraints.HORIZONTAL;
+		gbc_filterByName.fill = GridBagConstraints.BOTH;
 		gbc_filterByName.insets = new Insets(0, 0, 5, 5);
-		gbc_filterByName.gridx = 5;
+		gbc_filterByName.gridx = 4;
 		gbc_filterByName.gridy = 1;
 		add(getFilterByName(), gbc_filterByName);
 		GridBagConstraints gbc_lblPuntuacin = new GridBagConstraints();
@@ -121,21 +119,14 @@ public class ResearchersTableView extends JPanel {
 		gbc_lblPuntuacin.gridy = 1;
 		add(getLblPuntuacin(), gbc_lblPuntuacin);
 		GridBagConstraints gbc_spinner = new GridBagConstraints();
-		gbc_spinner.fill = GridBagConstraints.HORIZONTAL;
-		gbc_spinner.insets = new Insets(0, 0, 5, 5);
+		gbc_spinner.fill = GridBagConstraints.BOTH;
+		gbc_spinner.insets = new Insets(0, 0, 5, 0);
 		gbc_spinner.gridx = 8;
 		gbc_spinner.gridy = 1;
 		add(getSpinner(), gbc_spinner);
-		GridBagConstraints gbc_btnEliminar = new GridBagConstraints();
-		gbc_btnEliminar.anchor = GridBagConstraints.SOUTH;
-		gbc_btnEliminar.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnEliminar.insets = new Insets(0, 0, 5, 0);
-		gbc_btnEliminar.gridx = 10;
-		gbc_btnEliminar.gridy = 1;
-		add(getBtnEliminar(), gbc_btnEliminar);
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
 		gbc_scrollPane.fill = GridBagConstraints.BOTH;
-		gbc_scrollPane.gridwidth = 11;
+		gbc_scrollPane.gridwidth = 9;
 		gbc_scrollPane.gridx = 0;
 		gbc_scrollPane.gridy = 2;
 		add(getScrollPane(), gbc_scrollPane);
@@ -186,7 +177,7 @@ public class ResearchersTableView extends JPanel {
 	private JLabel getLblFiltrar() {
 		if (lblFiltrar == null) {
 			lblFiltrar = new JLabel("Filtrar");
-			lblFiltrar.setHorizontalAlignment(SwingConstants.CENTER);
+			lblFiltrar.setHorizontalAlignment(SwingConstants.LEFT);
 			lblFiltrar.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 15));
 		}
 
@@ -227,7 +218,7 @@ public class ResearchersTableView extends JPanel {
 	private JLabel getLblNombre() {
 		if (lblNombre == null) {
 			lblNombre = new JLabel("Nombre");
-			lblNombre.setHorizontalAlignment(SwingConstants.CENTER);
+			lblNombre.setHorizontalAlignment(SwingConstants.RIGHT);
 			lblNombre.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 15));
 		}
 		return lblNombre;
@@ -279,6 +270,12 @@ public class ResearchersTableView extends JPanel {
 										((ResearcherTableModel)table.getModel()).fill();
 									}
 								});
+								current.listenTo(new OnRemovedResearcher() {
+									@Override
+									public void removed(int ID) {
+										((ResearcherTableModel)table.getModel()).fill();
+									}
+								});
 								current.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 								current.setVisible(true);
 							} catch (Exception e) {
@@ -295,15 +292,6 @@ public class ResearchersTableView extends JPanel {
 			table.setBackground(Color.WHITE);
 		}
 		return table;
-	}
-
-	private JButton getBtnEliminar() {
-		if (btnEliminar == null) {
-			btnEliminar = new JButton("Eliminar");
-			btnEliminar.setVisible(false);
-			btnEliminar.setBackground(Color.WHITE);
-		}
-		return btnEliminar;
 	}
 
 	public void updateTable() {

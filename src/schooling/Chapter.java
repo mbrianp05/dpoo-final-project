@@ -77,6 +77,10 @@ public class Chapter implements ScorableBreakthrough {
             throw new IllegalArgumentException("Book has at leat one editor");
         }
 
+        for (String editor: editors) {
+        	if (!Validation.notEmpty(editor)) throw new IllegalArgumentException("Editors cannot be empty");
+        }
+        
         this.editors = editors;
     }
 

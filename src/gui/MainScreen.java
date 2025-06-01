@@ -59,8 +59,8 @@ public class MainScreen extends JFrame {
 		
 		faculty.addStudent("Brian", "IAs Generativas");
 		
-		faculty.getResearchers().get(0).addBookChapter("Chapter 1", new String[]{""}, new String[] {""}, "FESX", "ISSN 1233-032X", "Name", 1);
-		faculty.getResearchers().get(0).addBookChapter("Chapter 2", new String[]{""}, new String[] {""}, "ABSH", "ISSN 1233-032X", "Name", 1);
+		faculty.getResearchers().get(0).addBookChapter("Chapter 1", new String[]{"@a"}, new String[] {"@a"}, "FESX", "ISSN 1233-032X", "Name", 1);
+		faculty.getResearchers().get(0).addBookChapter("Chapter 2", new String[]{"@a"}, new String[] {"@a"}, "ABSH", "ISSN 1233-0321", "Name", 1);
 		//-----------------------------
 		
 		setResizable(false);
