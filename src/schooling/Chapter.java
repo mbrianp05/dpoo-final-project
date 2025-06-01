@@ -30,7 +30,7 @@ public class Chapter implements ScorableBreakthrough {
 
     public void setTitle(String title) {
         if (!Validation.notEmpty(title)) {
-            throw new IllegalArgumentException("El título del capítulo no puede estar vacío");
+            throw new IllegalArgumentException("Book chapter title cannot be empty");
         }
 
         this.title = title;
@@ -38,15 +38,19 @@ public class Chapter implements ScorableBreakthrough {
 
     public void setAuthors(String[] authors) {
         if (authors.length == 0) {
-            throw new IllegalArgumentException("El capítulo no tiene autores");
+            throw new IllegalArgumentException("Book has at least one author");
         }
 
+        for (String author: authors) {
+        	if (!Validation.notEmpty(author)) throw new IllegalArgumentException("Author name cannot be empty");
+        }
+        
         this.authors = authors;
     }
 
     public void setBookName(String bookName) {
         if (!Validation.notEmpty(bookName)) {
-            throw new IllegalArgumentException("El nombre del libro no puede estar vacío");
+            throw new IllegalArgumentException("Book title cannot be empty");
         }
 
         this.bookName = bookName;
@@ -54,7 +58,7 @@ public class Chapter implements ScorableBreakthrough {
 
     public void setVolume(int volume) {
         if (volume < 0) {
-            throw new IllegalArgumentException("El volumen del libro no puede ser negativo");
+            throw new IllegalArgumentException("Volume cannot be a negative number or 0");
         }
 
         this.volume = volume;
@@ -62,7 +66,7 @@ public class Chapter implements ScorableBreakthrough {
 
     public void setEditorial(String editorial) {
         if (!Validation.notEmpty(editorial)) {
-            throw new IllegalArgumentException("El editorial del libro no puede estar vacío");
+            throw new IllegalArgumentException("Editorial cannot be empty");
         }
 
         this.editorial = editorial;
@@ -70,7 +74,7 @@ public class Chapter implements ScorableBreakthrough {
 
     public void setEditors(String[] editors) {
         if (editors.length == 0) {
-            throw new IllegalArgumentException("El libro no tiene editores");
+            throw new IllegalArgumentException("Book has at leat one editor");
         }
 
         this.editors = editors;
@@ -78,11 +82,15 @@ public class Chapter implements ScorableBreakthrough {
 
     public void setISSN(String ISSN) {
         if (!Validation.notEmpty(ISSN)) {
-            throw new IllegalArgumentException("El ISSN del libro no puede estar vac�o");
+            throw new IllegalArgumentException("ISSN cannot be empty");
         }
 
+        if (!Validation.unique(this.getClass().getSimpleName() + ".ISSN", ISSN)) {
+            throw new IllegalArgumentException("ISSN code has to be unique thus cannot be repeated");
+        }
+        
         if (!Validation.validISSN(ISSN)) {
-            throw new IllegalArgumentException("El ISSN del libro sigue el patr�n ISSN NNNN-NNNN");
+            throw new IllegalArgumentException("ISSN has to have the shape ISSN NNNN-NNNN");
         }
 
         this.ISSN = ISSN;
