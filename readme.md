@@ -5,10 +5,7 @@
 *   [Brian Monteagudo](https://github.com/mbrianp05/)
 
 ## Diagrama de clases
-Ver archivo dpoo_final_project_diagram.drawio.png
-
-- Link en el repositorio:
-https://github.com/mbrianp05/dpoo-final-project/blob/main/dpoo_final_project_diagram.drawio.png
+<img width="100%" src="https://github.com/mbrianp05/dpoo-final-project/blob/main/dpoo_final_project_diagram.drawio.png" alt="Diagrama de clases del projecto">
 
 ## Descripción
 
