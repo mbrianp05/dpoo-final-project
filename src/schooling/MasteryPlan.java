@@ -12,7 +12,7 @@ public class MasteryPlan {
 		setMinCredit(minCredits);
 
 		matriculations = new ArrayList<>();
-		courses = new ArrayList<PostgraduateCourse>();
+		courses = new ArrayList<>();
 	}
 
 	public void addMatriculation(Profesor profesor, PostgraduateCourse course) {
