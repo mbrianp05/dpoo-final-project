@@ -45,6 +45,8 @@ public class MenuPanel extends JPanel {
 	private JPanel contentPanel;
 	private ResearcherFormView researcherFormView;
 	private ResearchersTableView researchersTableView;
+	private JMenu linesSubemenu;
+	private JMenuItem addLineMenu;
 
 	public MenuPanel(Faculty faculty) {
 		this.faculty = faculty;
@@ -86,6 +88,7 @@ public class MenuPanel extends JPanel {
 			management.setBackground(Color.WHITE);
 			management.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 			management.add(getResearchersSubmenu());
+			management.add(getLinesSubemenu());
 		}
 		return management;
 	}
@@ -212,5 +215,18 @@ public class MenuPanel extends JPanel {
 			researchersTableView = new ResearchersTableView(faculty);
 		}
 		return researchersTableView;
+	}
+	private JMenu getLinesSubemenu() {
+		if (linesSubemenu == null) {
+			linesSubemenu = new JMenu("L\u00EDneas de investigaci\u00F3n");
+			linesSubemenu.add(getAddLineMenu());
+		}
+		return linesSubemenu;
+	}
+	private JMenuItem getAddLineMenu() {
+		if (addLineMenu == null) {
+			addLineMenu = new JMenuItem("Agregar l\u00EDnea");
+		}
+		return addLineMenu;
 	}
 }
