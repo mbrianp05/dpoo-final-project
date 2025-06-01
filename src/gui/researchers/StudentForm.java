@@ -7,7 +7,6 @@ import gui.event.OnAddedResearcher;
 import javax.swing.JPanel;
 
 import schooling.Faculty;
-import schooling.Profesor;
 import schooling.ResearchMatter;
 import schooling.Student;
 

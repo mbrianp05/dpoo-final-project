@@ -211,12 +211,65 @@ public class Faculty {
         return total;
     }
 
+    private ArrayList<Matriculation> getMatriculationsOf(int ID) {
+    	ArrayList<Matriculation> matriculations = new ArrayList<>();
+    	
+    	for (ResearchLine l: researchLines) {
+    		for (Matriculation m: l.getMasteryPlan().getMatriculations()) {
+    			if (m.getProfesor().getID() == ID) {
+    				matriculations.add(m);
+    			}
+    		}
+    	}
+    	
+    	return matriculations;
+    }
+    
+    private double getAverageMarksOf(int ID) {
+    	Researcher r = findResearcher(ID);
+    
+    	if (r == null || !(r instanceof Profesor)) {
+    		throw new IllegalArgumentException("Researcher with ID " + ID + " either doesn't exits or its not a profesor");
+    	}
+    	
+    	int total = 0;
+    	ArrayList<Matriculation> matriculations = getMatriculationsOf(r.getID());
+    	
+    	for (Matriculation m: matriculations) {
+    		total += m.getMark();
+    	}
+    	
+    	return total / (double)Math.max(1, matriculations.size());
+    }
+    
+    
+    // Reporte 6: (Aleksandr): Los profesores con mejor promedio de notas
+    public ArrayList<Profesor> profesorsWithBestAverage() {
+    	ArrayList<Profesor> profesors = new ArrayList<>();
+    	double max = Double.MIN_VALUE;
+    	
+    	for (Profesor p: getProfesors()) {
+    		double avg = getAverageMarksOf(p.getID());
+    	
+    		if (avg > max) {
+    			max = avg;
+    			profesors.clear();
+    		}
+    		
+    		if (avg == max) {
+    			profesors.add(p);
+    		}
+    	}
+    	
+    	return profesors;
+    }
+    
     // Cambia de materia de investigacion a un investigador
 	public void moveToOtherMatter(int ID, String newMatterName) {
 		ResearchMatter newMatter = findResearchMatter(newMatterName);
 		
 		if (newMatter == null) {
-			throw new IllegalArgumentException("No matter with name " + newMatterName + "exists");
+			throw new IllegalArgumentException("No matter with name " + newMatterName + " exists");
 		}
 		
 		Researcher r = findResearcher(ID);

@@ -45,6 +45,7 @@ public class MainScreen extends JFrame {
 	}
 
 	public MainScreen() {
+		setTitle("Informaci\u00F3n de la facultad");
 		faculty = Faculty.newInstance();
 		
 		setResizable(false);
