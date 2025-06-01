@@ -25,6 +25,7 @@ import gui.views.ResearchersTableView;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.CardLayout;
+import gui.views.ResearchLinesFormView;
 
 public class MenuPanel extends JPanel {
 	private static final long serialVersionUID = 3762125698246597691L;
@@ -47,6 +48,7 @@ public class MenuPanel extends JPanel {
 	private ResearchersTableView researchersTableView;
 	private JMenu linesSubemenu;
 	private JMenuItem addLineMenu;
+	private ResearchLinesFormView researchLinesFormView;
 
 	public MenuPanel(Faculty faculty) {
 		this.faculty = faculty;
@@ -195,6 +197,7 @@ public class MenuPanel extends JPanel {
 			contentPanel.setLayout(new CardLayout(0, 0));	
 			contentPanel.add(getResearcherForm(), "Researcher Form");
 			contentPanel.add(getResearchersTableView(), "Researchers Table");
+			contentPanel.add(getResearchLinesFormView(), "Research Lines Form");
 		}
 		return contentPanel;
 	}
@@ -226,7 +229,18 @@ public class MenuPanel extends JPanel {
 	private JMenuItem getAddLineMenu() {
 		if (addLineMenu == null) {
 			addLineMenu = new JMenuItem("Agregar l\u00EDnea");
+			addLineMenu.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					switchView("Research Lines Form");
+				}
+			});
 		}
 		return addLineMenu;
+	}
+	private ResearchLinesFormView getResearchLinesFormView() {
+		if (researchLinesFormView == null) {
+			researchLinesFormView = new ResearchLinesFormView(faculty);
+		}
+		return researchLinesFormView;
 	}
 }

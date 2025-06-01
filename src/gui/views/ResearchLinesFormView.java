@@ -13,14 +13,14 @@ import schooling.Faculty;
 import schooling.ResearchMatter;
 import javax.swing.SwingConstants;
 
-public class ResearchLinesView extends JPanel {
+public class ResearchLinesFormView extends JPanel {
 	private static final long serialVersionUID = 3971105665570208468L;
 	private JPanel panel;
 	private JLabel lblTemasPopulares;
 	private JLabel lblMatters;
 	private Faculty faculty;
 	
-	public ResearchLinesView(Faculty faculty) {
+	public ResearchLinesFormView(Faculty faculty) {
 		this.faculty = faculty;
 		
 		setBackground(Color.WHITE);
