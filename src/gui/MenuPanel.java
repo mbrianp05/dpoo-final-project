@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import java.awt.Color;
 
 import schooling.Faculty;
+import schooling.Profesor;
 import utils.Mock;
 
 import java.awt.Font;
@@ -25,6 +26,7 @@ import gui.views.ResearchersTableView;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.CardLayout;
+
 import gui.views.ResearchLinesFormView;
 
 public class MenuPanel extends JPanel {
@@ -208,6 +210,10 @@ public class MenuPanel extends JPanel {
 				@Override
 				public void added(int researcherID) {
 					researchersTableView.updateTable();
+					
+					if (faculty.findResearcher(researcherID) instanceof Profesor) {
+						researchLinesFormView.fetchProfesors();
+					}
 				}
 			});
 		}
