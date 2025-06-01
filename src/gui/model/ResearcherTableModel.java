@@ -22,8 +22,8 @@ public class ResearcherTableModel extends DefaultTableModel {
 	public ResearcherTableModel(Faculty faculty) {
 		this.faculty = faculty;
 
-		filterMinScore = 0;
 		filterName = "";
+		filterMinScore = 0;
 		includeProfesorsFilter = true;
 		includeStudentsFilter = true;
 		
@@ -130,14 +130,5 @@ public class ResearcherTableModel extends DefaultTableModel {
 		for (Researcher r: filter) {
 			addNew(r);
 		}
-	}
-
-	public void removeSelectedItem(int row) {
-//		String name = (String)getValueAt(row, 0);
-//		removeRow(row);
-//
-//		Researcher r = faculty.findResearcherByName(name);
-//		int index = faculty.getResearchers().indexOf(r);
-//		faculty.getResearchers().remove(index);
 	}
 }

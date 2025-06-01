@@ -1,5 +1,6 @@
 package gui.views;
 
+
 import gui.model.ResearcherTableModel;
 import gui.researchers.EditResearcherJDialog;
 
@@ -18,9 +19,6 @@ import java.awt.Color;
 
 import javax.swing.JTextField;
 import javax.swing.JScrollPane;
-
-import schooling.Faculty;
-import schooling.Researcher;
 
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
@@ -41,6 +39,9 @@ import java.awt.Insets;
 
 import javax.swing.ListSelectionModel;
 
+import schooling.Faculty;
+import schooling.Researcher;
+
 public class ResearchersTableView extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JCheckBox filterStudents;
@@ -55,7 +56,6 @@ public class ResearchersTableView extends JPanel {
 	private ResearcherTableModel researcherModel;
 	private JTable table;
 
-	@SuppressWarnings("unused")
 	private Faculty faculty;
 	private JButton btnEliminar;
 	private JLabel lblDatosDeInvestigadores;
@@ -265,9 +265,9 @@ public class ResearchersTableView extends JPanel {
 						int row = table.getSelectedRow();
 						int ID = (int)table.getModel().getValueAt(row, 0);
 						Researcher researcher = faculty.findResearcher(ID);
-
+						
 						try {
-							EditResearcherJDialog dialog = new EditResearcherJDialog(researcher);
+							EditResearcherJDialog dialog = new EditResearcherJDialog(faculty, researcher);
 							dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 							dialog.setVisible(true);
 						} catch (Exception e) {
@@ -287,11 +287,6 @@ public class ResearchersTableView extends JPanel {
 	private JButton getBtnEliminar() {
 		if (btnEliminar == null) {
 			btnEliminar = new JButton("Eliminar");
-			btnEliminar.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent event) {
-					((ResearcherTableModel)table.getModel()).removeSelectedItem(table.getSelectedRow());
-				}
-			});
 			btnEliminar.setVisible(false);
 			btnEliminar.setBackground(Color.WHITE);
 		}
