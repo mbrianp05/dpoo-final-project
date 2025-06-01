@@ -12,6 +12,7 @@ import javax.swing.border.EmptyBorder;
 
 import schooling.Profesor;
 import schooling.Researcher;
+import schooling.Student;
 
 import java.awt.Color;
 
@@ -23,7 +24,6 @@ import javax.swing.JButton;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.SystemColor;
 
 public class EditResearcherJDialog extends JDialog {
 	private static final long serialVersionUID = -8039865322179654975L;
@@ -38,6 +38,7 @@ public class EditResearcherJDialog extends JDialog {
 	private JButton btnA;
 	
 	private OnRemovedResearcher listener;
+	private StudentForm studentForm;
 
 	public EditResearcherJDialog(Faculty faculty, Researcher researcher) {
 		setAlwaysOnTop(true);
@@ -61,6 +62,8 @@ public class EditResearcherJDialog extends JDialog {
 
 		if (researcher instanceof Profesor) {
 			contentPanel.add(getProfesorForm(), BorderLayout.CENTER);
+		} else if (researcher instanceof Student) {
+			contentPanel.add(getStudentForm(), BorderLayout.CENTER);
 		}
 	}
 
@@ -96,7 +99,7 @@ public class EditResearcherJDialog extends JDialog {
 			btnRemove.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					setAlwaysOnTop(false);
-					int input = JOptionPane.showConfirmDialog(null, "Deseas eliminar a este investigador", null, JOptionPane.WARNING_MESSAGE);
+					int input = JOptionPane.showConfirmDialog(null, "Deseas eliminar a este investigador", "Eliminar", JOptionPane.WARNING_MESSAGE);
 
 					setAlwaysOnTop(true);
 					
@@ -127,5 +130,11 @@ public class EditResearcherJDialog extends JDialog {
 			btnA.setBackground(Color.WHITE);
 		}
 		return btnA;
+	}
+	private StudentForm getStudentForm() {
+		if (studentForm == null) {
+			studentForm = new StudentForm(faculty, (Student)researcher);
+		}
+		return studentForm;
 	}
 }
