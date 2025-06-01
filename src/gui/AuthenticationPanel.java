@@ -12,12 +12,8 @@ import javax.swing.border.LineBorder;
 
 import java.awt.Color;
 
-import javax.swing.JButton;
-
 import auth.Authentication;
 
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import javax.swing.JProgressBar;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;

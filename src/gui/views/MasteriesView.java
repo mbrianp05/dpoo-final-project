@@ -11,6 +11,7 @@ import javax.swing.border.LineBorder;
 import schooling.Faculty;
 
 public class MasteriesView extends JPanel {
+	private static final long serialVersionUID = -934022517279816049L;
 	private JPanel panel;
 	private Faculty faculty;
 	private JLabel lblTotalCourses;

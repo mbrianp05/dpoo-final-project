@@ -27,16 +27,10 @@ public class ResearcherTableModel extends DefaultTableModel {
 		includeProfesorsFilter = true;
 		includeStudentsFilter = true;
 		
-		String[] columns = {"Nombre", "Tema", "Puntuación"};
+		String[] columns = {"ID", "Nombre", "Tema", "Puntuación"};
 		this.setColumnIdentifiers(columns);
 	}
 
-	public void update(int row, String name, String matter, int score) {
-		setValueAt(name, row, 0);
-		setValueAt(matter, row, 1);
-		setValueAt(score, row, 2);
-	}
-	
 	public void addNew(Researcher r) {
 		ResearchMatter matter = faculty.findMatterOf(r.getID());
 		String matterName = "-";
@@ -45,7 +39,7 @@ public class ResearcherTableModel extends DefaultTableModel {
 			matterName = matter.getName();
 		}
 		
-		Object[] newRow = new Object[]{r.getName(), matterName, r.getScore()};
+		Object[] newRow = new Object[]{r.getID(), r.getName(), matterName, r.getScore()};
 		
 		addRow(newRow);
 	}
@@ -129,9 +123,7 @@ public class ResearcherTableModel extends DefaultTableModel {
 		filter = filterByKind(filter);
 		
 		for (Researcher r: filter) {
-			String matter = faculty.findMatterOf(r.getID()).getName();
-			
-			addRow(new Object[] { r.getName(), matter, r.getScore() });
+			addNew(r);
 		}
 	}
 
