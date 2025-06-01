@@ -1,5 +1,7 @@
 package gui;
 
+import gui.views.ResearcherFormView;
+
 import javax.swing.JPanel;
 
 import java.awt.Color;
@@ -18,9 +20,12 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 
-import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+import gui.views.ResearchersTableView;
+import java.awt.BorderLayout;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class MenuPanel extends JPanel {
 private static final long serialVersionUID = 3762125698246597691L;
@@ -37,10 +42,11 @@ private static final long serialVersionUID = 3762125698246597691L;
 	private JMenuItem aprovalPendingMenu;
 	private JMenuItem mostPaperMenu;
 	private JMenu researchersSubmenu;
-	private JMenuItem mntmVerTabla;
+	private JMenuItem researchersTableMenu;
 	private JLayeredPane layeredPane;
-	private ResearcherForm researcherForm;
+	private ResearcherFormView researcherFormView;
 	private JLabel lblInsertarInvestigador;
+	private ResearchersTableView researchersTableView;
 	
 	public MenuPanel(Faculty faculty) {
 		this.faculty = faculty;
@@ -49,7 +55,7 @@ private static final long serialVersionUID = 3762125698246597691L;
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{1092, 0};
 		gridBagLayout.rowHeights = new int[]{74, 0, 421, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, Double.MIN_VALUE};
+		gridBagLayout.columnWeights = new double[]{1.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		GridBagConstraints gbc_menuBar = new GridBagConstraints();
@@ -82,6 +88,7 @@ private static final long serialVersionUID = 3762125698246597691L;
 	private JMenu getManagement() {
 		if (management == null) {
 			management = new JMenu("Administraci\u00F3n");
+			management.setBackground(Color.WHITE);
 			management.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 			management.add(getResearchersSubmenu());
 		}
@@ -90,6 +97,12 @@ private static final long serialVersionUID = 3762125698246597691L;
 	private JMenuItem getNewResearcherMenu() {
 		if (newResearcherMenu == null) {
 			newResearcherMenu = new JMenuItem("Insertar investigadores");
+			newResearcherMenu.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					researcherFormView.setVisible(true);
+					researchersTableView.setVisible(false);
+				}
+			});
 			newResearcherMenu.setBackground(Color.WHITE);
 			newResearcherMenu.setSelected(true);
 		}
@@ -154,39 +167,48 @@ private static final long serialVersionUID = 3762125698246597691L;
 	private JMenu getResearchersSubmenu() {
 		if (researchersSubmenu == null) {
 			researchersSubmenu = new JMenu("Investigadores");
+			researchersSubmenu.setBackground(Color.WHITE);
 			researchersSubmenu.add(getNewResearcherMenu());
-			researchersSubmenu.add(getMntmVerTabla());
+			researchersSubmenu.add(getResearchersTableMenu());
 		}
 		return researchersSubmenu;
 	}
-	private JMenuItem getMntmVerTabla() {
-		if (mntmVerTabla == null) {
-			mntmVerTabla = new JMenuItem("Tabla de datos");
-			mntmVerTabla.setBackground(Color.WHITE);
+	private JMenuItem getResearchersTableMenu() {
+		if (researchersTableMenu == null) {
+			researchersTableMenu = new JMenuItem("Tabla de datos");
+			researchersTableMenu.setBackground(Color.WHITE);
 		}
-		return mntmVerTabla;
+		return researchersTableMenu;
 	}
 	private JLayeredPane getLayeredPane() {
 		if (layeredPane == null) {
 			layeredPane = new JLayeredPane();
-			layeredPane.setLayout(new BoxLayout(layeredPane, BoxLayout.X_AXIS));
-			layeredPane.add(getResearcherForm());
+			layeredPane.setLayout(new BorderLayout(0, 0));
+			layeredPane.add(getResearcherForm(), BorderLayout.CENTER);
+			layeredPane.add(getResearchersTableView());
 		}
 		return layeredPane;
 	}
-	private ResearcherForm getResearcherForm() {
-		if (researcherForm == null) {
-			researcherForm = new ResearcherForm(faculty);
+	private ResearcherFormView getResearcherForm() {
+		if (researcherFormView == null) {
+			researcherFormView = new ResearcherFormView(faculty);
+			getLayeredPane().setLayer(researcherFormView, 1);
 		}
-		return researcherForm;
+		return researcherFormView;
 	}
 	private JLabel getLblInsertarInvestigador() {
 		if (lblInsertarInvestigador == null) {
 			lblInsertarInvestigador = new JLabel("Insertar investigador");
-			lblInsertarInvestigador.setFont(new Font("Segoe UI", Font.PLAIN, 17));
+			lblInsertarInvestigador.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 			lblInsertarInvestigador.setBackground(Color.WHITE);
 			lblInsertarInvestigador.setHorizontalAlignment(SwingConstants.LEFT);
 		}
 		return lblInsertarInvestigador;
+	}
+	private ResearchersTableView getResearchersTableView() {
+		if (researchersTableView == null) {
+			researchersTableView = new ResearchersTableView(faculty);
+		}
+		return researchersTableView;
 	}
 }

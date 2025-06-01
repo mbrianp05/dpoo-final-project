@@ -9,13 +9,12 @@ import javax.swing.JLabel;
 
 import java.awt.Font;
 
-import javax.swing.JList;
-
 import schooling.Faculty;
 import schooling.ResearchMatter;
 import javax.swing.SwingConstants;
 
 public class ResearchLinesView extends JPanel {
+	private static final long serialVersionUID = 3971105665570208468L;
 	private JPanel panel;
 	private JLabel lblTemasPopulares;
 	private JLabel lblMatters;

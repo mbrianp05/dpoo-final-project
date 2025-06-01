@@ -1,20 +1,19 @@
 package gui.model;
 
 import java.util.ArrayList;
-import java.util.Vector;
 
 import javax.swing.table.DefaultTableModel;
 
 import schooling.Faculty;
 import schooling.Profesor;
+import schooling.ResearchMatter;
 import schooling.Researcher;
 import schooling.Student;
 
 public class ResearcherTableModel extends DefaultTableModel {
+	private static final long serialVersionUID = -1630353171311020485L;
 	private Faculty faculty;
 	
-	
-	// Filters
 	private String filterName;
 	private int filterMinScore;
 	private boolean includeProfesorsFilter;
@@ -39,8 +38,14 @@ public class ResearcherTableModel extends DefaultTableModel {
 	}
 	
 	public void addNew(Researcher r) {
-		String matter = faculty.findMatterOf(r.getName()).getName();
-		Object[] newRow = new Object[]{r.getName(), matter, r.getScore()};
+		ResearchMatter matter = faculty.findMatterOf(r.getID());
+		String matterName = "-";
+		
+		if (matter != null) {
+			matterName = matter.getName();
+		}
+		
+		Object[] newRow = new Object[]{r.getName(), matterName, r.getScore()};
 		
 		addRow(newRow);
 	}
@@ -124,15 +129,15 @@ public class ResearcherTableModel extends DefaultTableModel {
 		filter = filterByKind(filter);
 		
 		for (Researcher r: filter) {
-			String matter = faculty.findMatterOf(r.getName()).getName();
+			String matter = faculty.findMatterOf(r.getID()).getName();
 			
 			addRow(new Object[] { r.getName(), matter, r.getScore() });
 		}
 	}
 
 	public void removeSelectedItem(int row) {
-		String name = (String)getValueAt(row, 0);
-		removeRow(row);
+//		String name = (String)getValueAt(row, 0);
+//		removeRow(row);
 //
 //		Researcher r = faculty.findResearcherByName(name);
 //		int index = faculty.getResearchers().indexOf(r);

@@ -1,19 +1,26 @@
-package gui;
+package gui.views;
+
+import gui.ProfesorForm;
+import gui.StudentForm;
 
 import javax.swing.JPanel;
+
 import java.awt.Color;
+
 import javax.swing.JTabbedPane;
+
 import schooling.Faculty;
+
 import java.awt.BorderLayout;
 
-public class ResearcherForm extends JPanel {
+public class ResearcherFormView extends JPanel {
 	private static final long serialVersionUID = 1751242066126705510L;
 	private JTabbedPane tabbedPane;
 	private Faculty faculty;
 	private ProfesorForm profesorForm;
 	private StudentForm studentForm;
 	
-	public ResearcherForm(Faculty faculty) {
+	public ResearcherFormView(Faculty faculty) {
 		this.faculty = faculty;
 		
 		setBackground(Color.WHITE);

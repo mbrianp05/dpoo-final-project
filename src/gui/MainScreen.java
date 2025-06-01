@@ -1,7 +1,5 @@
 package gui;
 
-import gui.event.OnAuthenticate;
-
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -18,9 +16,11 @@ import schooling.ResearchLine;
 import java.awt.Color;
 
 import javax.swing.JLayeredPane;
-import javax.swing.BoxLayout;
+import java.awt.BorderLayout;
 
 public class MainScreen extends JFrame {
+	private static final long serialVersionUID = -5078546845004098026L;
+
 	private JPanel contentPane;
 	
 	private Faculty faculty;
@@ -70,13 +70,13 @@ public class MainScreen extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		
 		setContentPane(contentPane);
-		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.X_AXIS));
+		contentPane.setLayout(new BorderLayout(0, 0));
 		contentPane.add(getLayeredPane_1());
 	}
 	private JLayeredPane getLayeredPane_1() {
 		if (layeredPane == null) {
 			layeredPane = new JLayeredPane();
-			layeredPane.setLayout(new BoxLayout(layeredPane, BoxLayout.X_AXIS));
+			layeredPane.setLayout(new BorderLayout(0, 0));
 			layeredPane.add(getMenuPanel());
 		}
 		return layeredPane;
