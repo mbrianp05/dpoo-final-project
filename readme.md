@@ -5,10 +5,9 @@
 *   [Brian Monteagudo](https://github.com/mbrianp05/)
 
 ## Diagrama de clases
-<img width="100%" src="https://github.com/mbrianp05/dpoo-final-project/blob/main/dpoo_final_project_diagram.drawio.png" alt="Diagrama de clases del projecto">
+<img width="100%" src="https://github.com/mbrianp05/dpoo-final-project/blob/main/dpoo_final_project_diagram.png?raw=true" alt="Diagrama de clases del projecto">
 
 ## Descripción
-
 El proyecto final consiste en crear un sistema de gestión de cursos de postgrado y de temas de investigación en la facultad.
 
 **Reportes: (sujeto a modificación con el transcurso del proyecto)**
