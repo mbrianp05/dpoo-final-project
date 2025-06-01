@@ -54,6 +54,7 @@ public class ResearcherFormView extends JPanel {
 	
 	public void listenTo(OnAddedResearcher listener) {
 		profesorForm.listenTo(listener);
+		studentForm.listenTo(listener);
 	}
 
 	private JTabbedPane getTabbedPane() {
@@ -74,7 +75,7 @@ public class ResearcherFormView extends JPanel {
 	}
 	private StudentForm getStudentForm() {
 		if (studentForm == null) {
-			studentForm = new StudentForm();
+			studentForm = new StudentForm(faculty);
 			studentForm.setBackground(Color.WHITE);
 		}
 		return studentForm;

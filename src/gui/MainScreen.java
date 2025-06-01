@@ -49,7 +49,7 @@ public class MainScreen extends JFrame {
 		
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1029, 803);
+		setBounds(100, 100, 1029, 880);
 		
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
@@ -57,8 +57,8 @@ public class MainScreen extends JFrame {
 		
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
-		gbl_contentPane.columnWidths = new int[]{0, 950, 0, 0};
-		gbl_contentPane.rowHeights = new int[]{800, 0};
+		gbl_contentPane.columnWidths = new int[]{0, 900, 0, 0};
+		gbl_contentPane.rowHeights = new int[]{730, 0};
 		gbl_contentPane.columnWeights = new double[]{1.0, 0.0, 1.0, Double.MIN_VALUE};
 		gbl_contentPane.rowWeights = new double[]{0.0, Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPane);
