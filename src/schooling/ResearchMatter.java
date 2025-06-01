@@ -14,9 +14,14 @@ public class ResearchMatter {
     }
 
     public void setName(String name) {
-        if (!Validation.notEmpty(name))
-            throw new IllegalArgumentException("El nombre no puede estar vac�o");
+        if (!Validation.notEmpty(name)) {
+        	throw new IllegalArgumentException("Matter name cannot be empty");
+        }
 
+        if (!Validation.unique(getClass().getSimpleName() + ".name", name)) {
+        	throw new IllegalArgumentException("There is already a matter with that name");
+        }
+        
         this.name = name;
     }
 
