@@ -1,4 +1,4 @@
-package gui;
+package gui.researchers;
 
 import javax.swing.JPanel;
 

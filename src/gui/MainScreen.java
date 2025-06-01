@@ -60,6 +60,7 @@ public class MainScreen extends JFrame {
 		faculty.addStudent("Brian", "IAs Generativas");
 		
 		faculty.getResearchers().get(0).addBookChapter("Sample", new String[]{""}, new String[] {""}, "FESX", "ISSN 1233-032X", "Name", 1);
+		//-----------------------------
 		
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

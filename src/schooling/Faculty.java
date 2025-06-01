@@ -121,6 +121,7 @@ public class Faculty {
     		if (researchers.get(i).getID() == ID) {
     			r = researchers.get(i);
     		}
+    		i++;
     	}
     	
     	return r;

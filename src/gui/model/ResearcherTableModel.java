@@ -52,18 +52,22 @@ public class ResearcherTableModel extends DefaultTableModel {
 	
 	public void setMinScore(int minScore) {
 		filterMinScore = minScore;
+		fill();
 	}
 	
 	public void setFilterName(String name) {
 		filterName = name;
+		fill();
 	}
 	
 	public void includeProfesors(boolean act) {
 		includeProfesorsFilter = act;
+		fill();
 	}
 	
 	public void includeStudents(boolean act) {
 		includeStudentsFilter = act;
+		fill();
 	}
 	
 	private ArrayList<Researcher> filterByName(ArrayList<Researcher> researchers) {
@@ -114,10 +118,11 @@ public class ResearcherTableModel extends DefaultTableModel {
 		return filtered;
 	}
 	
-	public void applyFilters() {
+	public void fill() {
 		emptyTable();
 		
 		ArrayList<Researcher> filter = faculty.getResearchers();
+		
 		filter = filterByName(filter);
 		filter = filterByScore(filter);
 		filter = filterByKind(filter);

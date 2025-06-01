@@ -1,5 +1,7 @@
-package gui;
+package gui.researchers;
 
+import gui.component.ErrorLabel;
+import gui.component.ResearchMatterComboBox;
 import gui.event.OnAddedResearcher;
 
 import javax.swing.JPanel;
@@ -22,12 +24,14 @@ import schooling.ProfesorCategory;
 import utils.Validation;
 
 import javax.swing.JButton;
-import javax.swing.BoxLayout;
 
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.BorderLayout;
+
+import javax.swing.SwingConstants;
 
 public class ProfesorForm extends JPanel {
 	private static final long serialVersionUID = 5814578189776579606L;
@@ -43,18 +47,20 @@ public class ProfesorForm extends JPanel {
 	private ResearchMatterComboBox researchMatterComboBox;
 	private JPanel panel;
 	private JTextField textFieldName;
-	private ErrorLabel errorLabel;
 	private OnAddedResearcher listener;
+	private JLabel lblFeedback;
+	private ErrorLabel errorLabel;
 
 	public ProfesorForm(Faculty faculty) {
 		this.faculty = faculty;
 
 		setBackground(Color.WHITE);
-		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+		setLayout(new BorderLayout(0, 0));
+		add(getLblFeedback(), BorderLayout.NORTH);
 		add(getPanel());
 	}
 
-	public void addListener(OnAddedResearcher listener) {
+	public void listenTo(OnAddedResearcher listener) {
 		this.listener = listener;
 	}
 
@@ -152,6 +158,7 @@ public class ProfesorForm extends JPanel {
 	}
 
 	private void resetForm() {
+		lblFeedback.setText("");
 		errorLabel.setText("");
 		textFieldName.setText("");
 		
@@ -165,6 +172,10 @@ public class ProfesorForm extends JPanel {
 		comboBoxDegree.setSelectedIndex(0);
 	}
 	
+	private void sendFeedback() {
+		lblFeedback.setText("Se ha registrado el investigador correctamente");
+	}
+	
 	private JButton getBtnSubmit() {
 		if (btnSubmit == null) {
 			btnSubmit = new JButton("Insertar  profesor");
@@ -172,13 +183,15 @@ public class ProfesorForm extends JPanel {
 				public void actionPerformed(ActionEvent arg0) {
 					if (Validation.notEmpty(textFieldName.getText())) {
 						int id = faculty.addProfesor(textFieldName.getText(), getDegree(), getCategory(), getMatter());
-						resetForm();
 						
 						if (listener != null) {
 							listener.added(id);
 						}
+						
+						resetForm();
+						sendFeedback();
 					} else {
-						errorLabel.setText("El nombre no puede estar vacío");
+						errorLabel.setText("El nombre es requerido");
 					}
 				}
 			});
@@ -201,9 +214,9 @@ public class ProfesorForm extends JPanel {
 			panel.setBackground(Color.WHITE);
 			GridBagLayout gbl_panel = new GridBagLayout();
 			gbl_panel.columnWidths = new int[]{50, 383, 50, 0};
-			gbl_panel.rowHeights = new int[]{0, 29, 0, 31, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+			gbl_panel.rowHeights = new int[]{0, 29, 30, 0, 0, 30, 0, 0, 30, 0, 0, 30, 0, 0, 0, 0};
 			gbl_panel.columnWeights = new double[]{1.0, 1.0, 1.0, Double.MIN_VALUE};
-			gbl_panel.rowWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 1.0, Double.MIN_VALUE};
+			gbl_panel.rowWeights = new double[]{1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 1.0, Double.MIN_VALUE};
 			panel.setLayout(gbl_panel);
 			GridBagConstraints gbc_lblName = new GridBagConstraints();
 			gbc_lblName.anchor = GridBagConstraints.WEST;
@@ -231,7 +244,6 @@ public class ProfesorForm extends JPanel {
 			panel.add(getLblProfesorCategory(), gbc_lblProfesorCategory);
 			GridBagConstraints gbc_comboBoxProfesorCategory = new GridBagConstraints();
 			gbc_comboBoxProfesorCategory.fill = GridBagConstraints.BOTH;
-			gbc_comboBoxProfesorCategory.anchor = GridBagConstraints.WEST;
 			gbc_comboBoxProfesorCategory.insets = new Insets(0, 0, 5, 5);
 			gbc_comboBoxProfesorCategory.gridx = 1;
 			gbc_comboBoxProfesorCategory.gridy = 5;
@@ -244,7 +256,6 @@ public class ProfesorForm extends JPanel {
 			panel.add(getLblCategoraCientfica(), gbc_lblCategoraCientfica);
 			GridBagConstraints gbc_comboBoxDegree = new GridBagConstraints();
 			gbc_comboBoxDegree.fill = GridBagConstraints.BOTH;
-			gbc_comboBoxDegree.anchor = GridBagConstraints.WEST;
 			gbc_comboBoxDegree.insets = new Insets(0, 0, 5, 5);
 			gbc_comboBoxDegree.gridx = 1;
 			gbc_comboBoxDegree.gridy = 8;
@@ -256,7 +267,6 @@ public class ProfesorForm extends JPanel {
 			gbc_lblTemaDeInvestigacin.gridy = 10;
 			panel.add(getLblTemaDeInvestigacin(), gbc_lblTemaDeInvestigacin);
 			GridBagConstraints gbc_researchMatterComboBox = new GridBagConstraints();
-			gbc_researchMatterComboBox.anchor = GridBagConstraints.WEST;
 			gbc_researchMatterComboBox.fill = GridBagConstraints.BOTH;
 			gbc_researchMatterComboBox.insets = new Insets(0, 0, 5, 5);
 			gbc_researchMatterComboBox.gridx = 1;
@@ -279,9 +289,20 @@ public class ProfesorForm extends JPanel {
 		}
 		return textFieldName;
 	}
+	private JLabel getLblFeedback() {
+		if (lblFeedback == null) {
+			lblFeedback = new JLabel("");
+			lblFeedback.setHorizontalAlignment(SwingConstants.CENTER);
+			lblFeedback.setForeground(new Color(102, 204, 153));
+			lblFeedback.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		}
+		return lblFeedback;
+	}
 	private ErrorLabel getErrorLabel() {
 		if (errorLabel == null) {
 			errorLabel = new ErrorLabel();
+			errorLabel.setVerticalAlignment(SwingConstants.TOP);
+			errorLabel.setText("");
 		}
 		return errorLabel;
 	}

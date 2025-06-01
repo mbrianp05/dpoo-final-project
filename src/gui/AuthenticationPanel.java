@@ -1,5 +1,6 @@
 package gui;
 
+import gui.component.LengthSecretInput;
 import gui.event.OnAuthenticate;
 
 import javax.swing.JPanel;
@@ -15,6 +16,7 @@ import java.awt.Color;
 import auth.Authentication;
 
 import javax.swing.JProgressBar;
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 

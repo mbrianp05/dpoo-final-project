@@ -1,12 +1,14 @@
 package gui.views;
 
 import gui.model.ResearcherTableModel;
+import gui.researchers.EditResearcherJDialog;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 
 import java.awt.Font;
 
+import javax.swing.JDialog;
 import javax.swing.JTable;
 import javax.swing.JCheckBox;
 import javax.swing.JSpinner;
@@ -20,20 +22,24 @@ import javax.swing.JScrollPane;
 import schooling.Faculty;
 import schooling.Researcher;
 
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 import javax.swing.SwingConstants;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
+import javax.swing.table.TableCellEditor;
 import javax.swing.SpinnerNumberModel;
+
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+
+import javax.swing.ListSelectionModel;
 
 public class ResearchersTableView extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -49,9 +55,10 @@ public class ResearchersTableView extends JPanel {
 	private ResearcherTableModel researcherModel;
 	private JTable table;
 
+	@SuppressWarnings("unused")
 	private Faculty faculty;
-	
 	private JButton btnEliminar;
+	private JLabel lblDatosDeInvestigadores;
 
 	public ResearchersTableView(Faculty faculty) {
 		this.faculty = faculty;
@@ -59,68 +66,75 @@ public class ResearchersTableView extends JPanel {
 		setBackground(Color.WHITE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{70, 100, 100, 30, 70, 100, 0, 70, 50, 0, 100, 0};
-		gridBagLayout.rowHeights = new int[]{26, 207, 0};
+		gridBagLayout.rowHeights = new int[]{0, 26, 207, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
+		GridBagConstraints gbc_lblDatosDeInvestigadores = new GridBagConstraints();
+		gbc_lblDatosDeInvestigadores.fill = GridBagConstraints.BOTH;
+		gbc_lblDatosDeInvestigadores.gridwidth = 11;
+		gbc_lblDatosDeInvestigadores.insets = new Insets(0, 0, 5, 5);
+		gbc_lblDatosDeInvestigadores.gridx = 0;
+		gbc_lblDatosDeInvestigadores.gridy = 0;
+		add(getLblDatosDeInvestigadores(), gbc_lblDatosDeInvestigadores);
 		GridBagConstraints gbc_lblFiltrar = new GridBagConstraints();
 		gbc_lblFiltrar.fill = GridBagConstraints.HORIZONTAL;
 		gbc_lblFiltrar.insets = new Insets(0, 0, 5, 5);
 		gbc_lblFiltrar.gridx = 0;
-		gbc_lblFiltrar.gridy = 0;
+		gbc_lblFiltrar.gridy = 1;
 		add(getLblFiltrar(), gbc_lblFiltrar);
 		GridBagConstraints gbc_filterProfesors = new GridBagConstraints();
 		gbc_filterProfesors.fill = GridBagConstraints.HORIZONTAL;
 		gbc_filterProfesors.anchor = GridBagConstraints.SOUTH;
 		gbc_filterProfesors.insets = new Insets(0, 0, 5, 5);
 		gbc_filterProfesors.gridx = 1;
-		gbc_filterProfesors.gridy = 0;
+		gbc_filterProfesors.gridy = 1;
 		add(getFilterProfesors(), gbc_filterProfesors);
 		GridBagConstraints gbc_filterStudents = new GridBagConstraints();
 		gbc_filterStudents.anchor = GridBagConstraints.SOUTH;
 		gbc_filterStudents.fill = GridBagConstraints.HORIZONTAL;
 		gbc_filterStudents.insets = new Insets(0, 0, 5, 5);
 		gbc_filterStudents.gridx = 2;
-		gbc_filterStudents.gridy = 0;
+		gbc_filterStudents.gridy = 1;
 		add(getFilterStudents(), gbc_filterStudents);
 		GridBagConstraints gbc_lblNombre = new GridBagConstraints();
 		gbc_lblNombre.anchor = GridBagConstraints.NORTH;
 		gbc_lblNombre.fill = GridBagConstraints.HORIZONTAL;
 		gbc_lblNombre.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNombre.gridx = 4;
-		gbc_lblNombre.gridy = 0;
+		gbc_lblNombre.gridy = 1;
 		add(getLblNombre(), gbc_lblNombre);
 		GridBagConstraints gbc_filterByName = new GridBagConstraints();
 		gbc_filterByName.fill = GridBagConstraints.HORIZONTAL;
 		gbc_filterByName.insets = new Insets(0, 0, 5, 5);
 		gbc_filterByName.gridx = 5;
-		gbc_filterByName.gridy = 0;
+		gbc_filterByName.gridy = 1;
 		add(getFilterByName(), gbc_filterByName);
 		GridBagConstraints gbc_lblPuntuacin = new GridBagConstraints();
 		gbc_lblPuntuacin.anchor = GridBagConstraints.NORTH;
 		gbc_lblPuntuacin.fill = GridBagConstraints.HORIZONTAL;
 		gbc_lblPuntuacin.insets = new Insets(0, 0, 5, 5);
 		gbc_lblPuntuacin.gridx = 7;
-		gbc_lblPuntuacin.gridy = 0;
+		gbc_lblPuntuacin.gridy = 1;
 		add(getLblPuntuacin(), gbc_lblPuntuacin);
 		GridBagConstraints gbc_spinner = new GridBagConstraints();
 		gbc_spinner.fill = GridBagConstraints.HORIZONTAL;
 		gbc_spinner.insets = new Insets(0, 0, 5, 5);
 		gbc_spinner.gridx = 8;
-		gbc_spinner.gridy = 0;
+		gbc_spinner.gridy = 1;
 		add(getSpinner(), gbc_spinner);
 		GridBagConstraints gbc_btnEliminar = new GridBagConstraints();
 		gbc_btnEliminar.anchor = GridBagConstraints.SOUTH;
 		gbc_btnEliminar.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnEliminar.insets = new Insets(0, 0, 5, 0);
 		gbc_btnEliminar.gridx = 10;
-		gbc_btnEliminar.gridy = 0;
+		gbc_btnEliminar.gridy = 1;
 		add(getBtnEliminar(), gbc_btnEliminar);
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
 		gbc_scrollPane.fill = GridBagConstraints.BOTH;
 		gbc_scrollPane.gridwidth = 11;
 		gbc_scrollPane.gridx = 0;
-		gbc_scrollPane.gridy = 1;
+		gbc_scrollPane.gridy = 2;
 		add(getScrollPane(), gbc_scrollPane);
 
 		researcherModel = new ResearcherTableModel(faculty);
@@ -128,11 +142,9 @@ public class ResearchersTableView extends JPanel {
 
 		initTableData();	
 	}
-	
+
 	private void initTableData() {
-		for (Researcher r: faculty.getResearchers()) {
-			((ResearcherTableModel)table.getModel()).addNew(r);
-		}
+		((ResearcherTableModel)table.getModel()).fill();
 	}
 
 	private JCheckBox getFilterStudents() {
@@ -142,7 +154,6 @@ public class ResearchersTableView extends JPanel {
 				public void actionPerformed(ActionEvent arg0) {
 					ResearcherTableModel tmodel = (ResearcherTableModel)table.getModel();
 					tmodel.includeStudents(filterStudents.isSelected());
-					tmodel.applyFilters();
 				}
 			});
 			filterStudents.setBackground(Color.WHITE);
@@ -160,7 +171,6 @@ public class ResearchersTableView extends JPanel {
 				public void actionPerformed(ActionEvent arg0) {
 					ResearcherTableModel tmodel = (ResearcherTableModel)table.getModel();
 					tmodel.includeProfesors(filterProfesors.isSelected());
-					tmodel.applyFilters();
 				}
 			});
 			filterProfesors.setBackground(Color.WHITE);
@@ -198,7 +208,6 @@ public class ResearchersTableView extends JPanel {
 				public void keyTyped(KeyEvent arg0) {
 					ResearcherTableModel tmodel = (ResearcherTableModel)table.getModel();
 					tmodel.setMinScore((int)spinner.getValue());
-					tmodel.applyFilters();
 				}
 			});
 			spinner.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
@@ -206,7 +215,6 @@ public class ResearchersTableView extends JPanel {
 				public void stateChanged(ChangeEvent event) {
 					ResearcherTableModel tmodel = (ResearcherTableModel)table.getModel();
 					tmodel.setMinScore((int)spinner.getValue());
-					tmodel.applyFilters();
 				}
 			});
 		}
@@ -230,7 +238,6 @@ public class ResearchersTableView extends JPanel {
 					if (event.getKeyCode() != 16) {		
 						ResearcherTableModel tmodel = (ResearcherTableModel)table.getModel();
 						tmodel.setFilterName(filterByName.getText());
-						tmodel.applyFilters();
 					}
 				}
 			});
@@ -248,18 +255,30 @@ public class ResearchersTableView extends JPanel {
 	private JTable getTable_1() {
 		if (table == null) {
 			table = new JTable();
-			table.setFillsViewportHeight(true);
-			table.addMouseListener(new MouseAdapter() {
+			table.addFocusListener(new FocusAdapter() {
 				@Override
-				public void mouseClicked(MouseEvent event) {
-					final int row = table.getSelectedRow();
+				public void focusLost(FocusEvent event) {
+					TableCellEditor tce = table.getCellEditor();
 
-					
-					if (row >= 0) {
-						btnEliminar.setVisible(true);
+					if(tce != null) {
+						tce.stopCellEditing();
+						int row = table.getSelectedRow();
+						int ID = (int)table.getModel().getValueAt(row, 0);
+						Researcher researcher = faculty.findResearcher(ID);
+
+						try {
+							EditResearcherJDialog dialog = new EditResearcherJDialog(researcher);
+							dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+							dialog.setVisible(true);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
 					}
 				}
 			});
+			table.setFillsViewportHeight(true);
+			table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+			table.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 			table.setBackground(Color.WHITE);
 		}
 		return table;
@@ -277,5 +296,16 @@ public class ResearchersTableView extends JPanel {
 			btnEliminar.setBackground(Color.WHITE);
 		}
 		return btnEliminar;
+	}
+
+	public void updateTable() {
+		((ResearcherTableModel)table.getModel()).fill();
+	}
+	private JLabel getLblDatosDeInvestigadores() {
+		if (lblDatosDeInvestigadores == null) {
+			lblDatosDeInvestigadores = new JLabel("Datos de investigadores registrados");
+			lblDatosDeInvestigadores.setFont(new Font("Segoe UI", Font.PLAIN, 25));
+		}
+		return lblDatosDeInvestigadores;
 	}
 }

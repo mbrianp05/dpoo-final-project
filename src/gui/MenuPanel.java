@@ -1,5 +1,6 @@
 package gui;
 
+import gui.event.OnAddedResearcher;
 import gui.views.ResearcherFormView;
 
 import javax.swing.JPanel;
@@ -18,16 +19,15 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
 import gui.views.ResearchersTableView;
-import java.awt.BorderLayout;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.CardLayout;
 
 public class MenuPanel extends JPanel {
-private static final long serialVersionUID = 3762125698246597691L;
-	
+	private static final long serialVersionUID = 3762125698246597691L;
+
 	private Faculty faculty;
 	private JMenuBar menuBar;
 	private JMenu management;
@@ -43,18 +43,17 @@ private static final long serialVersionUID = 3762125698246597691L;
 	private JMenuItem researchersTableMenu;
 	private JPanel contentPanel;
 	private ResearcherFormView researcherFormView;
-	private JLabel lblInsertarInvestigador;
 	private ResearchersTableView researchersTableView;
-	
+
 	public MenuPanel(Faculty faculty) {
 		this.faculty = faculty;
 
 		setBackground(Color.WHITE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{1092, 0};
-		gridBagLayout.rowHeights = new int[]{74, 0, 421, 0};
+		gridBagLayout.rowHeights = new int[]{74, 421, 0};
 		gridBagLayout.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		GridBagConstraints gbc_menuBar = new GridBagConstraints();
 		gbc_menuBar.fill = GridBagConstraints.BOTH;
@@ -62,19 +61,11 @@ private static final long serialVersionUID = 3762125698246597691L;
 		gbc_menuBar.gridx = 0;
 		gbc_menuBar.gridy = 0;
 		add(getMenuBar(), gbc_menuBar);
-		GridBagConstraints gbc_lblInsertarInvestigador = new GridBagConstraints();
-		gbc_lblInsertarInvestigador.insets = new Insets(0, 0, 5, 0);
-		gbc_lblInsertarInvestigador.fill = GridBagConstraints.BOTH;
-		gbc_lblInsertarInvestigador.gridx = 0;
-		gbc_lblInsertarInvestigador.gridy = 1;
-		add(getLblInsertarInvestigador(), gbc_lblInsertarInvestigador);
 		GridBagConstraints gbc_contentPanel = new GridBagConstraints();
 		gbc_contentPanel.fill = GridBagConstraints.BOTH;
 		gbc_contentPanel.gridx = 0;
-		gbc_contentPanel.gridy = 2;
+		gbc_contentPanel.gridy = 1;
 		add(getContentPanel(), gbc_contentPanel);
-		
-		switchView(researcherFormView);
 	}
 	private JMenuBar getMenuBar() {
 		if (menuBar == null) {
@@ -94,20 +85,18 @@ private static final long serialVersionUID = 3762125698246597691L;
 		}
 		return management;
 	}
-	
-	private void switchView(JPanel panel) {
-		researcherFormView.setVisible(false);
-		researchersTableView.setVisible(false);
-		
-		panel.setVisible(true);
+
+	private void switchView(String view) {
+		CardLayout cl = (CardLayout)(contentPanel.getLayout());
+		cl.show(contentPanel, view);
 	}
-	
+
 	private JMenuItem getNewResearcherMenu() {
 		if (newResearcherMenu == null) {
 			newResearcherMenu = new JMenuItem("Insertar investigadores");
 			newResearcherMenu.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					switchView(researcherFormView);
+					switchView("Researcher Form");
 				}
 			});
 			newResearcherMenu.setBackground(Color.WHITE);
@@ -185,8 +174,7 @@ private static final long serialVersionUID = 3762125698246597691L;
 			researchersTableMenu = new JMenuItem("Tabla de datos");
 			researchersTableMenu.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					researchersTableView.setVisible(true);
-					researcherFormView.setVisible(false);
+					switchView("Researchers Table");
 				}
 			});
 			researchersTableMenu.setBackground(Color.WHITE);
@@ -197,26 +185,23 @@ private static final long serialVersionUID = 3762125698246597691L;
 		if (contentPanel == null) {
 			contentPanel = new JPanel();
 			contentPanel.setBackground(Color.WHITE);
-			contentPanel.setLayout(new BorderLayout(0, 0));
-			contentPanel.add(getResearcherForm());
-			contentPanel.add(getResearchersTableView());
+			contentPanel.setLayout(new CardLayout(0, 0));	
+			contentPanel.add(getResearcherForm(), "Researcher Form");
+			contentPanel.add(getResearchersTableView(), "Researchers Table");
 		}
 		return contentPanel;
 	}
 	private ResearcherFormView getResearcherForm() {
 		if (researcherFormView == null) {
 			researcherFormView = new ResearcherFormView(faculty);
+			researcherFormView.listenTo(new OnAddedResearcher() {
+				@Override
+				public void added(int researcherID) {
+					researchersTableView.updateTable();
+				}
+			});
 		}
 		return researcherFormView;
-	}
-	private JLabel getLblInsertarInvestigador() {
-		if (lblInsertarInvestigador == null) {
-			lblInsertarInvestigador = new JLabel("Insertar investigador");
-			lblInsertarInvestigador.setFont(new Font("Segoe UI", Font.PLAIN, 20));
-			lblInsertarInvestigador.setBackground(Color.WHITE);
-			lblInsertarInvestigador.setHorizontalAlignment(SwingConstants.LEFT);
-		}
-		return lblInsertarInvestigador;
 	}
 	private ResearchersTableView getResearchersTableView() {
 		if (researchersTableView == null) {
