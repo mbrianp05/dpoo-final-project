@@ -23,6 +23,7 @@ import javax.swing.JButton;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.SystemColor;
 
 public class EditResearcherJDialog extends JDialog {
 	private static final long serialVersionUID = -8039865322179654975L;
@@ -83,6 +84,7 @@ public class EditResearcherJDialog extends JDialog {
 	private JPanel getPanel() {
 		if (panel == null) {
 			panel = new JPanel();
+			panel.setBackground(Color.DARK_GRAY);
 			panel.add(getBtnRemove());
 			panel.add(getBtnA());
 		}

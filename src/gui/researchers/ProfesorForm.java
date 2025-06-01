@@ -54,16 +54,18 @@ public class ProfesorForm extends JPanel {
 	private JPanel panel;
 	private JTextField textFieldName;
 	private OnAddedResearcher listener;
-	private JLabel lblFeedback;
 	private ErrorLabel errorLabel;
+	private JLabel lblFeedback;
 
+	/**
+	 * @wbp.parser.constructor
+	 */
 	public ProfesorForm(Faculty faculty) {
 		this.faculty = faculty;
 		editing = false;
 
 		setBackground(Color.WHITE);
 		setLayout(new BorderLayout(0, 0));
-		add(getLblFeedback(), BorderLayout.NORTH);
 		add(getPanel());
 	}
 
@@ -319,10 +321,16 @@ public class ProfesorForm extends JPanel {
 			panel.setBackground(Color.WHITE);
 			GridBagLayout gbl_panel = new GridBagLayout();
 			gbl_panel.columnWidths = new int[]{50, 383, 50, 0};
-			gbl_panel.rowHeights = new int[]{0, 29, 30, 0, 0, 30, 0, 0, 30, 0, 0, 30, 0, 0, 0, 0};
+			gbl_panel.rowHeights = new int[]{30, 29, 30, 28, 0, 30, 28, 0, 30, 28, 0, 30, 28, 0, 28, 0};
 			gbl_panel.columnWeights = new double[]{1.0, 1.0, 1.0, Double.MIN_VALUE};
 			gbl_panel.rowWeights = new double[]{1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 1.0, Double.MIN_VALUE};
 			panel.setLayout(gbl_panel);
+			GridBagConstraints gbc_lblFeedback = new GridBagConstraints();
+			gbc_lblFeedback.fill = GridBagConstraints.BOTH;
+			gbc_lblFeedback.insets = new Insets(0, 0, 5, 5);
+			gbc_lblFeedback.gridx = 1;
+			gbc_lblFeedback.gridy = 0;
+			panel.add(getLblFeedback(), gbc_lblFeedback);
 			GridBagConstraints gbc_lblName = new GridBagConstraints();
 			gbc_lblName.anchor = GridBagConstraints.WEST;
 			gbc_lblName.insets = new Insets(0, 0, 5, 5);
@@ -331,7 +339,7 @@ public class ProfesorForm extends JPanel {
 			panel.add(getLblName(), gbc_lblName);
 			GridBagConstraints gbc_textFieldName = new GridBagConstraints();
 			gbc_textFieldName.insets = new Insets(0, 0, 5, 5);
-			gbc_textFieldName.fill = GridBagConstraints.HORIZONTAL;
+			gbc_textFieldName.fill = GridBagConstraints.BOTH;
 			gbc_textFieldName.gridx = 1;
 			gbc_textFieldName.gridy = 2;
 			panel.add(getTextFieldName(), gbc_textFieldName);
@@ -398,15 +406,6 @@ public class ProfesorForm extends JPanel {
 		}
 		return textFieldName;
 	}
-	private JLabel getLblFeedback() {
-		if (lblFeedback == null) {
-			lblFeedback = new JLabel("");
-			lblFeedback.setHorizontalAlignment(SwingConstants.CENTER);
-			lblFeedback.setForeground(new Color(102, 204, 153));
-			lblFeedback.setFont(new Font("Segoe UI", Font.PLAIN, 15));
-		}
-		return lblFeedback;
-	}
 	private ErrorLabel getErrorLabel() {
 		if (errorLabel == null) {
 			errorLabel = new ErrorLabel();
@@ -414,5 +413,14 @@ public class ProfesorForm extends JPanel {
 			errorLabel.setText("");
 		}
 		return errorLabel;
+	}
+	private JLabel getLblFeedback() {
+		if (lblFeedback == null) {
+			lblFeedback = new JLabel("");
+			lblFeedback.setHorizontalAlignment(SwingConstants.CENTER);
+			lblFeedback.setForeground(new Color(51, 102, 51));
+			lblFeedback.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		}
+		return lblFeedback;
 	}
 }

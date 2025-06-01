@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import java.awt.Color;
 
 import schooling.Faculty;
+import utils.Mock;
 
 import java.awt.Font;
 
@@ -47,6 +48,9 @@ public class MenuPanel extends JPanel {
 
 	public MenuPanel(Faculty faculty) {
 		this.faculty = faculty;
+		
+		// Mock data
+		Mock.mockFacultyData(faculty);
 
 		setBackground(Color.WHITE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
