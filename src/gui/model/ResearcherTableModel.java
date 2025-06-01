@@ -93,7 +93,7 @@ public class ResearcherTableModel extends DefaultTableModel {
 			filtered = researchers;
 		} else {
 			for (Researcher r: researchers) {
-				if (r.getScore() > filterMinScore) {
+				if (r.getScore() >= filterMinScore) {
 					filtered.add(r);
 				}
 			}
