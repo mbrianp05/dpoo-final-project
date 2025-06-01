@@ -210,4 +210,21 @@ public class Faculty {
 
         return total;
     }
+
+    // Cambia de materia de investigacion a un investigador
+	public void moveToOtherMatter(int ID, String newMatterName) {
+		ResearchMatter newMatter = findResearchMatter(newMatterName);
+		
+		if (newMatter == null) {
+			throw new IllegalArgumentException("No matter with name " + newMatterName + "exists");
+		}
+		
+		Researcher r = findResearcher(ID);
+		ResearchMatter matter = findMatterOf(ID);
+		
+		newMatter.addResearcher(r);
+		
+		if (matter != null) 
+			matter.getResearchers().remove(r);
+	}
 }

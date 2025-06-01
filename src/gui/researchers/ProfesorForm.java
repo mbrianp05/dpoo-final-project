@@ -133,11 +133,11 @@ public class ProfesorForm extends JPanel {
 					break;
 				case Permanent:
 				default:
-					index = 2;
+					index = 3;
 					break;
 				}
 
-				researchMatterComboBox.setSelectedIndex(index);
+				comboBoxProfesorCategory.setSelectedIndex(index);
 			}
 		}
 		return comboBoxProfesorCategory;
@@ -167,7 +167,7 @@ public class ProfesorForm extends JPanel {
 					}
 				}
 
-				researchMatterComboBox.setSelectedIndex(index);
+				comboBoxDegree.setSelectedIndex(index);
 			}
 		}
 		return comboBoxDegree;
@@ -182,6 +182,7 @@ public class ProfesorForm extends JPanel {
 			break;
 		case 2:
 			degree = Degree.Doctor;
+			break;
 		case 0:
 		default:
 			degree = null;
@@ -233,26 +234,51 @@ public class ProfesorForm extends JPanel {
 	}
 
 	private void sendFeedback() {
-		lblFeedback.setText("Se ha registrado el investigador correctamente");
+		lblFeedback.setText(editing ? "Se ha actualizado correctamente" : "Se ha registrado el investigador correctamente");
 	}
 
+	private void insert() {
+		if (Validation.notEmpty(textFieldName.getText())) {
+			int id = faculty.addProfesor(textFieldName.getText(), getDegree(), getCategory(), getMatter());
+
+			if (listener != null) {
+				listener.added(id);
+			}
+
+			resetForm();
+			sendFeedback();
+		} else {
+			errorLabel.setText("El nombre es requerido");
+		}
+	}
+	
+	private void update() {
+		if (Validation.notEmpty(textFieldName.getText())) {
+			Profesor r = (Profesor)faculty.findResearcher(profesor.getID());
+
+			r.setName(textFieldName.getText());
+			r.setCategory(getCategory());
+			r.setDegree(getDegree());
+			
+			faculty.moveToOtherMatter(r.getID(), getMatter());
+			
+			if (listener != null) {
+				listener.added(r.getID());
+			}
+
+			sendFeedback();
+		} else {
+			errorLabel.setText("El nombre es requerido");
+		}
+	}
+	
 	private JButton getBtnSubmit() {
 		if (btnSubmit == null) {
 			btnSubmit = new JButton(editing ? "Actualizar" : "Registrar  profesor");
 			btnSubmit.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					if (Validation.notEmpty(textFieldName.getText())) {
-						int id = faculty.addProfesor(textFieldName.getText(), getDegree(), getCategory(), getMatter());
-
-						if (listener != null) {
-							listener.added(id);
-						}
-
-						resetForm();
-						sendFeedback();
-					} else {
-						errorLabel.setText("El nombre es requerido");
-					}
+					if (!editing) insert();
+					else update();
 				}
 			});
 			btnSubmit.setBackground(new Color(255, 0, 51));

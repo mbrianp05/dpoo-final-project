@@ -1,5 +1,7 @@
 package gui.researchers;
 
+import gui.event.OnAddedResearcher;
+
 import java.awt.BorderLayout;
 
 import javax.swing.JDialog;
@@ -13,6 +15,8 @@ import java.awt.Color;
 
 import schooling.Faculty;
 
+import java.awt.Toolkit;
+
 public class EditResearcherJDialog extends JDialog {
 	private static final long serialVersionUID = -8039865322179654975L;
 	private final JPanel contentPanel = new JPanel();
@@ -23,6 +27,11 @@ public class EditResearcherJDialog extends JDialog {
 	private ProfesorForm profesorForm;
 	
 	public EditResearcherJDialog(Faculty faculty, Researcher researcher) {
+		setModalExclusionType(ModalExclusionType.APPLICATION_EXCLUDE);
+		setModal(true);
+		setIconImage(Toolkit.getDefaultToolkit().getImage(EditResearcherJDialog.class.getResource("/com/sun/javafx/scene/web/skin/FontBackgroundColor_16x16_JFX.png")));
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		setBackground(Color.WHITE);
 		this.researcher = researcher;
 		this.faculty = faculty;
 		
@@ -42,10 +51,17 @@ public class EditResearcherJDialog extends JDialog {
 		}
 	}
 	
+	public void listenTo(OnAddedResearcher listener) {
+		if (researcher instanceof Profesor) {
+			profesorForm.listenTo(listener);
+		}
+	}
+	
 	private ProfesorForm getProfesorForm() {
 		if (profesorForm == null) {
 			profesorForm = new ProfesorForm(faculty, (Profesor)researcher);
 		}
+		
 		return profesorForm;
 	}
 }

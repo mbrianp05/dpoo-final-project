@@ -39,7 +39,7 @@ public class ResearcherTableModel extends DefaultTableModel {
 			matterName = matter.getName();
 		}
 		
-		Object[] newRow = new Object[]{r.getID(), r.getName(), matterName, r.getScore()};
+		Object[] newRow = new Object[]{String.valueOf(r.getID()), r.getName(), matterName, r.getScore()};
 		
 		addRow(newRow);
 	}

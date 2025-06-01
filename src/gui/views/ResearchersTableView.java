@@ -1,6 +1,7 @@
 package gui.views;
 
 
+import gui.event.OnAddedResearcher;
 import gui.model.ResearcherTableModel;
 import gui.researchers.EditResearcherJDialog;
 
@@ -59,6 +60,8 @@ public class ResearchersTableView extends JPanel {
 	private Faculty faculty;
 	private JButton btnEliminar;
 	private JLabel lblDatosDeInvestigadores;
+	
+	private EditResearcherJDialog current;
 
 	public ResearchersTableView(Faculty faculty) {
 		this.faculty = faculty;
@@ -262,18 +265,28 @@ public class ResearchersTableView extends JPanel {
 
 					if(tce != null) {
 						tce.stopCellEditing();
+						
 						int row = table.getSelectedRow();
-						int ID = (int)table.getModel().getValueAt(row, 0);
+						int ID = Integer.valueOf((String)table.getModel().getValueAt(row, 0));
 						Researcher researcher = faculty.findResearcher(ID);
 						
-						try {
-							EditResearcherJDialog dialog = new EditResearcherJDialog(faculty, researcher);
-							dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-							dialog.setVisible(true);
-						} catch (Exception e) {
-							e.printStackTrace();
+						if (current == null || !current.isVisible()) {
+							try {
+								current = new EditResearcherJDialog(faculty, researcher);
+								current.listenTo(new OnAddedResearcher() {
+									@Override
+									public void added(int researcherID) {
+										((ResearcherTableModel)table.getModel()).fill();
+									}
+								});
+								current.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+								current.setVisible(true);
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
 						}
 					}
+					
 				}
 			});
 			table.setFillsViewportHeight(true);
