@@ -311,6 +311,8 @@ public class ResearchLinesFormView extends JPanel {
 			btnNewButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					if (Validation.notEmpty(textFieldName.getText())) {
+						errorName.setText("");
+						
 						if (matters.size() > 0) {
 							try {
 								String name = faculty.addResearchLine(textFieldName.getText(), getChief(), (int)minCreditsSpinner.getValue());
