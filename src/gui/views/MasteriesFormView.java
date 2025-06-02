@@ -10,14 +10,14 @@ import javax.swing.border.LineBorder;
 
 import schooling.Faculty;
 
-public class MasteriesView extends JPanel {
+public class MasteriesFormView extends JPanel {
 	private static final long serialVersionUID = -934022517279816049L;
 	private JPanel panel;
 	private Faculty faculty;
 	private JLabel lblTotalCourses;
 	private JLabel lblTotal;
 	
-	public MasteriesView (Faculty faculty){
+	public MasteriesFormView (Faculty faculty){
 		
 		this.faculty = faculty;
 		
