@@ -29,6 +29,7 @@ import java.awt.event.ActionEvent;
 import java.awt.CardLayout;
 
 import gui.views.ResearchLinesFormView;
+import gui.views.ResearchLinesTableView;
 
 public class MenuPanel extends JPanel {
 	private static final long serialVersionUID = 3762125698246597691L;
@@ -53,6 +54,8 @@ public class MenuPanel extends JPanel {
 	private JMenuItem addLineMenu;
 	private ResearchLinesFormView researchLinesFormView;
 	private JMenu mnData;
+	private JMenuItem mntmLneasDeInvestigacin;
+	private ResearchLinesTableView researchLinesTableView;
 
 	public MenuPanel(Faculty faculty) {
 		this.faculty = faculty;
@@ -202,6 +205,7 @@ public class MenuPanel extends JPanel {
 			contentPanel.add(getResearcherForm(), "Researcher Form");
 			contentPanel.add(getResearchersTableView(), "Researchers Table");
 			contentPanel.add(getResearchLinesFormView(), "Research Lines Form");
+			contentPanel.add(getResearchLinesTableView(), "Research Lines Table");
 		}
 		return contentPanel;
 	}
@@ -252,6 +256,7 @@ public class MenuPanel extends JPanel {
 				@Override
 				public void added(String name) {
 					researcherFormView.update();
+					researchLinesTableView.updateTable();
 				}
 			});
 		}
@@ -263,7 +268,25 @@ public class MenuPanel extends JPanel {
 			mnData.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 			mnData.setBackground(Color.WHITE);
 			mnData.add(getResearchersTableMenu());
+			mnData.add(getMntmLneasDeInvestigacin());
 		}
 		return mnData;
+	}
+	private JMenuItem getMntmLneasDeInvestigacin() {
+		if (mntmLneasDeInvestigacin == null) {
+			mntmLneasDeInvestigacin = new JMenuItem("L\u00EDneas de investigaci\u00F3n");
+			mntmLneasDeInvestigacin.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					switchView("Research Lines Table");
+				}
+			});
+		}
+		return mntmLneasDeInvestigacin;
+	}
+	private ResearchLinesTableView getResearchLinesTableView() {
+		if (researchLinesTableView == null) {
+			researchLinesTableView = new ResearchLinesTableView(faculty);
+		}
+		return researchLinesTableView;
 	}
 }
