@@ -47,7 +47,6 @@ public class StudentForm extends JPanel {
 	private JTextField textFieldName;
 	private OnAddedResearcher listener;
 	private ErrorLabel errorLabel;
-	private TemporaryMessage temporaryMessage;
 
 	/**
 	 * @wbp.parser.constructor
@@ -107,11 +106,6 @@ public class StudentForm extends JPanel {
 		}
 	}
 
-	private void sendFeedback() {
-		temporaryMessage.appear();
-		temporaryMessage.setText(editing ? "Se ha actualizado correctamente" : "Se ha registrado el investigador correctamente");
-	}
-
 	private void insert() {
 		if (Validation.notEmpty(textFieldName.getText())) {
 			int id = faculty.addStudent(textFieldName.getText(), getMatter());
@@ -121,7 +115,6 @@ public class StudentForm extends JPanel {
 			}
 
 			resetForm();
-			sendFeedback();
 		} else {
 			errorLabel.setText("El nombre es requerido");
 		}
@@ -138,8 +131,6 @@ public class StudentForm extends JPanel {
 			if (listener != null) {
 				listener.added(r.getID());
 			}
-
-			sendFeedback();
 		} else {
 			errorLabel.setText("El nombre es requerido");
 		}
@@ -197,51 +188,45 @@ public class StudentForm extends JPanel {
 			panel.setBackground(Color.WHITE);
 			GridBagLayout gbl_panel = new GridBagLayout();
 			gbl_panel.columnWidths = new int[]{50, 383, 50, 0};
-			gbl_panel.rowHeights = new int[]{30, 30, 50, 29, 30, 50, 0, 30, 28, 0, 28, 0};
+			gbl_panel.rowHeights = new int[]{50, 29, 30, 50, 0, 30, 50, 0, 28, 0};
 			gbl_panel.columnWeights = new double[]{1.0, 1.0, 1.0, Double.MIN_VALUE};
-			gbl_panel.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, Double.MIN_VALUE};
+			gbl_panel.rowWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 			panel.setLayout(gbl_panel);
-			GridBagConstraints gbc_temporaryMessage = new GridBagConstraints();
-			gbc_temporaryMessage.insets = new Insets(0, 0, 5, 5);
-			gbc_temporaryMessage.fill = GridBagConstraints.HORIZONTAL;
-			gbc_temporaryMessage.gridx = 1;
-			gbc_temporaryMessage.gridy = 2;
-			panel.add(getTemporaryMessage(), gbc_temporaryMessage);
 			GridBagConstraints gbc_lblName = new GridBagConstraints();
 			gbc_lblName.anchor = GridBagConstraints.WEST;
 			gbc_lblName.insets = new Insets(0, 0, 5, 5);
 			gbc_lblName.gridx = 1;
-			gbc_lblName.gridy = 3;
+			gbc_lblName.gridy = 1;
 			panel.add(getLblName(), gbc_lblName);
 			GridBagConstraints gbc_textFieldName = new GridBagConstraints();
 			gbc_textFieldName.insets = new Insets(0, 0, 5, 5);
 			gbc_textFieldName.fill = GridBagConstraints.BOTH;
 			gbc_textFieldName.gridx = 1;
-			gbc_textFieldName.gridy = 4;
+			gbc_textFieldName.gridy = 2;
 			panel.add(getTextFieldName(), gbc_textFieldName);
 			GridBagConstraints gbc_errorLabel = new GridBagConstraints();
 			gbc_errorLabel.fill = GridBagConstraints.BOTH;
 			gbc_errorLabel.insets = new Insets(0, 0, 5, 5);
 			gbc_errorLabel.gridx = 1;
-			gbc_errorLabel.gridy = 5;
+			gbc_errorLabel.gridy = 3;
 			panel.add(getErrorLabel(), gbc_errorLabel);
 			GridBagConstraints gbc_lblTemaDeInvestigacin = new GridBagConstraints();
 			gbc_lblTemaDeInvestigacin.anchor = GridBagConstraints.WEST;
 			gbc_lblTemaDeInvestigacin.insets = new Insets(0, 0, 5, 5);
 			gbc_lblTemaDeInvestigacin.gridx = 1;
-			gbc_lblTemaDeInvestigacin.gridy = 6;
+			gbc_lblTemaDeInvestigacin.gridy = 4;
 			panel.add(getLblTemaDeInvestigacin(), gbc_lblTemaDeInvestigacin);
 			GridBagConstraints gbc_researchMatterComboBox = new GridBagConstraints();
 			gbc_researchMatterComboBox.fill = GridBagConstraints.BOTH;
 			gbc_researchMatterComboBox.insets = new Insets(0, 0, 5, 5);
 			gbc_researchMatterComboBox.gridx = 1;
-			gbc_researchMatterComboBox.gridy = 7;
+			gbc_researchMatterComboBox.gridy = 5;
 			panel.add(getResearchMatterComboBox(), gbc_researchMatterComboBox);
 			GridBagConstraints gbc_btnSubmit = new GridBagConstraints();
 			gbc_btnSubmit.insets = new Insets(0, 0, 5, 5);
-			gbc_btnSubmit.anchor = GridBagConstraints.NORTHWEST;
+			gbc_btnSubmit.anchor = GridBagConstraints.NORTHEAST;
 			gbc_btnSubmit.gridx = 1;
-			gbc_btnSubmit.gridy = 9;
+			gbc_btnSubmit.gridy = 7;
 			panel.add(getBtnSubmit(), gbc_btnSubmit);
 		}
 		return panel;
@@ -265,11 +250,5 @@ public class StudentForm extends JPanel {
 			errorLabel.setText("");
 		}
 		return errorLabel;
-	}
-	private TemporaryMessage getTemporaryMessage() {
-		if (temporaryMessage == null) {
-			temporaryMessage = new TemporaryMessage();
-		}
-		return temporaryMessage;
 	}
 }

@@ -52,6 +52,7 @@ public class MenuPanel extends JPanel {
 	private JMenu linesSubemenu;
 	private JMenuItem addLineMenu;
 	private ResearchLinesFormView researchLinesFormView;
+	private JMenu mnData;
 
 	public MenuPanel(Faculty faculty) {
 		this.faculty = faculty;
@@ -83,6 +84,7 @@ public class MenuPanel extends JPanel {
 			menuBar = new JMenuBar();
 			menuBar.setBackground(Color.WHITE);
 			menuBar.add(getManagement());
+			menuBar.add(getMnData());
 			menuBar.add(getReports());
 		}
 		return menuBar;
@@ -177,13 +179,12 @@ public class MenuPanel extends JPanel {
 			researchersSubmenu = new JMenu("Investigadores");
 			researchersSubmenu.setBackground(Color.WHITE);
 			researchersSubmenu.add(getNewResearcherMenu());
-			researchersSubmenu.add(getResearchersTableMenu());
 		}
 		return researchersSubmenu;
 	}
 	private JMenuItem getResearchersTableMenu() {
 		if (researchersTableMenu == null) {
-			researchersTableMenu = new JMenuItem("Tabla de datos");
+			researchersTableMenu = new JMenuItem("Tabla de investigadores");
 			researchersTableMenu.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					switchView("Researchers Table");
@@ -255,5 +256,14 @@ public class MenuPanel extends JPanel {
 			});
 		}
 		return researchLinesFormView;
+	}
+	private JMenu getMnData() {
+		if (mnData == null) {
+			mnData = new JMenu("Datos");
+			mnData.setFont(new Font("Segoe UI", Font.PLAIN, 20));
+			mnData.setBackground(Color.WHITE);
+			mnData.add(getResearchersTableMenu());
+		}
+		return mnData;
 	}
 }
