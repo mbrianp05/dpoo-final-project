@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class Authentication {
 	private static boolean hasAccess = false;
 
-	private static boolean validateAccessCode(String username, String password) {
+	private static boolean validateCredentials(String username, String password) {
 		boolean correctCredentials = false;
 		
 		try {
@@ -27,7 +27,7 @@ public class Authentication {
 	}
 
 	public static boolean authorize(String username, String password) {
-		hasAccess = validateAccessCode(username, password);
+		hasAccess = validateCredentials(username, password);
 
 		return hasAccess;
 	}
