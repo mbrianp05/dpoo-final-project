@@ -1,6 +1,5 @@
 package gui.views;
 
-
 import gui.event.OnAddedResearcher;
 import gui.event.OnRemovedResearcher;
 import gui.model.ResearcherTableModel;
@@ -131,12 +130,6 @@ public class ResearchersTableView extends JPanel {
 
 		researcherModel = new ResearcherTableModel(faculty);
 		table.setModel(researcherModel);
-
-		initTableData();	
-	}
-
-	private void initTableData() {
-		((ResearcherTableModel)table.getModel()).fill();
 	}
 
 	private JCheckBox getFilterStudents() {
@@ -247,6 +240,7 @@ public class ResearchersTableView extends JPanel {
 	private JTable getTable_1() {
 		if (table == null) {
 			table = new JTable();
+			
 			table.addFocusListener(new FocusAdapter() {
 				@Override
 				public void focusLost(FocusEvent event) {
