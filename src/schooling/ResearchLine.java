@@ -10,10 +10,10 @@ public class ResearchLine {
 	private MasteryPlan masteryPlan;
 	private ArrayList<ResearchMatter> matters;
 
-	public ResearchLine(String name, Profesor chief, MasteryPlan masteryPlan) {
+	public ResearchLine(String name, Profesor chief, int credits) {
 		setName(name);
 		setChief(chief);
-		setMasteryPlan(masteryPlan);
+		setMasteryPlan(credits);
 		matters = new ArrayList<>();
 	}
 
@@ -40,8 +40,8 @@ public class ResearchLine {
 		matters.add(new ResearchMatter(name));
 	}
 
-	public void setMasteryPlan(MasteryPlan mastPlan) {
-		masteryPlan = mastPlan;
+	public void setMasteryPlan(int credits) {
+		masteryPlan = new MasteryPlan(credits);
 	}
 
 	public MasteryPlan getMasteryPlan() {

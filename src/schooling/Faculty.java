@@ -41,8 +41,10 @@ public class Faculty {
     	return student.getID();
     }
     
-    public void addResearchLine(String name, Profesor chief, MasteryPlan plan) {
-    	researchLines.add(new ResearchLine(name, chief, plan));
+    public String addResearchLine(String name, Profesor chief, int credits) {
+    	researchLines.add(new ResearchLine(name, chief, credits));
+    	
+    	return name;
     }
     
     public ArrayList<ResearchLine> getReseachLines() {
@@ -108,6 +110,8 @@ public class Faculty {
     			
     			j++;
     		}
+    		
+    		i++;
     	}
     	
     	return matter;
@@ -120,6 +124,20 @@ public class Faculty {
     	while (r == null && i < researchers.size()) {
     		if (researchers.get(i).getID() == ID) {
     			r = researchers.get(i);
+    		}
+    		i++;
+    	}
+    	
+    	return r;
+    }
+    
+    public ResearchLine findResearchLine(String name) {
+    	ResearchLine r = null;
+    	
+    	int i = 0;
+    	while (r == null && i < researchLines.size()) {
+    		if (researchLines.get(i).getName().equals(name)) {
+    			r = researchLines.get(i);
     		}
     		i++;
     	}

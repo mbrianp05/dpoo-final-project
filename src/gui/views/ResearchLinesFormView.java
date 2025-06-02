@@ -11,7 +11,10 @@ import java.awt.Font;
 
 import schooling.Faculty;
 import schooling.Profesor;
+import schooling.ResearchLine;
 import schooling.ResearchMatter;
+import utils.ArrayLib;
+import utils.Validation;
 
 import javax.swing.SwingConstants;
 
@@ -27,20 +30,26 @@ import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.JButton;
 import javax.swing.SpinnerNumberModel;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
+import gui.component.ErrorLabel;
+import gui.event.OnAddedResearchLine;
 
 public class ResearchLinesFormView extends JPanel {
 	private static final long serialVersionUID = 3971105665570208468L;
 	private Faculty faculty;
+	private OnAddedResearchLine listener;
+	
 	private JLabel lblAgregarLneaDe;
 	private JLabel lblNombre;
 	private JTextField textFieldName;
 	private JLabel lblProfesor;
-	private JComboBox<String> comboBox;
+	private JComboBox<String> chiefCombox;
 	private JLabel lblMaestra;
 	private JLabel lblCrditoNecesario;
-	private JSpinner spinner;
+	private JSpinner minCreditsSpinner;
 	private JLabel lblTemas;
 	private JLabel lblAgregarTema;
 	private JTextField textFieldMatterName;
@@ -48,7 +57,9 @@ public class ResearchLinesFormView extends JPanel {
 	private JButton btnNewButton;
 	private JLabel lblMatterNames;
 	
-	private ArrayList<ResearchMatter> matters;
+	private ArrayList<String> matters;
+	private ErrorLabel errorLabel;
+	private ErrorLabel errorName;
 	
 	public ResearchLinesFormView(Faculty faculty) {
 		this.faculty = faculty;
@@ -82,6 +93,13 @@ public class ResearchLinesFormView extends JPanel {
 		gbc_textFieldName.gridx = 1;
 		gbc_textFieldName.gridy = 4;
 		add(getTextFieldName(), gbc_textFieldName);
+		GridBagConstraints gbc_errorName = new GridBagConstraints();
+		gbc_errorName.anchor = GridBagConstraints.NORTHWEST;
+		gbc_errorName.gridwidth = 3;
+		gbc_errorName.insets = new Insets(0, 0, 5, 5);
+		gbc_errorName.gridx = 1;
+		gbc_errorName.gridy = 5;
+		add(getErrorName(), gbc_errorName);
 		GridBagConstraints gbc_lblProfesor = new GridBagConstraints();
 		gbc_lblProfesor.gridwidth = 4;
 		gbc_lblProfesor.fill = GridBagConstraints.BOTH;
@@ -89,13 +107,13 @@ public class ResearchLinesFormView extends JPanel {
 		gbc_lblProfesor.gridx = 1;
 		gbc_lblProfesor.gridy = 6;
 		add(getLblProfesor(), gbc_lblProfesor);
-		GridBagConstraints gbc_comboBox = new GridBagConstraints();
-		gbc_comboBox.gridwidth = 4;
-		gbc_comboBox.insets = new Insets(0, 0, 5, 5);
-		gbc_comboBox.fill = GridBagConstraints.BOTH;
-		gbc_comboBox.gridx = 1;
-		gbc_comboBox.gridy = 7;
-		add(getComboBox(), gbc_comboBox);
+		GridBagConstraints gbc_chiefCombox = new GridBagConstraints();
+		gbc_chiefCombox.gridwidth = 4;
+		gbc_chiefCombox.insets = new Insets(0, 0, 5, 5);
+		gbc_chiefCombox.fill = GridBagConstraints.BOTH;
+		gbc_chiefCombox.gridx = 1;
+		gbc_chiefCombox.gridy = 7;
+		add(getChiefCombox(), gbc_chiefCombox);
 		GridBagConstraints gbc_lblTemas = new GridBagConstraints();
 		gbc_lblTemas.fill = GridBagConstraints.BOTH;
 		gbc_lblTemas.insets = new Insets(0, 0, 5, 5);
@@ -129,6 +147,13 @@ public class ResearchLinesFormView extends JPanel {
 		gbc_button.gridx = 4;
 		gbc_button.gridy = 10;
 		add(getButton(), gbc_button);
+		GridBagConstraints gbc_errorLabel = new GridBagConstraints();
+		gbc_errorLabel.anchor = GridBagConstraints.NORTHWEST;
+		gbc_errorLabel.gridwidth = 2;
+		gbc_errorLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_errorLabel.gridx = 2;
+		gbc_errorLabel.gridy = 11;
+		add(getErrorLabel(), gbc_errorLabel);
 		GridBagConstraints gbc_lblMaestra = new GridBagConstraints();
 		gbc_lblMaestra.gridwidth = 4;
 		gbc_lblMaestra.fill = GridBagConstraints.BOTH;
@@ -142,12 +167,12 @@ public class ResearchLinesFormView extends JPanel {
 		gbc_lblCrditoNecesario.gridx = 1;
 		gbc_lblCrditoNecesario.gridy = 13;
 		add(getLblCrditoNecesario(), gbc_lblCrditoNecesario);
-		GridBagConstraints gbc_spinner = new GridBagConstraints();
-		gbc_spinner.fill = GridBagConstraints.BOTH;
-		gbc_spinner.insets = new Insets(0, 0, 5, 5);
-		gbc_spinner.gridx = 2;
-		gbc_spinner.gridy = 13;
-		add(getSpinner(), gbc_spinner);
+		GridBagConstraints gbc_minCreditsSpinner = new GridBagConstraints();
+		gbc_minCreditsSpinner.fill = GridBagConstraints.BOTH;
+		gbc_minCreditsSpinner.insets = new Insets(0, 0, 5, 5);
+		gbc_minCreditsSpinner.gridx = 2;
+		gbc_minCreditsSpinner.gridy = 13;
+		add(getMinCreditsSpinner(), gbc_minCreditsSpinner);
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
 		gbc_btnNewButton.fill = GridBagConstraints.VERTICAL;
 		gbc_btnNewButton.gridwidth = 2;
@@ -158,6 +183,10 @@ public class ResearchLinesFormView extends JPanel {
 		add(getBtnNewButton(), gbc_btnNewButton);
 	}
 
+	public void listenTo(OnAddedResearchLine listener) {
+		this.listener = listener;
+	}
+	
 	private JLabel getLblAgregarLneaDe() {
 		if (lblAgregarLneaDe == null) {
 			lblAgregarLneaDe = new JLabel("Agregar l\u00EDnea de investigaci\u00F3n");
@@ -195,15 +224,15 @@ public class ResearchLinesFormView extends JPanel {
 			names[i] = profesors.get(i).getName();
 		}
 		
-		comboBox.setModel(new DefaultComboBoxModel<>(names));
+		chiefCombox.setModel(new DefaultComboBoxModel<>(names));
 	}
 	
-	private JComboBox<String> getComboBox() {
-		if (comboBox == null) {
-			comboBox = new JComboBox<String>();
+	private JComboBox<String> getChiefCombox() {
+		if (chiefCombox == null) {
+			chiefCombox = new JComboBox<String>();
 			fetchProfesors();
 		}
-		return comboBox;
+		return chiefCombox;
 	}
 	private JLabel getLblMaestra() {
 		if (lblMaestra == null) {
@@ -220,12 +249,12 @@ public class ResearchLinesFormView extends JPanel {
 		}
 		return lblCrditoNecesario;
 	}
-	private JSpinner getSpinner() {
-		if (spinner == null) {
-			spinner = new JSpinner();
-			spinner.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
+	private JSpinner getMinCreditsSpinner() {
+		if (minCreditsSpinner == null) {
+			minCreditsSpinner = new JSpinner();
+			minCreditsSpinner.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
 		}
-		return spinner;
+		return minCreditsSpinner;
 	}
 	private JLabel getLblTemas() {
 		if (lblTemas == null) {
@@ -254,20 +283,14 @@ public class ResearchLinesFormView extends JPanel {
 			button = new JButton("+");
 			button.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					matters.add(new ResearchMatter(textFieldMatterName.getText()));
-					textFieldMatterName.setText("");
-					lblMatterNames.setText("");
-					
-					for (int i = 0; i < matters.size(); i++) {
-						lblMatterNames.setText(lblMatterNames.getText() + matters.get(i).getName());
+					if (!textFieldMatterName.getText().trim().isEmpty()) {
+						errorLabel.setText("");
 						
-						if (i + 1 != matters.size()) {
-							if (i == matters.size() - 2) {
-								lblMatterNames.setText(lblMatterNames.getText() + " y ");
-							} else {
-								lblMatterNames.setText(lblMatterNames.getText() + ", ");
-							}
-						}
+						matters.add(textFieldMatterName.getText());
+						textFieldMatterName.setText("");
+						lblMatterNames.setText(ArrayLib.join(matters));
+					} else {
+						errorLabel.setText("El tema no puede estar vacío");
 					}
 				}
 			});
@@ -275,9 +298,44 @@ public class ResearchLinesFormView extends JPanel {
 		}
 		return button;
 	}
+	
+	public Profesor getChief() {
+		int index = chiefCombox.getSelectedIndex();
+		
+		return faculty.getProfesors().get(index);
+	}
+	
 	private JButton getBtnNewButton() {
 		if (btnNewButton == null) {
 			btnNewButton = new JButton("Agregar");
+			btnNewButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					if (Validation.notEmpty(textFieldName.getText())) {
+						if (matters.size() > 0) {
+							try {
+								String name = faculty.addResearchLine(textFieldName.getText(), getChief(), (int)minCreditsSpinner.getValue());
+								ResearchLine line = faculty.findResearchLine(name);
+								
+								for (String matter : matters) {
+									line.addMatter(matter);
+								}
+								
+								if (listener != null) {
+									listener.added(textFieldName.getText());
+								}
+								
+								resetForm();
+							} catch (Exception e) {
+								// TODO: handle exception
+							}
+						} else {
+							errorLabel.setText("Debe existir al menos un tema de investigación");
+						}
+					} else {
+						errorName.setText("El nombre no puede estar vacío");
+					}
+				}
+			});
 			btnNewButton.setBackground(Color.WHITE);
 		}
 		return btnNewButton;
@@ -289,5 +347,27 @@ public class ResearchLinesFormView extends JPanel {
 			lblMatterNames.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		}
 		return lblMatterNames;
+	}
+	private ErrorLabel getErrorLabel() {
+		if (errorLabel == null) {
+			errorLabel = new ErrorLabel();
+			errorLabel.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		}
+		return errorLabel;
+	}
+	private ErrorLabel getErrorName() {
+		if (errorName == null) {
+			errorName = new ErrorLabel();
+			errorName.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		}
+		return errorName;
+	}
+	
+	private void resetForm() {
+		matters.clear();
+		minCreditsSpinner.setValue(1);
+		textFieldName.setText("");
+		lblMatterNames.setText("");
+		chiefCombox.setSelectedIndex(-1);
 	}
 }

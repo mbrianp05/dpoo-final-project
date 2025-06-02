@@ -52,6 +52,11 @@ public class ResearcherFormView extends JPanel {
 		add(getTabbedPane(), gbc_tabbedPane);
 	}
 	
+	public void update() {
+		studentForm.fetchData();
+		profesorForm.fetchData();
+	}
+	
 	public void listenTo(OnAddedResearcher listener) {
 		profesorForm.listenTo(listener);
 		studentForm.listenTo(listener);

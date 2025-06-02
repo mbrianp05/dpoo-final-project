@@ -12,16 +12,13 @@ public class Mock {
 		/// Datos de prueba
 		int profesorID = faculty.addProfesor("Juan", Degree.Doctor, ProfesorCategory.Permanent, null);
 		
-		faculty.addResearchLine("Inteligencia artificial", null, null);
+		faculty.addResearchLine("Inteligencia artificial", faculty.getProfesors().get(0), 10);
 		ResearchLine line = faculty.getReseachLines().get(0);
 		
 		line.addMatter("IAs Generativas");
 		line.addMatter("Transformers");
 		
-		MasteryPlan plan = new MasteryPlan(20);
-		plan.addCourse("Curso 1", "test", (Profesor)faculty.findResearcher(profesorID), 2);
-		
-		line.setMasteryPlan(plan);
+		line.getMasteryPlan().addCourse("Curso 1", "test", (Profesor)faculty.findResearcher(profesorID), 2);
 		
 		faculty.addStudent("Brian", "IAs Generativas");
 		

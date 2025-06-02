@@ -1,5 +1,6 @@
 package gui;
 
+import gui.event.OnAddedResearchLine;
 import gui.event.OnAddedResearcher;
 import gui.views.ResearcherFormView;
 
@@ -246,6 +247,12 @@ public class MenuPanel extends JPanel {
 	private ResearchLinesFormView getResearchLinesFormView() {
 		if (researchLinesFormView == null) {
 			researchLinesFormView = new ResearchLinesFormView(faculty);
+			researchLinesFormView.listenTo(new OnAddedResearchLine() {
+				@Override
+				public void added(String name) {
+					researcherFormView.update();
+				}
+			});
 		}
 		return researchLinesFormView;
 	}

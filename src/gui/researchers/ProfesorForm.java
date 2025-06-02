@@ -289,6 +289,11 @@ public class ProfesorForm extends JPanel {
 		}
 		return btnSubmit;
 	}
+	
+	public void fetchData() {
+		researchMatterComboBox.setData();
+	}
+	
 	private ResearchMatterComboBox getResearchMatterComboBox() {
 		if (researchMatterComboBox == null) {
 			researchMatterComboBox = new ResearchMatterComboBox(faculty);
