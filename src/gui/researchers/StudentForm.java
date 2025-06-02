@@ -30,7 +30,6 @@ import java.awt.event.ActionEvent;
 import java.awt.BorderLayout;
 
 import javax.swing.SwingConstants;
-import gui.component.TemporaryMessage;
 
 public class StudentForm extends JPanel {
 	private static final long serialVersionUID = 5814578189776579606L;
