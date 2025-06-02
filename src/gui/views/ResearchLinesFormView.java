@@ -4,7 +4,6 @@ import javax.swing.JPanel;
 
 import java.awt.Color;
 
-import javax.swing.border.LineBorder;
 import javax.swing.JLabel;
 
 import java.awt.Font;
@@ -12,11 +11,8 @@ import java.awt.Font;
 import schooling.Faculty;
 import schooling.Profesor;
 import schooling.ResearchLine;
-import schooling.ResearchMatter;
 import utils.ArrayLib;
 import utils.Validation;
-
-import javax.swing.SwingConstants;
 
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
@@ -27,7 +23,6 @@ import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JSpinner;
-import javax.swing.JTextArea;
 import javax.swing.JButton;
 import javax.swing.SpinnerNumberModel;
 
@@ -36,6 +31,7 @@ import java.awt.event.ActionEvent;
 
 import gui.component.ErrorLabel;
 import gui.event.OnAddedResearchLine;
+import gui.component.TemporaryMessage;
 
 public class ResearchLinesFormView extends JPanel {
 	private static final long serialVersionUID = 3971105665570208468L;
@@ -60,6 +56,7 @@ public class ResearchLinesFormView extends JPanel {
 	private ArrayList<String> matters;
 	private ErrorLabel errorLabel;
 	private ErrorLabel errorName;
+	private TemporaryMessage temporaryMessage;
 	
 	public ResearchLinesFormView(Faculty faculty) {
 		this.faculty = faculty;
@@ -68,10 +65,17 @@ public class ResearchLinesFormView extends JPanel {
 		setBackground(Color.WHITE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 50, 288, 50, 0, 0};
-		gridBagLayout.rowHeights = new int[]{0, 45, 50, 0, 30, 50, 0, 30, 50, 30, 30, 50, 0, 30, 50, 30, 0, 0};
-		gridBagLayout.columnWeights = new double[]{1.0, 0.0, 0.0, 1.0, 0.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.rowHeights = new int[]{30, 45, 50, 0, 30, 50, 0, 30, 50, 30, 30, 50, 0, 30, 50, 30, 0, 0};
+		gridBagLayout.columnWeights = new double[]{1.0, 1.0, 0.0, 1.0, 0.0, 1.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
+		GridBagConstraints gbc_temporaryMessage = new GridBagConstraints();
+		gbc_temporaryMessage.fill = GridBagConstraints.HORIZONTAL;
+		gbc_temporaryMessage.gridwidth = 4;
+		gbc_temporaryMessage.insets = new Insets(0, 0, 5, 5);
+		gbc_temporaryMessage.gridx = 1;
+		gbc_temporaryMessage.gridy = 0;
+		add(getTemporaryMessage(), gbc_temporaryMessage);
 		GridBagConstraints gbc_lblAgregarLneaDe = new GridBagConstraints();
 		gbc_lblAgregarLneaDe.gridwidth = 4;
 		gbc_lblAgregarLneaDe.insets = new Insets(0, 0, 5, 5);
@@ -327,6 +331,8 @@ public class ResearchLinesFormView extends JPanel {
 								}
 								
 								resetForm();
+								temporaryMessage.setText("La línea de invetigación se ha registrado correctamente");
+								temporaryMessage.appear();
 							} catch (Exception e) {
 								// TODO: handle exception
 							}
@@ -371,5 +377,11 @@ public class ResearchLinesFormView extends JPanel {
 		textFieldName.setText("");
 		lblMatterNames.setText("");
 		chiefCombox.setSelectedIndex(-1);
+	}
+	private TemporaryMessage getTemporaryMessage() {
+		if (temporaryMessage == null) {
+			temporaryMessage = new TemporaryMessage();
+		}
+		return temporaryMessage;
 	}
 }

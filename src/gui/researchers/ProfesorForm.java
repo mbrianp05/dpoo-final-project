@@ -326,13 +326,13 @@ public class ProfesorForm extends JPanel {
 			panel.setBackground(Color.WHITE);
 			GridBagLayout gbl_panel = new GridBagLayout();
 			gbl_panel.columnWidths = new int[]{50, 383, 50, 0};
-			gbl_panel.rowHeights = new int[]{40, 20, 29, 30, 50, 0, 30, 50, 0, 30, 50, 0, 30, 0, 0, 0, 0};
+			gbl_panel.rowHeights = new int[]{30, 20, 29, 30, 50, 0, 30, 50, 0, 30, 50, 0, 30, 0, 0, 0, 0};
 			gbl_panel.columnWeights = new double[]{1.0, 1.0, 1.0, Double.MIN_VALUE};
 			gbl_panel.rowWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, Double.MIN_VALUE};
 			panel.setLayout(gbl_panel);
 			GridBagConstraints gbc_temporaryMessage = new GridBagConstraints();
 			gbc_temporaryMessage.insets = new Insets(0, 0, 5, 5);
-			gbc_temporaryMessage.fill = GridBagConstraints.BOTH;
+			gbc_temporaryMessage.fill = GridBagConstraints.HORIZONTAL;
 			gbc_temporaryMessage.gridx = 1;
 			gbc_temporaryMessage.gridy = 0;
 			panel.add(getTemporaryMessage(), gbc_temporaryMessage);
