@@ -29,6 +29,8 @@ public class ResearcherTableModel extends DefaultTableModel {
 		
 		String[] columns = {"ID", "Nombre", "Tema", "Puntuación"};
 		this.setColumnIdentifiers(columns);
+		
+		fill();
 	}
 
 	public void addNew(Researcher r) {
