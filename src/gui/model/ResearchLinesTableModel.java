@@ -22,6 +22,10 @@ public class ResearchLinesTableModel extends DefaultTableModel {
 		fill();
 	}
 
+	public boolean isCellEditable(int row, int col) {
+		return false;
+	}
+	
 	public void emptyTable() {		
 		while (getRowCount() > 0) {
 			removeRow(0);

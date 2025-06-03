@@ -8,8 +8,6 @@ import javax.swing.JPanel;
 
 import java.awt.Color;
 
-import javax.swing.JTabbedPane;
-
 import schooling.Faculty;
 
 import java.awt.GridBagLayout;
@@ -19,16 +17,24 @@ import javax.swing.JLabel;
 
 import java.awt.Insets;
 import java.awt.Font;
-import gui.component.TemporaryMessage;
+import javax.swing.JRadioButton;
+import java.awt.BorderLayout;
+import javax.swing.ButtonGroup;
+import java.awt.CardLayout;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class ResearcherFormView extends JPanel {
 	private static final long serialVersionUID = 1751242066126705510L;
-	private JTabbedPane tabbedPane;
 	private Faculty faculty;
+	private JLabel lblInsertarInvestigador;
+	private JPanel panel;
+	private JRadioButton addStudent;
+	private JRadioButton addProfesor;
+	private ButtonGroup buttonGroup;
+	private JPanel wrapperPanel;
 	private ProfesorForm profesorForm;
 	private StudentForm studentForm;
-	private JLabel lblInsertarInvestigador;
-	private TemporaryMessage temporaryMessage;
 	
 	public ResearcherFormView(Faculty faculty) {
 		this.faculty = faculty;
@@ -36,28 +42,28 @@ public class ResearcherFormView extends JPanel {
 		setBackground(Color.WHITE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{100, 0, 100, 0};
-		gridBagLayout.rowHeights = new int[]{30, 46, 40, 0, 0, 0};
+		gridBagLayout.rowHeights = new int[]{70, 46, 40, 0, 0, 0, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{1.0, 0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, 3.0, 1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
-		GridBagConstraints gbc_temporaryMessage = new GridBagConstraints();
-		gbc_temporaryMessage.insets = new Insets(0, 0, 5, 5);
-		gbc_temporaryMessage.fill = GridBagConstraints.HORIZONTAL;
-		gbc_temporaryMessage.gridx = 1;
-		gbc_temporaryMessage.gridy = 0;
-		add(getTemporaryMessage(), gbc_temporaryMessage);
 		GridBagConstraints gbc_lblInsertarInvestigador = new GridBagConstraints();
 		gbc_lblInsertarInvestigador.fill = GridBagConstraints.BOTH;
 		gbc_lblInsertarInvestigador.insets = new Insets(0, 0, 5, 5);
 		gbc_lblInsertarInvestigador.gridx = 1;
 		gbc_lblInsertarInvestigador.gridy = 1;
 		add(getLblInsertarInvestigador(), gbc_lblInsertarInvestigador);
-		GridBagConstraints gbc_tabbedPane = new GridBagConstraints();
-		gbc_tabbedPane.insets = new Insets(0, 0, 5, 5);
-		gbc_tabbedPane.fill = GridBagConstraints.BOTH;
-		gbc_tabbedPane.gridx = 1;
-		gbc_tabbedPane.gridy = 3;
-		add(getTabbedPane(), gbc_tabbedPane);
+		GridBagConstraints gbc_panel = new GridBagConstraints();
+		gbc_panel.insets = new Insets(0, 0, 5, 5);
+		gbc_panel.fill = GridBagConstraints.BOTH;
+		gbc_panel.gridx = 1;
+		gbc_panel.gridy = 2;
+		add(getPanel(), gbc_panel);
+		GridBagConstraints gbc_wrapperPanel = new GridBagConstraints();
+		gbc_wrapperPanel.insets = new Insets(0, 0, 5, 5);
+		gbc_wrapperPanel.fill = GridBagConstraints.BOTH;
+		gbc_wrapperPanel.gridx = 1;
+		gbc_wrapperPanel.gridy = 4;
+		add(getWrapperPanel(), gbc_wrapperPanel);
 	}
 	
 	public void update() {
@@ -66,8 +72,6 @@ public class ResearcherFormView extends JPanel {
 	}
 
 	private void sendFeedback() {
-		temporaryMessage.appear();
-		temporaryMessage.setText("Se ha registrado el investigador correctamente");
 	}
 	
 	public void listenTo(final OnAddedResearcher listener) {
@@ -86,30 +90,6 @@ public class ResearcherFormView extends JPanel {
 			}
 		});
 	}
-
-	private JTabbedPane getTabbedPane() {
-		if (tabbedPane == null) {
-			tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-			tabbedPane.setBackground(Color.WHITE);
-			tabbedPane.addTab("Profesor", null, getProfesorForm(), null);
-			tabbedPane.addTab("Estudiante", null, getStudentForm(), null);
-		}
-		return tabbedPane;
-	}
-	private ProfesorForm getProfesorForm() {
-		if (profesorForm == null) {
-			profesorForm = new ProfesorForm(faculty);	
-			profesorForm.setBackground(Color.WHITE);
-		}
-		return profesorForm;
-	}
-	private StudentForm getStudentForm() {
-		if (studentForm == null) {
-			studentForm = new StudentForm(faculty);
-			studentForm.setBackground(Color.WHITE);
-		}
-		return studentForm;
-	}
 	private JLabel getLblInsertarInvestigador() {
 		if (lblInsertarInvestigador == null) {
 			lblInsertarInvestigador = new JLabel("Insertar datos del investigador");
@@ -117,10 +97,78 @@ public class ResearcherFormView extends JPanel {
 		}
 		return lblInsertarInvestigador;
 	}
-	private TemporaryMessage getTemporaryMessage() {
-		if (temporaryMessage == null) {
-			temporaryMessage = new TemporaryMessage();
+	private JPanel getPanel() {
+		if (panel == null) {
+			panel = new JPanel();
+			panel.setBackground(Color.WHITE);
+			panel.setLayout(new BorderLayout(0, 0));
+			panel.add(getAddStudent());
+			panel.add(getAddProfesor(), BorderLayout.WEST);
+
+			getButtonGroup();
 		}
-		return temporaryMessage;
+		return panel;
+	}
+	private JRadioButton getAddStudent() {
+		if (addStudent == null) {
+			addStudent = new JRadioButton("Estudiante");
+			addStudent.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					CardLayout cl = (CardLayout)wrapperPanel.getLayout();
+					cl.show(wrapperPanel, "Student Form");
+				}
+			});
+			addStudent.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+			addStudent.setBackground(Color.WHITE);
+		}
+		return addStudent;
+	}
+	private JRadioButton getAddProfesor() {
+		if (addProfesor == null) {
+			addProfesor = new JRadioButton("Profesor");
+			addProfesor.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					CardLayout cl = (CardLayout)wrapperPanel.getLayout();
+					cl.show(wrapperPanel, "Profesor Form");
+				}
+			});
+			addProfesor.setSelected(true);
+			addProfesor.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+			addProfesor.setBackground(Color.WHITE);
+		}
+		return addProfesor;
+	}
+	/**
+	 * @wbp.nonvisual location=361,74
+	 */
+	private ButtonGroup getButtonGroup() {
+		if (buttonGroup == null) {
+			buttonGroup = new ButtonGroup();
+			buttonGroup.add(addProfesor);
+			buttonGroup.add(addStudent);
+		}
+		return buttonGroup;
+	}
+	private JPanel getWrapperPanel() {
+		if (wrapperPanel == null) {
+			wrapperPanel = new JPanel();
+			wrapperPanel.setBackground(Color.WHITE);
+			wrapperPanel.setLayout(new CardLayout(0, 0));
+			wrapperPanel.add(getProfesorForm(), "Profesor Form");
+			wrapperPanel.add(getStudentForm(), "Student Form");
+		}
+		return wrapperPanel;
+	}
+	private ProfesorForm getProfesorForm() {
+		if (profesorForm == null) {
+			profesorForm = new ProfesorForm(faculty);
+		}
+		return profesorForm;
+	}
+	private StudentForm getStudentForm() {
+		if (studentForm == null) {
+			studentForm = new StudentForm(faculty);
+		}
+		return studentForm;
 	}
 }

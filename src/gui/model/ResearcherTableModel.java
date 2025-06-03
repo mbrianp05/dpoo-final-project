@@ -32,6 +32,10 @@ public class ResearcherTableModel extends DefaultTableModel {
 		
 		fill();
 	}
+	
+	public boolean isCellEditable(int row, int col) {
+		return false;
+	}
 
 	public void addNew(Researcher r) {
 		ResearchMatter matter = faculty.findMatterOf(r.getID());
