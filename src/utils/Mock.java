@@ -2,7 +2,6 @@ package utils;
 
 import schooling.Degree;
 import schooling.Faculty;
-import schooling.MasteryPlan;
 import schooling.Profesor;
 import schooling.ProfesorCategory;
 import schooling.ResearchLine;
