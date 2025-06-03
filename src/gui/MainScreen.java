@@ -63,19 +63,25 @@ public class MainScreen extends JFrame {
 		gbl_contentPane.columnWeights = new double[]{1.0, 0.0, 1.0, Double.MIN_VALUE};
 		gbl_contentPane.rowWeights = new double[]{0.0, Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPane);
-		GridBagConstraints gbc_authenticationPanel = new GridBagConstraints();
-		gbc_authenticationPanel.insets = new Insets(200, 200, 200, 200);
-		gbc_authenticationPanel.fill = GridBagConstraints.BOTH;
-		gbc_authenticationPanel.gridx = 1;
-		gbc_authenticationPanel.gridy = 0;
-		contentPane.add(getAuthenticationPanel(), gbc_authenticationPanel);
+		
+		resolveView();
 	}
 	
-	private void addAuthorizedView() {
+	private void resolveView() {
 		if (Authentication.hasAccess()) {
-			authenticationPanel.setVisible(false);
+			if (authenticationPanel != null)
+				authenticationPanel.setVisible(false);
+			
 			contentPane.setLayout(new BorderLayout(0, 0));
 			contentPane.add(getLayeredPane_1());
+		} else {
+			GridBagConstraints gbc_authenticationPanel = new GridBagConstraints();
+			gbc_authenticationPanel.insets = new Insets(200, 200, 200, 200);
+			gbc_authenticationPanel.fill = GridBagConstraints.BOTH;
+			gbc_authenticationPanel.gridx = 1;
+			gbc_authenticationPanel.gridy = 0;
+			
+			contentPane.add(getAuthenticationPanel(), gbc_authenticationPanel);
 		}
 	}
 	
@@ -99,7 +105,7 @@ public class MainScreen extends JFrame {
 			authenticationPanel.listenTo(new OnAuthenticate() {
 				@Override
 				public void granted() {
-					addAuthorizedView();
+					resolveView();
 				}
 			});
 		}
