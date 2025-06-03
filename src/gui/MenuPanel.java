@@ -28,7 +28,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.CardLayout;
 
-import gui.views.ResearchLinesFormView;
+import gui.views.ResearchLineFormView;
 import gui.views.ResearchLinesTableView;
 
 public class MenuPanel extends JPanel {
@@ -50,7 +50,7 @@ public class MenuPanel extends JPanel {
 	private ResearcherFormView researcherFormView;
 	private ResearchersTableView researchersTableView;
 	private JMenuItem addLineMenu;
-	private ResearchLinesFormView researchLinesFormView;
+	private ResearchLineFormView researchLineFormView;
 	private JMenu mnData;
 	private JMenuItem mntmLneasDeInvestigacin;
 	private ResearchLinesTableView researchLinesTableView;
@@ -177,7 +177,7 @@ public class MenuPanel extends JPanel {
 	}
 	private JMenuItem getResearchersTableMenu() {
 		if (researchersTableMenu == null) {
-			researchersTableMenu = new JMenuItem("Tabla de investigadores");
+			researchersTableMenu = new JMenuItem("Investigadores");
 			researchersTableMenu.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					switchView("Researchers Table");
@@ -208,7 +208,7 @@ public class MenuPanel extends JPanel {
 					researchersTableView.updateTable();
 					
 					if (faculty.findResearcher(researcherID) instanceof Profesor) {
-						researchLinesFormView.fetchProfesors();
+						researchLineFormView.fetchProfesors();
 					}
 				}
 			});
@@ -232,10 +232,10 @@ public class MenuPanel extends JPanel {
 		}
 		return addLineMenu;
 	}
-	private ResearchLinesFormView getResearchLinesFormView() {
-		if (researchLinesFormView == null) {
-			researchLinesFormView = new ResearchLinesFormView(faculty);
-			researchLinesFormView.listenTo(new OnAddedResearchLine() {
+	private ResearchLineFormView getResearchLinesFormView() {
+		if (researchLineFormView == null) {
+			researchLineFormView = new ResearchLineFormView(faculty);
+			researchLineFormView.listenTo(new OnAddedResearchLine() {
 				@Override
 				public void added(String name) {
 					researcherFormView.update();
@@ -243,7 +243,7 @@ public class MenuPanel extends JPanel {
 				}
 			});
 		}
-		return researchLinesFormView;
+		return researchLineFormView;
 	}
 	private JMenu getMnData() {
 		if (mnData == null) {
