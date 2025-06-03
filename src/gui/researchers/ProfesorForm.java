@@ -281,23 +281,32 @@ public class ProfesorForm extends JPanel {
 	}
 	
 	public void fetchData() {
-		researchMatterComboBox.setData();
+		if (editing) {
+			if (faculty.isChief(profesor)) {
+				researchMatterComboBox.setData(profesor);
+			} else {
+				researchMatterComboBox.setData();
+			}
+		} else {
+			researchMatterComboBox.setData();
+		}
 	}
 	
 	private ResearchMatterComboBox getResearchMatterComboBox() {
 		if (researchMatterComboBox == null) {
 			researchMatterComboBox = new ResearchMatterComboBox(faculty);
 			researchMatterComboBox.setFont(new Font("Segoe UI", Font.PLAIN, 15));
-
+			fetchData();
+			
 			if (editing) {
 				ResearchMatter matter = faculty.findMatterOf(profesor.getID());
 
 				if (matter != null) {
-					ComboBoxModel<Object> model = researchMatterComboBox.getModel();
+					ComboBoxModel<String> model = researchMatterComboBox.getModel();
 					int index = -1;
 					int i = 0;
 
-					while (i < researchMatterComboBox.getModel().getSize() && index == -1) {
+					while (i < model.getSize() && index == -1) {
 						String current = (String)model.getElementAt(i);
 						if (current.equals(matter.getName())) index = i;
 
