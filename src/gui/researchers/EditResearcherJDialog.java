@@ -24,6 +24,9 @@ import javax.swing.JButton;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
 
 public class EditResearcherJDialog extends JDialog {
 	private static final long serialVersionUID = -8039865322179654975L;
@@ -57,14 +60,32 @@ public class EditResearcherJDialog extends JDialog {
 		contentPanel.setBackground(Color.WHITE);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
-		contentPanel.setLayout(new BorderLayout(0, 0));
-		contentPanel.add(getPanel(), BorderLayout.SOUTH);
+		GridBagLayout gbl_contentPanel = new GridBagLayout();
+		gbl_contentPanel.columnWidths = new int[]{0, 0, 0, 0};
+		gbl_contentPanel.rowHeights = new int[]{30, 0, 0, 0};
+		gbl_contentPanel.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
+		gbl_contentPanel.rowWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
+		contentPanel.setLayout(gbl_contentPanel);
+		GridBagConstraints gbc_panel = new GridBagConstraints();
+		gbc_panel.gridwidth = 3;
+		gbc_panel.insets = new Insets(0, 0, 0, 5);
+		gbc_panel.anchor = GridBagConstraints.NORTH;
+		gbc_panel.fill = GridBagConstraints.HORIZONTAL;
+		gbc_panel.gridx = 0;
+		gbc_panel.gridy = 2;
 
+		GridBagConstraints grid = new GridBagConstraints();
+		grid.insets = new Insets(0, 0, 5, 5);
+		grid.gridx = 1;
+		grid.gridy = 1;
+		
 		if (researcher instanceof Profesor) {
-			contentPanel.add(getProfesorForm(), BorderLayout.CENTER);
+			contentPanel.add(getProfesorForm(), grid);
 		} else if (researcher instanceof Student) {
-			contentPanel.add(getStudentForm(), BorderLayout.CENTER);
+			contentPanel.add(getStudentForm(), grid);
 		}
+
+		contentPanel.add(getPanel(), gbc_panel);
 	}
 
 	public void listenTo(OnAddedResearcher listener) {
