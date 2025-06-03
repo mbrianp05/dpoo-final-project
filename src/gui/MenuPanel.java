@@ -45,12 +45,10 @@ public class MenuPanel extends JPanel {
 	private JMenuItem bestMarksMenu;
 	private JMenuItem aprovalPendingMenu;
 	private JMenuItem mostPaperMenu;
-	private JMenu researchersSubmenu;
 	private JMenuItem researchersTableMenu;
 	private JPanel contentPanel;
 	private ResearcherFormView researcherFormView;
 	private ResearchersTableView researchersTableView;
-	private JMenu linesSubemenu;
 	private JMenuItem addLineMenu;
 	private ResearchLinesFormView researchLinesFormView;
 	private JMenu mnData;
@@ -97,8 +95,8 @@ public class MenuPanel extends JPanel {
 			management = new JMenu("Administraci\u00F3n");
 			management.setBackground(Color.WHITE);
 			management.setFont(new Font("Segoe UI", Font.PLAIN, 20));
-			management.add(getResearchersSubmenu());
-			management.add(getLinesSubemenu());
+			management.add(getNewResearcherMenu());
+			management.add(getAddLineMenu());
 		}
 		return management;
 	}
@@ -177,14 +175,6 @@ public class MenuPanel extends JPanel {
 		}
 		return mostPaperMenu;
 	}
-	private JMenu getResearchersSubmenu() {
-		if (researchersSubmenu == null) {
-			researchersSubmenu = new JMenu("Investigadores");
-			researchersSubmenu.setBackground(Color.WHITE);
-			researchersSubmenu.add(getNewResearcherMenu());
-		}
-		return researchersSubmenu;
-	}
 	private JMenuItem getResearchersTableMenu() {
 		if (researchersTableMenu == null) {
 			researchersTableMenu = new JMenuItem("Tabla de investigadores");
@@ -230,13 +220,6 @@ public class MenuPanel extends JPanel {
 			researchersTableView = new ResearchersTableView(faculty);
 		}
 		return researchersTableView;
-	}
-	private JMenu getLinesSubemenu() {
-		if (linesSubemenu == null) {
-			linesSubemenu = new JMenu("L\u00EDneas de investigaci\u00F3n");
-			linesSubemenu.add(getAddLineMenu());
-		}
-		return linesSubemenu;
 	}
 	private JMenuItem getAddLineMenu() {
 		if (addLineMenu == null) {
