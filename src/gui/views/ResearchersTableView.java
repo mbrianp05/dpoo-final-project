@@ -20,8 +20,6 @@ import java.awt.Color;
 import javax.swing.JTextField;
 import javax.swing.JScrollPane;
 
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.ActionListener;
@@ -30,7 +28,6 @@ import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
-import javax.swing.table.TableCellEditor;
 import javax.swing.SpinnerNumberModel;
 
 import java.awt.GridBagLayout;
@@ -41,6 +38,8 @@ import javax.swing.ListSelectionModel;
 
 import schooling.Faculty;
 import schooling.Researcher;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class ResearchersTableView extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -67,7 +66,7 @@ public class ResearchersTableView extends JPanel {
 		setBackground(Color.WHITE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{100, 70, 100, 100, 30, 100, 0, 0, 70, 70, 100, 0};
-		gridBagLayout.rowHeights = new int[]{40, 0, 50, 50, 207, 0, 0};
+		gridBagLayout.rowHeights = new int[]{70, 0, 50, 50, 207, 0, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
@@ -240,15 +239,10 @@ public class ResearchersTableView extends JPanel {
 	private JTable getTable_1() {
 		if (table == null) {
 			table = new JTable();
-			
-			table.addFocusListener(new FocusAdapter() {
+			table.addMouseListener(new MouseAdapter() {
 				@Override
-				public void focusLost(FocusEvent event) {
-					TableCellEditor tce = table.getCellEditor();
-
-					if(tce != null) {
-						tce.stopCellEditing();
-						
+				public void mouseClicked(MouseEvent event) {
+					if (event.getClickCount() > 1 && table.getSelectedRow() >= 0) {
 						int row = table.getSelectedRow();
 						int ID = Integer.valueOf((String)table.getModel().getValueAt(row, 0));
 						Researcher researcher = faculty.findResearcher(ID);
@@ -275,9 +269,9 @@ public class ResearchersTableView extends JPanel {
 							}
 						}
 					}
-					
 				}
 			});
+
 			table.setFillsViewportHeight(true);
 			table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			table.setFont(new Font("Segoe UI", Font.PLAIN, 15));

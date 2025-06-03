@@ -43,7 +43,7 @@ public class ResearchLinesTableView extends JPanel {
 		setBackground(Color.WHITE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{100, 70, 30, 100, 0, 0, 100, 0};
-		gridBagLayout.rowHeights = new int[]{40, 0, 50, 50, 207, 0, 0};
+		gridBagLayout.rowHeights = new int[]{70, 0, 50, 50, 207, 0, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
@@ -80,7 +80,7 @@ public class ResearchLinesTableView extends JPanel {
 		gbc_scrollPane.gridy = 4;
 		add(getScrollPane(), gbc_scrollPane);
 
-		tableModel = new ResearchLinesTableModel(faculty);
+		tableModel = new ResearchLinesTableModel(this.faculty);
 		table.setModel(tableModel);
 	}
 
