@@ -20,4 +20,14 @@ public class ArrayLib {
 		
 		return result;
 	}
+	
+	public static String[] cast(ArrayList<String> items) {
+		String[] data = new String[items.size()];
+		
+		for (int i = 0; i < items.size(); i++) {
+			data[i] = items.get(i);
+		}
+		
+		return data;
+	}
 }
