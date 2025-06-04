@@ -16,6 +16,7 @@ public class CoursesTableModel extends DefaultTableModel {
 
 	private static final long serialVersionUID = 9038021182128267655L;
 	private Faculty faculty;
+	private String filterName;
 
 	public CoursesTableModel(Faculty faculty) {
 
@@ -27,8 +28,31 @@ public class CoursesTableModel extends DefaultTableModel {
 		fill();
 	}
 
+	public void setFilterName(String name) {
+		filterName = name;
+		fill();
+	}
+	
+	public ArrayList<PostgraduateCourse> filterByName(ArrayList<PostgraduateCourse> courses) {
+		ArrayList<PostgraduateCourse> filtered = new ArrayList<>();
+
+		if(filterName.isEmpty()) {
+			filtered = courses;
+		} else {
+			for(PostgraduateCourse c: faculty.getCoursesList()) {
+				if(c.getName().startsWith(filterName)){
+					filtered.add(c);
+				}
+			}
+		}
+
+		return filtered;
+	}
+
 	public void fill() {
 		emptyTable();
+		
+		
 		for(PostgraduateCourse c: faculty.getCoursesList()){
 			addNew(c);
 		}
