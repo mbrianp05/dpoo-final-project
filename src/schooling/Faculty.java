@@ -298,4 +298,30 @@ public class Faculty {
 		if (matter != null) 
 			matter.getResearchers().remove(r);
 	}
+
+	public ResearchLine findResearchLine(Profesor profesor) {
+		ResearchLine line = null;
+		int i = 0;
+		
+		while (line == null && i < researchLines.size()) {
+			if (researchLines.get(i).getChief() == profesor) line = researchLines.get(i);
+			
+			i++;
+		}
+		
+		return line;
+	}
+
+	public boolean isChief(Profesor profesor) {
+		boolean found = false;
+		int i = 0;
+		
+		while (!found && i < researchLines.size()) {
+			found = researchLines.get(i).getChief() == profesor;
+			
+			i++;
+		}
+		
+		return found;
+	}
 }
