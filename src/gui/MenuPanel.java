@@ -250,6 +250,7 @@ public class MenuPanel extends JPanel {
 	private JMenuItem getCoursesTableMenu() {
 		if (coursesTableMenu == null) {
 			coursesTableMenu = new JMenuItem("Cursos de postgrado");
+			coursesTableMenu.setBackground(Color.WHITE);
 			coursesTableMenu.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					switchView("Courses Table");
@@ -269,6 +270,7 @@ public class MenuPanel extends JPanel {
 	private JMenuItem getAddLineMenu() {
 		if (addLineMenu == null) {
 			addLineMenu = new JMenuItem("Agregar l\u00EDnea");
+			addLineMenu.setBackground(Color.WHITE);
 			addLineMenu.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					switchView("Research Lines Form");
@@ -304,6 +306,7 @@ public class MenuPanel extends JPanel {
 	private JMenuItem getMntmLneasDeInvestigacin() {
 		if (mntmLneasDeInvestigacin == null) {
 			mntmLneasDeInvestigacin = new JMenuItem("L\u00EDneas de investigaci\u00F3n");
+			mntmLneasDeInvestigacin.setBackground(Color.WHITE);
 			mntmLneasDeInvestigacin.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					switchView("Research Lines Table");
