@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import java.awt.Color;
 
 import schooling.Faculty;
+import utils.Constants;
 
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
@@ -17,9 +18,13 @@ import javax.swing.JLabel;
 
 import java.awt.Insets;
 import java.awt.Font;
+
 import javax.swing.JRadioButton;
+
 import java.awt.BorderLayout;
+
 import javax.swing.ButtonGroup;
+
 import java.awt.CardLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -93,7 +98,7 @@ public class ResearcherFormView extends JPanel {
 	private JLabel getLblInsertarInvestigador() {
 		if (lblInsertarInvestigador == null) {
 			lblInsertarInvestigador = new JLabel("Insertar datos del investigador");
-			lblInsertarInvestigador.setFont(new Font("Segoe UI", Font.PLAIN, 25));
+			lblInsertarInvestigador.setFont(Constants.getTitleFont());
 		}
 		return lblInsertarInvestigador;
 	}
@@ -118,7 +123,7 @@ public class ResearcherFormView extends JPanel {
 					cl.show(wrapperPanel, "Student Form");
 				}
 			});
-			addStudent.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+			addStudent.setFont(Constants.getLabelFont());
 			addStudent.setBackground(Color.WHITE);
 		}
 		return addStudent;
@@ -133,7 +138,7 @@ public class ResearcherFormView extends JPanel {
 				}
 			});
 			addProfesor.setSelected(true);
-			addProfesor.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+			addProfesor.setFont(Constants.getLabelFont());
 			addProfesor.setBackground(Color.WHITE);
 		}
 		return addProfesor;

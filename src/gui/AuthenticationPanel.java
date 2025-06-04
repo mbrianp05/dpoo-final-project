@@ -40,7 +40,7 @@ public class AuthenticationPanel extends JPanel {
 		setBorder(new LineBorder(new Color(255, 0, 51), 2, true));
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 400, 0, 0};
-		gridBagLayout.rowHeights = new int[]{0, 0, 0, 30, 40, 0, 0, 40, 50, 0, 0, 0};
+		gridBagLayout.rowHeights = new int[]{0, 0, 0, 30, 40, 0, 0, 40, 50, 40, 0, 0};
 		gridBagLayout.columnWeights = new double[]{1.0, 1.0, 1.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
@@ -81,7 +81,7 @@ public class AuthenticationPanel extends JPanel {
 		gbc_errorMsg.gridy = 8;
 		add(getErrorMsg(), gbc_errorMsg);
 		GridBagConstraints gbc_btnAcceder = new GridBagConstraints();
-		gbc_btnAcceder.anchor = GridBagConstraints.NORTHEAST;
+		gbc_btnAcceder.anchor = GridBagConstraints.EAST;
 		gbc_btnAcceder.fill = GridBagConstraints.VERTICAL;
 		gbc_btnAcceder.insets = new Insets(0, 0, 5, 5);
 		gbc_btnAcceder.gridx = 1;

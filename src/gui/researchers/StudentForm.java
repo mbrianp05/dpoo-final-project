@@ -19,6 +19,8 @@ import java.awt.Font;
 
 import javax.swing.ComboBoxModel;
 import javax.swing.JTextField;
+
+import utils.Constants;
 import utils.Validation;
 
 import javax.swing.JButton;
@@ -76,14 +78,14 @@ public class StudentForm extends JPanel {
 	private JLabel getLblName() {
 		if (lblName == null) {
 			lblName = new JLabel("Nombre");
-			lblName.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+			lblName.setFont(Constants.getLabelFont());
 		}
 		return lblName;
 	}
 	private JLabel getLblTemaDeInvestigacin() {
 		if (lblTemaDeInvestigacin == null) {
 			lblTemaDeInvestigacin = new JLabel("Tema de investigaci\u00F3n");
-			lblTemaDeInvestigacin.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+			lblTemaDeInvestigacin.setFont(Constants.getLabelFont());
 		}
 		return lblTemaDeInvestigacin;
 	}
@@ -144,9 +146,9 @@ public class StudentForm extends JPanel {
 					else update();
 				}
 			});
-			btnSubmit.setBackground(new Color(255, 0, 51));
+			btnSubmit.setBackground(Constants.getInsertionBtnColor());
 			btnSubmit.setForeground(Color.WHITE);
-			btnSubmit.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+			btnSubmit.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		}
 		return btnSubmit;
 	}
@@ -187,7 +189,7 @@ public class StudentForm extends JPanel {
 			panel.setBackground(Color.WHITE);
 			GridBagLayout gbl_panel = new GridBagLayout();
 			gbl_panel.columnWidths = new int[]{383, 0};
-			gbl_panel.rowHeights = new int[]{29, 30, 50, 0, 30, 50, 0, 0};
+			gbl_panel.rowHeights = new int[]{29, 35, 50, 0, 35, 50, 35, 0};
 			gbl_panel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
 			gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 			panel.setLayout(gbl_panel);
@@ -222,6 +224,7 @@ public class StudentForm extends JPanel {
 			gbc_researchMatterComboBox.gridy = 4;
 			panel.add(getResearchMatterComboBox(), gbc_researchMatterComboBox);
 			GridBagConstraints gbc_btnSubmit = new GridBagConstraints();
+			gbc_btnSubmit.fill = GridBagConstraints.VERTICAL;
 			gbc_btnSubmit.anchor = GridBagConstraints.NORTHEAST;
 			gbc_btnSubmit.gridx = 0;
 			gbc_btnSubmit.gridy = 6;

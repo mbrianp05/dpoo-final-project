@@ -13,7 +13,6 @@ import java.awt.Color;
 
 import javax.swing.JTextField;
 import javax.swing.JScrollPane;
-
 import javax.swing.SwingConstants;
 
 import java.awt.GridBagLayout;
@@ -23,6 +22,7 @@ import java.awt.Insets;
 import javax.swing.ListSelectionModel;
 
 import schooling.Faculty;
+import utils.Constants;
 
 public class ResearchLinesTableView extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -133,7 +133,7 @@ public class ResearchLinesTableView extends JPanel {
 	private JLabel getLblDatosDeInvestigadores() {
 		if (lblDatosDeInvestigadores == null) {
 			lblDatosDeInvestigadores = new JLabel("Datos de l\u00EDneas de investigaci\u00F3n");
-			lblDatosDeInvestigadores.setFont(new Font("Segoe UI", Font.PLAIN, 25));
+			lblDatosDeInvestigadores.setFont(Constants.getTitleFont());
 		}
 		return lblDatosDeInvestigadores;
 	}

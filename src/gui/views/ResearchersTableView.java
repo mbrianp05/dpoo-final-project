@@ -38,6 +38,8 @@ import javax.swing.ListSelectionModel;
 
 import schooling.Faculty;
 import schooling.Researcher;
+import utils.Constants;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -286,7 +288,7 @@ public class ResearchersTableView extends JPanel {
 	private JLabel getLblDatosDeInvestigadores() {
 		if (lblDatosDeInvestigadores == null) {
 			lblDatosDeInvestigadores = new JLabel("Datos de investigadores registrados");
-			lblDatosDeInvestigadores.setFont(new Font("Segoe UI", Font.PLAIN, 25));
+			lblDatosDeInvestigadores.setFont(Constants.getTitleFont());
 		}
 		return lblDatosDeInvestigadores;
 	}
