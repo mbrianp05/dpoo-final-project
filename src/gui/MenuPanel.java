@@ -2,37 +2,30 @@ package gui;
 
 import gui.event.OnAddedResearchLine;
 import gui.event.OnAddedResearcher;
+import gui.views.CoursesFormView;
+import gui.views.CoursesTableView;
+import gui.views.ResearchLineFormView;
+import gui.views.ResearchLinesTableView;
 import gui.views.ResearcherFormView;
+import gui.views.ResearchersTableView;
 
-import javax.swing.JPanel;
-
+import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 
 import schooling.Faculty;
 import schooling.Profesor;
 import utils.Mock;
-
-import java.awt.Font;
-
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JMenu;
-
-import java.awt.Component;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-
-import gui.views.ResearchersTableView;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.CardLayout;
-
-import gui.views.CoursesFormView;
-import gui.views.CoursesTableView;
-import gui.views.ResearchLinesFormView;
-import gui.views.ResearchLinesTableView;
 
 public class MenuPanel extends JPanel {
 	private static final long serialVersionUID = 3762125698246597691L;
@@ -54,7 +47,7 @@ public class MenuPanel extends JPanel {
 	private ResearchersTableView researchersTableView;
 	private CoursesFormView coursesFormView;
 	private JMenuItem addLineMenu;
-	private ResearchLinesFormView researchLinesFormView;
+	private ResearchLineFormView researchLineFormView;
 	private JMenu mnData;
 	private JMenuItem mntmLneasDeInvestigacin;
 	private ResearchLinesTableView researchLinesTableView;
@@ -200,7 +193,7 @@ public class MenuPanel extends JPanel {
 	}
 	private JMenuItem getResearchersTableMenu() {
 		if (researchersTableMenu == null) {
-			researchersTableMenu = new JMenuItem("Tabla de investigadores");
+			researchersTableMenu = new JMenuItem("Investigadores");
 			researchersTableMenu.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					switchView("Researchers Table");
@@ -239,7 +232,7 @@ public class MenuPanel extends JPanel {
 					researchersTableView.updateTable();
 
 					if (faculty.findResearcher(researcherID) instanceof Profesor) {
-						researchLinesFormView.fetchProfesors();
+						researchLineFormView.fetchProfesors();
 					}
 				}
 			});
@@ -284,10 +277,10 @@ public class MenuPanel extends JPanel {
 		}
 		return addLineMenu;
 	}
-	private ResearchLinesFormView getResearchLinesFormView() {
-		if (researchLinesFormView == null) {
-			researchLinesFormView = new ResearchLinesFormView(faculty);
-			researchLinesFormView.listenTo(new OnAddedResearchLine() {
+	private ResearchLineFormView getResearchLinesFormView() {
+		if (researchLineFormView == null) {
+			researchLineFormView = new ResearchLineFormView(faculty);
+			researchLineFormView.listenTo(new OnAddedResearchLine() {
 				@Override
 				public void added(String name) {
 					researcherFormView.update();
@@ -295,7 +288,7 @@ public class MenuPanel extends JPanel {
 				}
 			});
 		}
-		return researchLinesFormView;
+		return researchLineFormView;
 	}
 	private JMenu getMnData() {
 		if (mnData == null) {
