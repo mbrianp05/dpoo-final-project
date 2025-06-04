@@ -33,7 +33,7 @@ import java.awt.event.ActionEvent;
 import gui.component.ErrorLabel;
 import gui.event.OnAddedResearchLine;
 
-public class ResearchLinesFormView extends JPanel {
+public class ResearchLineFormView extends JPanel {
 	private static final long serialVersionUID = 3971105665570208468L;
 	private Faculty faculty;
 	private OnAddedResearchLine listener;
@@ -60,7 +60,7 @@ public class ResearchLinesFormView extends JPanel {
 	private JButton btnEliminar;
 	private ErrorLabel lblCreditsError;
 
-	public ResearchLinesFormView(Faculty faculty) {
+	public ResearchLineFormView(Faculty faculty) {
 		this.faculty = faculty;
 		matters = new ArrayList<>();
 
@@ -363,6 +363,12 @@ public class ResearchLinesFormView extends JPanel {
 								} catch (Exception e) {
 									// TODO: handle exception
 								}
+
+								// Reset form
+								textFieldMatterName.setText("");
+								mattersComboBox.setModel(new DefaultComboBoxModel<>(new String[] {}));
+								btnEliminar.setVisible(false);
+								editBtn.setVisible(false);
 							} else {
 								lblCreditsError.setText("Todos los planes de maestría deben exigir al menos 1 crédito");
 							}

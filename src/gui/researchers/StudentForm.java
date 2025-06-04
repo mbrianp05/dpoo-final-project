@@ -87,7 +87,7 @@ public class StudentForm extends JPanel {
 		}
 		return lblTemaDeInvestigacin;
 	}
-	
+
 	private String getMatter() {
 		int index = researchMatterComboBox.getSelectedIndex();
 
@@ -118,15 +118,15 @@ public class StudentForm extends JPanel {
 			errorLabel.setText("El nombre es requerido");
 		}
 	}
-	
+
 	private void update() {
 		if (Validation.notEmpty(textFieldName.getText())) {
 			Student r = (Student)faculty.findResearcher(student.getID());
 
 			r.setName(textFieldName.getText());
-			
+
 			faculty.moveToOtherMatter(r.getID(), getMatter());
-			
+
 			if (listener != null) {
 				listener.added(r.getID());
 			}
@@ -134,7 +134,7 @@ public class StudentForm extends JPanel {
 			errorLabel.setText("El nombre es requerido");
 		}
 	}
-	
+
 	private JButton getBtnSubmit() {
 		if (btnSubmit == null) {
 			btnSubmit = new JButton(editing ? "Actualizar" : "Registrar estudiante");
@@ -150,11 +150,11 @@ public class StudentForm extends JPanel {
 		}
 		return btnSubmit;
 	}
-	
+
 	public void fetchData() {
 		researchMatterComboBox.setData();
 	}
-	
+
 	private ResearchMatterComboBox getResearchMatterComboBox() {
 		if (researchMatterComboBox == null) {
 			researchMatterComboBox = new ResearchMatterComboBox(faculty);
@@ -164,7 +164,7 @@ public class StudentForm extends JPanel {
 				ResearchMatter matter = faculty.findMatterOf(student.getID());
 
 				if (matter != null) {
-					ComboBoxModel<Object> model = researchMatterComboBox.getModel();
+					ComboBoxModel<String> model = researchMatterComboBox.getModel();
 					int index = -1;
 					int i = 0;
 
