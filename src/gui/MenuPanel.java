@@ -18,6 +18,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JMenu;
 
+import java.awt.Component;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
@@ -28,6 +29,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.CardLayout;
 
+import gui.views.CoursesFormView;
+import gui.views.CoursesTableView;
 import gui.views.ResearchLinesFormView;
 import gui.views.ResearchLinesTableView;
 
@@ -49,15 +52,19 @@ public class MenuPanel extends JPanel {
 	private JPanel contentPanel;
 	private ResearcherFormView researcherFormView;
 	private ResearchersTableView researchersTableView;
+	private CoursesFormView coursesFormView;
 	private JMenuItem addLineMenu;
 	private ResearchLinesFormView researchLinesFormView;
 	private JMenu mnData;
 	private JMenuItem mntmLneasDeInvestigacin;
 	private ResearchLinesTableView researchLinesTableView;
+	private JMenuItem addCourse;
+	private JMenuItem coursesTableMenu;
+	private CoursesTableView coursesTableView;
 
 	public MenuPanel(Faculty faculty) {
 		this.faculty = faculty;
-		
+
 		// Mock data
 		Mock.mockFacultyData(faculty);
 
@@ -96,6 +103,7 @@ public class MenuPanel extends JPanel {
 			management.setBackground(Color.WHITE);
 			management.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 			management.add(getNewResearcherMenu());
+			management.add(getAddCourse());
 			management.add(getAddLineMenu());
 		}
 		return management;
@@ -119,6 +127,21 @@ public class MenuPanel extends JPanel {
 		}
 		return newResearcherMenu;
 	}
+
+	// boton de insertar curso
+	private JMenuItem getAddCourse() {
+		if (addCourse == null) {
+			addCourse = new JMenuItem("Nuevo curso");
+			addCourse.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					switchView("Courses Form");
+				}
+			});
+			addCourse.setBackground(Color.WHITE);
+		}
+		return addCourse;
+	}
+
 	private JMenu getReports() {
 		if (reports == null) {
 			reports = new JMenu("Reportes");
@@ -193,11 +216,19 @@ public class MenuPanel extends JPanel {
 			contentPanel.setBackground(Color.WHITE);
 			contentPanel.setLayout(new CardLayout(0, 0));	
 			contentPanel.add(getResearcherForm(), "Researcher Form");
+			contentPanel.add(getCoursesFormView(), "Courses Form");
 			contentPanel.add(getResearchersTableView(), "Researchers Table");
 			contentPanel.add(getResearchLinesFormView(), "Research Lines Form");
 			contentPanel.add(getResearchLinesTableView(), "Research Lines Table");
+			contentPanel.add(getCoursesTableView(), "Courses Table");
 		}
 		return contentPanel;
+	}
+	private CoursesFormView getCoursesFormView() {
+		if (coursesFormView == null) {
+			coursesFormView = new CoursesFormView(faculty);
+		}
+		return coursesFormView;
 	}
 	private ResearcherFormView getResearcherForm() {
 		if (researcherFormView == null) {
@@ -206,7 +237,7 @@ public class MenuPanel extends JPanel {
 				@Override
 				public void added(int researcherID) {
 					researchersTableView.updateTable();
-					
+
 					if (faculty.findResearcher(researcherID) instanceof Profesor) {
 						researchLinesFormView.fetchProfesors();
 					}
@@ -221,6 +252,27 @@ public class MenuPanel extends JPanel {
 		}
 		return researchersTableView;
 	}
+
+	//lista de cursos de postgrado
+	private JMenuItem getCoursesTableMenu() {
+		if (coursesTableMenu == null) {
+			coursesTableMenu = new JMenuItem("Cursos de postgrado");
+			coursesTableMenu.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					switchView("Courses Table");
+				}
+			});
+		}
+		return coursesTableMenu;
+	}
+	
+	private CoursesTableView getCoursesTableView() {
+		if (coursesTableView == null) {
+			coursesTableView = new CoursesTableView(faculty);
+		}
+		return coursesTableView;
+	}
+
 	private JMenuItem getAddLineMenu() {
 		if (addLineMenu == null) {
 			addLineMenu = new JMenuItem("Agregar l\u00EDnea");
@@ -252,6 +304,7 @@ public class MenuPanel extends JPanel {
 			mnData.setBackground(Color.WHITE);
 			mnData.add(getResearchersTableMenu());
 			mnData.add(getMntmLneasDeInvestigacin());
+			mnData.add(getCoursesTableMenu());
 		}
 		return mnData;
 	}
@@ -272,4 +325,5 @@ public class MenuPanel extends JPanel {
 		}
 		return researchLinesTableView;
 	}
+
 }
