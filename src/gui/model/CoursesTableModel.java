@@ -7,30 +7,29 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 import schooling.Faculty;
+import schooling.MasteryPlan;
 import schooling.PostgraduateCourse;
+import schooling.ResearchLine;
 import schooling.Researcher;
 
 public class CoursesTableModel extends DefaultTableModel {
 
 	private static final long serialVersionUID = 9038021182128267655L;
 	private Faculty faculty;
-	
+
 	public CoursesTableModel(Faculty faculty) {
-		
+
 		this.faculty = faculty;
-		
-		String[] columns = {"Nombre", "Instructor", "Créditos", "Descripción"};
+
+		String[] columns = {"Nombre", "Instructor", "Créditos necesarios", "Descripción"};
 		this.setColumnIdentifiers(columns);
 
 		fill();
 	}
-	
+
 	public void fill() {
 		emptyTable();
-		
-		ArrayList<PostgraduateCourse> courses = new ArrayList<PostgraduateCourse>();
-				
-		for (PostgraduateCourse c: courses) {
+		for(PostgraduateCourse c: faculty.getCoursesList()){
 			addNew(c);
 		}
 	}
@@ -40,10 +39,10 @@ public class CoursesTableModel extends DefaultTableModel {
 			removeRow(0);
 		}
 	}
-	
+
 	public void addNew(PostgraduateCourse c){
 		Object[] newRow = new Object[]{c.getName(), c.getInstructor().getName(), String.valueOf(c.getCredits()), c.getDescription()};
-		
+
 		addRow(newRow);
 	}
 }
