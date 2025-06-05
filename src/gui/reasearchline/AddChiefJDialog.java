@@ -51,6 +51,7 @@ public class AddChiefJDialog extends JDialog {
 	private OnSetChief listener;
 
 	public AddChiefJDialog(String[] matters, OnSetChief listener) {
+		setResizable(false);
 		this.matters = matters;
 		this.listener = listener;
 		
