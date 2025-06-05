@@ -2,15 +2,9 @@ package gui.model;
 
 import java.util.ArrayList;
 
-import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
-
 import schooling.Faculty;
-import schooling.MasteryPlan;
 import schooling.PostgraduateCourse;
-import schooling.ResearchLine;
-import schooling.Researcher;
 
 public class CoursesTableModel extends DefaultTableModel {
 

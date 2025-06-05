@@ -17,7 +17,6 @@ import java.awt.GridBagConstraints;
 import javax.swing.JLabel;
 
 import java.awt.Insets;
-import java.awt.Font;
 
 import javax.swing.JRadioButton;
 
