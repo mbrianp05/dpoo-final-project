@@ -94,7 +94,7 @@ public class ResearchLineFormView extends JPanel {
 		setBackground(Color.WHITE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{100, 50, 75, 30, 288, 50, 100, 0};
-		gridBagLayout.rowHeights = new int[]{70, 45, 50, 0, 35, 30, 35, 35, 35, 50, 0, 35, 80, 40, 50, 35, 0, 0, 0};
+		gridBagLayout.rowHeights = new int[]{70, 45, 50, 0, 35, 30, 35, 35, 35, 50, 0, 35, 80, 30, 50, 35, 0, 0, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
@@ -622,6 +622,8 @@ public class ResearchLineFormView extends JPanel {
 	private JPanel getChangeChief() {
 		if (changeChief == null) {
 			changeChief = new JPanel();
+			changeChief.setForeground(Color.BLACK);
+			changeChief.setBorder(null);
 			changeChief.setBackground(Color.WHITE);
 			GridBagLayout gbl_changeChief = new GridBagLayout();
 			gbl_changeChief.columnWidths = new int[]{0, 0, 0};
