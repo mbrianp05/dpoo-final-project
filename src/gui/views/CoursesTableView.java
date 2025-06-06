@@ -17,10 +17,17 @@ import java.awt.Insets;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-
 import javax.swing.ListSelectionModel;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
+
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+
+import javax.swing.JSpinner;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
 
 public class CoursesTableView extends JPanel {
 	private static final long serialVersionUID = 7564447082179207965L;
@@ -32,7 +39,7 @@ public class CoursesTableView extends JPanel {
 	private JLabel lblNombre;
 	private JTextField filterByName;
 	private JLabel lblInstructor;
-	private JTextField filterByCred;
+	private JSpinner filterCreds;
 
 	/**
 	 * Create the panel.
@@ -42,15 +49,15 @@ public class CoursesTableView extends JPanel {
 		
 		coursesTableModel = new CoursesTableModel(faculty);
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{100, 0, 55, 116, 116, 116, 100, 0};
+		gridBagLayout.columnWidths = new int[]{100, 0, 55, 116, 116, 0, 116, 100, 0};
 		gridBagLayout.rowHeights = new int[]{70, 34, 72, 23, 90, 0, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		GridBagConstraints gbc_lblCursosDePostgrado = new GridBagConstraints();
 		gbc_lblCursosDePostgrado.anchor = GridBagConstraints.NORTHWEST;
 		gbc_lblCursosDePostgrado.insets = new Insets(0, 0, 5, 5);
-		gbc_lblCursosDePostgrado.gridwidth = 5;
+		gbc_lblCursosDePostgrado.gridwidth = 6;
 		gbc_lblCursosDePostgrado.gridx = 1;
 		gbc_lblCursosDePostgrado.gridy = 1;
 		add(getLblCursosDePostgrado(), gbc_lblCursosDePostgrado);
@@ -79,16 +86,15 @@ public class CoursesTableView extends JPanel {
 		gbc_lblInstructor.gridx = 4;
 		gbc_lblInstructor.gridy = 3;
 		add(getLblInstructor(), gbc_lblInstructor);
-		GridBagConstraints gbc_filterByCred = new GridBagConstraints();
-		gbc_filterByCred.anchor = GridBagConstraints.SOUTHWEST;
-		gbc_filterByCred.insets = new Insets(0, 0, 5, 5);
-		gbc_filterByCred.gridx = 5;
-		gbc_filterByCred.gridy = 3;
-		add(getFilterByCred(), gbc_filterByCred);
+		GridBagConstraints gbc_filterCreds = new GridBagConstraints();
+		gbc_filterCreds.insets = new Insets(0, 0, 5, 5);
+		gbc_filterCreds.gridx = 5;
+		gbc_filterCreds.gridy = 3;
+		add(getFilterCreds(), gbc_filterCreds);
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
 		gbc_scrollPane.insets = new Insets(0, 0, 5, 5);
 		gbc_scrollPane.fill = GridBagConstraints.BOTH;
-		gbc_scrollPane.gridwidth = 5;
+		gbc_scrollPane.gridwidth = 6;
 		gbc_scrollPane.gridx = 1;
 		gbc_scrollPane.gridy = 4;
 		add(getScrollPane(), gbc_scrollPane);
@@ -139,6 +145,15 @@ public class CoursesTableView extends JPanel {
 	private JTextField getFilterByName() {
 		if (filterByName == null) {
 			filterByName = new JTextField();
+			filterByName.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyReleased(KeyEvent event) {
+					if(event.getKeyCode() != 16) {
+						CoursesTableModel ctmodel = (CoursesTableModel)table.getModel();
+						ctmodel.setFilterName(filterByName.getText());
+					}
+				}
+			});
 			filterByName.setColumns(10);
 		}
 		return filterByName;
@@ -150,11 +165,28 @@ public class CoursesTableView extends JPanel {
 		}
 		return lblInstructor;
 	}
-	private JTextField getFilterByCred() {
-		if (filterByCred == null) {
-			filterByCred = new JTextField();
-			filterByCred.setColumns(10);
+	
+	public void updateTable() {
+		((CoursesTableModel)table.getModel()).fill();
+	}
+	private JSpinner getFilterCreds() {
+		if (filterCreds == null) {
+			filterCreds = new JSpinner();
+			filterCreds.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyTyped(KeyEvent arg0) {
+					CoursesTableModel ctmodel = (CoursesTableModel)table.getModel();
+					ctmodel.setFilterCreds((int)filterCreds.getValue());
+				}
+			});
+			filterCreds.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
+			filterCreds.addChangeListener(new ChangeListener() {
+				public void stateChanged(ChangeEvent event) {
+					CoursesTableModel ctmodel = (CoursesTableModel)table.getModel();
+					ctmodel.setFilterCreds((int)filterCreds.getValue());
+				}
+			});
 		}
-		return filterByCred;
+		return filterCreds;
 	}
 }

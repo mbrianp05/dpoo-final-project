@@ -3,6 +3,7 @@ package gui.model;
 import java.util.ArrayList;
 
 import javax.swing.table.DefaultTableModel;
+
 import schooling.Faculty;
 import schooling.PostgraduateCourse;
 
@@ -11,10 +12,14 @@ public class CoursesTableModel extends DefaultTableModel {
 	private static final long serialVersionUID = 9038021182128267655L;
 	private Faculty faculty;
 	private String filterName;
+	private int filterMinCreds;
 
 	public CoursesTableModel(Faculty faculty) {
 
 		this.faculty = faculty;
+		
+		filterName = "";
+		filterMinCreds = 0;
 
 		String[] columns = {"Nombre", "Instructor", "Créditos necesarios", "Descripción"};
 		this.setColumnIdentifiers(columns);
@@ -24,6 +29,11 @@ public class CoursesTableModel extends DefaultTableModel {
 
 	public void setFilterName(String name) {
 		filterName = name;
+		fill();
+	}
+	
+	public void setFilterCreds(int creds) {
+		filterMinCreds = creds;
 		fill();
 	}
 	
@@ -42,12 +52,31 @@ public class CoursesTableModel extends DefaultTableModel {
 
 		return filtered;
 	}
+	
+	public ArrayList<PostgraduateCourse> filterByCreds(ArrayList<PostgraduateCourse> courses) {
+		ArrayList<PostgraduateCourse> filtered = new ArrayList<>();
+		
+		if(filterMinCreds <= 0) {
+			filtered = courses;
+		} else {
+			for(PostgraduateCourse c: courses) {
+				if(c.getCredits() >= filterMinCreds) {
+					filtered.add(c);
+				}
+			}
+		}
+		return filtered;
+	}
 
 	public void fill() {
 		emptyTable();
 		
+		ArrayList<PostgraduateCourse> filter = faculty.getCoursesList();
 		
-		for(PostgraduateCourse c: faculty.getCoursesList()){
+		filter = filterByName(filter);
+		filter = filterByCreds(filter);
+		
+		for(PostgraduateCourse c: filter){
 			addNew(c);
 		}
 	}
