@@ -323,6 +323,16 @@ public class Faculty {
 
 		return line;
 	}
+	
+	public ArrayList<MasteryPlan> getMasteryPlans() {
+		ArrayList<MasteryPlan> masteries = new ArrayList<>();
+		
+		for(ResearchLine r: researchLines) {
+			masteries.add(r.getMasteryPlan());
+		}
+		
+		return masteries;
+	}
 
 	public boolean isChief(Profesor profesor) {
 		boolean found = false;

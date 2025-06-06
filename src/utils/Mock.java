@@ -10,14 +10,17 @@ public class Mock {
 	public static void mockFacultyData(Faculty faculty) {
 		/// Datos de prueba
 		int profesorID = faculty.addProfesor("Juan", Degree.Doctor, ProfesorCategory.Permanent, null);
+		int profesorID2 = faculty.addProfesor("Kevin", Degree.Doctor, ProfesorCategory.Permanent, null);
 		
 		faculty.addResearchLine("Inteligencia artificial", faculty.getProfesors().get(0), 10);
+		faculty.addResearchLine("Desarrollo de software", faculty.getProfesors().get(1), 8);
 		ResearchLine line = faculty.getReseachLines().get(0);
 		
 		line.addMatter("IAs Generativas");
 		line.addMatter("Transformers");
 		
 		line.getMasteryPlan().addCourse("Curso 1", "test", (Profesor)faculty.findResearcher(profesorID), 2);
+		line.getMasteryPlan().addCourse("Curso 2", "test2", (Profesor)faculty.findResearcher(profesorID2), 3);
 		
 		faculty.addStudent("Brian", "IAs Generativas");
 		
