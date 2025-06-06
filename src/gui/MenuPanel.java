@@ -24,7 +24,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
 import schooling.Faculty;
-import schooling.Profesor;
 import utils.Mock;
 
 public class MenuPanel extends JPanel {
@@ -225,15 +224,11 @@ public class MenuPanel extends JPanel {
 	}
 	private ResearcherFormView getResearcherForm() {
 		if (researcherFormView == null) {
-			researcherFormView = new ResearcherFormView(faculty);
+			researcherFormView = new ResearcherFormView();
 			researcherFormView.listenTo(new OnAddedResearcher() {
 				@Override
-				public void added(int researcherID) {
+				public void newResearcher(int researcherID) {
 					researchersTableView.updateTable();
-
-					if (faculty.findResearcher(researcherID) instanceof Profesor) {
-						researchLineFormView.fetchProfesors();
-					}
 				}
 			});
 		}
@@ -286,6 +281,7 @@ public class MenuPanel extends JPanel {
 				@Override
 				public void added(String name) {
 					researcherFormView.update();
+					researchersTableView.updateTable();
 					researchLinesTableView.updateTable();
 				}
 			});

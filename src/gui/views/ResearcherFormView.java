@@ -1,5 +1,6 @@
 package gui.views;
 
+import gui.event.OnAddedProfesor;
 import gui.event.OnAddedResearcher;
 import gui.researchers.ProfesorForm;
 import gui.researchers.StudentForm;
@@ -8,7 +9,10 @@ import javax.swing.JPanel;
 
 import java.awt.Color;
 
+import schooling.Degree;
 import schooling.Faculty;
+import schooling.ProfesorCategory;
+import utils.ArrayLib;
 import utils.Constants;
 
 import java.awt.GridBagLayout;
@@ -39,9 +43,10 @@ public class ResearcherFormView extends JPanel {
 	private JPanel wrapperPanel;
 	private ProfesorForm profesorForm;
 	private StudentForm studentForm;
+	private OnAddedResearcher listener;
 	
-	public ResearcherFormView(Faculty faculty) {
-		this.faculty = faculty;
+	public ResearcherFormView() {
+		this.faculty = Faculty.newInstance();
 		
 		setBackground(Color.WHITE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -70,30 +75,22 @@ public class ResearcherFormView extends JPanel {
 		add(getWrapperPanel(), gbc_wrapperPanel);
 	}
 	
+	private String[] getMatters() {
+		return ArrayLib.cast(faculty.getResearchMattersNames());
+	}
+	
 	public void update() {
 		studentForm.fetchData();
-		profesorForm.fetchData();
+		profesorForm.setResearchMatters(getMatters());
 	}
 
 	private void sendFeedback() {
 	}
 	
-	public void listenTo(final OnAddedResearcher listener) {
-		profesorForm.listenTo(new OnAddedResearcher() {
-			@Override
-			public void added(int researcherID) {
-				sendFeedback();
-				listener.added(researcherID);
-			}
-		});
-		studentForm.listenTo(new OnAddedResearcher() {
-			@Override
-			public void added(int researcherID) {
-				sendFeedback();
-				listener.added(researcherID);
-			}
-		});
+	public void listenTo(OnAddedResearcher listener) {
+		this.listener = listener;
 	}
+	
 	private JLabel getLblInsertarInvestigador() {
 		if (lblInsertarInvestigador == null) {
 			lblInsertarInvestigador = new JLabel("Insertar datos del investigador");
@@ -142,9 +139,7 @@ public class ResearcherFormView extends JPanel {
 		}
 		return addProfesor;
 	}
-	/**
-	 * @wbp.nonvisual location=361,74
-	 */
+	
 	private ButtonGroup getButtonGroup() {
 		if (buttonGroup == null) {
 			buttonGroup = new ButtonGroup();
@@ -153,6 +148,7 @@ public class ResearcherFormView extends JPanel {
 		}
 		return buttonGroup;
 	}
+	
 	private JPanel getWrapperPanel() {
 		if (wrapperPanel == null) {
 			wrapperPanel = new JPanel();
@@ -163,15 +159,37 @@ public class ResearcherFormView extends JPanel {
 		}
 		return wrapperPanel;
 	}
+	
 	private ProfesorForm getProfesorForm() {
 		if (profesorForm == null) {
-			profesorForm = new ProfesorForm(faculty);
+			profesorForm = new ProfesorForm(getMatters());
+			profesorForm.listenTo(new OnAddedProfesor() {
+				@Override
+				public void newProfesor(String name, Degree degree, ProfesorCategory category, String matter) {
+					int ID = faculty.addProfesor(name, degree, category, matter);
+					
+					if (listener != null) {
+						listener.newResearcher(ID);
+					}
+				}
+			});
 		}
 		return profesorForm;
 	}
+	
 	private StudentForm getStudentForm() {
 		if (studentForm == null) {
-			studentForm = new StudentForm(faculty);
+			studentForm = new StudentForm();
+			studentForm.listenTo(new OnAddedResearcher() {
+				@Override
+				public void newResearcher(int researcherID) {
+					sendFeedback();
+					
+					if (listener != null) {
+						listener.newResearcher(researcherID);
+					}
+				}
+			});
 		}
 		return studentForm;
 	}

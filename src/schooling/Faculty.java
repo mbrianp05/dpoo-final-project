@@ -336,4 +336,17 @@ public class Faculty {
 
 		return found;
 	}
+
+	public ResearchLine getReseachLineByChief(Profesor researcher) {
+		ResearchLine line = null;
+		int i = 0;
+		
+		while (line == null && i < researchLines.size()) {
+			if (researchLines.get(i).getChief() == researcher) line = researchLines.get(i);
+			
+			i++;
+		}
+		
+		return line;
+	}
 }

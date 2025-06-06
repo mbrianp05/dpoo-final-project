@@ -1,5 +1,6 @@
 package gui.researchers;
 
+import gui.event.OnAddedProfesor;
 import gui.event.OnAddedResearcher;
 import gui.event.OnRemovedResearcher;
 
@@ -10,13 +11,17 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import schooling.Degree;
 import schooling.Profesor;
+import schooling.ProfesorCategory;
+import schooling.ResearchLine;
 import schooling.Researcher;
 import schooling.Student;
 
 import java.awt.Color;
 
 import schooling.Faculty;
+import utils.ArrayLib;
 
 import java.awt.Toolkit;
 
@@ -43,23 +48,28 @@ public class EditResearcherJDialog extends JDialog {
 	private OnRemovedResearcher listener;
 	private StudentForm studentForm;
 
-	public EditResearcherJDialog(Faculty faculty, Researcher researcher) {
+	public EditResearcherJDialog(Researcher researcher) {
+		this.faculty = Faculty.newInstance();
+		this.researcher = researcher;
+
 		setAlwaysOnTop(true);
 		setModal(true);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(EditResearcherJDialog.class.getResource("/com/sun/javafx/scene/web/skin/FontBackgroundColor_16x16_JFX.png")));
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setBackground(Color.WHITE);
-		this.researcher = researcher;
-		this.faculty = faculty;
 
 		setResizable(false);
 		setTitle("Editar datos de investigador");
 		getContentPane().setBackground(Color.WHITE);
 		setBounds(100, 100, 897, 688);
+		
 		getContentPane().setLayout(new BorderLayout());
+		
 		contentPanel.setBackground(Color.WHITE);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
+		
 		GridBagLayout gbl_contentPanel = new GridBagLayout();
 		gbl_contentPanel.columnWidths = new int[]{0, 0, 0, 0};
 		gbl_contentPanel.rowHeights = new int[]{30, 0, 0, 0};
@@ -88,9 +98,16 @@ public class EditResearcherJDialog extends JDialog {
 		contentPanel.add(getPanel(), gbc_panel);
 	}
 
-	public void listenTo(OnAddedResearcher listener) {
+	public void listenTo(final OnAddedResearcher listener) {
 		if (researcher instanceof Profesor) {
-			profesorForm.listenTo(listener);
+			profesorForm.listenTo(new OnAddedProfesor() {
+				@Override
+				public void newProfesor(String name, Degree degree, ProfesorCategory category, String matter) {
+					listener.newResearcher(researcher.getID());
+				}
+			});
+		} else {
+			studentForm.listenTo(listener);
 		}
 	}
 	
@@ -98,9 +115,26 @@ public class EditResearcherJDialog extends JDialog {
 		this.listener = listener;
 	}
 
+	private String[] getMatters() {
+		String[] matters = ArrayLib.cast(faculty.getResearchMattersNames());
+		
+		if (researcher instanceof Profesor) {
+			if (faculty.isChief((Profesor)researcher)) {
+				ResearchLine line = faculty.getReseachLineByChief((Profesor)researcher);
+				matters = new String[line.getMatters().size()];
+				
+				for (int i = 0; i < line.getMatters().size(); i++) {
+					matters[i] = line.getMatters().get(i).getName();
+				}
+			}
+		}
+		
+		return matters;
+	}
+	
 	private ProfesorForm getProfesorForm() {
 		if (profesorForm == null) {
-			profesorForm = new ProfesorForm(faculty, (Profesor)researcher);
+			profesorForm = new ProfesorForm(getMatters(), (Profesor)researcher);
 		}
 
 		return profesorForm;

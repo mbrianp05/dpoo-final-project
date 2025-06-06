@@ -49,11 +49,8 @@ public class StudentForm extends JPanel {
 	private OnAddedResearcher listener;
 	private ErrorLabel errorLabel;
 
-	/**
-	 * @wbp.parser.constructor
-	 */
-	public StudentForm(Faculty faculty) {
-		this.faculty = faculty;
+	public StudentForm() {
+		this.faculty = Faculty.newInstance();
 		editing = false;
 
 		setBackground(Color.WHITE);
@@ -112,7 +109,7 @@ public class StudentForm extends JPanel {
 			int id = faculty.addStudent(textFieldName.getText(), getMatter());
 
 			if (listener != null) {
-				listener.added(id);
+				listener.newResearcher(id);
 			}
 
 			resetForm();
@@ -130,7 +127,7 @@ public class StudentForm extends JPanel {
 			faculty.moveToOtherMatter(r.getID(), getMatter());
 
 			if (listener != null) {
-				listener.added(r.getID());
+				listener.newResearcher(r.getID());
 			}
 		} else {
 			errorLabel.setText("El nombre es requerido");

@@ -251,10 +251,10 @@ public class ResearchersTableView extends JPanel {
 						
 						if (current == null || !current.isVisible()) {
 							try {
-								current = new EditResearcherJDialog(faculty, researcher);
+								current = new EditResearcherJDialog(researcher);
 								current.listenTo(new OnAddedResearcher() {
 									@Override
-									public void added(int researcherID) {
+									public void newResearcher(int researcherID) {
 										((ResearcherTableModel)table.getModel()).fill();
 									}
 								});
