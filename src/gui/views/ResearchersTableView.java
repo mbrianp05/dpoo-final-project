@@ -68,7 +68,7 @@ public class ResearchersTableView extends JPanel {
 		setBackground(Color.WHITE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{100, 70, 100, 100, 30, 100, 0, 0, 70, 70, 100, 0};
-		gridBagLayout.rowHeights = new int[]{70, 0, 50, 35, 207, 0, 0};
+		gridBagLayout.rowHeights = new int[]{70, 0, 60, 35, 207, 0, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
