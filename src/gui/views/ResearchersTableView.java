@@ -62,8 +62,8 @@ public class ResearchersTableView extends JPanel {
 	
 	private EditResearcherJDialog current;
 
-	public ResearchersTableView(Faculty faculty) {
-		this.faculty = faculty;
+	public ResearchersTableView() {
+		this.faculty = Faculty.newInstance();
 
 		setBackground(Color.WHITE);
 		GridBagLayout gridBagLayout = new GridBagLayout();

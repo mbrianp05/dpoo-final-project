@@ -8,8 +8,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import schooling.Faculty;
-
 import java.awt.Color;
 
 import javax.swing.JLayeredPane;
@@ -26,7 +24,6 @@ public class MainScreen extends JFrame {
 
 	private JPanel contentPane;
 	
-	private Faculty faculty;
 	private JLayeredPane layeredPane;
 	private MenuPanel menuPanel;
 	private AuthenticationPanel authenticationPanel;
@@ -46,8 +43,7 @@ public class MainScreen extends JFrame {
 
 	public MainScreen() {
 		setTitle("Gestión de datos de la facultad");
-		faculty = Faculty.newInstance();
-		
+
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1029, 880);
@@ -95,7 +91,7 @@ public class MainScreen extends JFrame {
 	}
 	private MenuPanel getMenuPanel() {
 		if (menuPanel == null) {
-			menuPanel = new MenuPanel(faculty);
+			menuPanel = new MenuPanel();
 		}
 		return menuPanel;
 	}

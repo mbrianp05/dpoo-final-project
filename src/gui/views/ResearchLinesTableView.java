@@ -37,8 +37,8 @@ public class ResearchLinesTableView extends JPanel {
 	private Faculty faculty;
 	private JLabel lblDatosDeInvestigadores;
 
-	public ResearchLinesTableView(Faculty faculty) {
-		this.faculty = faculty;
+	public ResearchLinesTableView() {
+		this.faculty = Faculty.newInstance();
 
 		setBackground(Color.WHITE);
 		GridBagLayout gridBagLayout = new GridBagLayout();

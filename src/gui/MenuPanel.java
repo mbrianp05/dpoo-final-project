@@ -54,8 +54,8 @@ public class MenuPanel extends JPanel {
 	private JMenuItem coursesTableMenu;
 	private CoursesTableView coursesTableView;
 
-	public MenuPanel(Faculty faculty) {
-		this.faculty = faculty;
+	public MenuPanel() {
+		this.faculty = Faculty.newInstance();
 
 		// Mock data
 		Mock.mockFacultyData(faculty);
@@ -236,7 +236,7 @@ public class MenuPanel extends JPanel {
 	}
 	private ResearchersTableView getResearchersTableView() {
 		if (researchersTableView == null) {
-			researchersTableView = new ResearchersTableView(faculty);
+			researchersTableView = new ResearchersTableView();
 		}
 		return researchersTableView;
 	}
@@ -313,7 +313,7 @@ public class MenuPanel extends JPanel {
 	}
 	private ResearchLinesTableView getResearchLinesTableView() {
 		if (researchLinesTableView == null) {
-			researchLinesTableView = new ResearchLinesTableView(faculty);
+			researchLinesTableView = new ResearchLinesTableView();
 		}
 		return researchLinesTableView;
 	}
