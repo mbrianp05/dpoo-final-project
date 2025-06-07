@@ -5,6 +5,7 @@ import gui.model.CoursesTableModel;
 import javax.swing.JPanel;
 
 import schooling.Faculty;
+import utils.Constants;
 
 import java.awt.GridBagLayout;
 import java.awt.Color;
@@ -53,52 +54,56 @@ public class CoursesTableView extends JPanel {
 		setBackground(Color.WHITE);
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{100, 0, 55, 116, 116, 0, 116, 100, 0};
-		gridBagLayout.rowHeights = new int[]{70, 34, 72, 23, 90, 0, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.columnWidths = new int[]{100, 0, 0, 55, 116, 116, 0, 0, 100, 0};
+		gridBagLayout.rowHeights = new int[]{70, 34, 60, 35, 90, 0, 0};
+		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		GridBagConstraints gbc_lblCursosDePostgrado = new GridBagConstraints();
 		gbc_lblCursosDePostgrado.anchor = GridBagConstraints.NORTHWEST;
 		gbc_lblCursosDePostgrado.insets = new Insets(0, 0, 5, 5);
-		gbc_lblCursosDePostgrado.gridwidth = 6;
+		gbc_lblCursosDePostgrado.gridwidth = 7;
 		gbc_lblCursosDePostgrado.gridx = 1;
 		gbc_lblCursosDePostgrado.gridy = 1;
 		add(getLblCursosDePostgrado(), gbc_lblCursosDePostgrado);
 		GridBagConstraints gbc_lblFiltrar = new GridBagConstraints();
+		gbc_lblFiltrar.fill = GridBagConstraints.BOTH;
 		gbc_lblFiltrar.anchor = GridBagConstraints.NORTHEAST;
 		gbc_lblFiltrar.insets = new Insets(0, 0, 5, 5);
 		gbc_lblFiltrar.gridx = 1;
 		gbc_lblFiltrar.gridy = 3;
 		add(getLblFiltrar(), gbc_lblFiltrar);
 		GridBagConstraints gbc_lblNombre = new GridBagConstraints();
+		gbc_lblNombre.fill = GridBagConstraints.BOTH;
 		gbc_lblNombre.anchor = GridBagConstraints.NORTHWEST;
 		gbc_lblNombre.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNombre.gridx = 2;
+		gbc_lblNombre.gridx = 3;
 		gbc_lblNombre.gridy = 3;
 		add(getLblNombre(), gbc_lblNombre);
 		GridBagConstraints gbc_filterByName = new GridBagConstraints();
+		gbc_filterByName.fill = GridBagConstraints.BOTH;
 		gbc_filterByName.anchor = GridBagConstraints.SOUTHWEST;
 		gbc_filterByName.insets = new Insets(0, 0, 5, 5);
-		gbc_filterByName.gridx = 3;
+		gbc_filterByName.gridx = 4;
 		gbc_filterByName.gridy = 3;
 		add(getFilterByName(), gbc_filterByName);
 		GridBagConstraints gbc_lblInstructor = new GridBagConstraints();
 		gbc_lblInstructor.anchor = GridBagConstraints.EAST;
 		gbc_lblInstructor.fill = GridBagConstraints.VERTICAL;
 		gbc_lblInstructor.insets = new Insets(0, 0, 5, 5);
-		gbc_lblInstructor.gridx = 4;
+		gbc_lblInstructor.gridx = 6;
 		gbc_lblInstructor.gridy = 3;
 		add(getLblInstructor(), gbc_lblInstructor);
 		GridBagConstraints gbc_filterCreds = new GridBagConstraints();
+		gbc_filterCreds.fill = GridBagConstraints.BOTH;
 		gbc_filterCreds.insets = new Insets(0, 0, 5, 5);
-		gbc_filterCreds.gridx = 5;
+		gbc_filterCreds.gridx = 7;
 		gbc_filterCreds.gridy = 3;
 		add(getFilterCreds(), gbc_filterCreds);
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
 		gbc_scrollPane.insets = new Insets(0, 0, 5, 5);
 		gbc_scrollPane.fill = GridBagConstraints.BOTH;
-		gbc_scrollPane.gridwidth = 6;
+		gbc_scrollPane.gridwidth = 7;
 		gbc_scrollPane.gridx = 1;
 		gbc_scrollPane.gridy = 4;
 		add(getScrollPane(), gbc_scrollPane);
@@ -128,7 +133,7 @@ public class CoursesTableView extends JPanel {
 			table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			table.setFillsViewportHeight(true);
 			table.setBackground(Color.WHITE);
-			table.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+			table.setFont(Constants.getLabelFont());
 		}
 		return table;
 	}
@@ -136,14 +141,14 @@ public class CoursesTableView extends JPanel {
 		if (lblFiltrar == null) {
 			lblFiltrar = new JLabel("Filtrar");
 			lblFiltrar.setHorizontalAlignment(SwingConstants.LEFT);
-			lblFiltrar.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 15));
+			lblFiltrar.setFont(Constants.getLabelFont());
 		}
 		return lblFiltrar;
 	}
 	private JLabel getLblNombre() {
 		if (lblNombre == null) {
 			lblNombre = new JLabel("Nombre");
-			lblNombre.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 15));
+			lblNombre.setFont(Constants.getLabelFont());
 		}
 		return lblNombre;
 	}
@@ -166,7 +171,7 @@ public class CoursesTableView extends JPanel {
 	private JLabel getLblInstructor() {
 		if (lblInstructor == null) {
 			lblInstructor = new JLabel("Cred. Nec.");
-			lblInstructor.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 15));
+			lblInstructor.setFont(Constants.getLabelFont());
 		}
 		return lblInstructor;
 	}

@@ -43,7 +43,7 @@ public class ResearchLinesTableView extends JPanel {
 		setBackground(Color.WHITE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{100, 70, 30, 100, 0, 0, 100, 0};
-		gridBagLayout.rowHeights = new int[]{70, 0, 50, 50, 207, 0, 0};
+		gridBagLayout.rowHeights = new int[]{70, 0, 60, 35, 207, 0, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
@@ -67,7 +67,7 @@ public class ResearchLinesTableView extends JPanel {
 		gbc_lblNombre.gridy = 3;
 		add(getLblNombre(), gbc_lblNombre);
 		GridBagConstraints gbc_filterByName = new GridBagConstraints();
-		gbc_filterByName.fill = GridBagConstraints.HORIZONTAL;
+		gbc_filterByName.fill = GridBagConstraints.BOTH;
 		gbc_filterByName.insets = new Insets(0, 0, 5, 5);
 		gbc_filterByName.gridx = 3;
 		gbc_filterByName.gridy = 3;
