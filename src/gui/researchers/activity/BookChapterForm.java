@@ -39,7 +39,7 @@ public class BookChapterForm extends JPanel {
 	private JLabel lblEditorial;
 	private JTextField textFieldEditorial;
 	private JLabel lblCdigoIssn;
-	private JFormattedTextField textFieldISSN;
+	private JTextField textFieldISSN;
 	private JLabel lblTtuloDelCaptulo;
 	private JTextField textFieldChapter;
 	private JLabel lblVolumen;
@@ -188,9 +188,9 @@ public class BookChapterForm extends JPanel {
 		}
 		return lblCdigoIssn;
 	}
-	private JFormattedTextField getTextFieldISSN() {
+	private JTextField getTextFieldISSN() {
 		if (textFieldISSN == null) {
-			textFieldISSN = new JFormattedTextField();
+			textFieldISSN = new JTextField();
 			textFieldISSN.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 			textFieldISSN.setColumns(10);
 		}
@@ -206,6 +206,7 @@ public class BookChapterForm extends JPanel {
 	private JTextField getTextFieldChapter() {
 		if (textFieldChapter == null) {
 			textFieldChapter = new JTextField();
+			textFieldChapter.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 			textFieldChapter.setColumns(10);
 		}
 		return textFieldChapter;
@@ -279,7 +280,9 @@ public class BookChapterForm extends JPanel {
 			researcher.addBookChapter(chapter, authors, editors, editorial, ISSN, bookName, vol);
 			reset();
 			
-			listener.actionPerformed();
+			if (listener != null) {
+				listener.actionPerformed();
+			}
 		}
 	}
 }
