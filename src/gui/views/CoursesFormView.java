@@ -32,6 +32,11 @@ import javax.swing.SpinnerNumberModel;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import javax.swing.SwingConstants;
+import javax.swing.JTextArea;
+import java.awt.BorderLayout;
+import javax.swing.BoxLayout;
+import javax.swing.border.LineBorder;
 
 public class CoursesFormView extends JPanel {
 	private static final long serialVersionUID = -1419886921835562157L;
@@ -47,7 +52,7 @@ public class CoursesFormView extends JPanel {
 	private JLabel lblDescripcion;
 	private JPanel panel;
 	private JPanel courseForm;
-	private JTextLimited txtDescrip;
+	private JTextArea txtDescrip;
 	private JButton btnAgregar;
 	private JLabel errorMast;
 	private JLabel errorName;
@@ -57,6 +62,7 @@ public class CoursesFormView extends JPanel {
 	private JSpinner spinnerCreds;
 
 	private int[] profIDs = new int[500];
+	private JPanel panel_1;
 
 	public CoursesFormView(Faculty faculty) {
 		setBackground(Color.WHITE);
@@ -122,8 +128,9 @@ public class CoursesFormView extends JPanel {
 	}
 	private JComboBox<String> getSelectInstructor() {
 		if (selectInstructor == null) {
-			selectInstructor = new JComboBox<String>();
+			selectInstructor = new JComboBox<>();
 			selectInstructor.setBackground(Color.WHITE);
+			selectInstructor.setFont(Constants.getLabelFont());
 
 			ArrayList<Profesor> profs = new ArrayList<>();
 			for(ResearchLine r: faculty.getReseachLines()){
@@ -136,7 +143,7 @@ public class CoursesFormView extends JPanel {
 				profIDs[i] = profs.get(i).getID();
 			}
 
-			selectInstructor.setModel(new DefaultComboBoxModel<String>(names));
+			selectInstructor.setModel(new DefaultComboBoxModel<>(names));
 		}
 		return selectInstructor;
 	}
@@ -157,6 +164,7 @@ public class CoursesFormView extends JPanel {
 	private JTextField getTxtCourseName() {
 		if (txtCourseName == null) {
 			txtCourseName = new JTextField();
+			txtCourseName.setBackground(Color.WHITE);
 			txtCourseName.setFont(Constants.getLabelFont());
 			txtCourseName.setColumns(10);
 		}
@@ -182,131 +190,140 @@ public class CoursesFormView extends JPanel {
 			courseForm = new JPanel();
 			courseForm.setBackground(Color.WHITE);
 			GridBagLayout gbl_courseForm = new GridBagLayout();
-			gbl_courseForm.columnWidths = new int[]{97, 56, 83, 0};
-			gbl_courseForm.rowHeights = new int[]{35, 30, 35, 30, 35, 30, 35, 30, 35, 107, 32, 40, 0};
+			gbl_courseForm.columnWidths = new int[]{0, 56, 83, 0};
+			gbl_courseForm.rowHeights = new int[]{-56, 35, 30, 0, 35, 30, 0, 35, 30, 35, 30, 0, 107, 32, 40, 0};
 			gbl_courseForm.columnWeights = new double[]{0.0, 0.0, 1.0, Double.MIN_VALUE};
-			gbl_courseForm.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+			gbl_courseForm.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 			courseForm.setLayout(gbl_courseForm);
-			GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
-			gbc_lblNewLabel.anchor = GridBagConstraints.NORTH;
-			gbc_lblNewLabel.fill = GridBagConstraints.HORIZONTAL;
-			gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
-			gbc_lblNewLabel.gridx = 0;
-			gbc_lblNewLabel.gridy = 0;
-			courseForm.add(getLblNewLabel(), gbc_lblNewLabel);
-			GridBagConstraints gbc_masteryPlans = new GridBagConstraints();
-			gbc_masteryPlans.anchor = GridBagConstraints.NORTH;
-			gbc_masteryPlans.fill = GridBagConstraints.BOTH;
-			gbc_masteryPlans.insets = new Insets(0, 0, 5, 0);
-			gbc_masteryPlans.gridwidth = 2;
-			gbc_masteryPlans.gridx = 1;
-			gbc_masteryPlans.gridy = 0;
-			courseForm.add(getMasteryPlans(), gbc_masteryPlans);
-			GridBagConstraints gbc_errorMast = new GridBagConstraints();
-			gbc_errorMast.gridwidth = 2;
-			gbc_errorMast.fill = GridBagConstraints.BOTH;
-			gbc_errorMast.insets = new Insets(0, 0, 5, 0);
-			gbc_errorMast.gridx = 1;
-			gbc_errorMast.gridy = 1;
-			courseForm.add(getErrorMast(), gbc_errorMast);
 			GridBagConstraints gbc_lblNombreDelCurso = new GridBagConstraints();
+			gbc_lblNombreDelCurso.gridwidth = 3;
 			gbc_lblNombreDelCurso.anchor = GridBagConstraints.NORTH;
 			gbc_lblNombreDelCurso.fill = GridBagConstraints.HORIZONTAL;
-			gbc_lblNombreDelCurso.insets = new Insets(0, 0, 5, 5);
+			gbc_lblNombreDelCurso.insets = new Insets(0, 0, 5, 0);
 			gbc_lblNombreDelCurso.gridx = 0;
-			gbc_lblNombreDelCurso.gridy = 2;
+			gbc_lblNombreDelCurso.gridy = 0;
 			courseForm.add(getLblNombreDelCurso(), gbc_lblNombreDelCurso);
 			GridBagConstraints gbc_txtCourseName = new GridBagConstraints();
 			gbc_txtCourseName.anchor = GridBagConstraints.NORTH;
 			gbc_txtCourseName.fill = GridBagConstraints.BOTH;
 			gbc_txtCourseName.insets = new Insets(0, 0, 5, 0);
-			gbc_txtCourseName.gridwidth = 2;
-			gbc_txtCourseName.gridx = 1;
-			gbc_txtCourseName.gridy = 2;
+			gbc_txtCourseName.gridwidth = 3;
+			gbc_txtCourseName.gridx = 0;
+			gbc_txtCourseName.gridy = 1;
 			courseForm.add(getTxtCourseName(), gbc_txtCourseName);
+			GridBagConstraints gbc_errorMast = new GridBagConstraints();
+			gbc_errorMast.gridwidth = 2;
+			gbc_errorMast.fill = GridBagConstraints.BOTH;
+			gbc_errorMast.insets = new Insets(0, 0, 5, 0);
+			gbc_errorMast.gridx = 1;
+			gbc_errorMast.gridy = 2;
+			courseForm.add(getErrorMast(), gbc_errorMast);
+			GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
+			gbc_lblNewLabel.gridwidth = 3;
+			gbc_lblNewLabel.anchor = GridBagConstraints.NORTH;
+			gbc_lblNewLabel.fill = GridBagConstraints.HORIZONTAL;
+			gbc_lblNewLabel.insets = new Insets(0, 0, 5, 0);
+			gbc_lblNewLabel.gridx = 0;
+			gbc_lblNewLabel.gridy = 3;
+			courseForm.add(getLblNewLabel(), gbc_lblNewLabel);
+			GridBagConstraints gbc_masteryPlans = new GridBagConstraints();
+			gbc_masteryPlans.anchor = GridBagConstraints.NORTH;
+			gbc_masteryPlans.fill = GridBagConstraints.BOTH;
+			gbc_masteryPlans.insets = new Insets(0, 0, 5, 0);
+			gbc_masteryPlans.gridwidth = 3;
+			gbc_masteryPlans.gridx = 0;
+			gbc_masteryPlans.gridy = 4;
+			courseForm.add(getMasteryPlans(), gbc_masteryPlans);
 			GridBagConstraints gbc_errorName = new GridBagConstraints();
 			gbc_errorName.gridwidth = 2;
 			gbc_errorName.fill = GridBagConstraints.BOTH;
 			gbc_errorName.insets = new Insets(0, 0, 5, 0);
 			gbc_errorName.gridx = 1;
-			gbc_errorName.gridy = 3;
+			gbc_errorName.gridy = 5;
 			courseForm.add(getErrorName(), gbc_errorName);
 			GridBagConstraints gbc_lblInstructor = new GridBagConstraints();
+			gbc_lblInstructor.gridwidth = 3;
 			gbc_lblInstructor.anchor = GridBagConstraints.NORTH;
 			gbc_lblInstructor.fill = GridBagConstraints.HORIZONTAL;
-			gbc_lblInstructor.insets = new Insets(0, 0, 5, 5);
+			gbc_lblInstructor.insets = new Insets(0, 0, 5, 0);
 			gbc_lblInstructor.gridx = 0;
-			gbc_lblInstructor.gridy = 4;
+			gbc_lblInstructor.gridy = 6;
 			courseForm.add(getLblInstructor(), gbc_lblInstructor);
 			GridBagConstraints gbc_selectInstructor = new GridBagConstraints();
 			gbc_selectInstructor.anchor = GridBagConstraints.NORTH;
 			gbc_selectInstructor.fill = GridBagConstraints.BOTH;
 			gbc_selectInstructor.insets = new Insets(0, 0, 5, 0);
-			gbc_selectInstructor.gridwidth = 2;
-			gbc_selectInstructor.gridx = 1;
-			gbc_selectInstructor.gridy = 4;
+			gbc_selectInstructor.gridwidth = 3;
+			gbc_selectInstructor.gridx = 0;
+			gbc_selectInstructor.gridy = 7;
 			courseForm.add(getSelectInstructor(), gbc_selectInstructor);
 			GridBagConstraints gbc_errorInstruct = new GridBagConstraints();
 			gbc_errorInstruct.gridwidth = 2;
 			gbc_errorInstruct.fill = GridBagConstraints.BOTH;
 			gbc_errorInstruct.insets = new Insets(0, 0, 5, 0);
 			gbc_errorInstruct.gridx = 1;
-			gbc_errorInstruct.gridy = 5;
+			gbc_errorInstruct.gridy = 8;
 			courseForm.add(getErrorInstruct(), gbc_errorInstruct);
 			GridBagConstraints gbc_lblCrditosNecesarios = new GridBagConstraints();
 			gbc_lblCrditosNecesarios.fill = GridBagConstraints.HORIZONTAL;
 			gbc_lblCrditosNecesarios.insets = new Insets(0, 0, 5, 5);
 			gbc_lblCrditosNecesarios.gridx = 0;
-			gbc_lblCrditosNecesarios.gridy = 6;
+			gbc_lblCrditosNecesarios.gridy = 9;
 			courseForm.add(getLblCrditosNecesarios(), gbc_lblCrditosNecesarios);
 			GridBagConstraints gbc_spinnerCreds = new GridBagConstraints();
 			gbc_spinnerCreds.anchor = GridBagConstraints.NORTH;
 			gbc_spinnerCreds.fill = GridBagConstraints.BOTH;
 			gbc_spinnerCreds.insets = new Insets(0, 0, 5, 5);
 			gbc_spinnerCreds.gridx = 1;
-			gbc_spinnerCreds.gridy = 6;
+			gbc_spinnerCreds.gridy = 9;
 			courseForm.add(getSpinnerCreds(), gbc_spinnerCreds);
 			GridBagConstraints gbc_errorCreds = new GridBagConstraints();
 			gbc_errorCreds.fill = GridBagConstraints.BOTH;
 			gbc_errorCreds.insets = new Insets(0, 0, 5, 0);
 			gbc_errorCreds.gridx = 2;
-			gbc_errorCreds.gridy = 6;
+			gbc_errorCreds.gridy = 9;
 			courseForm.add(getErrorCreds(), gbc_errorCreds);
 			GridBagConstraints gbc_lblDescripcion = new GridBagConstraints();
+			gbc_lblDescripcion.gridwidth = 3;
 			gbc_lblDescripcion.fill = GridBagConstraints.BOTH;
-			gbc_lblDescripcion.insets = new Insets(0, 0, 5, 5);
+			gbc_lblDescripcion.insets = new Insets(0, 0, 5, 0);
 			gbc_lblDescripcion.gridx = 0;
-			gbc_lblDescripcion.gridy = 8;
+			gbc_lblDescripcion.gridy = 11;
 			courseForm.add(getLblDescripcion(), gbc_lblDescripcion);
-			GridBagConstraints gbc_txtDescrip = new GridBagConstraints();
-			gbc_txtDescrip.fill = GridBagConstraints.BOTH;
-			gbc_txtDescrip.insets = new Insets(0, 0, 5, 0);
-			gbc_txtDescrip.gridwidth = 3;
-			gbc_txtDescrip.gridx = 0;
-			gbc_txtDescrip.gridy = 9;
-			courseForm.add(getTxtDescrip(), gbc_txtDescrip);
+			GridBagConstraints gbc_panel_1 = new GridBagConstraints();
+			gbc_panel_1.gridwidth = 3;
+			gbc_panel_1.insets = new Insets(0, 0, 5, 5);
+			gbc_panel_1.fill = GridBagConstraints.BOTH;
+			gbc_panel_1.gridx = 0;
+			gbc_panel_1.gridy = 12;
+			courseForm.add(getPanel_1(), gbc_panel_1);
 			GridBagConstraints gbc_errorDesc = new GridBagConstraints();
 			gbc_errorDesc.fill = GridBagConstraints.BOTH;
 			gbc_errorDesc.insets = new Insets(0, 0, 5, 0);
 			gbc_errorDesc.gridwidth = 2;
 			gbc_errorDesc.gridx = 1;
-			gbc_errorDesc.gridy = 10;
+			gbc_errorDesc.gridy = 13;
 			courseForm.add(getErrorDesc(), gbc_errorDesc);
 			GridBagConstraints gbc_btnAgregar = new GridBagConstraints();
 			gbc_btnAgregar.gridwidth = 3;
 			gbc_btnAgregar.anchor = GridBagConstraints.EAST;
 			gbc_btnAgregar.fill = GridBagConstraints.VERTICAL;
 			gbc_btnAgregar.gridx = 0;
-			gbc_btnAgregar.gridy = 11;
+			gbc_btnAgregar.gridy = 14;
 			courseForm.add(getBtnAgregar(), gbc_btnAgregar);
 		}
 		return courseForm;
 	}
-	private JTextLimited getTxtDescrip() {
+	private JTextArea getTxtDescrip() {
 		if (txtDescrip == null) {
-			txtDescrip = new JTextLimited();
+			txtDescrip = new JTextArea();
+			txtDescrip.setLineWrap(true);
+			txtDescrip.setWrapStyleWord(true);
+			txtDescrip.setRows(5);
+			txtDescrip.setTabSize(2);
+			txtDescrip.setColumns(10);
+			txtDescrip.setBackground(Color.WHITE);
 			txtDescrip.setFont(Constants.getLabelFont());
-			txtDescrip.setLimite(240);
 		}
 		return txtDescrip;
 	}
@@ -404,6 +421,7 @@ public class CoursesFormView extends JPanel {
 	private JSpinner getSpinnerCreds() {
 		if (spinnerCreds == null) {
 			spinnerCreds = new JSpinner();
+			spinnerCreds.setBackground(Color.WHITE);
 			spinnerCreds.setFont(Constants.getLabelFont());
 			spinnerCreds.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
 		}
@@ -415,5 +433,14 @@ public class CoursesFormView extends JPanel {
 		txtDescrip.setText("");
 		spinnerCreds.setValue(0);
 		
+	}
+	private JPanel getPanel_1() {
+		if (panel_1 == null) {
+			panel_1 = new JPanel();
+			panel_1.setBorder(new LineBorder(Color.LIGHT_GRAY));
+			panel_1.setLayout(new BoxLayout(panel_1, BoxLayout.X_AXIS));
+			panel_1.add(getTxtDescrip());
+		}
+		return panel_1;
 	}
 }
