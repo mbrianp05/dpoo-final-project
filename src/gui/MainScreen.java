@@ -46,7 +46,7 @@ public class MainScreen extends JFrame {
 
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1029, 880);
+		setBounds(100, 100, 1029, 930);
 		
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
