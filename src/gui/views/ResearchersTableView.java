@@ -136,6 +136,7 @@ public class ResearchersTableView extends JPanel {
 	private JCheckBox getFilterStudents() {
 		if (filterStudents == null) {
 			filterStudents = new JCheckBox("Estudiantes");
+			filterStudents.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 			filterStudents.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					ResearcherTableModel tmodel = (ResearcherTableModel)table.getModel();
@@ -152,6 +153,7 @@ public class ResearchersTableView extends JPanel {
 	private JCheckBox getFilterProfesors() {
 		if (filterProfesors == null) {
 			filterProfesors = new JCheckBox("Profesores");
+			filterProfesors.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 			filterProfesors.setHorizontalAlignment(SwingConstants.CENTER);
 			filterProfesors.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
@@ -170,7 +172,7 @@ public class ResearchersTableView extends JPanel {
 		if (lblFiltrar == null) {
 			lblFiltrar = new JLabel("Filtrar");
 			lblFiltrar.setHorizontalAlignment(SwingConstants.LEFT);
-			lblFiltrar.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 15));
+			lblFiltrar.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 		}
 
 		return lblFiltrar;
@@ -180,7 +182,7 @@ public class ResearchersTableView extends JPanel {
 		if (lblPuntuacin == null) {
 			lblPuntuacin = new JLabel("Puntuaci\u00F3n");
 			lblPuntuacin.setHorizontalAlignment(SwingConstants.CENTER);
-			lblPuntuacin.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 15));
+			lblPuntuacin.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 		}
 
 		return lblPuntuacin;
@@ -189,6 +191,7 @@ public class ResearchersTableView extends JPanel {
 	private JSpinner getSpinner() {
 		if (spinner == null) {
 			spinner = new JSpinner();
+			spinner.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 			spinner.addKeyListener(new KeyAdapter() {
 				@Override
 				public void keyTyped(KeyEvent arg0) {
@@ -218,6 +221,7 @@ public class ResearchersTableView extends JPanel {
 	private JTextField getFilterByName() {
 		if (filterByName == null) {
 			filterByName = new JTextField("");
+			filterByName.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 			filterByName.addKeyListener(new KeyAdapter() {
 				@Override
 				public void keyReleased(KeyEvent event) {

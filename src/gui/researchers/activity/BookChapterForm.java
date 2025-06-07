@@ -14,7 +14,6 @@ import java.awt.GridBagConstraints;
 import javax.swing.JTextField;
 import java.awt.Insets;
 import java.awt.Font;
-import javax.swing.JComboBox;
 import javax.swing.JButton;
 import gui.component.MultipleInput;
 

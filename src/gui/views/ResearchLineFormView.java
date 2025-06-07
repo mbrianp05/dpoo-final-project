@@ -85,9 +85,9 @@ public class ResearchLineFormView extends JPanel {
 
 		setBackground(Color.WHITE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{100, 50, 75, 288, 50, 100, 0};
+		gridBagLayout.columnWidths = new int[]{100, 0, 75, 288, 50, 100, 0};
 		gridBagLayout.rowHeights = new int[]{70, 45, 60, 0, 35, 35, 0, 35, 0, 35, 35, 0, 35, 50, 40, 0, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 1.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		GridBagConstraints gbc_lblAgregarLneaDe = new GridBagConstraints();
