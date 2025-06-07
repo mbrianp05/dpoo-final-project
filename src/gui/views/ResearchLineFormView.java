@@ -8,10 +8,8 @@ import javax.swing.JLabel;
 
 import java.awt.Font;
 
-import schooling.Degree;
 import schooling.Faculty;
 import schooling.Profesor;
-import schooling.ProfesorCategory;
 import schooling.ResearchLine;
 import schooling.ResearchMatter;
 import utils.Constants;
@@ -37,6 +35,7 @@ import gui.event.OnAddedResearchLine;
 import gui.event.OnDeletedInput;
 import gui.event.OnSetChief;
 import gui.reasearchline.AddChiefJDialog;
+import gui.researchers.ProfesorFormData;
 
 import java.awt.CardLayout;
 
@@ -47,7 +46,7 @@ public class ResearchLineFormView extends JPanel {
 	private Faculty faculty;
 	private OnAddedResearchLine listener;
 
-	private Object[] chief;
+	private ProfesorFormData chief;
 
 	private JLabel lblAgregarLneaDe;
 	private JLabel lblNombre;
@@ -243,9 +242,9 @@ public class ResearchLineFormView extends JPanel {
 		return minCreditsSpinner;
 	}
 
-	public Profesor getChief() {
-		int id = faculty.addProfesor((String)chief[0], (Degree)chief[1], (ProfesorCategory)chief[2], null);
-
+	public Profesor registerChief() {
+		int id = faculty.addProfesor(chief.getName(), chief.getDegree(), chief.getCategory(), null);
+		
 		return (Profesor)faculty.findResearcher(id);
 	}
 
@@ -264,7 +263,7 @@ public class ResearchLineFormView extends JPanel {
 
 								if ((int)minCreditsSpinner.getValue() > 0) {		
 									lblCreditsError.setText("");
-									Profesor chiefProfesor = getChief();
+									Profesor chiefProfesor = registerChief();
 									String name = faculty.addResearchLine(textFieldName.getText(), chiefProfesor, (int)minCreditsSpinner.getValue());
 									ResearchLine line = faculty.findResearchLine(name);
 
@@ -276,7 +275,7 @@ public class ResearchLineFormView extends JPanel {
 										listener.added(textFieldName.getText());
 									}
 
-									ResearchMatter chiefResearchMatter = faculty.findResearchMatter((String)chief[3]);
+									ResearchMatter chiefResearchMatter = faculty.findResearchMatter(chief.getMatter());
 									chiefResearchMatter.addResearcher(chiefProfesor);
 
 									resetForm();
@@ -313,8 +312,7 @@ public class ResearchLineFormView extends JPanel {
 		multipleInput.reset();
 		chief = null;
 
-		CardLayout cl = (CardLayout)(panelWrapper.getLayout());
-		cl.show(panelWrapper, "Add Chief");
+		switchPanel("Add Chief");
 
 		btnEditChief.setVisible(false);
 		lblChiefData.setVisible(false);
@@ -339,26 +337,19 @@ public class ResearchLineFormView extends JPanel {
 		try {
 			AddChiefJDialog dialog = new AddChiefJDialog(multipleInput.getValues(), new OnSetChief() {
 				@Override
-				public void set(String name, ProfesorCategory category, Degree degree, String matter) {
-					chief = new Object[4];
-
-					chief[0] = name;
-					chief[1] = degree;
-					chief[2] = category;
-					chief[3] = matter;
-
-					CardLayout cl = (CardLayout)(panelWrapper.getLayout());
-					cl.show(panelWrapper, "Change Chief");
+				public void set(ProfesorFormData data) {
+					chief = data;
+					switchPanel("Change Chief");
 
 					lblChiefData.setVisible(true);
 					btnEditChief.setVisible(true);
 
-					lblChiefName.setText((String)chief[0]);
-					lblChiefDegree.setText(EnumsDictionary.degree((Degree)chief[1]));
-					lblChiefCat.setText(EnumsDictionary.category((ProfesorCategory)chief[2]));
-					lblChiefMatter.setText((String)chief[3]);
+					lblChiefName.setText(data.getName());
+					lblChiefDegree.setText(EnumsDictionary.degree(data.getDegree()));
+					lblChiefCat.setText(EnumsDictionary.category(data.getCategory()));
+					lblChiefMatter.setText(data.getMatter());
 				}
-			});
+			}, chief);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -615,7 +606,7 @@ public class ResearchLineFormView extends JPanel {
 		String matter = null;
 		
 		if (chief != null) {
-			matter = (String)chief[3];
+			matter = chief.getMatter();
 		}
 		
 		return matter;
@@ -644,5 +635,10 @@ public class ResearchLineFormView extends JPanel {
 			});
 		}
 		return multipleInput;
+	}
+	
+	private void switchPanel(String id) {
+		CardLayout cl = (CardLayout)(panelWrapper.getLayout());
+		cl.show(panelWrapper, id);
 	}
 }

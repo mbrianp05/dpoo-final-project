@@ -13,7 +13,6 @@ public class Mock {
 		int profesorID2 = faculty.addProfesor("Kevin", Degree.Doctor, ProfesorCategory.Permanent, null);
 		
 		faculty.addResearchLine("Inteligencia artificial", faculty.getProfesors().get(0), 10);
-		faculty.addResearchLine("Desarrollo de software", faculty.getProfesors().get(1), 8);
 		ResearchLine line = faculty.getReseachLines().get(0);
 		
 		line.addMatter("IAs Generativas");

@@ -1,8 +1,9 @@
 package gui.event;
 
+import gui.researchers.ProfesorFormData;
 import schooling.Degree;
 import schooling.ProfesorCategory;
 
 public interface OnSetChief {
-	void set(String name, ProfesorCategory category, Degree degree, String matter);
+	void set(ProfesorFormData data);
 }

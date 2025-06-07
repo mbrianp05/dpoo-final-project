@@ -1,17 +1,16 @@
 package gui.views;
 
-import gui.event.OnAddedProfesor;
+import gui.event.OnProfesorFormActionTriggered;
 import gui.event.OnAddedResearcher;
 import gui.researchers.ProfesorForm;
+import gui.researchers.ProfesorFormData;
 import gui.researchers.StudentForm;
 
 import javax.swing.JPanel;
 
 import java.awt.Color;
 
-import schooling.Degree;
 import schooling.Faculty;
-import schooling.ProfesorCategory;
 import utils.ArrayLib;
 import utils.Constants;
 
@@ -163,10 +162,10 @@ public class ResearcherFormView extends JPanel {
 	private ProfesorForm getProfesorForm() {
 		if (profesorForm == null) {
 			profesorForm = new ProfesorForm(getMatters());
-			profesorForm.listenTo(new OnAddedProfesor() {
+			profesorForm.listenTo(new OnProfesorFormActionTriggered() {
 				@Override
-				public void newProfesor(String name, Degree degree, ProfesorCategory category, String matter) {
-					int ID = faculty.addProfesor(name, degree, category, matter);
+				public void actionPerformed(ProfesorFormData data) {
+					int ID = faculty.addProfesor(data.getName(), data.getDegree(), data.getCategory(), data.getMatter());
 					
 					if (listener != null) {
 						listener.newResearcher(ID);

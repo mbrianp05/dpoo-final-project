@@ -1,13 +1,11 @@
 package gui.researchers;
 
 import gui.component.ErrorLabel;
-import gui.event.OnAddedProfesor;
+import gui.event.OnProfesorFormActionTriggered;
 
 import javax.swing.JPanel;
 
 import schooling.Degree;
-import schooling.Faculty;
-import schooling.Profesor;
 
 import java.awt.Color;
 import java.awt.GridBagLayout;
@@ -37,9 +35,7 @@ import javax.swing.SwingConstants;
 public class ProfesorForm extends JPanel {
 	private static final long serialVersionUID = 5814578189776579606L;
 
-	private Faculty faculty;
-	private Profesor profesor;
-	private boolean editing;
+	private ProfesorFormData profesor;
 
 	private JLabel lblName;
 	private JLabel lblProfesorCategory;
@@ -52,7 +48,8 @@ public class ProfesorForm extends JPanel {
 	private JTextField textFieldName;
 	private JButton btnSubmit;
 	private ErrorLabel errorLabel;
-	private OnAddedProfesor listener;
+	
+	private OnProfesorFormActionTriggered listener;
 
 	private String[] researchMatters;
 
@@ -60,13 +57,8 @@ public class ProfesorForm extends JPanel {
 		this(researchMatters, null);
 	}
 
-	/**
-	 * @wbp.parser.constructor
-	 */
-	public ProfesorForm(String[] researchMatters, Profesor profesor) {
-		this.profesor = profesor;
-		this.editing = profesor != null;
-		this.faculty = Faculty.newInstance();
+	public ProfesorForm(String[] researchMatters, ProfesorFormData data) {
+		this.profesor = data;
 		this.researchMatters = researchMatters;
 
 		setBackground(Color.WHITE);
@@ -74,7 +66,7 @@ public class ProfesorForm extends JPanel {
 		add(getPanel());
 	}
 
-	public void listenTo(OnAddedProfesor listener) {
+	public void listenTo(OnProfesorFormActionTriggered listener) {
 		this.listener = listener;
 	}
 
@@ -119,7 +111,7 @@ public class ProfesorForm extends JPanel {
 			comboBoxProfesorCategory.setModel(new DefaultComboBoxModel<>(new String[] {"Instructor", "Asistente", "Auxiliar", "Titular"}));
 			comboBoxProfesorCategory.setSelectedIndex(0);
 
-			if (editing) {
+			if (profesor != null) {
 				int index;
 
 				switch (profesor.getCategory()) {
@@ -152,7 +144,7 @@ public class ProfesorForm extends JPanel {
 			comboBoxDegree.setModel(new DefaultComboBoxModel<>(new String[] {"Ninguna", "M\u00E1ster", "Doctor"}));
 			comboBoxDegree.setSelectedIndex(0);
 
-			if (editing) {
+			if (profesor != null) {
 				int index;
 
 				if (profesor.getDegree() == null) {
@@ -242,18 +234,12 @@ public class ProfesorForm extends JPanel {
 			ProfesorCategory category = getCategory();
 			String matter = getMatter();
 		
-			if (!editing) {
+			if (profesor == null) {	
 				resetForm();
-			} else {
-				profesor.setName(name);
-				profesor.setCategory(category);
-				profesor.setDegree(degree);
-				
-				faculty.moveToOtherMatter(profesor.getID(), getMatter());
 			}
 			
 			if (listener != null) {
-				listener.newProfesor(name, degree, category, matter);
+				listener.actionPerformed(new ProfesorFormData(name, matter, degree, category));
 			}
 		} else {
 			errorLabel.setText("El nombre es requerido");
@@ -262,7 +248,7 @@ public class ProfesorForm extends JPanel {
 
 	private JButton getBtnSubmit() {
 		if (btnSubmit == null) {
-			btnSubmit = new JButton(editing ? "Actualizar" : "Registrar  profesor");
+			btnSubmit = new JButton(profesor != null ? "Actualizar" : "Registrar  profesor");
 			btnSubmit.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					submit();
@@ -280,8 +266,8 @@ public class ProfesorForm extends JPanel {
 		this.researchMatters = matters;
 		researchMatterComboBox.setModel(new DefaultComboBoxModel<>(matters));
 		
-		if (editing) {
-			researchMatterComboBox.setSelectedItem(faculty.findMatterOf(profesor.getID()));
+		if (profesor != null) {
+			researchMatterComboBox.setSelectedItem(profesor.getMatter());
 		}
 	}
 
@@ -399,7 +385,7 @@ public class ProfesorForm extends JPanel {
 			textFieldName.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 			textFieldName.setColumns(10);
 
-			if (editing) {
+			if (profesor != null) {
 				textFieldName.setText(profesor.getName());
 			}
 		}

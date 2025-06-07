@@ -1,6 +1,6 @@
 package gui.reasearchline;
 
-import gui.event.OnAddedProfesor;
+import gui.event.OnProfesorFormActionTriggered;
 import gui.event.OnSetChief;
 
 import javax.swing.JDialog;
@@ -10,13 +10,10 @@ import java.awt.GridBagLayout;
 
 
 import java.awt.GridBagConstraints;
-
 import java.awt.Insets;
 
-import schooling.Degree;
-import schooling.ProfesorCategory;
-
 import gui.researchers.ProfesorForm;
+import gui.researchers.ProfesorFormData;
 
 public class AddChiefJDialog extends JDialog {
 	private static final long serialVersionUID = 3142798032279882910L;
@@ -24,12 +21,18 @@ public class AddChiefJDialog extends JDialog {
 	private String[] matters;
 	private ProfesorForm profesorForm;
 	private OnSetChief listener;
-
+	private ProfesorFormData data;
+	
 	public AddChiefJDialog(String[] matters, OnSetChief listener) {
+		this(matters, listener, null);
+	}
+
+	public AddChiefJDialog(String[] matters, OnSetChief listener, ProfesorFormData data) {
 		getContentPane().setBackground(Color.WHITE);
 		setResizable(false);
 		this.matters = matters;
 		this.listener = listener;
+		this.data = data;
 
 		setAlwaysOnTop(true);
 		setTitle("Insertar datos el jefe de la l\u00EDnea");
@@ -53,12 +56,12 @@ public class AddChiefJDialog extends JDialog {
 
 	private ProfesorForm getProfesorForm() {
 		if (profesorForm == null) {
-			profesorForm = new ProfesorForm(matters);
+			profesorForm = new ProfesorForm(matters, data);
 			profesorForm.setBackground(Color.WHITE);
-			profesorForm.listenTo(new OnAddedProfesor() {
+			profesorForm.listenTo(new OnProfesorFormActionTriggered() {
 				@Override
-				public void newProfesor(String name, Degree degree, ProfesorCategory category, String matter) {
-					listener.set(name, category, degree, matter);
+				public void actionPerformed(ProfesorFormData data) {
+					listener.set(data);
 					setVisible(false);
 				}
 			});

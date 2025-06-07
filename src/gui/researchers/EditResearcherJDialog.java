@@ -1,6 +1,6 @@
 package gui.researchers;
 
-import gui.event.OnAddedProfesor;
+import gui.event.OnProfesorFormActionTriggered;
 import gui.event.OnAddedResearcher;
 import gui.event.OnRemovedResearcher;
 
@@ -11,10 +11,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import schooling.Degree;
 import schooling.Profesor;
-import schooling.ProfesorCategory;
 import schooling.ResearchLine;
+import schooling.ResearchMatter;
 import schooling.Researcher;
 import schooling.Student;
 
@@ -100,9 +99,17 @@ public class EditResearcherJDialog extends JDialog {
 
 	public void listenTo(final OnAddedResearcher listener) {
 		if (researcher instanceof Profesor) {
-			profesorForm.listenTo(new OnAddedProfesor() {
+			profesorForm.listenTo(new OnProfesorFormActionTriggered() {
 				@Override
-				public void newProfesor(String name, Degree degree, ProfesorCategory category, String matter) {
+				public void actionPerformed(ProfesorFormData data) {
+					Profesor p = (Profesor)researcher;
+					
+					p.setName(data.getName());
+					p.setDegree(data.getDegree());
+					p.setCategory(data.getCategory());
+					
+					faculty.moveToOtherMatter(p.getID(), data.getMatter());
+					
 					listener.newResearcher(researcher.getID());
 				}
 			});
@@ -119,8 +126,12 @@ public class EditResearcherJDialog extends JDialog {
 		String[] matters = ArrayLib.cast(faculty.getResearchMattersNames());
 		
 		if (researcher instanceof Profesor) {
-			if (faculty.isChief((Profesor)researcher)) {
-				ResearchLine line = faculty.getReseachLineByChief((Profesor)researcher);
+			Profesor p = (Profesor)researcher;
+			
+			if (faculty.isChief(p)) {
+				System.out.println(p.getName());
+				
+				ResearchLine line = faculty.getReseachLineByChief(p);
 				matters = new String[line.getMatters().size()];
 				
 				for (int i = 0; i < line.getMatters().size(); i++) {
@@ -134,11 +145,19 @@ public class EditResearcherJDialog extends JDialog {
 	
 	private ProfesorForm getProfesorForm() {
 		if (profesorForm == null) {
-			profesorForm = new ProfesorForm(getMatters(), (Profesor)researcher);
+			Profesor profesor = (Profesor)researcher;
+			ResearchMatter matter = faculty.findMatterOf(profesor.getID());
+			
+			String matterName = "";
+			
+			if (matter != null) matterName = matter.getName();
+			
+			profesorForm = new ProfesorForm(getMatters(), ProfesorFormData.fromResearcher(profesor, matterName));
 		}
 
 		return profesorForm;
 	}
+	
 	private JPanel getPanel() {
 		if (panel == null) {
 			panel = new JPanel();
