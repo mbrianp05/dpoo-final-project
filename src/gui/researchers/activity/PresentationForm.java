@@ -211,7 +211,7 @@ public class PresentationForm extends JPanel {
 	private JPanel getPanel() {
 		if (panel == null) {
 			panel = new JPanel();
-			panel.setBorder(new TitledBorder(new LineBorder(new Color(0, 51, 153)), "Fecha", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 51, 255)));
+			panel.setBorder(new TitledBorder(new LineBorder(new Color(0, 51, 153), 2, true), "Fecha", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 51, 255)));
 			panel.setBackground(Color.WHITE);
 			GridBagLayout gbl_panel = new GridBagLayout();
 			gbl_panel.columnWidths = new int[]{0, 100, 35, 100, 35, 100, 0, 0};

@@ -157,6 +157,7 @@ public class StudentForm extends JPanel {
 	private ResearchMatterComboBox getResearchMatterComboBox() {
 		if (researchMatterComboBox == null) {
 			researchMatterComboBox = new ResearchMatterComboBox(faculty);
+			researchMatterComboBox.setBackground(Color.WHITE);
 			researchMatterComboBox.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 
 			if (editing) {
