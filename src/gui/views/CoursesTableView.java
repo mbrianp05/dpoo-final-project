@@ -40,14 +40,18 @@ public class CoursesTableView extends JPanel {
 	private JTextField filterByName;
 	private JLabel lblInstructor;
 	private JSpinner filterCreds;
+	
+	private Faculty faculty;
 
 	/**
 	 * Create the panel.
 	 */
-	public CoursesTableView(Faculty faculty) {
+	public CoursesTableView() {
+		
+		this.faculty = Faculty.newInstance();
+		
 		setBackground(Color.WHITE);
 		
-		coursesTableModel = new CoursesTableModel(faculty);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{100, 0, 55, 116, 116, 0, 116, 100, 0};
 		gridBagLayout.rowHeights = new int[]{70, 34, 72, 23, 90, 0, 0};
@@ -98,8 +102,9 @@ public class CoursesTableView extends JPanel {
 		gbc_scrollPane.gridx = 1;
 		gbc_scrollPane.gridy = 4;
 		add(getScrollPane(), gbc_scrollPane);
-		table.setModel(coursesTableModel);
 
+		coursesTableModel = new CoursesTableModel(this.faculty);
+		table.setModel(coursesTableModel);
 		
 	}
 

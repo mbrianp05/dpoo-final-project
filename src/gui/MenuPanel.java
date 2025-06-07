@@ -1,5 +1,6 @@
 package gui;
 
+import gui.event.OnAddedCourse;
 import gui.event.OnAddedResearchLine;
 import gui.event.OnAddedResearcher;
 import gui.views.CoursesFormView;
@@ -24,6 +25,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
 import schooling.Faculty;
+import schooling.Profesor;
 import utils.Mock;
 
 public class MenuPanel extends JPanel {
@@ -219,6 +221,13 @@ public class MenuPanel extends JPanel {
 	private CoursesFormView getCoursesFormView() {
 		if (coursesFormView == null) {
 			coursesFormView = new CoursesFormView(faculty);
+			coursesFormView.listenTo(new OnAddedCourse() {				
+				@Override
+				public void added(String name, String descrip, Profesor instruct,
+						int credits) {		
+					coursesTableView.updateTable();
+				}
+			});
 		}
 		return coursesFormView;
 	}
@@ -257,7 +266,7 @@ public class MenuPanel extends JPanel {
 	
 	private CoursesTableView getCoursesTableView() {
 		if (coursesTableView == null) {
-			coursesTableView = new CoursesTableView(faculty);
+			coursesTableView = new CoursesTableView();
 		}
 		return coursesTableView;
 	}

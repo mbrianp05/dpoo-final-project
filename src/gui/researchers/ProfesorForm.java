@@ -60,6 +60,9 @@ public class ProfesorForm extends JPanel {
 		this(researchMatters, null);
 	}
 
+	/**
+	 * @wbp.parser.constructor
+	 */
 	public ProfesorForm(String[] researchMatters, Profesor profesor) {
 		this.profesor = profesor;
 		this.editing = profesor != null;

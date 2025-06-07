@@ -1,7 +1,6 @@
 package gui.views;
 
-import gui.component.JTextLimited;
-
+import gui.event.OnAddedCourse;
 import javax.swing.JPanel;
 
 import schooling.Faculty;
@@ -29,12 +28,12 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
+
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import javax.swing.SwingConstants;
+
 import javax.swing.JTextArea;
-import java.awt.BorderLayout;
 import javax.swing.BoxLayout;
 import javax.swing.border.LineBorder;
 
@@ -60,6 +59,8 @@ public class CoursesFormView extends JPanel {
 	private JLabel errorCreds;
 	private JLabel errorDesc;
 	private JSpinner spinnerCreds;
+
+	private OnAddedCourse listener;
 
 	private int[] profIDs = new int[500];
 	private JPanel panel_1;
@@ -88,6 +89,11 @@ public class CoursesFormView extends JPanel {
 		add(getPanel(), gbc_panel);
 
 	}
+	
+	public void listenTo(OnAddedCourse listener) {
+		this.listener = listener;
+	}
+	
 	private JLabel getLblInsertarDatosDe() {
 		if (lblInsertarDatosDe == null) {
 			lblInsertarDatosDe = new JLabel("Insertar datos de curso de postgrado");
@@ -335,29 +341,41 @@ public class CoursesFormView extends JPanel {
 			btnAgregar.setBackground(Constants.getInsertionBtnColor());
 			btnAgregar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
+					resetErrors();
 					if(masteryPlans != null){
 						errorMast.setText("");
 						if(Validation.notEmpty(txtCourseName.getText())) {
 							errorName.setText("");
+
 							if(selectInstructor!= null) {
 								errorInstruct.setText("");
+
 								if((int)spinnerCreds.getValue() != 0) {
 									errorCreds.setText("");
+
 									if(Validation.notEmpty(txtDescrip.getText())) {
 										errorDesc.setText("");
 
-										try{
-											int index = selectInstructor.getSelectedIndex();
-											Profesor instructor = (Profesor) faculty.findResearcher(profIDs[index]);
-											
-											String name = masteryPlans.getSelectedItem().toString();
-											ResearchLine line = faculty.findResearchLine(name); 
-											
-											line.getMasteryPlan().addCourse(txtCourseName.getText(), txtDescrip.getText(), instructor, (int)spinnerCreds.getValue());
-											
-											resetForm();
-										}
-										catch (Exception e){}
+										String name = txtCourseName.getText();
+										
+										String descrip = txtDescrip.getText();
+										
+										int creds = (int)spinnerCreds.getValue();
+
+										int index = selectInstructor.getSelectedIndex();
+										Profesor instructor = (Profesor) faculty.findResearcher(profIDs[index]);
+
+										String lineName = masteryPlans.getSelectedItem().toString();
+
+										ResearchLine line = faculty.findResearchLine(lineName);
+
+										line.getMasteryPlan().addCourse(name, descrip, instructor, creds);
+
+										if(listener != null)
+											listener.added(name, descrip, instructor, creds);
+
+										resetForm();
+
 									} else {
 										errorDesc.setText("Agregue una descripción");
 									}
@@ -427,12 +445,12 @@ public class CoursesFormView extends JPanel {
 		}
 		return spinnerCreds;
 	}
-	
+
 	public void resetForm() {
 		txtCourseName.setText("");
 		txtDescrip.setText("");
 		spinnerCreds.setValue(0);
-		
+
 	}
 	private JPanel getPanel_1() {
 		if (panel_1 == null) {
@@ -442,5 +460,13 @@ public class CoursesFormView extends JPanel {
 			panel_1.add(getTxtDescrip());
 		}
 		return panel_1;
+	}
+
+	public void resetErrors() {
+		errorMast.setText("");
+		errorName.setText("");
+		errorInstruct.setText("");
+		errorCreds.setText("");
+		errorDesc.setText("");
 	}
 }
