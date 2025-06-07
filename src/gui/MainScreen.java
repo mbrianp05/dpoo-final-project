@@ -18,6 +18,7 @@ import java.awt.BorderLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.Toolkit;
 
 public class MainScreen extends JFrame {
 	private static final long serialVersionUID = -5078546845004098026L;
@@ -33,6 +34,8 @@ public class MainScreen extends JFrame {
 			public void run() {
 				try {
 					MainScreen frame = new MainScreen();
+					frame.setSize(Toolkit.getDefaultToolkit().getScreenSize());
+					frame.setUndecorated(true);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -42,6 +45,7 @@ public class MainScreen extends JFrame {
 	}
 
 	public MainScreen() {
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setTitle("Gestión de datos de la facultad");
 
 		setResizable(false);

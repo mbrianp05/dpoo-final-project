@@ -21,7 +21,7 @@ public class CoursesTableModel extends DefaultTableModel {
 		filterName = "";
 		filterMinCreds = 0;
 
-		String[] columns = {"Nombre", "Instructor", "Créditos necesarios", "Descripción"};
+		String[] columns = {"Nombre", "Instructor", "Créditos", "Descripción"};
 		this.setColumnIdentifiers(columns);
 
 		fill();
