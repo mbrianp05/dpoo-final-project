@@ -3,6 +3,7 @@ package gui.researchers;
 import gui.event.OnProfesorFormActionTriggered;
 import gui.event.OnAddedResearcher;
 import gui.event.OnRemovedResearcher;
+import gui.event.OnResearchActivityActionTriggered;
 
 import java.awt.BorderLayout;
 
@@ -40,6 +41,8 @@ import javax.swing.ButtonGroup;
 
 import java.awt.CardLayout;
 
+import javax.swing.border.MatteBorder;
+
 public class EditResearcherJDialog extends JDialog {
 	private static final long serialVersionUID = -8039865322179654975L;
 	private final JPanel contentPanel = new JPanel();
@@ -52,6 +55,7 @@ public class EditResearcherJDialog extends JDialog {
 	private JButton btnA;
 	
 	private OnRemovedResearcher listener;
+	
 	private JPanel radiosWrapper;
 	private JRadioButton rbtnResearcherActivity;
 	private JRadioButton rbtnResearcherInfo;
@@ -115,6 +119,10 @@ public class EditResearcherJDialog extends JDialog {
 		getButtonGroup();
 	}
 
+	public void listenTo(OnResearchActivityActionTriggered listener) {
+		researcherActivityForm.listenTo(listener);
+	}
+	
 	public void listenTo(final OnAddedResearcher listener) {
 		if (researcher instanceof Profesor) {
 			profesorForm_1.listenTo(new OnProfesorFormActionTriggered() {
@@ -213,6 +221,7 @@ public class EditResearcherJDialog extends JDialog {
 	private JPanel getRadiosWrapper() {
 		if (radiosWrapper == null) {
 			radiosWrapper = new JPanel();
+			radiosWrapper.setBorder(new MatteBorder(0, 0, 1, 0, (Color) Color.LIGHT_GRAY));
 			radiosWrapper.setBackground(Color.WHITE);
 			radiosWrapper.add(getRadioButton_2());
 			radiosWrapper.add(getRadioButton_1());
@@ -292,7 +301,7 @@ public class EditResearcherJDialog extends JDialog {
 	}
 	private ResearcherActivityForm getResearcherActivityForm() {
 		if (researcherActivityForm == null) {
-			researcherActivityForm = new ResearcherActivityForm();
+			researcherActivityForm = new ResearcherActivityForm(researcher);
 		}
 		return researcherActivityForm;
 	}

@@ -2,6 +2,7 @@ package gui.views;
 
 import gui.event.OnAddedResearcher;
 import gui.event.OnRemovedResearcher;
+import gui.event.OnResearchActivityActionTriggered;
 import gui.model.ResearcherTableModel;
 import gui.researchers.EditResearcherJDialog;
 
@@ -260,13 +261,19 @@ public class ResearchersTableView extends JPanel {
 								current.listenTo(new OnAddedResearcher() {
 									@Override
 									public void newResearcher(int researcherID) {
-										((ResearcherTableModel)table.getModel()).fill();
+										updateTable();
 									}
 								});
 								current.listenTo(new OnRemovedResearcher() {
 									@Override
 									public void removed(int ID) {
-										((ResearcherTableModel)table.getModel()).fill();
+										updateTable();
+									}
+								});
+								current.listenTo(new OnResearchActivityActionTriggered() {
+									@Override
+									public void actionPerformed() {
+										updateTable();
 									}
 								});
 								current.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);

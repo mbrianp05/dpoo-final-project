@@ -1,26 +1,43 @@
 package gui.researchers;
 
 import javax.swing.JPanel;
+
 import java.awt.Color;
+
 import javax.swing.BoxLayout;
 import javax.swing.JTabbedPane;
+
+import schooling.Researcher;
+import gui.event.OnResearchActivityActionTriggered;
 import gui.researchers.activity.BookChapterForm;
+
 import java.awt.GridBagLayout;
 import java.awt.Font;
+
 import gui.researchers.activity.PaperForm;
 import gui.researchers.activity.PresentationForm;
 
 public class ResearcherActivityForm extends JPanel {
-	public ResearcherActivityForm() {
-		setBackground(Color.WHITE);
-		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-		add(getTabbedPane());
-	}
+	private Researcher researcher;
+	
 	private static final long serialVersionUID = 8784191316235786417L;
 	private JTabbedPane tabbedPane;
 	private BookChapterForm bookChapterForm;
 	private PaperForm paperForm;
 	private PresentationForm presentationForm;
+	
+	public ResearcherActivityForm(Researcher researcher) {
+		this.researcher = researcher;
+		
+		setBackground(Color.WHITE);
+		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+		add(getTabbedPane());
+	}
+	
+	public void listenTo(OnResearchActivityActionTriggered listener) {
+		bookChapterForm.listenTo(listener);
+	}
+	
 	private JTabbedPane getTabbedPane() {
 		if (tabbedPane == null) {
 			tabbedPane = new JTabbedPane(JTabbedPane.TOP);
@@ -34,7 +51,7 @@ public class ResearcherActivityForm extends JPanel {
 	}
 	private BookChapterForm getBookChapterForm() {
 		if (bookChapterForm == null) {
-			bookChapterForm = new BookChapterForm();
+			bookChapterForm = new BookChapterForm(researcher);
 			GridBagLayout gridBagLayout = (GridBagLayout) bookChapterForm.getLayout();
 			gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0};
 		}
