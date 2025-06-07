@@ -6,9 +6,9 @@ import utils.Validation;
 
 public class Presentation implements ScorableBreakthrough {
     private String name;
-    private Date date;
     private String ISBN;
     private String location;
+    private Date date;
 
     private final static int score = 1;
 
