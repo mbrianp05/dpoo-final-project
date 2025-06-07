@@ -12,5 +12,4 @@ public class ErrorLabel extends JLabel {
 		setForeground(new Color(255, 0, 51));
 		setFont(new Font("Segoe UI", Font.PLAIN, 15));
 	}
-
 }

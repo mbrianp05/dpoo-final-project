@@ -131,6 +131,7 @@ public class ResearchersTableView extends JPanel {
 
 		researcherModel = new ResearcherTableModel(faculty);
 		table.setModel(researcherModel);
+		table.getColumnModel().getColumn(0).setMaxWidth(30);
 	}
 
 	private JCheckBox getFilterStudents() {

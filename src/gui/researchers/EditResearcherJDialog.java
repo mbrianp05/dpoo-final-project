@@ -86,16 +86,16 @@ public class EditResearcherJDialog extends JDialog {
 		
 		GridBagLayout gbl_contentPanel = new GridBagLayout();
 		gbl_contentPanel.columnWidths = new int[]{40, 0, 40, 0};
-		gbl_contentPanel.rowHeights = new int[]{30, 0, 0, 0};
+		gbl_contentPanel.rowHeights = new int[]{30, 0, 0, 0, 0};
 		gbl_contentPanel.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
-		gbl_contentPanel.rowWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
+		gbl_contentPanel.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
 		contentPanel.setLayout(gbl_contentPanel);
 		GridBagConstraints gbc_panel = new GridBagConstraints();
 		gbc_panel.gridwidth = 3;
 		gbc_panel.anchor = GridBagConstraints.NORTH;
 		gbc_panel.fill = GridBagConstraints.HORIZONTAL;
 		gbc_panel.gridx = 0;
-		gbc_panel.gridy = 2;
+		gbc_panel.gridy = 3;
 
 		GridBagConstraints gbc_radiosWrapper = new GridBagConstraints();
 		gbc_radiosWrapper.insets = new Insets(0, 0, 5, 5);
@@ -105,10 +105,10 @@ public class EditResearcherJDialog extends JDialog {
 		contentPanel.add(getRadiosWrapper(), gbc_radiosWrapper);
 		GridBagConstraints gbc_panelsWrapper = new GridBagConstraints();
 		gbc_panelsWrapper.gridwidth = 3;
-		gbc_panelsWrapper.insets = new Insets(0, 0, 5, 5);
+		gbc_panelsWrapper.insets = new Insets(0, 0, 5, 0);
 		gbc_panelsWrapper.fill = GridBagConstraints.BOTH;
 		gbc_panelsWrapper.gridx = 0;
-		gbc_panelsWrapper.gridy = 1;
+		gbc_panelsWrapper.gridy = 2;
 		contentPanel.add(getPanelsWrapper(), gbc_panelsWrapper);
 
 		contentPanel.add(getPanel(), gbc_panel);

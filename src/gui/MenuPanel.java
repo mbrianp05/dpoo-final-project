@@ -326,5 +326,4 @@ public class MenuPanel extends JPanel {
 		}
 		return researchLinesTableView;
 	}
-
 }
