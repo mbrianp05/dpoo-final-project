@@ -1,5 +1,6 @@
 package gui.component;
 
+import gui.event.OnAddedInput;
 import gui.event.OnDeletedInput;
 
 import javax.swing.JPanel;
@@ -25,12 +26,14 @@ import javax.swing.JButton;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Font;
 
 public class MultipleInput extends JPanel {
 	private String mainLabelText;
 	private String secondaryLabelText;
 	private ArrayList<String> values;
-	private OnDeletedInput listener;
+	private OnDeletedInput removedListener;
+	private OnAddedInput newListener;
 	
 	public MultipleInput(String mainLabelText, String secondaryLabelText) {
 		this.mainLabelText = mainLabelText;
@@ -40,10 +43,17 @@ public class MultipleInput extends JPanel {
 		setBackground(Color.WHITE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0};
-		gridBagLayout.rowHeights = new int[]{35, 35, 35, 0, 0};
+		gridBagLayout.rowHeights = new int[]{36, 35, 35, 36, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
+		GridBagConstraints gbc_comboBox = new GridBagConstraints();
+		gbc_comboBox.gridwidth = 3;
+		gbc_comboBox.insets = new Insets(0, 0, 5, 0);
+		gbc_comboBox.fill = GridBagConstraints.BOTH;
+		gbc_comboBox.gridx = 1;
+		gbc_comboBox.gridy = 1;
+		add(getComboBox(), gbc_comboBox);
 		GridBagConstraints gbc_btnEdit = new GridBagConstraints();
 		gbc_btnEdit.fill = GridBagConstraints.BOTH;
 		gbc_btnEdit.insets = new Insets(0, 0, 5, 5);
@@ -58,19 +68,14 @@ public class MultipleInput extends JPanel {
 		gbc_btnRemove.gridy = 0;
 		add(getBtnRemove(), gbc_btnRemove);
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
+		gbc_lblNewLabel.fill = GridBagConstraints.BOTH;
 		gbc_lblNewLabel.anchor = GridBagConstraints.EAST;
 		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel.gridx = 0;
 		gbc_lblNewLabel.gridy = 1;
 		add(getLblNewLabel(), gbc_lblNewLabel);
-		GridBagConstraints gbc_comboBox = new GridBagConstraints();
-		gbc_comboBox.gridwidth = 3;
-		gbc_comboBox.insets = new Insets(0, 0, 5, 0);
-		gbc_comboBox.fill = GridBagConstraints.BOTH;
-		gbc_comboBox.gridx = 1;
-		gbc_comboBox.gridy = 1;
-		add(getComboBox(), gbc_comboBox);
 		GridBagConstraints gbc_label = new GridBagConstraints();
+		gbc_label.fill = GridBagConstraints.BOTH;
 		gbc_label.anchor = GridBagConstraints.EAST;
 		gbc_label.insets = new Insets(0, 0, 5, 5);
 		gbc_label.gridx = 0;
@@ -99,7 +104,11 @@ public class MultipleInput extends JPanel {
 	}
 	
 	public void listenTo(OnDeletedInput listener) {
-		this.listener = listener;
+		this.removedListener = listener;
+	}
+	
+	public void listenTo(OnAddedInput listener) { 
+		this.newListener = listener;
 	}
 	
 	private static final long serialVersionUID = 7427373212103007553L;
@@ -128,7 +137,8 @@ public class MultipleInput extends JPanel {
 	private JLabel getLabel() {
 		if (label == null) {
 			label = new JLabel(secondaryLabelText);
-			label.setFont(Constants.getLabelFont());
+			label.setForeground(Color.DARK_GRAY);
+			label.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		}
 		return label;
 	}
@@ -136,6 +146,7 @@ public class MultipleInput extends JPanel {
 	private JComboBox<String> getComboBox() {
 		if (comboBox == null) {
 			comboBox = new JComboBox<>();
+			comboBox.setBackground(Color.WHITE);
 			comboBox.setFont(Constants.getLabelFont());
 		}
 		return comboBox;
@@ -144,6 +155,7 @@ public class MultipleInput extends JPanel {
 	private JTextField getTextField() {
 		if (textField == null) {
 			textField = new JTextField();
+			textField.setBackground(Color.WHITE);
 			textField.setColumns(10);
 			textField.setFont(Constants.getLabelFont());
 		}
@@ -153,12 +165,23 @@ public class MultipleInput extends JPanel {
 	private JButton getButton() {
 		if (button == null) {
 			button = new JButton("+");
+			button.setBackground(Color.WHITE);
 			button.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					if (Validation.notEmpty(textField.getText())) {
+						String newValue = textField.getText();
+						
 						errorMessage.setVisible(false);
-						values.add(textField.getText());
+						values.add(newValue);
+						textField.setText("");
+						
 						updateCombobox();
+						
+						comboBox.setSelectedIndex(comboBox.getModel().getSize() - 1);
+						
+						if (newListener != null) {
+							newListener.newItem(newValue);
+						}
 					} else {
 						errorMessage.setVisible(true);
 					}
@@ -172,6 +195,8 @@ public class MultipleInput extends JPanel {
 	private JButton getBtnEdit() {
 		if (btnEdit == null) {
 			btnEdit = new JButton("Editar");
+			btnEdit.setBackground(Color.WHITE);
+			btnEdit.setVisible(false);
 			btnEdit.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					String newInput = JOptionPane.showInputDialog(null, "¿Cambiar " + comboBox.getSelectedItem() + "?", "Editar", JOptionPane.PLAIN_MESSAGE);
@@ -198,9 +223,11 @@ public class MultipleInput extends JPanel {
 	private JButton getBtnRemove() {
 		if (btnRemove == null) {
 			btnRemove = new JButton("Eliminar");
+			btnRemove.setVisible(false);
+			btnRemove.setBackground(Color.WHITE);
 			btnRemove.addActionListener(new ActionListener() {
-				String item = (String)comboBox.getSelectedItem();
 				public void actionPerformed(ActionEvent arg0) {
+					String item = (String)comboBox.getSelectedItem();
 					int input = JOptionPane.showConfirmDialog(null, "¿Eliminar " + item + "?", "Eliminar materia", JOptionPane.WARNING_MESSAGE);
 
 					if (input == JOptionPane.YES_OPTION) {
@@ -214,8 +241,8 @@ public class MultipleInput extends JPanel {
 						
 						updateCombobox();
 
-						if (listener != null) {
-							listener.deletedItem(item);
+						if (removedListener != null) {
+							removedListener.deletedItem(item);
 						}
 					}
 				}
@@ -244,5 +271,12 @@ public class MultipleInput extends JPanel {
 	
 	public String[] getValues() {
 		return ArrayLib.cast(values);
+	}
+
+	public void reset() {
+		values.clear();
+		textField.setText("");
+		errorMessage.setVisible(false);
+		updateCombobox();
 	}
 }
