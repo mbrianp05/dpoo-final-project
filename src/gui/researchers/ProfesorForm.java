@@ -53,6 +53,9 @@ public class ProfesorForm extends JPanel {
 
 	private String[] researchMatters;
 
+	/**
+	 * @wbp.parser.constructor
+	 */
 	public ProfesorForm(String[] researchMatters) {
 		this(researchMatters, null);
 	}
@@ -274,6 +277,7 @@ public class ProfesorForm extends JPanel {
 	private JComboBox<String> getResearchMatterComboBox() {
 		if (researchMatterComboBox == null) {
 			researchMatterComboBox = new JComboBox<>();
+			researchMatterComboBox.setBackground(Color.WHITE);
 			researchMatterComboBox.setFont(Constants.getLabelFont());
 
 			setResearchMatters(researchMatters);
