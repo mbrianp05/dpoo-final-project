@@ -69,14 +69,12 @@ public class MultipleInput extends JPanel {
 		add(getBtnRemove(), gbc_btnRemove);
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
 		gbc_lblNewLabel.fill = GridBagConstraints.BOTH;
-		gbc_lblNewLabel.anchor = GridBagConstraints.EAST;
 		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel.gridx = 0;
 		gbc_lblNewLabel.gridy = 1;
 		add(getLblNewLabel(), gbc_lblNewLabel);
 		GridBagConstraints gbc_label = new GridBagConstraints();
 		gbc_label.fill = GridBagConstraints.BOTH;
-		gbc_label.anchor = GridBagConstraints.EAST;
 		gbc_label.insets = new Insets(0, 0, 5, 5);
 		gbc_label.gridx = 0;
 		gbc_label.gridy = 2;
