@@ -29,6 +29,20 @@ public class Validation {
 		
 		return !exists;
 	}
+	
+	public static boolean validISBM(String str) {
+		boolean valid = false;
+		String cleanInput = str.replaceAll("-", "").replaceAll(" ", "");
+		
+		if (cleanInput.length() == 10 || cleanInput.length() == 13) {
+			Pattern pattern = Pattern.compile("^([0-9]{9}|[0-9]{12})([0-9]|X)$");
+			Matcher matcher = pattern.matcher(str.trim());
+
+			valid = matcher.find();
+		}
+		
+		return valid;
+	}
 
 	public static boolean validISSN(String str) {
 		boolean valid = false;
