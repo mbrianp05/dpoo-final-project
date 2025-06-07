@@ -23,9 +23,9 @@ public class BookChapterForm extends JPanel {
 		setBackground(Color.WHITE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0};
-		gridBagLayout.rowHeights = new int[]{0, 0, 35, 0, 0, 35, 0, 150, 150, 0, 0, 35, 0, 0, 35, 0, 0, 35, 0, 0, 35, 40, 0};
+		gridBagLayout.rowHeights = new int[]{0, 0, 35, 0, 0, 35, 0, 150, 150, 0, 0, 35, 0, 0, 35, 0, 0, 35, 0, 40, 0};
 		gridBagLayout.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		GridBagConstraints gbc_lblBookName = new GridBagConstraints();
 		gbc_lblBookName.fill = GridBagConstraints.BOTH;
@@ -57,83 +57,69 @@ public class BookChapterForm extends JPanel {
 		gbc_authorsInput.gridx = 0;
 		gbc_authorsInput.gridy = 7;
 		add(getAuthorsInput(), gbc_authorsInput);
-		GridBagConstraints gbc_multipleInput = new GridBagConstraints();
-		gbc_multipleInput.insets = new Insets(0, 0, 5, 0);
-		gbc_multipleInput.fill = GridBagConstraints.BOTH;
-		gbc_multipleInput.gridx = 0;
-		gbc_multipleInput.gridy = 8;
-		add(getMultipleInput_1(), gbc_multipleInput);
+		GridBagConstraints gbc_editorsInput = new GridBagConstraints();
+		gbc_editorsInput.insets = new Insets(0, 0, 5, 0);
+		gbc_editorsInput.fill = GridBagConstraints.BOTH;
+		gbc_editorsInput.gridx = 0;
+		gbc_editorsInput.gridy = 8;
+		add(getMultipleInput_1(), gbc_editorsInput);
 		GridBagConstraints gbc_lblEditorial = new GridBagConstraints();
 		gbc_lblEditorial.insets = new Insets(0, 0, 5, 0);
 		gbc_lblEditorial.fill = GridBagConstraints.BOTH;
 		gbc_lblEditorial.gridx = 0;
 		gbc_lblEditorial.gridy = 10;
 		add(getLblEditorial(), gbc_lblEditorial);
-		GridBagConstraints gbc_textField_3 = new GridBagConstraints();
-		gbc_textField_3.insets = new Insets(0, 0, 5, 0);
-		gbc_textField_3.fill = GridBagConstraints.BOTH;
-		gbc_textField_3.gridx = 0;
-		gbc_textField_3.gridy = 11;
-		add(getTextField_3(), gbc_textField_3);
+		GridBagConstraints gbc_textFieldEditorial = new GridBagConstraints();
+		gbc_textFieldEditorial.insets = new Insets(0, 0, 5, 0);
+		gbc_textFieldEditorial.fill = GridBagConstraints.BOTH;
+		gbc_textFieldEditorial.gridx = 0;
+		gbc_textFieldEditorial.gridy = 11;
+		add(getTextFieldEditorial(), gbc_textFieldEditorial);
 		GridBagConstraints gbc_lblCdigoIssn = new GridBagConstraints();
 		gbc_lblCdigoIssn.insets = new Insets(0, 0, 5, 0);
 		gbc_lblCdigoIssn.fill = GridBagConstraints.BOTH;
 		gbc_lblCdigoIssn.gridx = 0;
 		gbc_lblCdigoIssn.gridy = 13;
 		add(getLblCdigoIssn(), gbc_lblCdigoIssn);
-		GridBagConstraints gbc_textField_4 = new GridBagConstraints();
-		gbc_textField_4.insets = new Insets(0, 0, 5, 0);
-		gbc_textField_4.fill = GridBagConstraints.BOTH;
-		gbc_textField_4.gridx = 0;
-		gbc_textField_4.gridy = 14;
-		add(getTextField_4(), gbc_textField_4);
-		GridBagConstraints gbc_label = new GridBagConstraints();
-		gbc_label.fill = GridBagConstraints.BOTH;
-		gbc_label.insets = new Insets(0, 0, 5, 0);
-		gbc_label.gridx = 0;
-		gbc_label.gridy = 16;
-		add(getLabel(), gbc_label);
-		GridBagConstraints gbc_textField_6 = new GridBagConstraints();
-		gbc_textField_6.insets = new Insets(0, 0, 5, 0);
-		gbc_textField_6.fill = GridBagConstraints.BOTH;
-		gbc_textField_6.gridx = 0;
-		gbc_textField_6.gridy = 17;
-		add(getTextField_6(), gbc_textField_6);
+		GridBagConstraints gbc_textFieldISSN = new GridBagConstraints();
+		gbc_textFieldISSN.insets = new Insets(0, 0, 5, 0);
+		gbc_textFieldISSN.fill = GridBagConstraints.BOTH;
+		gbc_textFieldISSN.gridx = 0;
+		gbc_textFieldISSN.gridy = 14;
+		add(getTextFieldISSN(), gbc_textFieldISSN);
 		GridBagConstraints gbc_lblVolumen = new GridBagConstraints();
 		gbc_lblVolumen.fill = GridBagConstraints.BOTH;
 		gbc_lblVolumen.insets = new Insets(0, 0, 5, 0);
 		gbc_lblVolumen.gridx = 0;
-		gbc_lblVolumen.gridy = 19;
+		gbc_lblVolumen.gridy = 16;
 		add(getLblVolumen(), gbc_lblVolumen);
-		GridBagConstraints gbc_textField = new GridBagConstraints();
-		gbc_textField.insets = new Insets(0, 0, 5, 0);
-		gbc_textField.fill = GridBagConstraints.BOTH;
-		gbc_textField.gridx = 0;
-		gbc_textField.gridy = 20;
-		add(getTextField(), gbc_textField);
+		GridBagConstraints gbc_textFieldVol = new GridBagConstraints();
+		gbc_textFieldVol.insets = new Insets(0, 0, 5, 0);
+		gbc_textFieldVol.fill = GridBagConstraints.BOTH;
+		gbc_textFieldVol.gridx = 0;
+		gbc_textFieldVol.gridy = 17;
+		add(getTextFieldVol(), gbc_textFieldVol);
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
 		gbc_btnNewButton.fill = GridBagConstraints.VERTICAL;
 		gbc_btnNewButton.anchor = GridBagConstraints.EAST;
 		gbc_btnNewButton.gridx = 0;
-		gbc_btnNewButton.gridy = 21;
+		gbc_btnNewButton.gridy = 19;
 		add(getBtnNewButton(), gbc_btnNewButton);
 	}
 	private static final long serialVersionUID = 8688995113018695988L;
 	private JLabel lblBookName;
 	private JTextField textFieldBookName;
 	private JLabel lblEditorial;
-	private JTextField textField_3;
+	private JTextField textFieldEditorial;
 	private JLabel lblCdigoIssn;
-	private JTextField textField_4;
+	private JTextField textFieldISSN;
 	private JLabel lblTtuloDelCaptulo;
 	private JTextField textFieldChapter;
-	private JLabel label;
-	private JTextField textField_6;
+	private JLabel lblVolumen;
+	private JTextField textFieldVol;
 	private JButton btnNewButton;
 	private MultipleInput authorsInput;
-	private MultipleInput multipleInput;
-	private JLabel lblVolumen;
-	private JTextField textField;
+	private MultipleInput editorsInput;
 
 	private JLabel getLblBookName() {
 		if (lblBookName == null) {
@@ -156,12 +142,12 @@ public class BookChapterForm extends JPanel {
 		}
 		return lblEditorial;
 	}
-	private JTextField getTextField_3() {
-		if (textField_3 == null) {
-			textField_3 = new JTextField();
-			textField_3.setColumns(10);
+	private JTextField getTextFieldEditorial() {
+		if (textFieldEditorial == null) {
+			textFieldEditorial = new JTextField();
+			textFieldEditorial.setColumns(10);
 		}
-		return textField_3;
+		return textFieldEditorial;
 	}
 	private JLabel getLblCdigoIssn() {
 		if (lblCdigoIssn == null) {
@@ -170,12 +156,12 @@ public class BookChapterForm extends JPanel {
 		}
 		return lblCdigoIssn;
 	}
-	private JTextField getTextField_4() {
-		if (textField_4 == null) {
-			textField_4 = new JTextField();
-			textField_4.setColumns(10);
+	private JTextField getTextFieldISSN() {
+		if (textFieldISSN == null) {
+			textFieldISSN = new JTextField();
+			textFieldISSN.setColumns(10);
 		}
-		return textField_4;
+		return textFieldISSN;
 	}
 	private JLabel getLblTtuloDelCaptulo() {
 		if (lblTtuloDelCaptulo == null) {
@@ -191,19 +177,19 @@ public class BookChapterForm extends JPanel {
 		}
 		return textFieldChapter;
 	}
-	private JLabel getLabel() {
-		if (label == null) {
-			label = new JLabel("C\u00F3digo ISSN");
-			label.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+	private JLabel getLblVolumen() {
+		if (lblVolumen == null) {
+			lblVolumen = new JLabel("Volumen");
+			lblVolumen.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 		}
-		return label;
+		return lblVolumen;
 	}
-	private JTextField getTextField_6() {
-		if (textField_6 == null) {
-			textField_6 = new JTextField();
-			textField_6.setColumns(10);
+	private JTextField getTextFieldVol() {
+		if (textFieldVol == null) {
+			textFieldVol = new JTextField();
+			textFieldVol.setColumns(10);
 		}
-		return textField_6;
+		return textFieldVol;
 	}
 	private JButton getBtnNewButton() {
 		if (btnNewButton == null) {
@@ -221,23 +207,9 @@ public class BookChapterForm extends JPanel {
 		return authorsInput;
 	}
 	private MultipleInput getMultipleInput_1() {
-		if (multipleInput == null) {
-			multipleInput = new MultipleInput("Editores", "");
+		if (editorsInput == null) {
+			editorsInput = new MultipleInput("Editores", "");
 		}
-		return multipleInput;
-	}
-	private JLabel getLblVolumen() {
-		if (lblVolumen == null) {
-			lblVolumen = new JLabel("Volumen");
-			lblVolumen.setFont(new Font("Segoe UI", Font.PLAIN, 15));
-		}
-		return lblVolumen;
-	}
-	private JTextField getTextField() {
-		if (textField == null) {
-			textField = new JTextField();
-			textField.setColumns(10);
-		}
-		return textField;
+		return editorsInput;
 	}
 }
