@@ -94,34 +94,34 @@ public class ResearchLineFormView extends JPanel {
 
 		setBackground(Color.WHITE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{100, 50, 75, 30, 288, 50, 100, 0};
+		gridBagLayout.columnWidths = new int[]{100, 50, 75, 288, 50, 100, 0};
 		gridBagLayout.rowHeights = new int[]{70, 45, 40, 0, 35, 35, 35, 35, 35, 60, 0, 35, 35, 0, 35, 50, 40, 0, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		GridBagConstraints gbc_lblAgregarLneaDe = new GridBagConstraints();
-		gbc_lblAgregarLneaDe.gridwidth = 5;
+		gbc_lblAgregarLneaDe.gridwidth = 4;
 		gbc_lblAgregarLneaDe.insets = new Insets(0, 0, 5, 5);
 		gbc_lblAgregarLneaDe.fill = GridBagConstraints.BOTH;
 		gbc_lblAgregarLneaDe.gridx = 1;
 		gbc_lblAgregarLneaDe.gridy = 1;
 		add(getLblAgregarLneaDe(), gbc_lblAgregarLneaDe);
 		GridBagConstraints gbc_lblNombre = new GridBagConstraints();
-		gbc_lblNombre.gridwidth = 5;
+		gbc_lblNombre.gridwidth = 4;
 		gbc_lblNombre.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNombre.fill = GridBagConstraints.BOTH;
 		gbc_lblNombre.gridx = 1;
 		gbc_lblNombre.gridy = 3;
 		add(getLblNombre(), gbc_lblNombre);
 		GridBagConstraints gbc_textFieldName = new GridBagConstraints();
-		gbc_textFieldName.gridwidth = 5;
+		gbc_textFieldName.gridwidth = 4;
 		gbc_textFieldName.insets = new Insets(0, 0, 5, 5);
 		gbc_textFieldName.fill = GridBagConstraints.BOTH;
 		gbc_textFieldName.gridx = 1;
 		gbc_textFieldName.gridy = 4;
 		add(getTextFieldName(), gbc_textFieldName);
 		GridBagConstraints gbc_errorName = new GridBagConstraints();
-		gbc_errorName.gridwidth = 5;
+		gbc_errorName.gridwidth = 4;
 		gbc_errorName.anchor = GridBagConstraints.NORTHWEST;
 		gbc_errorName.insets = new Insets(0, 0, 5, 5);
 		gbc_errorName.gridx = 1;
@@ -135,7 +135,6 @@ public class ResearchLineFormView extends JPanel {
 		add(getEditBtn(), gbc_editBtn);
 		GridBagConstraints gbc_btnEliminar = new GridBagConstraints();
 		gbc_btnEliminar.fill = GridBagConstraints.VERTICAL;
-		gbc_btnEliminar.gridwidth = 2;
 		gbc_btnEliminar.anchor = GridBagConstraints.WEST;
 		gbc_btnEliminar.insets = new Insets(0, 0, 5, 5);
 		gbc_btnEliminar.gridx = 3;
@@ -148,7 +147,7 @@ public class ResearchLineFormView extends JPanel {
 		gbc_lblTemas.gridy = 7;
 		add(getLblTemas(), gbc_lblTemas);
 		GridBagConstraints gbc_mattersComboBox = new GridBagConstraints();
-		gbc_mattersComboBox.gridwidth = 4;
+		gbc_mattersComboBox.gridwidth = 3;
 		gbc_mattersComboBox.insets = new Insets(0, 0, 5, 5);
 		gbc_mattersComboBox.fill = GridBagConstraints.BOTH;
 		gbc_mattersComboBox.gridx = 2;
@@ -162,7 +161,7 @@ public class ResearchLineFormView extends JPanel {
 		gbc_lblAgregarTema.gridy = 8;
 		add(getLblAgregarTema(), gbc_lblAgregarTema);
 		GridBagConstraints gbc_textFieldMatterName = new GridBagConstraints();
-		gbc_textFieldMatterName.gridwidth = 3;
+		gbc_textFieldMatterName.gridwidth = 2;
 		gbc_textFieldMatterName.insets = new Insets(0, 0, 5, 5);
 		gbc_textFieldMatterName.fill = GridBagConstraints.BOTH;
 		gbc_textFieldMatterName.gridx = 2;
@@ -171,7 +170,7 @@ public class ResearchLineFormView extends JPanel {
 		GridBagConstraints gbc_button = new GridBagConstraints();
 		gbc_button.fill = GridBagConstraints.BOTH;
 		gbc_button.insets = new Insets(0, 0, 5, 5);
-		gbc_button.gridx = 5;
+		gbc_button.gridx = 4;
 		gbc_button.gridy = 8;
 		add(getButton(), gbc_button);
 		GridBagConstraints gbc_lblChiefData = new GridBagConstraints();
@@ -183,13 +182,13 @@ public class ResearchLineFormView extends JPanel {
 		add(getLblChiefData(), gbc_lblChiefData);
 		GridBagConstraints gbc_errorLabel = new GridBagConstraints();
 		gbc_errorLabel.anchor = GridBagConstraints.NORTHWEST;
-		gbc_errorLabel.gridwidth = 3;
+		gbc_errorLabel.gridwidth = 2;
 		gbc_errorLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_errorLabel.gridx = 2;
 		gbc_errorLabel.gridy = 9;
 		add(getErrorLabel(), gbc_errorLabel);
 		GridBagConstraints gbc_panelWrapper = new GridBagConstraints();
-		gbc_panelWrapper.gridwidth = 5;
+		gbc_panelWrapper.gridwidth = 4;
 		gbc_panelWrapper.gridheight = 2;
 		gbc_panelWrapper.insets = new Insets(0, 0, 5, 5);
 		gbc_panelWrapper.fill = GridBagConstraints.BOTH;
@@ -201,7 +200,7 @@ public class ResearchLineFormView extends JPanel {
 		gbc_btnEditChief.fill = GridBagConstraints.VERTICAL;
 		gbc_btnEditChief.gridwidth = 2;
 		gbc_btnEditChief.insets = new Insets(0, 0, 5, 5);
-		gbc_btnEditChief.gridx = 4;
+		gbc_btnEditChief.gridx = 3;
 		gbc_btnEditChief.gridy = 12;
 		add(getBtnEditChief(), gbc_btnEditChief);
 		GridBagConstraints gbc_lblMaestra = new GridBagConstraints();
@@ -225,7 +224,7 @@ public class ResearchLineFormView extends JPanel {
 		gbc_minCreditsSpinner.gridy = 14;
 		add(getMinCreditsSpinner(), gbc_minCreditsSpinner);
 		GridBagConstraints gbc_lblCreditsError = new GridBagConstraints();
-		gbc_lblCreditsError.gridwidth = 3;
+		gbc_lblCreditsError.gridwidth = 2;
 		gbc_lblCreditsError.insets = new Insets(0, 0, 5, 5);
 		gbc_lblCreditsError.gridx = 1;
 		gbc_lblCreditsError.gridy = 15;
@@ -235,7 +234,7 @@ public class ResearchLineFormView extends JPanel {
 		gbc_btnNewButton.gridwidth = 2;
 		gbc_btnNewButton.anchor = GridBagConstraints.EAST;
 		gbc_btnNewButton.insets = new Insets(0, 0, 5, 5);
-		gbc_btnNewButton.gridx = 4;
+		gbc_btnNewButton.gridx = 3;
 		gbc_btnNewButton.gridy = 16;
 		add(getBtnNewButton(), gbc_btnNewButton);
 	}
