@@ -1,8 +1,5 @@
 package gui;
 
-import gui.event.OnAddedCourse;
-import gui.event.OnAddedResearchLine;
-import gui.event.OnAddedResearcher;
 import gui.views.CoursesFormView;
 import gui.views.CoursesTableView;
 import gui.views.ResearchLineFormView;
@@ -25,7 +22,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
 import schooling.Faculty;
-import schooling.Profesor;
 import utils.Mock;
 
 public class MenuPanel extends JPanel {
@@ -103,9 +99,17 @@ public class MenuPanel extends JPanel {
 		return management;
 	}
 
+	// Actualizar todas las tablas y formularios que se vayan añadiendo
 	private void switchView(String view) {
 		CardLayout cl = (CardLayout)(contentPanel.getLayout());
 		cl.show(contentPanel, view);
+		
+		researchLinesTableView.updateTable();
+		coursesTableView.updateTable();
+		researchersTableView.updateTable();
+		
+		coursesFormView.update();
+		researcherFormView.update();
 	}
 
 	private JMenuItem getNewResearcherMenu() {
@@ -221,25 +225,12 @@ public class MenuPanel extends JPanel {
 	private CoursesFormView getCoursesFormView() {
 		if (coursesFormView == null) {
 			coursesFormView = new CoursesFormView(faculty);
-			coursesFormView.listenTo(new OnAddedCourse() {				
-				@Override
-				public void added(String name, String descrip, Profesor instruct,
-						int credits) {		
-					coursesTableView.updateTable();
-				}
-			});
 		}
 		return coursesFormView;
 	}
 	private ResearcherFormView getResearcherForm() {
 		if (researcherFormView == null) {
 			researcherFormView = new ResearcherFormView();
-			researcherFormView.listenTo(new OnAddedResearcher() {
-				@Override
-				public void newResearcher(int researcherID) {
-					researchersTableView.updateTable();
-				}
-			});
 		}
 		return researcherFormView;
 	}
@@ -286,14 +277,6 @@ public class MenuPanel extends JPanel {
 	private ResearchLineFormView getResearchLinesFormView() {
 		if (researchLineFormView == null) {
 			researchLineFormView = new ResearchLineFormView(faculty);
-			researchLineFormView.listenTo(new OnAddedResearchLine() {
-				@Override
-				public void added(String name) {
-					researcherFormView.update();
-					researchersTableView.updateTable();
-					researchLinesTableView.updateTable();
-				}
-			});
 		}
 		return researchLineFormView;
 	}

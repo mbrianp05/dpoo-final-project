@@ -108,20 +108,25 @@ public class CoursesFormView extends JPanel {
 		}
 		return lblNewLabel;
 	}
+	
+	private void fetchMasteryPlans() {
+		ArrayList<ResearchLine> lines = faculty.getReseachLines();
+		String [] names = new String[lines.size()];
+
+		for(int i = 0; i < lines.size(); i++){
+			names[i] = lines.get(i).getName();
+		}
+
+		masteryPlans.setModel(new DefaultComboBoxModel<>(names));
+	}
+	
 	private JComboBox<String> getMasteryPlans() {
 		if (masteryPlans == null) {
 			masteryPlans = new JComboBox<String>();
 			masteryPlans.setBackground(Color.WHITE);
 			masteryPlans.setFont(Constants.getLabelFont());
 
-			ArrayList<ResearchLine> lines = faculty.getReseachLines();
-			String [] names = new String[lines.size()];
-
-			for(int i = 0; i < lines.size(); i++){
-				names[i] = lines.get(i).getName();
-			}
-
-			masteryPlans.setModel(new DefaultComboBoxModel<String>(names));
+			fetchMasteryPlans();
 		}
 		return masteryPlans;
 	}
@@ -468,5 +473,9 @@ public class CoursesFormView extends JPanel {
 		errorInstruct.setText("");
 		errorCreds.setText("");
 		errorDesc.setText("");
+	}
+
+	public void update() {
+		fetchMasteryPlans();
 	}
 }

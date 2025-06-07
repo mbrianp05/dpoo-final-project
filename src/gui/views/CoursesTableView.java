@@ -48,7 +48,6 @@ public class CoursesTableView extends JPanel {
 	 * Create the panel.
 	 */
 	public CoursesTableView() {
-		
 		this.faculty = Faculty.newInstance();
 		
 		setBackground(Color.WHITE);
