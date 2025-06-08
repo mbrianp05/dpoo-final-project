@@ -62,20 +62,22 @@ public class ResearchersTableView extends JPanel {
 	private JLabel lblDatosDeInvestigadores;
 	
 	private EditResearcherJDialog current;
+	private JLabel lblTema;
+	private JTextField textFieldMatterFilter;
 
 	public ResearchersTableView() {
 		this.faculty = Faculty.newInstance();
 
 		setBackground(Color.WHITE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{100, 70, 100, 100, 30, 100, 0, 0, 70, 70, 100, 0};
+		gridBagLayout.columnWidths = new int[]{100, 70, 100, 100, 30, 0, 0, 30, 0, 0, 30, 70, 70, 100, 0};
 		gridBagLayout.rowHeights = new int[]{70, 0, 60, 35, 207, 0, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		GridBagConstraints gbc_lblDatosDeInvestigadores = new GridBagConstraints();
 		gbc_lblDatosDeInvestigadores.fill = GridBagConstraints.BOTH;
-		gbc_lblDatosDeInvestigadores.gridwidth = 9;
+		gbc_lblDatosDeInvestigadores.gridwidth = 12;
 		gbc_lblDatosDeInvestigadores.insets = new Insets(0, 0, 5, 5);
 		gbc_lblDatosDeInvestigadores.gridx = 1;
 		gbc_lblDatosDeInvestigadores.gridy = 1;
@@ -101,36 +103,48 @@ public class ResearchersTableView extends JPanel {
 		GridBagConstraints gbc_lblNombre = new GridBagConstraints();
 		gbc_lblNombre.fill = GridBagConstraints.BOTH;
 		gbc_lblNombre.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNombre.gridx = 4;
+		gbc_lblNombre.gridx = 5;
 		gbc_lblNombre.gridy = 3;
 		add(getLblNombre(), gbc_lblNombre);
 		GridBagConstraints gbc_filterByName = new GridBagConstraints();
 		gbc_filterByName.fill = GridBagConstraints.BOTH;
 		gbc_filterByName.insets = new Insets(0, 0, 5, 5);
-		gbc_filterByName.gridx = 5;
+		gbc_filterByName.gridx = 6;
 		gbc_filterByName.gridy = 3;
 		add(getFilterByName(), gbc_filterByName);
+		GridBagConstraints gbc_lblTema = new GridBagConstraints();
+		gbc_lblTema.anchor = GridBagConstraints.EAST;
+		gbc_lblTema.insets = new Insets(0, 0, 5, 5);
+		gbc_lblTema.gridx = 8;
+		gbc_lblTema.gridy = 3;
+		add(getLblTema(), gbc_lblTema);
+		GridBagConstraints gbc_textFieldMatterFilter = new GridBagConstraints();
+		gbc_textFieldMatterFilter.insets = new Insets(0, 0, 5, 5);
+		gbc_textFieldMatterFilter.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textFieldMatterFilter.gridx = 9;
+		gbc_textFieldMatterFilter.gridy = 3;
+		add(getTextFieldMatterFilter(), gbc_textFieldMatterFilter);
 		GridBagConstraints gbc_lblPuntuacin = new GridBagConstraints();
 		gbc_lblPuntuacin.fill = GridBagConstraints.BOTH;
 		gbc_lblPuntuacin.insets = new Insets(0, 0, 5, 5);
-		gbc_lblPuntuacin.gridx = 8;
+		gbc_lblPuntuacin.gridx = 11;
 		gbc_lblPuntuacin.gridy = 3;
 		add(getLblPuntuacin(), gbc_lblPuntuacin);
 		GridBagConstraints gbc_spinner = new GridBagConstraints();
 		gbc_spinner.fill = GridBagConstraints.BOTH;
 		gbc_spinner.insets = new Insets(0, 0, 5, 5);
-		gbc_spinner.gridx = 9;
+		gbc_spinner.gridx = 12;
 		gbc_spinner.gridy = 3;
 		add(getSpinner(), gbc_spinner);
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
 		gbc_scrollPane.insets = new Insets(0, 0, 5, 5);
 		gbc_scrollPane.fill = GridBagConstraints.BOTH;
-		gbc_scrollPane.gridwidth = 9;
+		gbc_scrollPane.gridwidth = 12;
 		gbc_scrollPane.gridx = 1;
 		gbc_scrollPane.gridy = 4;
 		add(getScrollPane(), gbc_scrollPane);
 
-		researcherModel = new ResearcherTableModel(faculty);
+		researcherModel = new ResearcherTableModel();
 		table.setModel(researcherModel);
 		table.getColumnModel().getColumn(0).setMaxWidth(30);
 	}
@@ -304,5 +318,30 @@ public class ResearchersTableView extends JPanel {
 			lblDatosDeInvestigadores.setFont(Constants.getTitleFont());
 		}
 		return lblDatosDeInvestigadores;
+	}
+	private JLabel getLblTema() {
+		if (lblTema == null) {
+			lblTema = new JLabel("Tema");
+			lblTema.setHorizontalAlignment(SwingConstants.RIGHT);
+			lblTema.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 15));
+		}
+		return lblTema;
+	}
+	private JTextField getTextFieldMatterFilter() {
+		if (textFieldMatterFilter == null) {
+			textFieldMatterFilter = new JTextField("");
+			textFieldMatterFilter.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyReleased(KeyEvent event) {
+					if (event.getKeyCode() != 16) {		
+						ResearcherTableModel tmodel = (ResearcherTableModel)table.getModel();
+						tmodel.setFilterMatter(textFieldMatterFilter.getText());
+					}
+				}
+			});
+			textFieldMatterFilter.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+			textFieldMatterFilter.setColumns(10);
+		}
+		return textFieldMatterFilter;
 	}
 }

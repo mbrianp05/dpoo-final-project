@@ -129,7 +129,7 @@ public class ResearchersActivityTableView extends JPanel {
 		gbc_scrollPane.gridy = 4;
 		add(getScrollPane(), gbc_scrollPane);
 
-		researcherModel = new ResearcherTableModel(faculty);
+		researcherModel = new ResearcherTableModel();
 		table.setModel(researcherModel);
 	}
 
