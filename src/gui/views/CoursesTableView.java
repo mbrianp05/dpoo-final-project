@@ -153,6 +153,7 @@ public class CoursesTableView extends JPanel {
 	private JTextField getFilterByName() {
 		if (filterByName == null) {
 			filterByName = new JTextField();
+			filterByName.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 			filterByName.addKeyListener(new KeyAdapter() {
 				@Override
 				public void keyReleased(KeyEvent event) {
@@ -180,6 +181,7 @@ public class CoursesTableView extends JPanel {
 	private JSpinner getFilterCreds() {
 		if (filterCreds == null) {
 			filterCreds = new JSpinner();
+			filterCreds.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 			filterCreds.addKeyListener(new KeyAdapter() {
 				@Override
 				public void keyTyped(KeyEvent arg0) {
