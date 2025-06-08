@@ -23,6 +23,8 @@ import javax.swing.JPanel;
 
 import schooling.Faculty;
 import utils.Mock;
+import gui.views.ResearchersActivityTableView;
+import javax.swing.ImageIcon;
 
 public class MenuPanel extends JPanel {
 	private static final long serialVersionUID = 3762125698246597691L;
@@ -46,11 +48,13 @@ public class MenuPanel extends JPanel {
 	private JMenuItem addLineMenu;
 	private ResearchLineFormView researchLineFormView;
 	private JMenu mnData;
-	private JMenuItem mntmLneasDeInvestigacin;
+	private JMenuItem researchLinesMenu;
 	private ResearchLinesTableView researchLinesTableView;
 	private JMenuItem addCourse;
 	private JMenuItem coursesTableMenu;
 	private CoursesTableView coursesTableView;
+	private ResearchersActivityTableView researchersActivityTableView;
+	private JMenuItem researchActivityMenu;
 
 	public MenuPanel() {
 		this.faculty = Faculty.newInstance();
@@ -90,6 +94,7 @@ public class MenuPanel extends JPanel {
 	private JMenu getManagement() {
 		if (management == null) {
 			management = new JMenu("Administraci\u00F3n");
+			management.setSelectedIcon(new ImageIcon(MenuPanel.class.getResource("/com/sun/javafx/scene/control/skin/caspian/images/vk-medium-pressed.png")));
 			management.setBackground(Color.WHITE);
 			management.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 			management.add(getNewResearcherMenu());
@@ -213,12 +218,13 @@ public class MenuPanel extends JPanel {
 			contentPanel = new JPanel();
 			contentPanel.setBackground(Color.WHITE);
 			contentPanel.setLayout(new CardLayout(0, 0));	
+			contentPanel.add(getResearchLinesFormView(), "Research Lines Form");
 			contentPanel.add(getResearcherForm(), "Researcher Form");
 			contentPanel.add(getCoursesFormView(), "Courses Form");
 			contentPanel.add(getResearchersTableView(), "Researchers Table");
-			contentPanel.add(getResearchLinesFormView(), "Research Lines Form");
 			contentPanel.add(getResearchLinesTableView(), "Research Lines Table");
 			contentPanel.add(getCoursesTableView(), "Courses Table");
+			contentPanel.add(getResearchersActivityTableView(), "Researchers Activity Table");
 		}
 		return contentPanel;
 	}
@@ -286,27 +292,46 @@ public class MenuPanel extends JPanel {
 			mnData.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 			mnData.setBackground(Color.WHITE);
 			mnData.add(getResearchersTableMenu());
-			mnData.add(getMntmLneasDeInvestigacin());
+			mnData.add(getResearchLinesMenu());
 			mnData.add(getCoursesTableMenu());
+			mnData.add(getResearchActivityMenu());
 		}
 		return mnData;
 	}
-	private JMenuItem getMntmLneasDeInvestigacin() {
-		if (mntmLneasDeInvestigacin == null) {
-			mntmLneasDeInvestigacin = new JMenuItem("L\u00EDneas de investigaci\u00F3n");
-			mntmLneasDeInvestigacin.setBackground(Color.WHITE);
-			mntmLneasDeInvestigacin.addActionListener(new ActionListener() {
+	private JMenuItem getResearchLinesMenu() {
+		if (researchLinesMenu == null) {
+			researchLinesMenu = new JMenuItem("L\u00EDneas de investigaci\u00F3n");
+			researchLinesMenu.setBackground(Color.WHITE);
+			researchLinesMenu.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					switchView("Research Lines Table");
 				}
 			});
 		}
-		return mntmLneasDeInvestigacin;
+		return researchLinesMenu;
 	}
 	private ResearchLinesTableView getResearchLinesTableView() {
 		if (researchLinesTableView == null) {
 			researchLinesTableView = new ResearchLinesTableView();
 		}
 		return researchLinesTableView;
+	}
+	private ResearchersActivityTableView getResearchersActivityTableView() {
+		if (researchersActivityTableView == null) {
+			researchersActivityTableView = new ResearchersActivityTableView();
+		}
+		return researchersActivityTableView;
+	}
+	private JMenuItem getResearchActivityMenu() {
+		if (researchActivityMenu == null) {
+			researchActivityMenu = new JMenuItem("Actividad investigativa");
+			researchActivityMenu.setBackground(Color.WHITE);
+			researchActivityMenu.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					switchView("Researchers Activity Table");
+				}
+			});
+		}
+		return researchActivityMenu;
 	}
 }
