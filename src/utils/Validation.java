@@ -31,27 +31,32 @@ public class Validation {
 	}
 	
 	public static boolean validISBN(String str) {
-		boolean valid = false;
 		String cleanInput = str.replaceAll("-", "").replaceAll(" ", "");
+		boolean valid = unique("ISBN", cleanInput);
 		
-		if (cleanInput.length() == 10 || cleanInput.length() == 13) {
-			Pattern pattern = Pattern.compile("^([0-9]{9}|[0-9]{12})([0-9]|X)$");
-			Matcher matcher = pattern.matcher(str.trim());
-
-			valid = matcher.find();
+		if (valid) {
+			if (cleanInput.length() == 10 || cleanInput.length() == 13) {
+				Pattern pattern = Pattern.compile("^([0-9]{9}|[0-9]{12})([0-9]|X)$");
+				Matcher matcher = pattern.matcher(str.trim());
+				
+				valid = matcher.find();
+			}
 		}
+		
 		
 		return valid;
 	}
 
 	public static boolean validISSN(String str) {
-		boolean valid = false;
+		boolean valid = unique("ISSN", str);
 
-		if (str.trim().length() == 14) {
-			Pattern pattern = Pattern.compile("^ISSN [0-9]{4}-(([0-9]{4})|([0-9]{3}X))$");
-			Matcher matcher = pattern.matcher(str.trim());
-
-			valid = matcher.find();
+		if (valid) {
+			if (str.trim().length() == 14) {
+				Pattern pattern = Pattern.compile("^ISSN [0-9]{4}-(([0-9]{4})|([0-9]{3}X))$");
+				Matcher matcher = pattern.matcher(str.trim());
+				
+				valid = matcher.find();
+			}
 		}
 
 		return valid;
