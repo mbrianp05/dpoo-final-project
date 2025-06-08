@@ -112,6 +112,7 @@ public class MenuPanel extends JPanel {
 		researchLinesTableView.updateTable();
 		coursesTableView.updateTable();
 		researchersTableView.updateTable();
+		researchersActivityTableView.updateTable();
 		
 		coursesFormView.update();
 		researcherFormView.update();
