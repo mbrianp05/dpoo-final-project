@@ -43,7 +43,6 @@ public class PaperForm extends JPanel {
 	private JLabel lblTtulo;
 	private JTextField textFieldTitle;
 	private JLabel lblNmero;
-	private JSpinner spinnerNo;
 	private JLabel lblVolumen;
 	private JSpinner spinnerVol;
 	private JLabel lblAo;
@@ -52,6 +51,7 @@ public class PaperForm extends JPanel {
 	private JComboBox<String> comboBoxTargetedGroup;
 	private JButton btnRegistrar;
 	private ErrorLabel errorTitle;
+	private JSpinner spinnerNo;
 	
 	public PaperForm(Researcher researcher) {
 		this.researcher = researcher;
@@ -91,6 +91,7 @@ public class PaperForm extends JPanel {
 		gbc_lblNmero.gridy = 4;
 		add(getLblNmero(), gbc_lblNmero);
 		GridBagConstraints gbc_spinnerNo = new GridBagConstraints();
+		gbc_spinnerNo.fill = GridBagConstraints.BOTH;
 		gbc_spinnerNo.insets = new Insets(0, 0, 5, 5);
 		gbc_spinnerNo.gridx = 2;
 		gbc_spinnerNo.gridy = 4;
@@ -167,16 +168,6 @@ public class PaperForm extends JPanel {
 			lblNmero.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 		}
 		return lblNmero;
-	}
-	
-	private JSpinner getSpinnerNo() {
-		if (spinnerNo == null) {
-			spinnerNo = new JSpinner();
-			spinnerNo.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
-			spinnerNo.setForeground(Color.WHITE);
-			spinnerNo.setFont(new Font("Segoe UI", Font.PLAIN, 15));
-		}
-		return spinnerNo;
 	}
 	
 	private JLabel getLblVolumen() {
@@ -289,7 +280,6 @@ public class PaperForm extends JPanel {
 	
 	private void reset() {
 		textFieldTitle.setText("");
-		spinnerNo.setValue(0);
 		spinnerYear.setValue(Year.now().getValue());
 		spinnerVol.setValue(1);
 		comboBoxTargetedGroup.setSelectedIndex(0);
@@ -320,5 +310,14 @@ public class PaperForm extends JPanel {
 			errorTitle.setText("El t\u00EDtulo es requerido");
 		}
 		return errorTitle;
+	}
+	private JSpinner getSpinnerNo() {
+		if (spinnerNo == null) {
+			spinnerNo = new JSpinner();
+			spinnerNo.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
+			spinnerNo.setBackground(Color.WHITE);
+			spinnerNo.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		}
+		return spinnerNo;
 	}
 }
