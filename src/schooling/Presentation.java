@@ -40,6 +40,10 @@ public class Presentation implements ScorableBreakthrough {
         if (!Validation.notEmpty(ISBN)) {
             throw new IllegalArgumentException("El ISBN de la presentaci�n no puede estar vac�o");
         }
+        
+        if (!Validation.validISBM(ISBN)) {
+        	throw new IllegalArgumentException("ISBN code has to be 10 or 13 digits long");
+        }
 
         this.ISBN = ISBN;
     }
