@@ -42,6 +42,7 @@ import javax.swing.ButtonGroup;
 import java.awt.CardLayout;
 
 import javax.swing.border.MatteBorder;
+import javax.swing.JSeparator;
 
 public class EditResearcherJDialog extends JDialog {
 	private static final long serialVersionUID = -8039865322179654975L;
@@ -90,7 +91,7 @@ public class EditResearcherJDialog extends JDialog {
 		
 		GridBagLayout gbl_contentPanel = new GridBagLayout();
 		gbl_contentPanel.columnWidths = new int[]{40, 0, 40, 0};
-		gbl_contentPanel.rowHeights = new int[]{30, 0, 0, 0, 0};
+		gbl_contentPanel.rowHeights = new int[]{30, 20, 0, 0, 0};
 		gbl_contentPanel.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
 		gbl_contentPanel.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
 		contentPanel.setLayout(gbl_contentPanel);
@@ -102,8 +103,9 @@ public class EditResearcherJDialog extends JDialog {
 		gbc_panel.gridy = 3;
 
 		GridBagConstraints gbc_radiosWrapper = new GridBagConstraints();
+		gbc_radiosWrapper.gridheight = 2;
 		gbc_radiosWrapper.insets = new Insets(0, 0, 5, 5);
-		gbc_radiosWrapper.fill = GridBagConstraints.BOTH;
+		gbc_radiosWrapper.fill = GridBagConstraints.HORIZONTAL;
 		gbc_radiosWrapper.gridx = 1;
 		gbc_radiosWrapper.gridy = 0;
 		contentPanel.add(getRadiosWrapper(), gbc_radiosWrapper);
@@ -172,7 +174,7 @@ public class EditResearcherJDialog extends JDialog {
 	private JPanel getPanel() {
 		if (panel == null) {
 			panel = new JPanel();
-			panel.setBackground(Color.DARK_GRAY);
+			panel.setBackground(new Color(220, 220, 220));
 			panel.add(getBtnRemove());
 			panel.add(getBtnA());
 		}
@@ -221,7 +223,7 @@ public class EditResearcherJDialog extends JDialog {
 	private JPanel getRadiosWrapper() {
 		if (radiosWrapper == null) {
 			radiosWrapper = new JPanel();
-			radiosWrapper.setBorder(new MatteBorder(0, 0, 1, 0, (Color) Color.LIGHT_GRAY));
+			radiosWrapper.setBorder(null);
 			radiosWrapper.setBackground(Color.WHITE);
 			radiosWrapper.add(getRadioButton_2());
 			radiosWrapper.add(getRadioButton_1());
@@ -274,6 +276,7 @@ public class EditResearcherJDialog extends JDialog {
 	private JPanel getPanelsWrapper() {
 		if (panelsWrapper == null) {
 			panelsWrapper = new JPanel();
+			panelsWrapper.setBorder(new MatteBorder(1, 0, 0, 0, (Color) Color.LIGHT_GRAY));
 			panelsWrapper.setBackground(Color.WHITE);
 			panelsWrapper.setLayout(new CardLayout(0, 0));
 			
