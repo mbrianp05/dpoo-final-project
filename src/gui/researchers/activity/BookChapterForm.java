@@ -23,6 +23,7 @@ import javax.swing.JButton;
 import gui.component.MultipleInput;
 import gui.event.OnResearchActivityActionTriggered;
 
+import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 
@@ -372,6 +373,10 @@ public class BookChapterForm extends JPanel {
 		return isValid;
 	}
 	
+	private void sendFeedback() {
+		JOptionPane.showMessageDialog(null, "¡Se ha registrado el capítulo correctamente!", "Mensaje", JOptionPane.PLAIN_MESSAGE);
+	}
+	
 	private void submit() {
 		if (checkValidity()) {
 			String bookName = textFieldBookName.getText();
@@ -384,11 +389,13 @@ public class BookChapterForm extends JPanel {
 			
 			try {
 				researcher.addBookChapter(chapter, authors, editors, editorial, ISSN, bookName, vol);
-				reset();
 				
 				if (listener != null) {
 					listener.actionPerformed();
 				}
+				
+				reset();
+				sendFeedback();
 			} catch (IllegalArgumentException exception) {
 				errorISSN.setVisible(true);
 			}

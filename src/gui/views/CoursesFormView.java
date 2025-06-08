@@ -22,6 +22,7 @@ import java.awt.CardLayout;
 import java.util.ArrayList;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 
@@ -382,6 +383,7 @@ public class CoursesFormView extends JPanel {
 										if(listener != null)
 											listener.added(name, descrip, instructor, creds);
 
+										sendFeedback();
 										resetForm();
 
 									} else {
@@ -404,6 +406,11 @@ public class CoursesFormView extends JPanel {
 		}
 		return btnAgregar;
 	}
+	
+	private void sendFeedback() {
+		JOptionPane.showMessageDialog(null, "¡Se ha registrado el curso correctamente!", "Mensaje", JOptionPane.PLAIN_MESSAGE);
+	}
+	
 	private JLabel getErrorMast() {
 		if (errorMast == null) {
 			errorMast = new JLabel("");

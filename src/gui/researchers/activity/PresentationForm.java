@@ -29,6 +29,7 @@ import utils.Validation;
 
 import javax.swing.border.TitledBorder;
 import javax.swing.border.LineBorder;
+import javax.swing.JOptionPane;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -449,6 +450,10 @@ public class PresentationForm extends JPanel {
 		return LocalDate.of(year, month, day);
 	}
 	
+	private void sendFeedback() {
+		JOptionPane.showMessageDialog(null, "¡Se ha registrado el capítulo correctamente!", "Mensaje", JOptionPane.PLAIN_MESSAGE);
+	}
+	
 	private void submit() {
 		if (checkValidity()) {
 			String name = textFieldName.getText();
@@ -463,6 +468,7 @@ public class PresentationForm extends JPanel {
 				if (listener != null) listener.actionPerformed();
 				
 				reset();
+				sendFeedback();
 			} catch (IllegalArgumentException exception) {
 				errorISBN.setVisible(true);
 			}

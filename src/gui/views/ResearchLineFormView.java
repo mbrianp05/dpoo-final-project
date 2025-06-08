@@ -21,6 +21,7 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JSpinner;
 import javax.swing.JButton;
@@ -263,6 +264,8 @@ public class ResearchLineFormView extends JPanel {
 
 								if ((int)minCreditsSpinner.getValue() > 0) {		
 									lblCreditsError.setText("");
+									errorLabel.setText("");
+									
 									Profesor chiefProfesor = registerChief();
 									String name = faculty.addResearchLine(textFieldName.getText(), chiefProfesor, (int)minCreditsSpinner.getValue());
 									ResearchLine line = faculty.findResearchLine(name);
@@ -277,6 +280,8 @@ public class ResearchLineFormView extends JPanel {
 
 									ResearchMatter chiefResearchMatter = faculty.findResearchMatter(chief.getMatter());
 									chiefResearchMatter.addResearcher(chiefProfesor);
+									
+									JOptionPane.showMessageDialog(null, "¡Se ha registrado la línea correctamente!", "Mensaje", JOptionPane.PLAIN_MESSAGE);
 
 									resetForm();
 								} else {

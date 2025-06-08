@@ -17,6 +17,7 @@ import javax.swing.JTextField;
 import java.awt.Insets;
 import java.time.Year;
 
+import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
@@ -287,6 +288,10 @@ public class PaperForm extends JPanel {
 		errorTitle.setVisible(false);
 	}
 	
+	private void sendFeedback() {
+		JOptionPane.showMessageDialog(null, "¡Se ha registrado el capítulo correctamente!", "Mensaje", JOptionPane.PLAIN_MESSAGE);
+	}
+	
 	private void submit() {
 		if (checkValidity()) {
 			String title = textFieldTitle.getText();
@@ -302,6 +307,7 @@ public class PaperForm extends JPanel {
 			}
 
 			reset();
+			sendFeedback();
 		}
 	}
 	private ErrorLabel getErrorTitle() {

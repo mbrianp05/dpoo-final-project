@@ -6,6 +6,7 @@ import gui.researchers.ProfesorForm;
 import gui.researchers.ProfesorFormData;
 import gui.researchers.StudentForm;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import java.awt.Color;
@@ -84,6 +85,7 @@ public class ResearcherFormView extends JPanel {
 	}
 
 	private void sendFeedback() {
+		JOptionPane.showMessageDialog(null, "¡Se ha registrado el investigador correctamente!", "Mensaje", JOptionPane.PLAIN_MESSAGE);
 	}
 	
 	public void listenTo(OnAddedResearcher listener) {
@@ -170,6 +172,8 @@ public class ResearcherFormView extends JPanel {
 					if (listener != null) {
 						listener.newResearcher(ID);
 					}
+					
+					sendFeedback();
 				}
 			});
 		}
@@ -182,11 +186,11 @@ public class ResearcherFormView extends JPanel {
 			studentForm.listenTo(new OnAddedResearcher() {
 				@Override
 				public void newResearcher(int researcherID) {
-					sendFeedback();
-					
 					if (listener != null) {
 						listener.newResearcher(researcherID);
 					}
+
+					sendFeedback();
 				}
 			});
 		}
