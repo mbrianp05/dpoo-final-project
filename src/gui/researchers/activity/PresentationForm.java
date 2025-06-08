@@ -142,6 +142,7 @@ public class PresentationForm extends JPanel {
 	private JTextField getTextFieldName() {
 		if (textFieldName == null) {
 			textFieldName = new JTextField();
+			textFieldName.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 			textFieldName.setColumns(10);
 		}
 		return textFieldName;
@@ -157,6 +158,7 @@ public class PresentationForm extends JPanel {
 	private JTextField getTextFieldISBN() {
 		if (textFieldISBN == null) {
 			textFieldISBN = new JTextField();
+			textFieldISBN.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 			textFieldISBN.setColumns(10);
 		}
 		return textFieldISBN;
@@ -172,6 +174,7 @@ public class PresentationForm extends JPanel {
 	private JTextField getTextFieldLocation() {
 		if (textFieldLocation == null) {
 			textFieldLocation = new JTextField();
+			textFieldLocation.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 			textFieldLocation.setColumns(10);
 		}
 		return textFieldLocation;
@@ -378,7 +381,7 @@ public class PresentationForm extends JPanel {
 	
 	private LocalDate getDate() {
 		int day = Integer.valueOf((String)comboBoxDays.getSelectedItem());
-		int month = Integer.valueOf((String)comboBoxMonths.getSelectedItem()) + 1;
+		int month = comboBoxMonths.getSelectedIndex() + 1;
 		int year = (Integer)spinnerYear.getValue();
 		
 		return LocalDate.of(year, month, day);
