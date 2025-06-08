@@ -17,12 +17,10 @@ import javax.swing.JTextField;
 import java.awt.Insets;
 import java.time.LocalDate;
 import java.time.Year;
-import java.util.Date;
 
 import javax.swing.JSpinner;
 import javax.swing.JButton;
 
-import schooling.Faculty;
 import schooling.Researcher;
 import utils.Constants;
 import utils.DateHelper;
