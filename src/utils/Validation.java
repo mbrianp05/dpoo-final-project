@@ -31,16 +31,15 @@ public class Validation {
 	}
 	
 	public static boolean validISBN(String str) {
-		String cleanInput = str.replaceAll("-", "").replaceAll(" ", "");
-		boolean valid = true;
+		String cleanInput = str.replaceAll("-", "").replaceAll(" ", "").replaceAll("_", "");
+		boolean valid = false;
 		
-		if (valid) {
-			if (cleanInput.length() == 10 || cleanInput.length() == 13) {
-				Pattern pattern = Pattern.compile("^([0-9]{9}|[0-9]{12})([0-9]|X)$");
-				Matcher matcher = pattern.matcher(str.trim());
+		
+		if (cleanInput.length() == 10 || cleanInput.length() == 13) {
+			Pattern pattern = Pattern.compile("^(?:ISBN(?:-1[03])?:? )?(?=[0-9X]{10}$|(?=(?:[0-9]+[- ]){3})[- 0-9X]{13}$|97[89][0-9]{10}$|(?=(?:[0-9]+[- ]){4})[- 0-9]{17}$)(?:97[89][- ]?)?[0-9]{1,5}[- ]?[0-9]+[- ]?[0-9]+[- ]?[0-9X]$");
+			Matcher matcher = pattern.matcher(str.trim());
 				
-				valid = matcher.find();
-			}
+			valid = matcher.find();
 		}
 		
 		return valid;
