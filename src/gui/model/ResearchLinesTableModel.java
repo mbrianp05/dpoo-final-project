@@ -5,11 +5,8 @@ import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 
 import schooling.Faculty;
-import schooling.Profesor;
 import schooling.ResearchLine;
 import schooling.ResearchMatter;
-import schooling.Researcher;
-import schooling.Student;
 import utils.ArrayLib;
 
 public class ResearchLinesTableModel extends DefaultTableModel {

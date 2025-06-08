@@ -56,7 +56,7 @@ public class CoursesTableView extends JPanel {
 		gridBagLayout.columnWidths = new int[]{100, 0, 0, 55, 0, 116, 0, 0, 0, 100, 0};
 		gridBagLayout.rowHeights = new int[]{70, 34, 60, 35, 90, 0, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		GridBagConstraints gbc_lblCursosDePostgrado = new GridBagConstraints();
 		gbc_lblCursosDePostgrado.anchor = GridBagConstraints.NORTHWEST;
@@ -128,6 +128,7 @@ public class CoursesTableView extends JPanel {
 	private JTable getTable() {
 		if (table == null) {
 			table = new JTable();
+			table.setRowHeight(24);
 			table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			table.setFillsViewportHeight(true);
 			table.setBackground(Color.WHITE);
