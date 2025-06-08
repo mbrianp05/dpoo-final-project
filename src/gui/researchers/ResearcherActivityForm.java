@@ -37,6 +37,7 @@ public class ResearcherActivityForm extends JPanel {
 	public void listenTo(OnResearchActivityActionTriggered listener) {
 		bookChapterForm.listenTo(listener);
 		paperForm.listenTo(listener);
+		presentationForm.listenTo(listener);
 	}
 	
 	private JTabbedPane getTabbedPane() {
@@ -66,7 +67,7 @@ public class ResearcherActivityForm extends JPanel {
 	}
 	private PresentationForm getPresentationForm() {
 		if (presentationForm == null) {
-			presentationForm = new PresentationForm();
+			presentationForm = new PresentationForm(researcher);
 		}
 		return presentationForm;
 	}

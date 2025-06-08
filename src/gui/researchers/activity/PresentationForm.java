@@ -1,5 +1,7 @@
 package gui.researchers.activity;
 
+import gui.event.OnResearchActivityActionTriggered;
+
 import javax.swing.JPanel;
 
 import java.awt.Color;
@@ -13,19 +15,55 @@ import java.awt.Font;
 import javax.swing.JTextField;
 
 import java.awt.Insets;
+import java.time.LocalDate;
 import java.time.Year;
+import java.util.Date;
 
 import javax.swing.JSpinner;
 import javax.swing.JButton;
 
+import schooling.Faculty;
+import schooling.Researcher;
 import utils.Constants;
+import utils.DateHelper;
+import utils.Month;
 
 import javax.swing.border.TitledBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
 
 public class PresentationForm extends JPanel {
-	public PresentationForm() {
+	private static final long serialVersionUID = 1218122467482657932L;
+	
+	private Researcher researcher;
+	private OnResearchActivityActionTriggered listener;
+	
+	private JLabel lblNombre;
+	private JTextField textFieldName;
+	private JLabel lblCdigoIsbn;
+	private JTextField textFieldISBN;
+	private JLabel lblLocalizacin;
+	private JTextField textFieldLocation;
+	private JLabel lblDa;
+	private JLabel lblMes;
+	private JLabel lblAo;
+	private JComboBox<String> comboBoxDays;
+	private JComboBox<String> comboBoxMonths;
+	private JSpinner spinnerYear;
+	private JButton btnAgregar;
+	private JPanel panel;
+	
+	public PresentationForm(Researcher researcher) {
+		this.researcher = researcher;
+		
 		setBackground(Color.WHITE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{100, 0, 100, 100, 0};
@@ -40,13 +78,13 @@ public class PresentationForm extends JPanel {
 		gbc_lblNombre.gridx = 1;
 		gbc_lblNombre.gridy = 1;
 		add(getLblNombre(), gbc_lblNombre);
-		GridBagConstraints gbc_textField = new GridBagConstraints();
-		gbc_textField.gridwidth = 2;
-		gbc_textField.insets = new Insets(0, 0, 5, 5);
-		gbc_textField.fill = GridBagConstraints.BOTH;
-		gbc_textField.gridx = 1;
-		gbc_textField.gridy = 2;
-		add(getTextField(), gbc_textField);
+		GridBagConstraints gbc_textFieldName = new GridBagConstraints();
+		gbc_textFieldName.gridwidth = 2;
+		gbc_textFieldName.insets = new Insets(0, 0, 5, 5);
+		gbc_textFieldName.fill = GridBagConstraints.BOTH;
+		gbc_textFieldName.gridx = 1;
+		gbc_textFieldName.gridy = 2;
+		add(getTextFieldName(), gbc_textFieldName);
 		GridBagConstraints gbc_lblCdigoIsbn = new GridBagConstraints();
 		gbc_lblCdigoIsbn.fill = GridBagConstraints.BOTH;
 		gbc_lblCdigoIsbn.gridwidth = 2;
@@ -54,13 +92,13 @@ public class PresentationForm extends JPanel {
 		gbc_lblCdigoIsbn.gridx = 1;
 		gbc_lblCdigoIsbn.gridy = 4;
 		add(getLblCdigoIsbn(), gbc_lblCdigoIsbn);
-		GridBagConstraints gbc_textField_1 = new GridBagConstraints();
-		gbc_textField_1.gridwidth = 2;
-		gbc_textField_1.insets = new Insets(0, 0, 5, 5);
-		gbc_textField_1.fill = GridBagConstraints.BOTH;
-		gbc_textField_1.gridx = 1;
-		gbc_textField_1.gridy = 5;
-		add(getTextField_1(), gbc_textField_1);
+		GridBagConstraints gbc_textFieldISBN = new GridBagConstraints();
+		gbc_textFieldISBN.gridwidth = 2;
+		gbc_textFieldISBN.insets = new Insets(0, 0, 5, 5);
+		gbc_textFieldISBN.fill = GridBagConstraints.BOTH;
+		gbc_textFieldISBN.gridx = 1;
+		gbc_textFieldISBN.gridy = 5;
+		add(getTextFieldISBN(), gbc_textFieldISBN);
 		GridBagConstraints gbc_lblLocalizacin = new GridBagConstraints();
 		gbc_lblLocalizacin.fill = GridBagConstraints.BOTH;
 		gbc_lblLocalizacin.gridwidth = 2;
@@ -68,13 +106,13 @@ public class PresentationForm extends JPanel {
 		gbc_lblLocalizacin.gridx = 1;
 		gbc_lblLocalizacin.gridy = 7;
 		add(getLblLocalizacin(), gbc_lblLocalizacin);
-		GridBagConstraints gbc_textField_2 = new GridBagConstraints();
-		gbc_textField_2.gridwidth = 2;
-		gbc_textField_2.insets = new Insets(0, 0, 5, 5);
-		gbc_textField_2.fill = GridBagConstraints.BOTH;
-		gbc_textField_2.gridx = 1;
-		gbc_textField_2.gridy = 8;
-		add(getTextField_2(), gbc_textField_2);
+		GridBagConstraints gbc_textFieldLocation = new GridBagConstraints();
+		gbc_textFieldLocation.gridwidth = 2;
+		gbc_textFieldLocation.insets = new Insets(0, 0, 5, 5);
+		gbc_textFieldLocation.fill = GridBagConstraints.BOTH;
+		gbc_textFieldLocation.gridx = 1;
+		gbc_textFieldLocation.gridy = 8;
+		add(getTextFieldLocation(), gbc_textFieldLocation);
 		GridBagConstraints gbc_panel = new GridBagConstraints();
 		gbc_panel.gridwidth = 2;
 		gbc_panel.insets = new Insets(0, 0, 5, 5);
@@ -90,21 +128,11 @@ public class PresentationForm extends JPanel {
 		gbc_btnAgregar.gridy = 13;
 		add(getBtnAgregar(), gbc_btnAgregar);
 	}
-	private static final long serialVersionUID = 1218122467482657932L;
-	private JLabel lblNombre;
-	private JTextField textField;
-	private JLabel lblCdigoIsbn;
-	private JTextField textField_1;
-	private JLabel lblLocalizacin;
-	private JTextField textField_2;
-	private JLabel lblDa;
-	private JLabel lblMes;
-	private JLabel lblAo;
-	private JSpinner spinner;
-	private JSpinner spinner_1;
-	private JSpinner spinner_2;
-	private JButton btnAgregar;
-	private JPanel panel;
+	
+	public void listenTo(OnResearchActivityActionTriggered listener) {
+		this.listener = listener;
+	}
+	
 	private JLabel getLblNombre() {
 		if (lblNombre == null) {
 			lblNombre = new JLabel("Nombre");
@@ -113,12 +141,12 @@ public class PresentationForm extends JPanel {
 		}
 		return lblNombre;
 	}
-	private JTextField getTextField() {
-		if (textField == null) {
-			textField = new JTextField();
-			textField.setColumns(10);
+	private JTextField getTextFieldName() {
+		if (textFieldName == null) {
+			textFieldName = new JTextField();
+			textFieldName.setColumns(10);
 		}
-		return textField;
+		return textFieldName;
 	}
 	private JLabel getLblCdigoIsbn() {
 		if (lblCdigoIsbn == null) {
@@ -128,12 +156,12 @@ public class PresentationForm extends JPanel {
 		}
 		return lblCdigoIsbn;
 	}
-	private JTextField getTextField_1() {
-		if (textField_1 == null) {
-			textField_1 = new JTextField();
-			textField_1.setColumns(10);
+	private JTextField getTextFieldISBN() {
+		if (textFieldISBN == null) {
+			textFieldISBN = new JTextField();
+			textFieldISBN.setColumns(10);
 		}
-		return textField_1;
+		return textFieldISBN;
 	}
 	private JLabel getLblLocalizacin() {
 		if (lblLocalizacin == null) {
@@ -143,12 +171,12 @@ public class PresentationForm extends JPanel {
 		}
 		return lblLocalizacin;
 	}
-	private JTextField getTextField_2() {
-		if (textField_2 == null) {
-			textField_2 = new JTextField();
-			textField_2.setColumns(10);
+	private JTextField getTextFieldLocation() {
+		if (textFieldLocation == null) {
+			textFieldLocation = new JTextField();
+			textFieldLocation.setColumns(10);
 		}
-		return textField_2;
+		return textFieldLocation;
 	}
 	private JLabel getLblDa() {
 		if (lblDa == null) {
@@ -174,34 +202,114 @@ public class PresentationForm extends JPanel {
 		}
 		return lblAo;
 	}
-	private JSpinner getSpinner() {
-		if (spinner == null) {
-			spinner = new JSpinner();
-			spinner.setModel(new SpinnerNumberModel(1, 1, 30, 1));
-			spinner.setFont(new Font("Segoe UI", Font.PLAIN, 15));
-			spinner.setBackground(Color.WHITE);
+	
+	private Month getMonth() {
+		Month month = null;
+		
+		switch (comboBoxMonths.getSelectedIndex()) {
+		case 0:
+			month = Month.January;
+			break;
+		case 1:
+			month = Month.February;
+			break;
+		case 2:
+			month = Month.March;
+			break;
+		case 3:
+			month = Month.April;
+			break;
+		case 4:
+			month = Month.May;
+			break;
+		case 5:
+			month = Month.June;
+			break;
+		case 6:
+			month = Month.July;
+			break;
+		case 7:
+			month = Month.August;
+			break;
+		case 8:
+			month = Month.September;
+			break;
+		case 9:
+			month = Month.Octuber;
+			break;
+		case 10:
+			month = Month.November;
+			break;
+		case 11:
+			month = Month.December;
+			break;
 		}
-		return spinner;
+		
+		return month;
 	}
-	private JSpinner getSpinner_1() {
-		if (spinner_1 == null) {
-			spinner_1 = new JSpinner();
-			spinner_1.setModel(new SpinnerNumberModel(1, 1, 12, 1));
-			spinner_1.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+	
+	private void setDays() {
+		int daysCount = DateHelper.getDaysFor(getMonth(), (Integer)spinnerYear.getValue());
+		String[] days = new String[daysCount];
+		
+		for (int i = 0; i < daysCount; i++) {
+			days[i] = String.valueOf(i + 1);
 		}
-		return spinner_1;
+		
+		String selectedItem = (String)comboBoxDays.getSelectedItem();
+		
+		comboBoxDays.setModel(new DefaultComboBoxModel<>(days));
+		
+		if (selectedItem != null)
+			comboBoxDays.setSelectedItem(selectedItem);
 	}
-	private JSpinner getSpinner_2() {
-		if (spinner_2 == null) {
-			spinner_2 = new JSpinner();
-			spinner_2.setModel(new SpinnerNumberModel(Year.now().getValue(), 1, Year.now().getValue(), 1));
-			spinner_2.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+	
+	private JComboBox<String> getComboBoxDays() {
+		if (comboBoxDays == null) {
+			comboBoxDays = new JComboBox<>();
+			comboBoxDays.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+			comboBoxDays.setBackground(Color.WHITE);
+			
+			setDays();
 		}
-		return spinner_2;
+		return comboBoxDays;
+	}
+	private JComboBox<String> getComboBoxMonths() {
+		if (comboBoxMonths == null) {
+			comboBoxMonths = new JComboBox<>();
+			comboBoxMonths.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					setDays();
+				}
+			});
+			comboBoxMonths.setModel(new DefaultComboBoxModel<>(new String[] {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"}));
+			comboBoxMonths.setBackground(Color.WHITE);
+			comboBoxMonths.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		}
+		return comboBoxMonths;
+	}
+	private JSpinner getSpinnerYear() {
+		if (spinnerYear == null) {
+			spinnerYear = new JSpinner();
+			spinnerYear.addChangeListener(new ChangeListener() {
+				public void stateChanged(ChangeEvent arg0) {
+					setDays();
+				}
+			});
+			spinnerYear.setBackground(Color.WHITE);
+			spinnerYear.setModel(new SpinnerNumberModel(Year.now().getValue(), 1, Year.now().getValue(), 1));
+			spinnerYear.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		}
+		return spinnerYear;
 	}
 	private JButton getBtnAgregar() {
 		if (btnAgregar == null) {
 			btnAgregar = new JButton("Agregar");
+			btnAgregar.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					submit();
+				}
+			});
 			btnAgregar.setForeground(Color.WHITE);
 			btnAgregar.setBackground(Constants.getInsertionBtnColor());
 			btnAgregar.setFont(new Font("Segoe UI", Font.BOLD, 15));
@@ -234,25 +342,63 @@ public class PresentationForm extends JPanel {
 			gbc_lblAo.gridx = 5;
 			gbc_lblAo.gridy = 0;
 			panel.add(getLblAo(), gbc_lblAo);
-			GridBagConstraints gbc_spinner = new GridBagConstraints();
-			gbc_spinner.fill = GridBagConstraints.BOTH;
-			gbc_spinner.insets = new Insets(0, 0, 5, 5);
-			gbc_spinner.gridx = 1;
-			gbc_spinner.gridy = 1;
-			panel.add(getSpinner(), gbc_spinner);
-			GridBagConstraints gbc_spinner_1 = new GridBagConstraints();
-			gbc_spinner_1.fill = GridBagConstraints.BOTH;
-			gbc_spinner_1.insets = new Insets(0, 0, 5, 5);
-			gbc_spinner_1.gridx = 3;
-			gbc_spinner_1.gridy = 1;
-			panel.add(getSpinner_1(), gbc_spinner_1);
-			GridBagConstraints gbc_spinner_2 = new GridBagConstraints();
-			gbc_spinner_2.fill = GridBagConstraints.BOTH;
-			gbc_spinner_2.insets = new Insets(0, 0, 5, 5);
-			gbc_spinner_2.gridx = 5;
-			gbc_spinner_2.gridy = 1;
-			panel.add(getSpinner_2(), gbc_spinner_2);
+			GridBagConstraints gbc_comboBoxMonths = new GridBagConstraints();
+			gbc_comboBoxMonths.fill = GridBagConstraints.BOTH;
+			gbc_comboBoxMonths.insets = new Insets(0, 0, 5, 5);
+			gbc_comboBoxMonths.gridx = 3;
+			gbc_comboBoxMonths.gridy = 1;
+			panel.add(getComboBoxMonths(), gbc_comboBoxMonths);
+			GridBagConstraints gbc_spinnerYear = new GridBagConstraints();
+			gbc_spinnerYear.fill = GridBagConstraints.BOTH;
+			gbc_spinnerYear.insets = new Insets(0, 0, 5, 5);
+			gbc_spinnerYear.gridx = 5;
+			gbc_spinnerYear.gridy = 1;
+			panel.add(getSpinnerYear(), gbc_spinnerYear);
+			GridBagConstraints gbc_comboBoxDays = new GridBagConstraints();
+			gbc_comboBoxDays.fill = GridBagConstraints.BOTH;
+			gbc_comboBoxDays.insets = new Insets(0, 0, 5, 5);
+			gbc_comboBoxDays.gridx = 1;
+			gbc_comboBoxDays.gridy = 1;
+			panel.add(getComboBoxDays(), gbc_comboBoxDays);
 		}
 		return panel;
+	}
+	
+	private boolean checkValidity() {
+		return true;
+	}
+	
+	private void reset() {
+		textFieldName.setText("");
+		textFieldISBN.setText("");
+		textFieldLocation.setText("");
+		
+		comboBoxDays.setSelectedIndex(-1);
+		comboBoxMonths.setSelectedIndex(-1);
+		spinnerYear.setValue(Year.now().getValue());
+	}
+	
+	private LocalDate getDate() {
+		int day = Integer.valueOf((String)comboBoxDays.getSelectedItem());
+		int month = Integer.valueOf((String)comboBoxMonths.getSelectedItem()) + 1;
+		int year = (Integer)spinnerYear.getValue();
+		
+		return LocalDate.of(year, month, day);
+	}
+	
+	private void submit() {
+		if (checkValidity()) {
+			String name = textFieldName.getText();
+			String ISBN = textFieldISBN.getText();
+			String location = textFieldLocation.getText();
+			
+			LocalDate date = getDate();
+			
+			researcher.addPresentation(name, date, ISBN, location);
+			
+			if (listener != null) listener.actionPerformed();
+
+			reset();
+		}
 	}
 }
