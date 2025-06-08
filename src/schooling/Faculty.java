@@ -347,7 +347,7 @@ public class Faculty {
 		return found;
 	}
 
-	public ResearchLine getReseachLineByChief(Profesor researcher) {
+	public ResearchLine findReseachLineByChief(Profesor researcher) {
 		ResearchLine line = null;
 		int i = 0;
 		
@@ -358,5 +358,34 @@ public class Faculty {
 		}
 		
 		return line;
+	}
+
+	public ArrayList<Breakthrough> getBreakthroughs() {
+		ArrayList<Breakthrough> breakthroughs = new ArrayList<>();
+	
+		for (Researcher r: researchers) {
+			breakthroughs.addAll(r.getBreakthroughs());
+		}
+		
+		return breakthroughs;
+	}
+	
+	public Researcher findResearcherByBreakthrough(Breakthrough breakthrough) throws Exception {
+		Researcher r = null;
+		int i = 0;
+		
+		while (r == null && i < researchers.size()) {
+			if (researchers.get(i).getBreakthroughs().contains(breakthrough)) {
+				r = researchers.get(i);
+			}
+			
+			i++;
+		}
+		
+		if (r == null) {
+			throw new Exception("There is a registered breakthrough by a non-existant researcher");
+		}
+		
+		return r;
 	}
 }

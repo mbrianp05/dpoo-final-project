@@ -102,4 +102,8 @@ public abstract class Researcher {
 	public int getID() {
 		return ID;
 	}
+
+	public ArrayList<Breakthrough> getBreakthroughs() {
+		return breakthroughs;
+	}
 }
