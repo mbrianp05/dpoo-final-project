@@ -42,7 +42,6 @@ import javax.swing.ButtonGroup;
 import java.awt.CardLayout;
 
 import javax.swing.border.MatteBorder;
-import javax.swing.JSeparator;
 
 public class EditResearcherJDialog extends JDialog {
 	private static final long serialVersionUID = -8039865322179654975L;
