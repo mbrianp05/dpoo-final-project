@@ -89,12 +89,8 @@ public class Chapter implements ScorableBreakthrough {
             throw new IllegalArgumentException("ISSN cannot be empty");
         }
 
-        if (!Validation.unique(getClass().getSimpleName() + ".ISSN", ISSN)) {
-            throw new IllegalArgumentException("ISSN code has to be unique thus cannot be repeated");
-        }
-        
         if (!Validation.validISSN(ISSN)) {
-            throw new IllegalArgumentException("ISSN has to have the shape ISSN NNNN-NNNN");
+            throw new IllegalArgumentException("ISSN has to have unique and follow the pattern ISSN DDDD-DDDD");
         }
 
         this.ISSN = ISSN;
