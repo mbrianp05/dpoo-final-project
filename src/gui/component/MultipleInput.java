@@ -42,13 +42,13 @@ public class MultipleInput extends JPanel {
 		
 		setBackground(Color.WHITE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0};
+		gridBagLayout.columnWidths = new int[]{0, 100, 100, 0, 0, 0};
 		gridBagLayout.rowHeights = new int[]{36, 35, 35, 36, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		GridBagConstraints gbc_comboBox = new GridBagConstraints();
-		gbc_comboBox.gridwidth = 3;
+		gbc_comboBox.gridwidth = 4;
 		gbc_comboBox.insets = new Insets(0, 0, 5, 0);
 		gbc_comboBox.fill = GridBagConstraints.BOTH;
 		gbc_comboBox.gridx = 1;
@@ -61,7 +61,7 @@ public class MultipleInput extends JPanel {
 		gbc_btnEdit.gridy = 0;
 		add(getBtnEdit(), gbc_btnEdit);
 		GridBagConstraints gbc_btnRemove = new GridBagConstraints();
-		gbc_btnRemove.fill = GridBagConstraints.VERTICAL;
+		gbc_btnRemove.fill = GridBagConstraints.BOTH;
 		gbc_btnRemove.anchor = GridBagConstraints.WEST;
 		gbc_btnRemove.insets = new Insets(0, 0, 5, 5);
 		gbc_btnRemove.gridx = 2;
@@ -80,7 +80,7 @@ public class MultipleInput extends JPanel {
 		gbc_label.gridy = 2;
 		add(getLabel(), gbc_label);
 		GridBagConstraints gbc_textField = new GridBagConstraints();
-		gbc_textField.gridwidth = 2;
+		gbc_textField.gridwidth = 3;
 		gbc_textField.insets = new Insets(0, 0, 5, 5);
 		gbc_textField.fill = GridBagConstraints.BOTH;
 		gbc_textField.gridx = 1;
@@ -89,13 +89,12 @@ public class MultipleInput extends JPanel {
 		GridBagConstraints gbc_button = new GridBagConstraints();
 		gbc_button.insets = new Insets(0, 0, 5, 0);
 		gbc_button.fill = GridBagConstraints.BOTH;
-		gbc_button.gridx = 3;
+		gbc_button.gridx = 4;
 		gbc_button.gridy = 2;
 		add(getButton(), gbc_button);
 		GridBagConstraints gbc_errorMessage = new GridBagConstraints();
 		gbc_errorMessage.fill = GridBagConstraints.BOTH;
-		gbc_errorMessage.gridwidth = 3;
-		gbc_errorMessage.insets = new Insets(0, 0, 0, 5);
+		gbc_errorMessage.gridwidth = 4;
 		gbc_errorMessage.gridx = 1;
 		gbc_errorMessage.gridy = 3;
 		add(getErrorMessage(), gbc_errorMessage);
@@ -276,5 +275,9 @@ public class MultipleInput extends JPanel {
 		textField.setText("");
 		errorMessage.setVisible(false);
 		updateCombobox();
+	}
+	
+	public ErrorLabel getErrorLbl() {
+		return errorMessage;
 	}
 }
