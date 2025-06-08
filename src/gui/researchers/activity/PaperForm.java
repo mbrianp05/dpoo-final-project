@@ -289,7 +289,7 @@ public class PaperForm extends JPanel {
 	
 	private void reset() {
 		textFieldTitle.setText("");
-		spinnerNo.setValue("");
+		spinnerNo.setValue(0);
 		spinnerYear.setValue(Year.now().getValue());
 		spinnerVol.setValue(1);
 		comboBoxTargetedGroup.setSelectedIndex(0);

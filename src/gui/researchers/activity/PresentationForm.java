@@ -25,6 +25,7 @@ import schooling.Researcher;
 import utils.Constants;
 import utils.DateHelper;
 import utils.Month;
+import utils.Validation;
 
 import javax.swing.border.TitledBorder;
 import javax.swing.border.LineBorder;
@@ -37,6 +38,8 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
+
+import gui.component.ErrorLabel;
 
 public class PresentationForm extends JPanel {
 	private static final long serialVersionUID = 1218122467482657932L;
@@ -58,6 +61,9 @@ public class PresentationForm extends JPanel {
 	private JSpinner spinnerYear;
 	private JButton btnAgregar;
 	private JPanel panel;
+	private ErrorLabel errorName;
+	private ErrorLabel errorISBN;
+	private ErrorLabel errorLocation;
 	
 	public PresentationForm(Researcher researcher) {
 		this.researcher = researcher;
@@ -83,6 +89,13 @@ public class PresentationForm extends JPanel {
 		gbc_textFieldName.gridx = 1;
 		gbc_textFieldName.gridy = 2;
 		add(getTextFieldName(), gbc_textFieldName);
+		GridBagConstraints gbc_errorName = new GridBagConstraints();
+		gbc_errorName.fill = GridBagConstraints.BOTH;
+		gbc_errorName.gridwidth = 2;
+		gbc_errorName.insets = new Insets(0, 0, 5, 5);
+		gbc_errorName.gridx = 1;
+		gbc_errorName.gridy = 3;
+		add(getErrorName(), gbc_errorName);
 		GridBagConstraints gbc_lblCdigoIsbn = new GridBagConstraints();
 		gbc_lblCdigoIsbn.fill = GridBagConstraints.BOTH;
 		gbc_lblCdigoIsbn.gridwidth = 2;
@@ -97,6 +110,13 @@ public class PresentationForm extends JPanel {
 		gbc_textFieldISBN.gridx = 1;
 		gbc_textFieldISBN.gridy = 5;
 		add(getTextFieldISBN(), gbc_textFieldISBN);
+		GridBagConstraints gbc_errorISBN = new GridBagConstraints();
+		gbc_errorISBN.fill = GridBagConstraints.BOTH;
+		gbc_errorISBN.gridwidth = 2;
+		gbc_errorISBN.insets = new Insets(0, 0, 5, 5);
+		gbc_errorISBN.gridx = 1;
+		gbc_errorISBN.gridy = 6;
+		add(getErrorISBN(), gbc_errorISBN);
 		GridBagConstraints gbc_lblLocalizacin = new GridBagConstraints();
 		gbc_lblLocalizacin.fill = GridBagConstraints.BOTH;
 		gbc_lblLocalizacin.gridwidth = 2;
@@ -111,6 +131,13 @@ public class PresentationForm extends JPanel {
 		gbc_textFieldLocation.gridx = 1;
 		gbc_textFieldLocation.gridy = 8;
 		add(getTextFieldLocation(), gbc_textFieldLocation);
+		GridBagConstraints gbc_errorLocation = new GridBagConstraints();
+		gbc_errorLocation.fill = GridBagConstraints.BOTH;
+		gbc_errorLocation.gridwidth = 2;
+		gbc_errorLocation.insets = new Insets(0, 0, 5, 5);
+		gbc_errorLocation.gridx = 1;
+		gbc_errorLocation.gridy = 9;
+		add(getErrorLocation(), gbc_errorLocation);
 		GridBagConstraints gbc_panel = new GridBagConstraints();
 		gbc_panel.gridwidth = 2;
 		gbc_panel.insets = new Insets(0, 0, 5, 5);
@@ -125,6 +152,8 @@ public class PresentationForm extends JPanel {
 		gbc_btnAgregar.gridx = 2;
 		gbc_btnAgregar.gridy = 13;
 		add(getBtnAgregar(), gbc_btnAgregar);
+		
+		reset();
 	}
 	
 	public void listenTo(OnResearchActivityActionTriggered listener) {
@@ -205,7 +234,7 @@ public class PresentationForm extends JPanel {
 	}
 	
 	private Month getMonth() {
-		Month month = null;
+		Month month = Month.January;
 		
 		switch (comboBoxMonths.getSelectedIndex()) {
 		case 0:
@@ -250,6 +279,8 @@ public class PresentationForm extends JPanel {
 	}
 	
 	private void setDays() {
+		if (comboBoxDays == null) getComboBoxDays();
+		
 		int daysCount = DateHelper.getDaysFor(getMonth(), (Integer)spinnerYear.getValue());
 		String[] days = new String[daysCount];
 		
@@ -343,18 +374,18 @@ public class PresentationForm extends JPanel {
 			gbc_lblAo.gridx = 5;
 			gbc_lblAo.gridy = 0;
 			panel.add(getLblAo(), gbc_lblAo);
-			GridBagConstraints gbc_comboBoxMonths = new GridBagConstraints();
-			gbc_comboBoxMonths.fill = GridBagConstraints.BOTH;
-			gbc_comboBoxMonths.insets = new Insets(0, 0, 5, 5);
-			gbc_comboBoxMonths.gridx = 3;
-			gbc_comboBoxMonths.gridy = 1;
-			panel.add(getComboBoxMonths(), gbc_comboBoxMonths);
 			GridBagConstraints gbc_spinnerYear = new GridBagConstraints();
 			gbc_spinnerYear.fill = GridBagConstraints.BOTH;
 			gbc_spinnerYear.insets = new Insets(0, 0, 5, 5);
 			gbc_spinnerYear.gridx = 5;
 			gbc_spinnerYear.gridy = 1;
 			panel.add(getSpinnerYear(), gbc_spinnerYear);
+			GridBagConstraints gbc_comboBoxMonths = new GridBagConstraints();
+			gbc_comboBoxMonths.fill = GridBagConstraints.BOTH;
+			gbc_comboBoxMonths.insets = new Insets(0, 0, 5, 5);
+			gbc_comboBoxMonths.gridx = 3;
+			gbc_comboBoxMonths.gridy = 1;
+			panel.add(getComboBoxMonths(), gbc_comboBoxMonths);
 			GridBagConstraints gbc_comboBoxDays = new GridBagConstraints();
 			gbc_comboBoxDays.fill = GridBagConstraints.BOTH;
 			gbc_comboBoxDays.insets = new Insets(0, 0, 5, 5);
@@ -366,7 +397,28 @@ public class PresentationForm extends JPanel {
 	}
 	
 	private boolean checkValidity() {
-		return true;
+		boolean validity = true;
+		
+		String name = textFieldName.getText();
+		String ISBN = textFieldISBN.getText();
+		String location = textFieldLocation.getText();
+		
+		if (!Validation.notEmpty(name)) {
+			errorName.setVisible(true);
+			validity = false;
+		}
+
+		if (!Validation.notEmpty(location)) {
+			errorLocation.setVisible(true);
+			validity = false;
+		}
+		
+		if (!Validation.validISBN(ISBN)) {
+			errorISBN.setVisible(true);
+			validity = false;
+		}
+		
+		return validity;
 	}
 	
 	private void reset() {
@@ -374,9 +426,13 @@ public class PresentationForm extends JPanel {
 		textFieldISBN.setText("");
 		textFieldLocation.setText("");
 		
-		comboBoxDays.setSelectedIndex(-1);
-		comboBoxMonths.setSelectedIndex(-1);
+		comboBoxDays.setSelectedIndex(0);
+		comboBoxMonths.setSelectedIndex(0);
 		spinnerYear.setValue(Year.now().getValue());
+		
+		errorName.setVisible(false);
+		errorLocation.setVisible(false);
+		errorISBN.setVisible(false);
 	}
 	
 	private LocalDate getDate() {
@@ -401,5 +457,26 @@ public class PresentationForm extends JPanel {
 
 			reset();
 		}
+	}
+	private ErrorLabel getErrorName() {
+		if (errorName == null) {
+			errorName = new ErrorLabel();
+			errorName.setText("El nombre es requerido");
+		}
+		return errorName;
+	}
+	private ErrorLabel getErrorISBN() {
+		if (errorISBN == null) {
+			errorISBN = new ErrorLabel();
+			errorISBN.setText("El c\u00F3digo ISBN es \u00FAnico y consta de 10 o 13 d\u00EFgitos");
+		}
+		return errorISBN;
+	}
+	private ErrorLabel getErrorLocation() {
+		if (errorLocation == null) {
+			errorLocation = new ErrorLabel();
+			errorLocation.setText("La localizaci\u00F3n es requerida");
+		}
+		return errorLocation;
 	}
 }
