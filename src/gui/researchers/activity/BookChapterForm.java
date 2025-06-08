@@ -51,8 +51,6 @@ public class BookChapterForm extends JPanel {
 	private MultipleInput editorsInput;
 	private ErrorLabel errorBookName;
 	private ErrorLabel errorChapter;
-	private ErrorLabel errorAuthors;
-	private ErrorLabel errorEditors;
 	private ErrorLabel errorEditorial;
 	private ErrorLabel errorISSN;
 	private ErrorLabel errorVol;
@@ -63,7 +61,7 @@ public class BookChapterForm extends JPanel {
 		setBackground(Color.WHITE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{100, 0, 0, 0, 30, 0, 100};
-		gridBagLayout.rowHeights = new int[]{12, 0, 35, 30, 0, 35, 30, 0, 30, 0, 35, 30, 0, 35, 30, 35, 30, 20, 0, 0};
+		gridBagLayout.rowHeights = new int[]{12, 0, 35, 30, 0, 35, 30, 0, 10, 0, 35, 30, 0, 35, 30, 35, 30, 20, 0, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
@@ -122,19 +120,6 @@ public class BookChapterForm extends JPanel {
 		gbc_editorsInput.gridx = 5;
 		gbc_editorsInput.gridy = 7;
 		add(getMultipleInput_1(), gbc_editorsInput);
-		GridBagConstraints gbc_errorAuthors = new GridBagConstraints();
-		gbc_errorAuthors.fill = GridBagConstraints.BOTH;
-		gbc_errorAuthors.gridwidth = 3;
-		gbc_errorAuthors.insets = new Insets(0, 0, 5, 5);
-		gbc_errorAuthors.gridx = 1;
-		gbc_errorAuthors.gridy = 8;
-		add(getErrorAuthors(), gbc_errorAuthors);
-		GridBagConstraints gbc_errorEditors = new GridBagConstraints();
-		gbc_errorEditors.fill = GridBagConstraints.BOTH;
-		gbc_errorEditors.insets = new Insets(0, 0, 5, 5);
-		gbc_errorEditors.gridx = 5;
-		gbc_errorEditors.gridy = 8;
-		add(getErrorEditors(), gbc_errorEditors);
 		GridBagConstraints gbc_lblEditorial = new GridBagConstraints();
 		gbc_lblEditorial.gridwidth = 5;
 		gbc_lblEditorial.insets = new Insets(0, 0, 5, 5);
@@ -302,12 +287,14 @@ public class BookChapterForm extends JPanel {
 	private MultipleInput getAuthorsInput() {
 		if (authorsInput == null) {
 			authorsInput = new MultipleInput("Autores", "A\u00F1adir");
+			authorsInput.getErrorLbl().setText("Introduzca al menos un autor");
 		}
 		return authorsInput;
 	}
 	private MultipleInput getMultipleInput_1() {
 		if (editorsInput == null) {
 			editorsInput = new MultipleInput("Editores", "A\u00F1adir");
+			editorsInput.getErrorLbl().setText("Introduzca al menos un editor");
 		}
 		return editorsInput;
 	}
@@ -325,13 +312,13 @@ public class BookChapterForm extends JPanel {
 	}
 	
 	private void resetErrorLabels() {
-		errorAuthors.setVisible(false);
 		errorBookName.setVisible(false);
 		errorChapter.setVisible(false);
 		errorEditorial.setVisible(false);
-		errorEditors.setVisible(false);
 		errorVol.setVisible(false);
 		errorISSN.setVisible(false);
+		editorsInput.getErrorLbl().setVisible(false);
+		authorsInput.getErrorLbl().setVisible(false);
 	}
 	
 	private boolean checkValidity() {
@@ -363,12 +350,12 @@ public class BookChapterForm extends JPanel {
 		}
 		
 		if (authorsSize == 0) {
-			errorAuthors.setVisible(true);
+			authorsInput.getErrorLbl().setVisible(true);
 			isValid = false;
 		}
 		
 		if (editorsSize == 0) {
-			errorEditors.setVisible(true);
+			editorsInput.getErrorLbl().setVisible(true);
 			isValid = false;
 		}
 		
@@ -420,20 +407,6 @@ public class BookChapterForm extends JPanel {
 			errorChapter.setText("El t\u00EDtulo del cap\u00EDtulo es requerido");
 		}
 		return errorChapter;
-	}
-	private ErrorLabel getErrorAuthors() {
-		if (errorAuthors == null) {
-			errorAuthors = new ErrorLabel();
-			errorAuthors.setText("Introduzca al menos un autor");
-		}
-		return errorAuthors;
-	}
-	private ErrorLabel getErrorEditors() {
-		if (errorEditors == null) {
-			errorEditors = new ErrorLabel();
-			errorEditors.setText("Introduzca al menos un editor");
-		}
-		return errorEditors;
 	}
 	private ErrorLabel getErrorEditorial() {
 		if (errorEditorial == null) {

@@ -457,11 +457,15 @@ public class PresentationForm extends JPanel {
 			
 			LocalDate date = getDate();
 			
-			researcher.addPresentation(name, date, ISBN, location);
-			
-			if (listener != null) listener.actionPerformed();
-
-			reset();
+			try {
+				researcher.addPresentation(name, date, ISBN, location);
+				
+				if (listener != null) listener.actionPerformed();
+				
+				reset();
+			} catch (IllegalArgumentException exception) {
+				errorISBN.setVisible(true);
+			}
 		}
 	}
 	private ErrorLabel getErrorName() {
