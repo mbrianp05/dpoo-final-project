@@ -1,7 +1,7 @@
 package schooling;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 
 import utils.Validation;
 
@@ -48,7 +48,7 @@ public abstract class Researcher {
 		score += paper.getScore();
 	}
 
-	public void addPresentation(String name, Date date, String ISBN, String location) {
+	public void addPresentation(String name, LocalDate date, String ISBN, String location) {
 		Presentation presentation = new Presentation(name, date, ISBN, location);
 		breakthroughs.add(presentation);
 

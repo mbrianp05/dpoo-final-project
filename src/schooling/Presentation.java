@@ -1,6 +1,6 @@
 package schooling;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import utils.Validation;
 
@@ -8,11 +8,11 @@ public class Presentation implements ScorableBreakthrough {
     private String name;
     private String ISBN;
     private String location;
-    private Date date;
+    private LocalDate date;
 
     private final static int score = 1;
 
-    public Presentation(String name, Date date, String ISBN, String location) {
+    public Presentation(String name, LocalDate date, String ISBN, String location) {
         setName(name);
         setDate(date);
         setISBN(ISBN);
@@ -31,7 +31,7 @@ public class Presentation implements ScorableBreakthrough {
         this.name = name;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
@@ -56,7 +56,7 @@ public class Presentation implements ScorableBreakthrough {
         return name;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
