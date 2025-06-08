@@ -1,8 +1,10 @@
 package gui.views;
 
 import gui.event.OnAddedCourse;
+
 import javax.swing.JPanel;
 
+import schooling.Degree;
 import schooling.Faculty;
 import schooling.Profesor;
 import schooling.ResearchLine;
@@ -120,6 +122,18 @@ public class CoursesFormView extends JPanel {
 		masteryPlans.setModel(new DefaultComboBoxModel<>(names));
 	}
 	
+	private void fetchInstructors() {
+		ArrayList<Profesor> profs = faculty.getProfesorsWithDegree(Degree.Doctor);
+		String[] names = new String[profs.size()];
+
+		for(int i = 0; i < profs.size(); i++){
+			names[i] = profs.get(i).getName();
+			profIDs[i] = profs.get(i).getID();
+		}
+
+		selectInstructor.setModel(new DefaultComboBoxModel<>(names));
+	}
+	
 	private JComboBox<String> getMasteryPlans() {
 		if (masteryPlans == null) {
 			masteryPlans = new JComboBox<String>();
@@ -143,18 +157,7 @@ public class CoursesFormView extends JPanel {
 			selectInstructor.setBackground(Color.WHITE);
 			selectInstructor.setFont(Constants.getLabelFont());
 
-			ArrayList<Profesor> profs = new ArrayList<>();
-			for(ResearchLine r: faculty.getReseachLines()){
-				profs.add(r.getChief());
-			}
-			String[] names = new String[profs.size()];
-
-			for(int i = 0; i < profs.size(); i++){
-				names[i] = profs.get(i).getName();
-				profIDs[i] = profs.get(i).getID();
-			}
-
-			selectInstructor.setModel(new DefaultComboBoxModel<>(names));
+			fetchInstructors();
 		}
 		return selectInstructor;
 	}
@@ -477,5 +480,6 @@ public class CoursesFormView extends JPanel {
 
 	public void update() {
 		fetchMasteryPlans();
+		fetchInstructors();
 	}
 }

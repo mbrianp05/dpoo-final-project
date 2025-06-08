@@ -66,6 +66,18 @@ public class Faculty {
 
 		return profesors;
 	}
+	
+	public ArrayList<Profesor> getProfesorsWithDegree(Degree degree) {
+		ArrayList<Profesor> profs = new ArrayList<>();
+		
+		for(Profesor p: getProfesors()){
+			if (p.getDegree() != null && p.getDegree() == degree) {
+				profs.add(p);
+			}
+		}
+		
+		return profs;
+	}
 
 	public ArrayList<String> getResearchMattersNames() {
 		ArrayList<String> matters = new ArrayList<>();
