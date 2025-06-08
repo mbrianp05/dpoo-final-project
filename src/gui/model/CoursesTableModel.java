@@ -27,6 +27,10 @@ public class CoursesTableModel extends DefaultTableModel {
 		fill();
 	}
 
+	public boolean isCellEditable(int row, int col) {
+		return false;
+	}
+	
 	public void setFilterName(String name) {
 		filterName = name;
 		fill();
