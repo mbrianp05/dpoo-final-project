@@ -24,12 +24,15 @@ import javax.swing.JButton;
 import schooling.Researcher;
 import schooling.TargetedGroup;
 import utils.Constants;
+import utils.Validation;
 
 import javax.swing.SpinnerNumberModel;
 import javax.swing.DefaultComboBoxModel;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
+import gui.component.ErrorLabel;
 
 public class PaperForm extends JPanel {
 	private static final long serialVersionUID = 8204693817348078346L;
@@ -48,6 +51,7 @@ public class PaperForm extends JPanel {
 	private JLabel lblGrupoDeImpacto;
 	private JComboBox<String> comboBoxTargetedGroup;
 	private JButton btnRegistrar;
+	private ErrorLabel errorTitle;
 	
 	public PaperForm(Researcher researcher) {
 		this.researcher = researcher;
@@ -73,6 +77,13 @@ public class PaperForm extends JPanel {
 		gbc_textFieldTitle.gridx = 1;
 		gbc_textFieldTitle.gridy = 2;
 		add(getTextFieldTitle(), gbc_textFieldTitle);
+		GridBagConstraints gbc_errorTitle = new GridBagConstraints();
+		gbc_errorTitle.fill = GridBagConstraints.BOTH;
+		gbc_errorTitle.gridwidth = 11;
+		gbc_errorTitle.insets = new Insets(0, 0, 5, 5);
+		gbc_errorTitle.gridx = 1;
+		gbc_errorTitle.gridy = 3;
+		add(getErrorTitle(), gbc_errorTitle);
 		GridBagConstraints gbc_lblNmero = new GridBagConstraints();
 		gbc_lblNmero.fill = GridBagConstraints.BOTH;
 		gbc_lblNmero.insets = new Insets(0, 0, 5, 5);
@@ -121,10 +132,11 @@ public class PaperForm extends JPanel {
 		gbc_btnRegistrar.anchor = GridBagConstraints.EAST;
 		gbc_btnRegistrar.fill = GridBagConstraints.VERTICAL;
 		gbc_btnRegistrar.insets = new Insets(0, 0, 0, 5);
-		gbc_btnRegistrar.gridwidth = 11;
-		gbc_btnRegistrar.gridx = 1;
+		gbc_btnRegistrar.gridx = 11;
 		gbc_btnRegistrar.gridy = 6;
 		add(getBtnRegistrar(), gbc_btnRegistrar);
+		
+		reset();
 	}
 	
 	
@@ -240,7 +252,15 @@ public class PaperForm extends JPanel {
 	}
 	
 	private boolean checkValidity() {
-		return true;
+		boolean validity = true;
+		String title = textFieldTitle.getText();
+		
+		if (!Validation.notEmpty(title)) {
+			errorTitle.setVisible(true);
+			validity = false;
+		}
+		
+		return validity;
 	}
 	
 	private TargetedGroup getGroup() {
@@ -273,6 +293,8 @@ public class PaperForm extends JPanel {
 		spinnerYear.setValue(Year.now().getValue());
 		spinnerVol.setValue(1);
 		comboBoxTargetedGroup.setSelectedIndex(0);
+		
+		errorTitle.setVisible(false);
 	}
 	
 	private void submit() {
@@ -291,5 +313,12 @@ public class PaperForm extends JPanel {
 
 			reset();
 		}
+	}
+	private ErrorLabel getErrorTitle() {
+		if (errorTitle == null) {
+			errorTitle = new ErrorLabel();
+			errorTitle.setText("El t\u00EDtulo es requerido");
+		}
+		return errorTitle;
 	}
 }
