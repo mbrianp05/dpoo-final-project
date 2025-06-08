@@ -9,6 +9,7 @@ import javax.swing.JLabel;
 
 import schooling.Researcher;
 import utils.Constants;
+import utils.Validation;
 
 import java.awt.GridBagConstraints;
 
@@ -28,6 +29,8 @@ import javax.swing.SpinnerNumberModel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+import gui.component.ErrorLabel;
+
 public class BookChapterForm extends JPanel {
 	private Researcher researcher;
 	private OnResearchActivityActionTriggered listener;
@@ -46,6 +49,13 @@ public class BookChapterForm extends JPanel {
 	private JButton btnNewButton;
 	private MultipleInput authorsInput;
 	private MultipleInput editorsInput;
+	private ErrorLabel errorBookName;
+	private ErrorLabel errorChapter;
+	private ErrorLabel errorAuthors;
+	private ErrorLabel errorEditors;
+	private ErrorLabel errorEditorial;
+	private ErrorLabel errorISSN;
+	private ErrorLabel errorVol;
 	
 	public BookChapterForm(Researcher researcher) {
 		this.researcher = researcher;
@@ -53,7 +63,7 @@ public class BookChapterForm extends JPanel {
 		setBackground(Color.WHITE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{100, 0, 0, 0, 30, 0, 100};
-		gridBagLayout.rowHeights = new int[]{50, 0, 35, 30, 0, 35, 0, 0, 0, 0, 35, 30, 0, 35, 30, 35, 35, 20, 0, 0};
+		gridBagLayout.rowHeights = new int[]{50, 0, 35, 30, 0, 35, 30, 0, 30, 0, 35, 30, 0, 35, 30, 35, 30, 20, 0, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
@@ -71,6 +81,13 @@ public class BookChapterForm extends JPanel {
 		gbc_textFieldBookName.gridx = 1;
 		gbc_textFieldBookName.gridy = 2;
 		add(getTextFieldBookName(), gbc_textFieldBookName);
+		GridBagConstraints gbc_errorBookName = new GridBagConstraints();
+		gbc_errorBookName.fill = GridBagConstraints.BOTH;
+		gbc_errorBookName.gridwidth = 5;
+		gbc_errorBookName.insets = new Insets(0, 0, 5, 5);
+		gbc_errorBookName.gridx = 1;
+		gbc_errorBookName.gridy = 3;
+		add(getErrorBookName(), gbc_errorBookName);
 		GridBagConstraints gbc_lblTtuloDelCaptulo = new GridBagConstraints();
 		gbc_lblTtuloDelCaptulo.gridwidth = 5;
 		gbc_lblTtuloDelCaptulo.fill = GridBagConstraints.BOTH;
@@ -85,6 +102,13 @@ public class BookChapterForm extends JPanel {
 		gbc_textFieldChapter.gridx = 1;
 		gbc_textFieldChapter.gridy = 5;
 		add(getTextFieldChapter(), gbc_textFieldChapter);
+		GridBagConstraints gbc_errorChapter = new GridBagConstraints();
+		gbc_errorChapter.fill = GridBagConstraints.BOTH;
+		gbc_errorChapter.gridwidth = 5;
+		gbc_errorChapter.insets = new Insets(0, 0, 5, 5);
+		gbc_errorChapter.gridx = 1;
+		gbc_errorChapter.gridy = 6;
+		add(getErrorChapter(), gbc_errorChapter);
 		GridBagConstraints gbc_authorsInput = new GridBagConstraints();
 		gbc_authorsInput.gridwidth = 3;
 		gbc_authorsInput.insets = new Insets(0, 0, 5, 5);
@@ -98,6 +122,19 @@ public class BookChapterForm extends JPanel {
 		gbc_editorsInput.gridx = 5;
 		gbc_editorsInput.gridy = 7;
 		add(getMultipleInput_1(), gbc_editorsInput);
+		GridBagConstraints gbc_errorAuthors = new GridBagConstraints();
+		gbc_errorAuthors.fill = GridBagConstraints.BOTH;
+		gbc_errorAuthors.gridwidth = 3;
+		gbc_errorAuthors.insets = new Insets(0, 0, 5, 5);
+		gbc_errorAuthors.gridx = 1;
+		gbc_errorAuthors.gridy = 8;
+		add(getErrorAuthors(), gbc_errorAuthors);
+		GridBagConstraints gbc_errorEditors = new GridBagConstraints();
+		gbc_errorEditors.fill = GridBagConstraints.BOTH;
+		gbc_errorEditors.insets = new Insets(0, 0, 5, 5);
+		gbc_errorEditors.gridx = 5;
+		gbc_errorEditors.gridy = 8;
+		add(getErrorEditors(), gbc_errorEditors);
 		GridBagConstraints gbc_lblEditorial = new GridBagConstraints();
 		gbc_lblEditorial.gridwidth = 5;
 		gbc_lblEditorial.insets = new Insets(0, 0, 5, 5);
@@ -112,6 +149,13 @@ public class BookChapterForm extends JPanel {
 		gbc_textFieldEditorial.gridx = 1;
 		gbc_textFieldEditorial.gridy = 10;
 		add(getTextFieldEditorial(), gbc_textFieldEditorial);
+		GridBagConstraints gbc_errorEditorial = new GridBagConstraints();
+		gbc_errorEditorial.fill = GridBagConstraints.BOTH;
+		gbc_errorEditorial.gridwidth = 5;
+		gbc_errorEditorial.insets = new Insets(0, 0, 5, 5);
+		gbc_errorEditorial.gridx = 1;
+		gbc_errorEditorial.gridy = 11;
+		add(getErrorEditorial(), gbc_errorEditorial);
 		GridBagConstraints gbc_lblCdigoIssn = new GridBagConstraints();
 		gbc_lblCdigoIssn.gridwidth = 5;
 		gbc_lblCdigoIssn.insets = new Insets(0, 0, 5, 5);
@@ -126,6 +170,13 @@ public class BookChapterForm extends JPanel {
 		gbc_textFieldISSN.gridx = 1;
 		gbc_textFieldISSN.gridy = 13;
 		add(getTextFieldISSN(), gbc_textFieldISSN);
+		GridBagConstraints gbc_errorISSN = new GridBagConstraints();
+		gbc_errorISSN.fill = GridBagConstraints.BOTH;
+		gbc_errorISSN.gridwidth = 5;
+		gbc_errorISSN.insets = new Insets(0, 0, 5, 5);
+		gbc_errorISSN.gridx = 1;
+		gbc_errorISSN.gridy = 14;
+		add(getErrorISSN(), gbc_errorISSN);
 		GridBagConstraints gbc_lblVolumen = new GridBagConstraints();
 		gbc_lblVolumen.fill = GridBagConstraints.BOTH;
 		gbc_lblVolumen.insets = new Insets(0, 0, 5, 5);
@@ -138,12 +189,21 @@ public class BookChapterForm extends JPanel {
 		gbc_spinnerVol.gridx = 2;
 		gbc_spinnerVol.gridy = 15;
 		add(getSpinnerVol(), gbc_spinnerVol);
+		GridBagConstraints gbc_errorVol = new GridBagConstraints();
+		gbc_errorVol.fill = GridBagConstraints.BOTH;
+		gbc_errorVol.gridwidth = 3;
+		gbc_errorVol.insets = new Insets(0, 0, 5, 5);
+		gbc_errorVol.gridx = 3;
+		gbc_errorVol.gridy = 15;
+		add(getErrorVol(), gbc_errorVol);
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
 		gbc_btnNewButton.insets = new Insets(0, 0, 5, 5);
 		gbc_btnNewButton.anchor = GridBagConstraints.EAST;
 		gbc_btnNewButton.gridx = 5;
 		gbc_btnNewButton.gridy = 17;
 		add(getBtnNewButton(), gbc_btnNewButton);
+		
+		reset();
 	}
 
 	public void listenTo(OnResearchActivityActionTriggered listener) {
@@ -260,10 +320,63 @@ public class BookChapterForm extends JPanel {
 		authorsInput.reset();
 		editorsInput.reset();
 		spinnerVol.setValue(1);
+		
+		errorAuthors.setVisible(false);
+		errorBookName.setVisible(false);
+		errorChapter.setVisible(false);
+		errorEditorial.setVisible(false);
+		errorEditors.setVisible(false);
+		errorVol.setVisible(false);
+		errorISSN.setVisible(false);
 	}
 	
 	private boolean checkValidity() {
-		return true;
+		boolean isValid = true;
+		
+		String bookName = textFieldBookName.getText();
+		String chapter = textFieldChapter.getText();
+		String editorial = textFieldEditorial.getText();
+		int authorsSize = authorsInput.amountOfItems();
+		int editorsSize = editorsInput.amountOfItems();
+		String ISSN = textFieldISSN.getText();
+		int vol = (Integer)spinnerVol.getValue();
+		
+		if (!Validation.notEmpty(bookName)) {
+			errorBookName.setVisible(true);
+			isValid = false;
+		}
+		
+		if (!Validation.notEmpty(chapter)) {
+			errorChapter.setVisible(true);
+			isValid = false;
+		}
+		
+		if (!Validation.notEmpty(editorial)) {
+			errorEditorial.setVisible(true);
+			isValid = false;
+		}
+		
+		if (authorsSize == 0) {
+			errorAuthors.setVisible(true);
+			isValid = false;
+		}
+		
+		if (editorsSize == 0) {
+			errorEditors.setVisible(true);
+			isValid = false;
+		}
+		
+		if (!Validation.validISSN(ISSN)) {
+			errorISSN.setVisible(true);
+			isValid = false;
+		}
+		
+		if (vol < 1) {
+			errorVol.setVisible(true);
+			isValid = false;
+		}
+		
+		return isValid;
 	}
 	
 	private void submit() {
@@ -283,5 +396,54 @@ public class BookChapterForm extends JPanel {
 				listener.actionPerformed();
 			}
 		}
+	}
+	private ErrorLabel getErrorBookName() {
+		if (errorBookName == null) {
+			errorBookName = new ErrorLabel();
+			errorBookName.setText("El nombre del libro es requerido");
+		}
+		return errorBookName;
+	}
+	private ErrorLabel getErrorChapter() {
+		if (errorChapter == null) {
+			errorChapter = new ErrorLabel();
+			errorChapter.setText("El t\u00EDtulo del cap\u00EDtulo es requerido");
+		}
+		return errorChapter;
+	}
+	private ErrorLabel getErrorAuthors() {
+		if (errorAuthors == null) {
+			errorAuthors = new ErrorLabel();
+			errorAuthors.setText("Introduzca al menos un autor");
+		}
+		return errorAuthors;
+	}
+	private ErrorLabel getErrorEditors() {
+		if (errorEditors == null) {
+			errorEditors = new ErrorLabel();
+			errorEditors.setText("Introduzca al menos un editor");
+		}
+		return errorEditors;
+	}
+	private ErrorLabel getErrorEditorial() {
+		if (errorEditorial == null) {
+			errorEditorial = new ErrorLabel();
+			errorEditorial.setText("La editorial es requerida");
+		}
+		return errorEditorial;
+	}
+	private ErrorLabel getErrorISSN() {
+		if (errorISSN == null) {
+			errorISSN = new ErrorLabel();
+			errorISSN.setText("El c\u00F3digo ISSN es \u00FAnico y sigue la forma indicada anteriormente");
+		}
+		return errorISSN;
+	}
+	private ErrorLabel getErrorVol() {
+		if (errorVol == null) {
+			errorVol = new ErrorLabel();
+			errorVol.setText("El volumen del libro debe ser mayor que 0");
+		}
+		return errorVol;
 	}
 }
