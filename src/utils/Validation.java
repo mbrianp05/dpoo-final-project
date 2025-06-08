@@ -30,7 +30,7 @@ public class Validation {
 		return !exists;
 	}
 	
-	public static boolean validISBM(String str) {
+	public static boolean validISBN(String str) {
 		boolean valid = false;
 		String cleanInput = str.replaceAll("-", "").replaceAll(" ", "");
 		
