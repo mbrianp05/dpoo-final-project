@@ -158,7 +158,7 @@ public class EditResearcherJDialog extends JDialog {
 			if (faculty.isChief(p)) {
 				System.out.println(p.getName());
 				
-				ResearchLine line = faculty.getReseachLineByChief(p);
+				ResearchLine line = faculty.findReseachLineByChief(p);
 				matters = new String[line.getMatters().size()];
 				
 				for (int i = 0; i < line.getMatters().size(); i++) {

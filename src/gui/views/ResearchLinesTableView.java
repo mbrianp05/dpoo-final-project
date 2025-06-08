@@ -137,6 +137,7 @@ public class ResearchLinesTableView extends JPanel {
 	private JTable getTable_1() {
 		if (table == null) {
 			table = new JTable();
+			table.setFont(Constants.getLabelFont());
 			table.setRowHeight(24);
 			table.setFillsViewportHeight(true);
 			table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);

@@ -129,6 +129,7 @@ public class CoursesTableView extends JPanel {
 	private JTable getTable() {
 		if (table == null) {
 			table = new JTable();
+			table.setFont(Constants.getLabelFont());
 			table.setRowHeight(24);
 			table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			table.setFillsViewportHeight(true);
