@@ -21,8 +21,9 @@ import java.awt.Insets;
 
 import javax.swing.ListSelectionModel;
 
-import schooling.Faculty;
 import utils.Constants;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class ResearchLinesTableView extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -34,22 +35,21 @@ public class ResearchLinesTableView extends JPanel {
 	private ResearchLinesTableModel tableModel;
 	private JTable table;
 
-	private Faculty faculty;
 	private JLabel lblDatosDeInvestigadores;
+	private JTextField filterByChief;
+	private JLabel lblResponsable;
 
 	public ResearchLinesTableView() {
-		this.faculty = Faculty.newInstance();
-
 		setBackground(Color.WHITE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{100, 70, 30, 100, 0, 0, 100, 0};
+		gridBagLayout.columnWidths = new int[]{100, 70, 0, 0, 30, 0, 0, 100, 0};
 		gridBagLayout.rowHeights = new int[]{70, 0, 60, 35, 207, 0, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		GridBagConstraints gbc_lblDatosDeInvestigadores = new GridBagConstraints();
 		gbc_lblDatosDeInvestigadores.fill = GridBagConstraints.BOTH;
-		gbc_lblDatosDeInvestigadores.gridwidth = 5;
+		gbc_lblDatosDeInvestigadores.gridwidth = 6;
 		gbc_lblDatosDeInvestigadores.insets = new Insets(0, 0, 5, 5);
 		gbc_lblDatosDeInvestigadores.gridx = 1;
 		gbc_lblDatosDeInvestigadores.gridy = 1;
@@ -72,15 +72,27 @@ public class ResearchLinesTableView extends JPanel {
 		gbc_filterByName.gridx = 3;
 		gbc_filterByName.gridy = 3;
 		add(getFilterByName(), gbc_filterByName);
+		GridBagConstraints gbc_lblResponsable = new GridBagConstraints();
+		gbc_lblResponsable.insets = new Insets(0, 0, 5, 5);
+		gbc_lblResponsable.anchor = GridBagConstraints.EAST;
+		gbc_lblResponsable.gridx = 5;
+		gbc_lblResponsable.gridy = 3;
+		add(getLblResponsable(), gbc_lblResponsable);
+		GridBagConstraints gbc_filterByChief = new GridBagConstraints();
+		gbc_filterByChief.insets = new Insets(0, 0, 5, 5);
+		gbc_filterByChief.fill = GridBagConstraints.BOTH;
+		gbc_filterByChief.gridx = 6;
+		gbc_filterByChief.gridy = 3;
+		add(getFilterByChief(), gbc_filterByChief);
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
 		gbc_scrollPane.insets = new Insets(0, 0, 5, 5);
 		gbc_scrollPane.fill = GridBagConstraints.BOTH;
-		gbc_scrollPane.gridwidth = 5;
+		gbc_scrollPane.gridwidth = 6;
 		gbc_scrollPane.gridx = 1;
 		gbc_scrollPane.gridy = 4;
 		add(getScrollPane(), gbc_scrollPane);
 
-		tableModel = new ResearchLinesTableModel(this.faculty);
+		tableModel = new ResearchLinesTableModel();
 		table.setModel(tableModel);
 	}
 
@@ -104,6 +116,13 @@ public class ResearchLinesTableView extends JPanel {
 	private JTextField getFilterByName() {
 		if (filterByName == null) {
 			filterByName = new JTextField("");
+			filterByName.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyReleased(KeyEvent arg0) {
+					((ResearchLinesTableModel)table.getModel()).setFilterName(filterByName.getText());
+				}
+			});
+			filterByName.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 			filterByName.setColumns(10);
 		}
 		return filterByName;
@@ -136,5 +155,27 @@ public class ResearchLinesTableView extends JPanel {
 			lblDatosDeInvestigadores.setFont(Constants.getTitleFont());
 		}
 		return lblDatosDeInvestigadores;
+	}
+	private JTextField getFilterByChief() {
+		if (filterByChief == null) {
+			filterByChief = new JTextField("");
+			filterByChief.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyReleased(KeyEvent arg0) {
+					((ResearchLinesTableModel)table.getModel()).setChiefFilter(filterByChief.getText());
+				}
+			});
+			filterByChief.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+			filterByChief.setColumns(10);
+		}
+		return filterByChief;
+	}
+	private JLabel getLblResponsable() {
+		if (lblResponsable == null) {
+			lblResponsable = new JLabel("Responsable");
+			lblResponsable.setHorizontalAlignment(SwingConstants.RIGHT);
+			lblResponsable.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 15));
+		}
+		return lblResponsable;
 	}
 }
