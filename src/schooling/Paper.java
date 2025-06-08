@@ -2,7 +2,7 @@ package schooling;
 
 import utils.Validation;
 
-public class Paper implements ScorableBreakthrough {
+public class Paper extends Breakthrough {
     private String title;
     private int no;
     private int volume;
@@ -97,4 +97,9 @@ public class Paper implements ScorableBreakthrough {
     public TargetedGroup getGroup() {
         return group;
     }
+
+	@Override
+	public String getName() {
+		return title;
+	}
 }

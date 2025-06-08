@@ -7,7 +7,7 @@ import utils.Validation;
 
 public abstract class Researcher {
 	protected String name;
-	protected ArrayList<ScorableBreakthrough> breakthroughs;
+	protected ArrayList<Breakthrough> breakthroughs;
 
 	// ID autoincremental
 	protected static int lastID = 1;
@@ -66,7 +66,7 @@ public abstract class Researcher {
 	public ArrayList<Paper> getPapers() {
 		ArrayList<Paper> papers = new ArrayList<Paper>();
 
-		for (ScorableBreakthrough b : breakthroughs) {
+		for (Breakthrough b : breakthroughs) {
 			if (b instanceof Paper) {
 				papers.add((Paper) b);
 			}
@@ -78,7 +78,7 @@ public abstract class Researcher {
 	public ArrayList<Presentation> getPresentations() {
 		ArrayList<Presentation> presentations = new ArrayList<Presentation>();
 
-		for (ScorableBreakthrough b : breakthroughs) {
+		for (Breakthrough b : breakthroughs) {
 			if (b instanceof Presentation) {
 				presentations.add((Presentation) b);
 			}
@@ -90,7 +90,7 @@ public abstract class Researcher {
 	public ArrayList<Chapter> getBookChapter() {
 		ArrayList<Chapter> chapters = new ArrayList<Chapter>();
 
-		for (ScorableBreakthrough b : breakthroughs) {
+		for (Breakthrough b : breakthroughs) {
 			if (b instanceof Chapter) {
 				chapters.add((Chapter) b);
 			}

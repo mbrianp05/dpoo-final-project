@@ -2,7 +2,7 @@ package schooling;
 
 import utils.Validation;
 
-public class Chapter implements ScorableBreakthrough {
+public class Chapter extends Breakthrough implements HasUniqueIndentifier {
     private String title;
     private String[] authors;
     private String[] editors;
@@ -127,4 +127,14 @@ public class Chapter implements ScorableBreakthrough {
     public int getVolume() {
         return volume;
     }
+
+	@Override
+	public String getId() {
+		return ISSN;
+	}
+
+	@Override
+	public String getName() {
+		return title;
+	}
 }

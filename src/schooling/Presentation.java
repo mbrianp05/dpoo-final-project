@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 import utils.Validation;
 
-public class Presentation implements ScorableBreakthrough {
+public class Presentation extends Breakthrough implements HasUniqueIndentifier {
     private String name;
     private String ISBN;
     private String location;
@@ -71,4 +71,9 @@ public class Presentation implements ScorableBreakthrough {
     public String getLocation() {
         return location;
     }
+
+	@Override
+	public String getId() {
+		return ISBN;
+	}
 }
