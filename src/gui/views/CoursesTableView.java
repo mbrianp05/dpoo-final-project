@@ -54,11 +54,12 @@ public class CoursesTableView extends JPanel {
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{100, 0, 0, 55, 0, 116, 0, 0, 0, 100, 0};
-		gridBagLayout.rowHeights = new int[]{70, 34, 60, 35, 90, 0, 0};
+		gridBagLayout.rowHeights = new int[]{70, 45, 60, 35, 90, 0, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		GridBagConstraints gbc_lblCursosDePostgrado = new GridBagConstraints();
+		gbc_lblCursosDePostgrado.fill = GridBagConstraints.BOTH;
 		gbc_lblCursosDePostgrado.anchor = GridBagConstraints.NORTHWEST;
 		gbc_lblCursosDePostgrado.insets = new Insets(0, 0, 5, 5);
 		gbc_lblCursosDePostgrado.gridwidth = 8;
