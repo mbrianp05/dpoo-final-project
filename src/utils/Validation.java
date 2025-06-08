@@ -32,7 +32,7 @@ public class Validation {
 	
 	public static boolean validISBN(String str) {
 		String cleanInput = str.replaceAll("-", "").replaceAll(" ", "");
-		boolean valid = unique("ISBN", cleanInput);
+		boolean valid = true;
 		
 		if (valid) {
 			if (cleanInput.length() == 10 || cleanInput.length() == 13) {
@@ -43,12 +43,11 @@ public class Validation {
 			}
 		}
 		
-		
 		return valid;
 	}
 
 	public static boolean validISSN(String str) {
-		boolean valid = unique("ISSN", str);
+		boolean valid = true;
 
 		if (valid) {
 			valid = str.trim().length() == 14;

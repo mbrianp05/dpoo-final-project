@@ -397,6 +397,8 @@ public class PresentationForm extends JPanel {
 	}
 	
 	private boolean checkValidity() {
+		resetErrorLabels();
+		
 		boolean validity = true;
 		
 		String name = textFieldName.getText();
@@ -422,6 +424,8 @@ public class PresentationForm extends JPanel {
 	}
 	
 	private void reset() {
+		resetErrorLabels();
+		
 		textFieldName.setText("");
 		textFieldISBN.setText("");
 		textFieldLocation.setText("");
@@ -429,7 +433,9 @@ public class PresentationForm extends JPanel {
 		comboBoxDays.setSelectedIndex(0);
 		comboBoxMonths.setSelectedIndex(0);
 		spinnerYear.setValue(Year.now().getValue());
-		
+	}
+	
+	private void resetErrorLabels() {
 		errorName.setVisible(false);
 		errorLocation.setVisible(false);
 		errorISBN.setVisible(false);

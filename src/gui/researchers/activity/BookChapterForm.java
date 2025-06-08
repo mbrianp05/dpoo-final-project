@@ -63,7 +63,7 @@ public class BookChapterForm extends JPanel {
 		setBackground(Color.WHITE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{100, 0, 0, 0, 30, 0, 100};
-		gridBagLayout.rowHeights = new int[]{50, 0, 35, 30, 0, 35, 30, 0, 30, 0, 35, 30, 0, 35, 30, 35, 30, 20, 0, 0};
+		gridBagLayout.rowHeights = new int[]{12, 0, 35, 30, 0, 35, 30, 0, 30, 0, 35, 30, 0, 35, 30, 35, 30, 20, 0, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
@@ -321,6 +321,10 @@ public class BookChapterForm extends JPanel {
 		editorsInput.reset();
 		spinnerVol.setValue(1);
 		
+		resetErrorLabels();
+	}
+	
+	private void resetErrorLabels() {
 		errorAuthors.setVisible(false);
 		errorBookName.setVisible(false);
 		errorChapter.setVisible(false);
@@ -331,6 +335,8 @@ public class BookChapterForm extends JPanel {
 	}
 	
 	private boolean checkValidity() {
+		resetErrorLabels();
+		
 		boolean isValid = true;
 		
 		String bookName = textFieldBookName.getText();
@@ -389,11 +395,15 @@ public class BookChapterForm extends JPanel {
 			String ISSN = textFieldISSN.getText();
 			int vol = (Integer)spinnerVol.getValue();
 			
-			researcher.addBookChapter(chapter, authors, editors, editorial, ISSN, bookName, vol);
-			reset();
-			
-			if (listener != null) {
-				listener.actionPerformed();
+			try {
+				researcher.addBookChapter(chapter, authors, editors, editorial, ISSN, bookName, vol);
+				reset();
+				
+				if (listener != null) {
+					listener.actionPerformed();
+				}
+			} catch (IllegalArgumentException exception) {
+				errorISSN.setVisible(true);
 			}
 		}
 	}
