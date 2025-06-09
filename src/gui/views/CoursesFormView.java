@@ -368,7 +368,7 @@ public class CoursesFormView extends JPanel {
 										line.getMasteryPlan().addCourse(name, descrip, instructor, creds);
 
 										if(listener != null)
-											listener.added(name, descrip, instructor, creds);
+											listener.added(name, instructor);
 
 										sendFeedback();
 										resetForm();

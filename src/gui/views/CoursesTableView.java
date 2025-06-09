@@ -2,6 +2,7 @@ package gui.views;
 
 import gui.component.TitleLabel;
 import gui.event.OnAddedCourse;
+import gui.event.OnRemovedCourse;
 import gui.model.CoursesTableModel;
 import gui.reasearchline.EditPostgradeCourse;
 
@@ -44,7 +45,7 @@ public class CoursesTableView extends JPanel {
 	private JLabel lblInstructor;
 	private JSpinner filterCreds;
 
-	private EditPostgradeCourse select;;
+	private EditPostgradeCourse select;
 
 	private Faculty faculty;
 	private JLabel lblLblinstruct;
@@ -154,14 +155,23 @@ public class CoursesTableView extends JPanel {
 						int row = table.getSelectedRow();
 						String courseName = String.valueOf((String)table.getModel().getValueAt(row, 0));
 						PostgraduateCourse course = faculty.findCourseByName(courseName);
+						
+						System.out.println(course.getName());
 
-						if(select == null && !select.isVisible()) {
+						if(select == null || !select.isVisible()) {
 							try {
 								select = new EditPostgradeCourse(course);
 								select.listenTo(new OnAddedCourse() {								
 									@Override
-									public void added(String name, String descrip, Profesor instruct, int credits) {
+									public void added(String name, Profesor instruct) {
 										updateTable();
+									}
+								});
+								select.listenTo(new OnRemovedCourse() {
+									
+									@Override
+									public void removed(String name) {
+										
 									}
 								});
 							} catch (Exception e) {
