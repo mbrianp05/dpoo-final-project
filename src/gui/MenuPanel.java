@@ -1,5 +1,6 @@
 package gui;
 
+import gui.event.OnCloseApp;
 import gui.report.views.BestResearchersJDialog;
 import gui.views.CoursesFormView;
 import gui.views.CoursesTableView;
@@ -17,6 +18,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JDialog;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -28,6 +30,8 @@ import utils.Mock;
 import gui.views.ResearchersActivityTableView;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.border.Border;
 
 public class MenuPanel extends JPanel {
 	private static final long serialVersionUID = 3762125698246597691L;
@@ -58,7 +62,10 @@ public class MenuPanel extends JPanel {
 	private CoursesTableView coursesTableView;
 	private ResearchersActivityTableView researchersActivityTableView;
 	private JMenuItem researchActivityMenu;
+	private JButton btnCerrar;
 
+	private OnCloseApp listener;
+	
 	public MenuPanel() {
 		this.faculty = Faculty.newInstance();
 
@@ -67,18 +74,26 @@ public class MenuPanel extends JPanel {
 
 		setBackground(Color.WHITE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{1092, 0};
+		gridBagLayout.columnWidths = new int[]{1092, 1092, 5, 0};
 		gridBagLayout.rowHeights = new int[]{74, 421, 0};
-		gridBagLayout.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+		gridBagLayout.columnWeights = new double[]{1.0, 1.0, 0.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		GridBagConstraints gbc_menuBar = new GridBagConstraints();
 		gbc_menuBar.fill = GridBagConstraints.BOTH;
-		gbc_menuBar.insets = new Insets(0, 0, 5, 0);
+		gbc_menuBar.insets = new Insets(0, 0, 5, 5);
 		gbc_menuBar.gridx = 0;
 		gbc_menuBar.gridy = 0;
 		add(getMenuBar(), gbc_menuBar);
+		GridBagConstraints gbc_btnCerrar = new GridBagConstraints();
+		gbc_btnCerrar.anchor = GridBagConstraints.EAST;
+		gbc_btnCerrar.insets = new Insets(0, 0, 5, 5);
+		gbc_btnCerrar.gridx = 1;
+		gbc_btnCerrar.gridy = 0;
+		add(getBtnCerrar(), gbc_btnCerrar);
 		GridBagConstraints gbc_contentPanel = new GridBagConstraints();
+		gbc_contentPanel.insets = new Insets(0, 0, 0, 5);
+		gbc_contentPanel.gridwidth = 2;
 		gbc_contentPanel.fill = GridBagConstraints.BOTH;
 		gbc_contentPanel.gridx = 0;
 		gbc_contentPanel.gridy = 1;
@@ -349,5 +364,26 @@ public class MenuPanel extends JPanel {
 			});
 		}
 		return researchActivityMenu;
+	}
+	
+	public void listenTo(OnCloseApp listener) {
+		this.listener = listener;
+	}
+	
+	private JButton getBtnCerrar() {
+		if (btnCerrar == null) {
+			btnCerrar = new JButton("Cerrar");
+			btnCerrar.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					if (listener != null) listener.actionPerformed();
+				}
+			});
+			btnCerrar.setFont(new Font("Segoe UI", Font.PLAIN, 20));
+			btnCerrar.setBackground(Color.WHITE);
+			
+			Border emptyBorder = BorderFactory.createEmptyBorder();
+			btnCerrar.setBorder(emptyBorder);
+		}
+		return btnCerrar;
 	}
 }
