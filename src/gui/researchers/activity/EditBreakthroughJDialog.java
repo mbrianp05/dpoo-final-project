@@ -46,6 +46,8 @@ public class EditBreakthroughJDialog extends JDialog {
 	
 	public void listenTo(OnResearchActivityActionTriggered listener) {
 		if (bookChapterForm != null) bookChapterForm.listenTo(listener);
+		if (presentationForm != null) presentationForm.listenTo(listener);
+		if (paperForm != null) paperForm.listenTo(listener);
 	}
 	
 	private BookChapterForm getBookChapterForm() {
@@ -57,14 +59,14 @@ public class EditBreakthroughJDialog extends JDialog {
 	
 	private PaperForm getPaperForm() {
 		if (paperForm == null) {
-			paperForm = new PaperForm(researcher);
+			paperForm = new PaperForm(researcher, (Paper)breakthrough);
 		}
 		return paperForm;
 	}
 	
 	private PresentationForm getPresentationForm() {
 		if (presentationForm == null) {
-			presentationForm = new PresentationForm(researcher);
+			presentationForm = new PresentationForm(researcher, (Presentation)breakthrough);
 		}
 		return presentationForm;
 	}

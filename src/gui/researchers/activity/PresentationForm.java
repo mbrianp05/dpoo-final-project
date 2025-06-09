@@ -27,6 +27,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import schooling.Presentation;
 import schooling.Researcher;
 import utils.DateHelper;
 import utils.Month;
@@ -36,6 +37,7 @@ public class PresentationForm extends JPanel {
 	private static final long serialVersionUID = 1218122467482657932L;
 	
 	private Researcher researcher;
+	private Presentation breakthrough;
 	private OnResearchActivityActionTriggered listener;
 	
 	private JLabel lblNombre;
@@ -57,7 +59,12 @@ public class PresentationForm extends JPanel {
 	private ErrorLabel errorLocation;
 	
 	public PresentationForm(Researcher researcher) {
+		this(researcher, null);
+	}
+	
+	public PresentationForm(Researcher researcher, Presentation breakthrough) {
 		this.researcher = researcher;
+		this.breakthrough = breakthrough;
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{100, 0, 100, 100, 0};
@@ -326,7 +333,7 @@ public class PresentationForm extends JPanel {
 	}
 	private JButton getBtnAgregar() {
 		if (btnAgregar == null) {
-			btnAgregar = new JButton("Agregar");
+			btnAgregar = new JButton(breakthrough == null ? "Agregar" : "Editar");
 			btnAgregar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					submit();
@@ -411,16 +418,32 @@ public class PresentationForm extends JPanel {
 		return validity;
 	}
 	
+	private void initForm() {
+		textFieldName.setText(breakthrough.getName());
+		textFieldISBN.setText(breakthrough.getISBN());
+		textFieldLocation.setText(breakthrough.getLocation());
+		
+		LocalDate date = breakthrough.getDate();
+		
+		comboBoxDays.setSelectedItem(String.valueOf(date.getDayOfMonth()));
+		comboBoxMonths.setSelectedItem(String.valueOf(date.getMonthValue()));
+		spinnerYear.setValue(date.getYear());
+	}
+	
 	private void reset() {
 		resetErrorLabels();
 		
-		textFieldName.setText("");
-		textFieldISBN.setText("");
-		textFieldLocation.setText("");
-		
-		comboBoxDays.setSelectedIndex(0);
-		comboBoxMonths.setSelectedIndex(0);
-		spinnerYear.setValue(Year.now().getValue());
+		if (breakthrough == null) {
+			textFieldName.setText("");
+			textFieldISBN.setText("");
+			textFieldLocation.setText("");
+			
+			comboBoxDays.setSelectedIndex(0);
+			comboBoxMonths.setSelectedIndex(0);
+			spinnerYear.setValue(Year.now().getValue());
+		} else {
+			initForm();
+		}
 	}
 	
 	private void resetErrorLabels() {
@@ -438,7 +461,7 @@ public class PresentationForm extends JPanel {
 	}
 	
 	private void sendFeedback() {
-		JOptionPane.showMessageDialog(null, "¡Se ha registrado el capítulo correctamente!", "Mensaje", JOptionPane.PLAIN_MESSAGE);
+		JOptionPane.showMessageDialog(null, "¡Se ha registrado la ponencia correctamente!", "Mensaje", JOptionPane.PLAIN_MESSAGE);
 	}
 	
 	private void submit() {
@@ -449,16 +472,25 @@ public class PresentationForm extends JPanel {
 			
 			LocalDate date = getDate();
 			
-			try {
-				researcher.addPresentation(name, date, ISBN, location);
+			if (breakthrough == null) {
+				try {
+					researcher.addPresentation(name, date, ISBN, location);
+				} catch (IllegalArgumentException exception) {
+					errorISBN.setVisible(true);
+				}
+			} else {
+				Validation.removeValue("ISBN", ISBN);
 				
-				if (listener != null) listener.actionPerformed();
-				
-				reset();
-				sendFeedback();
-			} catch (IllegalArgumentException exception) {
-				errorISBN.setVisible(true);
+				breakthrough.setName(name);
+				breakthrough.setISBN(ISBN);
+				breakthrough.setLocation(location);
+				breakthrough.setDate(date);
 			}
+			
+			if (listener != null) listener.actionPerformed();
+			
+			reset();
+			sendFeedback();
 		}
 	}
 	private ErrorLabel getErrorName() {
