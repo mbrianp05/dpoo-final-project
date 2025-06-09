@@ -7,15 +7,18 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
 import java.awt.Color;
 
 import javax.swing.JLayeredPane;
 
+import utils.Constants;
 import auth.Authentication;
 
 import java.awt.BorderLayout;
+import java.awt.Font;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
@@ -46,6 +49,8 @@ public class MainScreen extends JFrame {
 	}
 
 	public MainScreen() {
+		setDefaults();
+		
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setTitle("Gestión de datos de la facultad");
 
@@ -66,6 +71,18 @@ public class MainScreen extends JFrame {
 		contentPane.setLayout(gbl_contentPane);
 		
 		resolveView();
+	}
+	
+	private void setDefaults() {
+		UIManager.put("OptionPane.messageFont", Constants.getLabelFont());
+		UIManager.put("OptionPane.buttonFont", Constants.getLabelFont());
+		UIManager.put("OptionPane.titleFont", Constants.getLabelFont().deriveFont(Font.BOLD));
+		UIManager.put("Label.font", Constants.getLabelFont());
+		UIManager.put("ComboBox.background", Color.WHITE);
+		UIManager.put("Button.background", Color.WHITE);
+		UIManager.put("OptionPane.buttonFont", Constants.getLabelFont());
+		UIManager.put("Button.focus", new Color(20, 20, 20, 0));
+		UIManager.put("TextField.font", Constants.getLabelFont());
 	}
 	
 	private void resolveView() {
