@@ -306,6 +306,19 @@ public class Faculty {
 		return courses;
 	}
 
+	public PostgraduateCourse findCourseByName (String name) {
+		PostgraduateCourse course = null;
+		
+		for (MasteryPlan m: getMasteryPlans()) {
+			for(PostgraduateCourse p: m.getCourses()) {
+				if(name.equalsIgnoreCase(p.getName())) {
+					course = p;
+				}
+			}
+		}
+		return course;
+	}
+	
 	// Cambia de materia de investigacion a un investigador
 	public void moveToOtherMatter(int ID, String newMatterName) {
 		ResearchMatter newMatter = findResearchMatter(newMatterName);
