@@ -58,7 +58,7 @@ public class EditResearcherJDialog extends JDialog {
 
 		setResizable(false);
 		setTitle("Editar datos de investigador");
-		setBounds(100, 100, 897, 835);
+		setBounds(100, 100, 970, 835);
 		
 		getContentPane().setLayout(new BorderLayout());
 		

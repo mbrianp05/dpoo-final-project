@@ -1,7 +1,10 @@
 package gui.views;
 
 import gui.component.TitleLabel;
+import gui.event.OnAddedCourse;
+import gui.event.OnRemovedCourse;
 import gui.model.CoursesTableModel;
+import gui.reasearchline.EditPostgradeCourse;
 
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -23,7 +26,12 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import schooling.Faculty;
+import schooling.PostgraduateCourse;
+import schooling.Profesor;
 import utils.Constants;
+
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class CoursesTableView extends JPanel {
 	private static final long serialVersionUID = 7564447082179207965L;
@@ -36,7 +44,9 @@ public class CoursesTableView extends JPanel {
 	private JTextField filterByName;
 	private JLabel lblInstructor;
 	private JSpinner filterCreds;
-	
+
+	private EditPostgradeCourse select;
+
 	private Faculty faculty;
 	private JLabel lblLblinstruct;
 	private JTextField filterByInstruct;
@@ -46,7 +56,7 @@ public class CoursesTableView extends JPanel {
 	 */
 	public CoursesTableView() {
 		this.faculty = Faculty.newInstance();
-		
+
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{100, 0, 30, 0, 0, 30, 0, 0, 30, 0, 0, 100, 0};
 		gridBagLayout.rowHeights = new int[]{70, 45, 60, 35, 90, 0, 0};
@@ -116,7 +126,7 @@ public class CoursesTableView extends JPanel {
 
 		coursesTableModel = new CoursesTableModel(this.faculty);
 		table.setModel(coursesTableModel);
-		
+
 	}
 
 	private TitleLabel getLblCursosDePostgrado() {
@@ -137,6 +147,41 @@ public class CoursesTableView extends JPanel {
 	private JTable getTable() {
 		if (table == null) {
 			table = new JTable();
+			table.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent event) {
+
+					if (event.getClickCount() > 1 && table.getSelectedRow() >= 0) {
+						int row = table.getSelectedRow();
+						String courseName = String.valueOf((String)table.getModel().getValueAt(row, 0));
+						PostgraduateCourse course = faculty.findCourseByName(courseName);
+						
+						System.out.println(course.getName());
+
+						if(select == null || !select.isVisible()) {
+							try {
+								select = new EditPostgradeCourse(course);
+								select.listenTo(new OnAddedCourse() {								
+									@Override
+									public void added(String name, Profesor instruct) {
+										updateTable();
+									}
+								});
+								select.listenTo(new OnRemovedCourse() {
+									
+									@Override
+									public void removed(String name) {
+										
+									}
+								});
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
+					}
+
+				}
+			});
 			table.setFont(Constants.getLabelFont());
 			table.setRowHeight(24);
 			table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -184,7 +229,7 @@ public class CoursesTableView extends JPanel {
 		}
 		return lblInstructor;
 	}
-	
+
 	public void updateTable() {
 		((CoursesTableModel)table.getModel()).fill();
 	}
