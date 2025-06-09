@@ -384,7 +384,7 @@ public class CoursesFormView extends JPanel {
 								errorInstruct.setText("Seleccione un instructor");
 							}
 						} else {
-							errorName.setText("Ingrrese un nombre para el curso");
+							errorName.setText("Ingrese un nombre para el curso");
 						}
 					} else {
 						errorMast.setText("Seleccione una maestría vinculada al curso");

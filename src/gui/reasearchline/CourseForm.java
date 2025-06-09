@@ -4,19 +4,35 @@ import gui.event.OnCoursesFormActionTriggered;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+
 import java.awt.Font;
+
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.JButton;
+
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.util.ArrayList;
+
 import javax.swing.BoxLayout;
+
+import schooling.Degree;
+import schooling.Faculty;
+import schooling.Profesor;
+import utils.Validation;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.Color;
 
 public class CourseForm extends JPanel {
 	public CourseForm() {
+		setBackground(Color.WHITE);
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		add(getPanel());
 	}
@@ -30,13 +46,60 @@ public class CourseForm extends JPanel {
 	private JLabel lblCredits;
 	private JSpinner spinner;
 	private JLabel lblDescripcin;
-	private JTextField textField;
+	private JTextField txtDescr;
 	private JButton btnSave;
 	private JPanel panel;
-	
+
+	private int[] profIDs;
+
+	private Faculty faculty;
+	private JLabel errorLbl;
+
 	public void listenTo(OnCoursesFormActionTriggered listener) {
 		this.listener = listener;
 	}
+
+	private void fetchInstructors() {
+		ArrayList<Profesor> profs = faculty.getProfesorsWithDegree(Degree.Doctor);
+		String[] names = new String[profs.size()];
+
+		for(int i = 0; i < profs.size(); i++){
+			names[i] = profs.get(i).getName();
+			profIDs[i] = profs.get(i).getID();
+		}
+
+		cmboxInstruct.setModel(new DefaultComboBoxModel<>(names));
+	}
+
+	private void updateCourse() {
+		if(Validation.notEmpty(txtName.getText())) {
+			if(Validation.notEmpty(txtDescr.getText())) {
+				if((int)spinner.getValue() == 0) {
+
+					int index = cmboxInstruct.getSelectedIndex();
+
+					String name = txtName.getText();
+					String description = txtDescr.getText();			
+					Profesor instructor = (Profesor) faculty.findResearcher(profIDs[index]);
+					int creds = (int)spinner.getValue();
+					
+					if(listener != null) {
+						listener.actionPerformed(new CourseFormData(name, description, instructor, creds));
+					}
+				}
+				else {
+					errorLbl.setText("Los créditos otorgados por el curso no pueden ser 0");
+				}
+			}
+			else {
+				errorLbl.setText("Ingrese una descripción para el curso");
+			}
+		}
+		else {
+			errorLbl.setText("Se requiere un nombre para el curso");
+		}
+	}
+
 	private JLabel getLblName() {
 		if (lblName == null) {
 			lblName = new JLabel("Nombre");
@@ -59,10 +122,12 @@ public class CourseForm extends JPanel {
 		}
 		return lblInstructor;
 	}
-	private JComboBox getCmboxInstruct() {
+	private JComboBox<String> getCmboxInstruct() {
 		if (cmboxInstruct == null) {
-			cmboxInstruct = new JComboBox();
+			cmboxInstruct = new JComboBox<String>();
 			cmboxInstruct.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 15));
+
+			fetchInstructors();
 		}
 		return cmboxInstruct;
 	}
@@ -88,16 +153,21 @@ public class CourseForm extends JPanel {
 		}
 		return lblDescripcin;
 	}
-	private JTextField getTextField() {
-		if (textField == null) {
-			textField = new JTextField();
-			textField.setColumns(10);
+	private JTextField getTxtDescr() {
+		if (txtDescr == null) {
+			txtDescr = new JTextField();
+			txtDescr.setColumns(10);
 		}
-		return textField;
+		return txtDescr;
 	}
 	private JButton getBtnSave() {
 		if (btnSave == null) {
 			btnSave = new JButton("Guardar");
+			btnSave.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					updateCourse();
+				}
+			});
 			btnSave.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		}
 		return btnSave;
@@ -105,6 +175,7 @@ public class CourseForm extends JPanel {
 	private JPanel getPanel() {
 		if (panel == null) {
 			panel = new JPanel();
+			panel.setBackground(Color.WHITE);
 			GridBagLayout gbl_panel = new GridBagLayout();
 			gbl_panel.columnWidths = new int[]{70, 97, 311, 70, 0};
 			gbl_panel.rowHeights = new int[]{40, 21, 27, 21, 27, 16, 22, 16, 90, 45, 40, 0};
@@ -160,20 +231,33 @@ public class CourseForm extends JPanel {
 			gbc_lblDescripcin.gridx = 1;
 			gbc_lblDescripcin.gridy = 7;
 			panel.add(getLblDescripcin(), gbc_lblDescripcin);
-			GridBagConstraints gbc_textField = new GridBagConstraints();
-			gbc_textField.fill = GridBagConstraints.BOTH;
-			gbc_textField.insets = new Insets(0, 0, 5, 5);
-			gbc_textField.gridwidth = 2;
-			gbc_textField.gridx = 1;
-			gbc_textField.gridy = 8;
-			panel.add(getTextField(), gbc_textField);
+			GridBagConstraints gbc_txtDescr = new GridBagConstraints();
+			gbc_txtDescr.fill = GridBagConstraints.BOTH;
+			gbc_txtDescr.insets = new Insets(0, 0, 5, 5);
+			gbc_txtDescr.gridwidth = 2;
+			gbc_txtDescr.gridx = 1;
+			gbc_txtDescr.gridy = 8;
+			panel.add(getTxtDescr(), gbc_txtDescr);
 			GridBagConstraints gbc_btnSave = new GridBagConstraints();
 			gbc_btnSave.insets = new Insets(0, 0, 0, 5);
 			gbc_btnSave.fill = GridBagConstraints.VERTICAL;
 			gbc_btnSave.gridx = 1;
 			gbc_btnSave.gridy = 10;
 			panel.add(getBtnSave(), gbc_btnSave);
+			GridBagConstraints gbc_errorLbl = new GridBagConstraints();
+			gbc_errorLbl.anchor = GridBagConstraints.WEST;
+			gbc_errorLbl.insets = new Insets(0, 0, 0, 5);
+			gbc_errorLbl.gridx = 2;
+			gbc_errorLbl.gridy = 10;
+			panel.add(getErrorLbl(), gbc_errorLbl);
 		}
 		return panel;
+	}
+	private JLabel getErrorLbl() {
+		if (errorLbl == null) {
+			errorLbl = new JLabel("");
+			errorLbl.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 15));
+		}
+		return errorLbl;
 	}
 }
