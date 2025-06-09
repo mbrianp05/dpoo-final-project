@@ -62,6 +62,7 @@ public class ResearchersActivityTableModel extends DefaultTableModel {
 	}
 
 	public void fill() {
+		init();
 		emptyTable();
 
 		for (Breakthrough b: breakthroughs) {

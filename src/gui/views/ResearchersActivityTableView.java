@@ -138,7 +138,7 @@ public class ResearchersActivityTableView extends JPanel {
 	}
 
 	public void updateTable() {
-		((ResearchersActivityTableModel)table.getModel()).fill();
+		getTableModel().fill();
 	}
 	
 	private TitleLabel getLblDatosDeInvestigadores() {
