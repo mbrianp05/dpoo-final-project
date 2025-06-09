@@ -13,12 +13,14 @@ public class CoursesTableModel extends DefaultTableModel {
 	private Faculty faculty;
 	private String filterName;
 	private int filterMinCreds;
+	private String filterInstr;
 
 	public CoursesTableModel(Faculty faculty) {
 
 		this.faculty = faculty;
-		
+
 		filterName = "";
+		filterInstr = "";
 		filterMinCreds = 0;
 
 		String[] columns = {"Nombre", "Instructor", "Créditos", "Descripción"};
@@ -30,17 +32,22 @@ public class CoursesTableModel extends DefaultTableModel {
 	public boolean isCellEditable(int row, int col) {
 		return false;
 	}
-	
+
 	public void setFilterName(String name) {
 		filterName = name;
 		fill();
 	}
-	
+
 	public void setFilterCreds(int creds) {
 		filterMinCreds = creds;
 		fill();
 	}
-	
+
+	public void setFilterByInstruc(String name){
+		filterInstr = name;
+		fill();
+	}
+
 	public ArrayList<PostgraduateCourse> filterByName(ArrayList<PostgraduateCourse> courses) {
 		ArrayList<PostgraduateCourse> filtered = new ArrayList<>();
 
@@ -56,10 +63,10 @@ public class CoursesTableModel extends DefaultTableModel {
 
 		return filtered;
 	}
-	
+
 	public ArrayList<PostgraduateCourse> filterByCreds(ArrayList<PostgraduateCourse> courses) {
 		ArrayList<PostgraduateCourse> filtered = new ArrayList<>();
-		
+
 		if(filterMinCreds <= 0) {
 			filtered = courses;
 		} else {
@@ -72,14 +79,31 @@ public class CoursesTableModel extends DefaultTableModel {
 		return filtered;
 	}
 
+	public ArrayList<PostgraduateCourse> filterProfesors(ArrayList<PostgraduateCourse> courses) {
+		ArrayList<PostgraduateCourse> filtered = new ArrayList<>();
+		
+		if(filterInstr.isEmpty())
+			filtered = courses;
+		else {
+			for(PostgraduateCourse p: courses) {
+				if(p.getInstructor().getName().startsWith(filterInstr)) {
+					filtered.add(p);
+				}
+			}
+		}
+		
+		return filtered;
+	}
+
 	public void fill() {
 		emptyTable();
-		
+
 		ArrayList<PostgraduateCourse> filter = faculty.getCoursesList();
-		
+
 		filter = filterByName(filter);
 		filter = filterByCreds(filter);
-		
+		filter = filterProfesors(filter);
+
 		for(PostgraduateCourse c: filter){
 			addNew(c);
 		}
