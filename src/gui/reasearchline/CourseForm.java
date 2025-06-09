@@ -188,6 +188,7 @@ public class CourseForm extends JPanel {
 			gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 			panel.setLayout(gbl_panel);
 			GridBagConstraints gbc_lblName = new GridBagConstraints();
+			gbc_lblName.gridwidth = 2;
 			gbc_lblName.anchor = GridBagConstraints.NORTHWEST;
 			gbc_lblName.insets = new Insets(0, 0, 5, 5);
 			gbc_lblName.gridx = 1;
@@ -202,6 +203,7 @@ public class CourseForm extends JPanel {
 			gbc_txtName.gridy = 2;
 			panel.add(getTxtName(), gbc_txtName);
 			GridBagConstraints gbc_lblInstructor = new GridBagConstraints();
+			gbc_lblInstructor.gridwidth = 2;
 			gbc_lblInstructor.anchor = GridBagConstraints.NORTHWEST;
 			gbc_lblInstructor.insets = new Insets(0, 0, 5, 5);
 			gbc_lblInstructor.gridx = 1;
@@ -230,6 +232,7 @@ public class CourseForm extends JPanel {
 			gbc_spinner.gridy = 7;
 			panel.add(getSpinner(), gbc_spinner);
 			GridBagConstraints gbc_lblDescripcin = new GridBagConstraints();
+			gbc_lblDescripcin.gridwidth = 2;
 			gbc_lblDescripcin.anchor = GridBagConstraints.WEST;
 			gbc_lblDescripcin.fill = GridBagConstraints.VERTICAL;
 			gbc_lblDescripcin.insets = new Insets(0, 0, 5, 5);
