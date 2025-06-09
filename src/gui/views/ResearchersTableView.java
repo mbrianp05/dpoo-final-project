@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import java.awt.Font;
 
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JCheckBox;
 import javax.swing.JSpinner;
@@ -43,6 +44,7 @@ import utils.Constants;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import gui.component.TitleLabel;
 
 public class ResearchersTableView extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -59,7 +61,7 @@ public class ResearchersTableView extends JPanel {
 	private JTable table;
 
 	private Faculty faculty;
-	private JLabel lblDatosDeInvestigadores;
+	private TitleLabel lblDatosDeInvestigadores;
 	
 	private EditResearcherJDialog current;
 	private JLabel lblTema;
@@ -147,6 +149,10 @@ public class ResearchersTableView extends JPanel {
 		researcherModel = new ResearcherTableModel();
 		table.setModel(researcherModel);
 		table.getColumnModel().getColumn(0).setMaxWidth(30);
+	}
+	
+	private void sendFeedback() {
+		JOptionPane.showMessageDialog(null, "¡Se ha actualizado el investigador correctamente!", "Mensaje", JOptionPane.PLAIN_MESSAGE);
 	}
 
 	private JCheckBox getFilterStudents() {
@@ -277,6 +283,7 @@ public class ResearchersTableView extends JPanel {
 									@Override
 									public void newResearcher(int researcherID) {
 										updateTable();
+										sendFeedback();
 									}
 								});
 								current.listenTo(new OnRemovedResearcher() {
@@ -312,9 +319,10 @@ public class ResearchersTableView extends JPanel {
 	public void updateTable() {
 		((ResearcherTableModel)table.getModel()).fill();
 	}
-	private JLabel getLblDatosDeInvestigadores() {
+	private TitleLabel getLblDatosDeInvestigadores() {
 		if (lblDatosDeInvestigadores == null) {
-			lblDatosDeInvestigadores = new JLabel("Datos de investigadores registrados");
+			lblDatosDeInvestigadores = new TitleLabel();
+			lblDatosDeInvestigadores.setText("Datos de investigadores registrados");
 			lblDatosDeInvestigadores.setFont(Constants.getTitleFont());
 		}
 		return lblDatosDeInvestigadores;

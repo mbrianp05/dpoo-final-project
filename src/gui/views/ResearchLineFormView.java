@@ -41,6 +41,7 @@ import gui.researchers.ProfesorFormData;
 import java.awt.CardLayout;
 
 import gui.component.MultipleInput;
+import gui.component.TitleLabel;
 
 public class ResearchLineFormView extends JPanel {
 	private static final long serialVersionUID = 3971105665570208468L;
@@ -49,7 +50,7 @@ public class ResearchLineFormView extends JPanel {
 
 	private ProfesorFormData chief;
 
-	private JLabel lblAgregarLneaDe;
+	private TitleLabel lblAgregarLneaDe;
 	private JLabel lblNombre;
 	private JTextField textFieldName;
 	private JLabel lblMaestra;
@@ -195,9 +196,10 @@ public class ResearchLineFormView extends JPanel {
 		this.listener = listener;
 	}
 
-	private JLabel getLblAgregarLneaDe() {
+	private TitleLabel getLblAgregarLneaDe() {
 		if (lblAgregarLneaDe == null) {
-			lblAgregarLneaDe = new JLabel("Agregar l\u00EDnea de investigaci\u00F3n");
+			lblAgregarLneaDe = new TitleLabel();
+			lblAgregarLneaDe.setText("Agregar l\u00EDnea de investigaci\u00F3n");
 			lblAgregarLneaDe.setFont(Constants.getTitleFont());
 		}
 		return lblAgregarLneaDe;
