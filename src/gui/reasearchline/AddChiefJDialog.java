@@ -23,6 +23,9 @@ public class AddChiefJDialog extends JDialog {
 	private OnSetChief listener;
 	private ProfesorFormData data;
 	
+	/**
+	 * @wbp.parser.constructor
+	 */
 	public AddChiefJDialog(String[] matters, OnSetChief listener) {
 		this(matters, listener, null);
 	}
@@ -33,8 +36,6 @@ public class AddChiefJDialog extends JDialog {
 		this.matters = matters;
 		this.listener = listener;
 		this.data = data;
-
-		setAlwaysOnTop(true);
 		setTitle("Insertar datos el jefe de la l\u00EDnea");
 		setModal(true);
 		setBackground(Color.WHITE);

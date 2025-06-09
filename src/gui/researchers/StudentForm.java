@@ -50,18 +50,13 @@ public class StudentForm extends JPanel {
 	private ErrorLabel errorLabel;
 
 	public StudentForm() {
-		this.faculty = Faculty.newInstance();
-		editing = false;
-
-		setBackground(Color.WHITE);
-		setLayout(new BorderLayout(0, 0));
-		add(getPanel());
+		this(null);
 	}
 
-	public StudentForm(Faculty faculty, Student student) {
-		this.faculty = faculty;
+	public StudentForm(Student student) {
+		this.faculty = Faculty.newInstance();
 		this.student = student;
-		this.editing = true;
+		this.editing = student != null;
 
 		setBackground(Color.WHITE);
 		setLayout(new BorderLayout(0, 0));
@@ -120,14 +115,12 @@ public class StudentForm extends JPanel {
 
 	private void update() {
 		if (Validation.notEmpty(textFieldName.getText())) {
-			Student r = (Student)faculty.findResearcher(student.getID());
+			student.setName(textFieldName.getText());
 
-			r.setName(textFieldName.getText());
-
-			faculty.moveToOtherMatter(r.getID(), getMatter());
+			faculty.moveToOtherMatter(student.getID(), getMatter());
 
 			if (listener != null) {
-				listener.newResearcher(r.getID());
+				listener.newResearcher(student.getID());
 			}
 		} else {
 			errorLabel.setText("El nombre es requerido");
