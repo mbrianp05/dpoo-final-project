@@ -14,6 +14,8 @@ import java.awt.Color;
 
 import javax.swing.JLayeredPane;
 
+import com.formdev.flatlaf.FlatLightLaf;
+
 import utils.Constants;
 import auth.Authentication;
 
@@ -49,7 +51,8 @@ public class MainScreen extends JFrame {
 	}
 
 	public MainScreen() {
-		setDefaults();
+		FlatLightLaf.setup();
+//		setDefaults();
 		
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setTitle("Gestión de datos de la facultad");
