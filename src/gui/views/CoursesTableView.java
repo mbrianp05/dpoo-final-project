@@ -56,9 +56,9 @@ public class CoursesTableView extends JPanel {
 		setBackground(Color.WHITE);
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{100, 0, 0, 0, 55, 0, 0, 116, 0, 0, 0, 100, 0};
+		gridBagLayout.columnWidths = new int[]{100, 0, 30, 0, 0, 30, 0, 0, 30, 0, 0, 100, 0};
 		gridBagLayout.rowHeights = new int[]{70, 45, 60, 35, 90, 0, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		GridBagConstraints gbc_lblCursosDePostgrado = new GridBagConstraints();
@@ -96,7 +96,6 @@ public class CoursesTableView extends JPanel {
 		add(getLblNombre(), gbc_lblNombre);
 		GridBagConstraints gbc_filterByName = new GridBagConstraints();
 		gbc_filterByName.fill = GridBagConstraints.BOTH;
-		gbc_filterByName.anchor = GridBagConstraints.SOUTHWEST;
 		gbc_filterByName.insets = new Insets(0, 0, 5, 5);
 		gbc_filterByName.gridx = 7;
 		gbc_filterByName.gridy = 3;
@@ -188,7 +187,7 @@ public class CoursesTableView extends JPanel {
 	}
 	private JLabel getLblInstructor() {
 		if (lblInstructor == null) {
-			lblInstructor = new JLabel("Cred. Nec.");
+			lblInstructor = new JLabel("Cr\u00E9ditos");
 			lblInstructor.setFont(Constants.getLabelFont());
 		}
 		return lblInstructor;
