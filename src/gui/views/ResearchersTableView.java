@@ -112,7 +112,7 @@ public class ResearchersTableView extends JPanel {
 		add(getLblTema(), gbc_lblTema);
 		GridBagConstraints gbc_textFieldMatterFilter = new GridBagConstraints();
 		gbc_textFieldMatterFilter.insets = new Insets(0, 0, 5, 5);
-		gbc_textFieldMatterFilter.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textFieldMatterFilter.fill = GridBagConstraints.BOTH;
 		gbc_textFieldMatterFilter.gridx = 9;
 		gbc_textFieldMatterFilter.gridy = 3;
 		add(getTextFieldMatterFilter(), gbc_textFieldMatterFilter);

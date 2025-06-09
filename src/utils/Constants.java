@@ -5,7 +5,7 @@ import java.awt.Font;
 
 public class Constants {
 	public static Color getInsertionBtnColor() {
-		return new Color(95, 180, 156);
+		return null;
 	}
 
 	public static Font getLabelFont() {

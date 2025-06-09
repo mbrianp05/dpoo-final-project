@@ -28,7 +28,7 @@ public class Icons {
 	
 	public static ImageIcon getRegisterIcon() {
 		ImageIcon image = new ImageIcon("D:\\Proyectos\\Java\\dpoo-final-project\\icons\\register.png");
-		Image scaledImage = image.getImage().getScaledInstance(35, 35, Image.SCALE_SMOOTH);
+		Image scaledImage = image.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH);
 		
 		return new ImageIcon(scaledImage);
 	}

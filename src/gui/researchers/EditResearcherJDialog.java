@@ -59,6 +59,8 @@ public class EditResearcherJDialog extends JDialog {
 	public EditResearcherJDialog(Researcher researcher) {
 		this.faculty = Faculty.newInstance();
 		this.researcher = researcher;
+		
+		setLocationRelativeTo(null);
 		setModal(true);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(EditResearcherJDialog.class.getResource("/com/sun/javafx/scene/web/skin/FontBackgroundColor_16x16_JFX.png")));
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);

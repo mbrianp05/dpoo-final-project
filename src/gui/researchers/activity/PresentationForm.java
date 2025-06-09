@@ -333,8 +333,6 @@ public class PresentationForm extends JPanel {
 					submit();
 				}
 			});
-			btnAgregar.setForeground(Color.WHITE);
-			btnAgregar.setBackground(Constants.getInsertionBtnColor());
 			btnAgregar.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		}
 		return btnAgregar;

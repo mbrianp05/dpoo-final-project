@@ -28,6 +28,7 @@ public class AddChiefJDialog extends JDialog {
 
 	public AddChiefJDialog(String[] matters, OnSetChief listener, ProfesorFormData data) {
 		setResizable(false);
+		setLocationRelativeTo(null);
 		this.matters = matters;
 		this.listener = listener;
 		this.data = data;

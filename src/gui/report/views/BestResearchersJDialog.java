@@ -27,6 +27,7 @@ public class BestResearchersJDialog extends JDialog {
 	private final JPanel contentPanel = new JPanel();
 
 	public BestResearchersJDialog() {
+		setLocationRelativeTo(null);
 		setModal(true);
 		setModalExclusionType(ModalExclusionType.APPLICATION_EXCLUDE);
 		setResizable(false);

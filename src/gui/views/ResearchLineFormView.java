@@ -369,7 +369,6 @@ public class ResearchLineFormView extends JPanel {
 	private JLabel getLblChiefWarning() {
 		if (lblChiefWarning == null) {
 			lblChiefWarning = new JLabel("*A\u00F1ade al menos un tema de investigaci\u00F3n");
-			lblChiefWarning.setForeground(Color.DARK_GRAY);
 			lblChiefWarning.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		}
 		return lblChiefWarning;
