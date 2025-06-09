@@ -55,6 +55,8 @@ public class EditPostgradeCourse extends JDialog {
 	private JPanel panel;
 	
 	public EditPostgradeCourse(PostgraduateCourse course) {
+		setTitle("Editar datos del curso");
+		setResizable(false);
 		this.faculty = Faculty.newInstance();
 		this.course = course;
 		
@@ -73,7 +75,7 @@ public class EditPostgradeCourse extends JDialog {
 		GridBagLayout gbl_contentPanel = new GridBagLayout();
 		gbl_contentPanel.columnWidths = new int[]{945, 0};
 		gbl_contentPanel.rowHeights = new int[]{0, 0, 0, 0};
-		gbl_contentPanel.columnWeights = new double[]{0.0, Double.MIN_VALUE};
+		gbl_contentPanel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
 		gbl_contentPanel.rowWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
 		contentPanel.setLayout(gbl_contentPanel);
 		GridBagConstraints gbc_operationPanel = new GridBagConstraints();
@@ -129,6 +131,7 @@ public class EditPostgradeCourse extends JDialog {
 	private JRadioButton getRdbtnNewRadioButton() {
 		if (rdbtnNewRadioButton == null) {
 			rdbtnNewRadioButton = new JRadioButton("Editar curso");
+			rdbtnNewRadioButton.setSelected(true);
 			rdbtnNewRadioButton.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 15));
 		}
 		return rdbtnNewRadioButton;
@@ -143,6 +146,7 @@ public class EditPostgradeCourse extends JDialog {
 	private CourseForm getCourseForm() {
 		if (courseForm == null) {
 			courseForm = new CourseForm();
+			courseForm.setLayout(new BoxLayout(courseForm, BoxLayout.X_AXIS));
 		}
 		return courseForm;
 	}
@@ -189,10 +193,11 @@ public class EditPostgradeCourse extends JDialog {
 			GridBagLayout gbl_panelWrapper = new GridBagLayout();
 			gbl_panelWrapper.columnWidths = new int[]{911, 0};
 			gbl_panelWrapper.rowHeights = new int[]{622, 0};
-			gbl_panelWrapper.columnWeights = new double[]{0.0, Double.MIN_VALUE};
+			gbl_panelWrapper.columnWeights = new double[]{1.0, Double.MIN_VALUE};
 			gbl_panelWrapper.rowWeights = new double[]{0.0, Double.MIN_VALUE};
 			panelWrapper.setLayout(gbl_panelWrapper);
 			GridBagConstraints gbc_courseForm = new GridBagConstraints();
+			gbc_courseForm.fill = GridBagConstraints.BOTH;
 			gbc_courseForm.gridx = 0;
 			gbc_courseForm.gridy = 0;
 			panelWrapper.add(getCourseForm(), gbc_courseForm);

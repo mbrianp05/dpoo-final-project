@@ -150,14 +150,11 @@ public class CoursesTableView extends JPanel {
 			table.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent event) {
-
 					if (event.getClickCount() > 1 && table.getSelectedRow() >= 0) {
 						int row = table.getSelectedRow();
 						String courseName = String.valueOf((String)table.getModel().getValueAt(row, 0));
 						PostgraduateCourse course = faculty.findCourseByName(courseName);
 						
-						System.out.println(course.getName());
-
 						if(select == null || !select.isVisible()) {
 							try {
 								select = new EditPostgradeCourse(course);
@@ -168,7 +165,6 @@ public class CoursesTableView extends JPanel {
 									}
 								});
 								select.listenTo(new OnRemovedCourse() {
-									
 									@Override
 									public void removed(String name) {
 										
