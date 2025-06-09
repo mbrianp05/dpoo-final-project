@@ -49,8 +49,8 @@ public class CoursesFormView extends JPanel {
 	private JPanel courseForm;
 	private JTextArea txtDescrip;
 	private JButton btnAgregar;
-	private JLabel errorMast;
 	private JLabel errorName;
+	private JLabel errorMast;
 	private JLabel errorInstruct;
 	private JLabel errorCreds;
 	private JLabel errorDesc;
@@ -215,13 +215,13 @@ public class CoursesFormView extends JPanel {
 			gbc_txtCourseName.gridx = 0;
 			gbc_txtCourseName.gridy = 1;
 			courseForm.add(getTxtCourseName(), gbc_txtCourseName);
-			GridBagConstraints gbc_errorMast = new GridBagConstraints();
-			gbc_errorMast.gridwidth = 2;
-			gbc_errorMast.fill = GridBagConstraints.BOTH;
-			gbc_errorMast.insets = new Insets(0, 0, 5, 0);
-			gbc_errorMast.gridx = 1;
-			gbc_errorMast.gridy = 2;
-			courseForm.add(getErrorMast(), gbc_errorMast);
+			GridBagConstraints gbc_errorName = new GridBagConstraints();
+			gbc_errorName.gridwidth = 3;
+			gbc_errorName.fill = GridBagConstraints.BOTH;
+			gbc_errorName.insets = new Insets(0, 0, 5, 0);
+			gbc_errorName.gridx = 0;
+			gbc_errorName.gridy = 2;
+			courseForm.add(getErrorName(), gbc_errorName);
 			GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
 			gbc_lblNewLabel.gridwidth = 3;
 			gbc_lblNewLabel.anchor = GridBagConstraints.NORTH;
@@ -238,13 +238,13 @@ public class CoursesFormView extends JPanel {
 			gbc_masteryPlans.gridx = 0;
 			gbc_masteryPlans.gridy = 4;
 			courseForm.add(getMasteryPlans(), gbc_masteryPlans);
-			GridBagConstraints gbc_errorName = new GridBagConstraints();
-			gbc_errorName.gridwidth = 2;
-			gbc_errorName.fill = GridBagConstraints.BOTH;
-			gbc_errorName.insets = new Insets(0, 0, 5, 0);
-			gbc_errorName.gridx = 1;
-			gbc_errorName.gridy = 5;
-			courseForm.add(getErrorName(), gbc_errorName);
+			GridBagConstraints gbc_errorMast = new GridBagConstraints();
+			gbc_errorMast.gridwidth = 3;
+			gbc_errorMast.fill = GridBagConstraints.BOTH;
+			gbc_errorMast.insets = new Insets(0, 0, 5, 0);
+			gbc_errorMast.gridx = 0;
+			gbc_errorMast.gridy = 5;
+			courseForm.add(getErrorMast(), gbc_errorMast);
 			GridBagConstraints gbc_lblInstructor = new GridBagConstraints();
 			gbc_lblInstructor.gridwidth = 3;
 			gbc_lblInstructor.anchor = GridBagConstraints.NORTH;
@@ -340,6 +340,7 @@ public class CoursesFormView extends JPanel {
 					resetErrors();
 					if(masteryPlans != null){
 						errorMast.setText("");
+						
 						if(Validation.notEmpty(txtCourseName.getText())) {
 							errorName.setText("");
 
@@ -398,14 +399,6 @@ public class CoursesFormView extends JPanel {
 		JOptionPane.showMessageDialog(null, "¡Se ha registrado el curso correctamente!", "Mensaje", JOptionPane.PLAIN_MESSAGE);
 	}
 	
-	private JLabel getErrorMast() {
-		if (errorMast == null) {
-			errorMast = new JLabel("");
-			errorMast.setForeground(Color.RED);
-			errorMast.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		}
-		return errorMast;
-	}
 	private JLabel getErrorName() {
 		if (errorName == null) {
 			errorName = new JLabel("");
@@ -413,6 +406,14 @@ public class CoursesFormView extends JPanel {
 			errorName.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		}
 		return errorName;
+	}
+	private JLabel getErrorMast() {
+		if (errorMast == null) {
+			errorMast = new JLabel("");
+			errorMast.setForeground(Color.RED);
+			errorMast.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		}
+		return errorMast;
 	}
 	private JLabel getErrorInstruct() {
 		if (errorInstruct == null) {
@@ -464,8 +465,8 @@ public class CoursesFormView extends JPanel {
 	}
 
 	public void resetErrors() {
-		errorMast.setText("");
 		errorName.setText("");
+		errorMast.setText("");
 		errorInstruct.setText("");
 		errorCreds.setText("");
 		errorDesc.setText("");
