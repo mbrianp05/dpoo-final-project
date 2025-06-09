@@ -5,7 +5,6 @@ import gui.event.OnSetChief;
 import gui.researchers.ProfesorForm;
 import gui.researchers.ProfesorFormData;
 
-import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;

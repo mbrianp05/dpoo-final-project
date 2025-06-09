@@ -158,7 +158,6 @@ public class EditResearcherJDialog extends JDialog {
 	private JPanel getPanel() {
 		if (panel == null) {
 			panel = new JPanel();
-			panel.setBackground(new Color(220, 220, 220));
 			panel.add(getBtnRemove());
 			panel.add(getBtnA());
 		}
