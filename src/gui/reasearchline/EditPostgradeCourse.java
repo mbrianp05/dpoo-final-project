@@ -30,6 +30,8 @@ import javax.swing.ButtonGroup;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.FlowLayout;
+import javax.swing.BoxLayout;
 
 public class EditPostgradeCourse extends JDialog {
 
@@ -46,7 +48,6 @@ public class EditPostgradeCourse extends JDialog {
 	private JRadioButton rdbtnMatrcula;
 	
 	private CourseForm courseForm;
-	private CourseForm courseForm_1;
 	private JButton btnEliminar;
 	private JButton btnCerrar;
 	private JPanel panelWrapper;
@@ -65,15 +66,33 @@ public class EditPostgradeCourse extends JDialog {
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 
 		
-		setBounds(100, 100, 975, 835);
+		setBounds(100, 100, 975, 746);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
-		contentPanel.setLayout(null);
-		getOperationPanel().setLayout(null);
-		contentPanel.add(getOperationPanel());
-		contentPanel.add(getPanelWrapper());
-		contentPanel.add(getPanel());
+		GridBagLayout gbl_contentPanel = new GridBagLayout();
+		gbl_contentPanel.columnWidths = new int[]{945, 0};
+		gbl_contentPanel.rowHeights = new int[]{0, 0, 0, 0};
+		gbl_contentPanel.columnWeights = new double[]{0.0, Double.MIN_VALUE};
+		gbl_contentPanel.rowWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
+		contentPanel.setLayout(gbl_contentPanel);
+		GridBagConstraints gbc_operationPanel = new GridBagConstraints();
+		gbc_operationPanel.fill = GridBagConstraints.BOTH;
+		gbc_operationPanel.insets = new Insets(0, 0, 5, 0);
+		gbc_operationPanel.gridx = 0;
+		gbc_operationPanel.gridy = 0;
+		contentPanel.add(getOperationPanel(), gbc_operationPanel);
+		GridBagConstraints gbc_panelWrapper = new GridBagConstraints();
+		gbc_panelWrapper.fill = GridBagConstraints.BOTH;
+		gbc_panelWrapper.insets = new Insets(0, 0, 5, 0);
+		gbc_panelWrapper.gridx = 0;
+		gbc_panelWrapper.gridy = 1;
+		contentPanel.add(getPanelWrapper(), gbc_panelWrapper);
+		GridBagConstraints gbc_panel = new GridBagConstraints();
+		gbc_panel.fill = GridBagConstraints.BOTH;
+		gbc_panel.gridx = 0;
+		gbc_panel.gridy = 2;
+		contentPanel.add(getPanel(), gbc_panel);
 		
 		getButtonGroup();
 	}
@@ -101,7 +120,7 @@ public class EditPostgradeCourse extends JDialog {
 	private JPanel getOperationPanel() {
 		if (operationPanel == null) {
 			operationPanel = new JPanel();
-			operationPanel.setBounds(5, 5, 940, 70);
+			operationPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 			operationPanel.add(getRdbtnNewRadioButton());
 			operationPanel.add(getRdbtnMatrcula());
 		}
@@ -111,7 +130,6 @@ public class EditPostgradeCourse extends JDialog {
 		if (rdbtnNewRadioButton == null) {
 			rdbtnNewRadioButton = new JRadioButton("Editar curso");
 			rdbtnNewRadioButton.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 15));
-			rdbtnNewRadioButton.setBounds(287, 24, 127, 25);
 		}
 		return rdbtnNewRadioButton;
 	}
@@ -119,15 +137,14 @@ public class EditPostgradeCourse extends JDialog {
 		if (rdbtnMatrcula == null) {
 			rdbtnMatrcula = new JRadioButton("Matr\u00EDcula");
 			rdbtnMatrcula.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 15));
-			rdbtnMatrcula.setBounds(469, 24, 127, 25);
 		}
 		return rdbtnMatrcula;
 	}
-	private CourseForm getCourseForm_1() {
-		if (courseForm_1 == null) {
-			courseForm_1 = new CourseForm();
+	private CourseForm getCourseForm() {
+		if (courseForm == null) {
+			courseForm = new CourseForm();
 		}
-		return courseForm_1;
+		return courseForm;
 	}
 	private JButton getBtnEliminar() {
 		if (btnEliminar == null) {
@@ -169,17 +186,16 @@ public class EditPostgradeCourse extends JDialog {
 	private JPanel getPanelWrapper() {
 		if (panelWrapper == null) {
 			panelWrapper = new JPanel();
-			panelWrapper.setBounds(0, 88, 935, 560);
 			GridBagLayout gbl_panelWrapper = new GridBagLayout();
 			gbl_panelWrapper.columnWidths = new int[]{911, 0};
 			gbl_panelWrapper.rowHeights = new int[]{622, 0};
 			gbl_panelWrapper.columnWeights = new double[]{0.0, Double.MIN_VALUE};
 			gbl_panelWrapper.rowWeights = new double[]{0.0, Double.MIN_VALUE};
 			panelWrapper.setLayout(gbl_panelWrapper);
-			GridBagConstraints gbc_courseForm_1 = new GridBagConstraints();
-			gbc_courseForm_1.gridx = 0;
-			gbc_courseForm_1.gridy = 0;
-			panelWrapper.add(getCourseForm_1(), gbc_courseForm_1);
+			GridBagConstraints gbc_courseForm = new GridBagConstraints();
+			gbc_courseForm.gridx = 0;
+			gbc_courseForm.gridy = 0;
+			panelWrapper.add(getCourseForm(), gbc_courseForm);
 		}
 		return panelWrapper;
 	}
@@ -197,25 +213,9 @@ public class EditPostgradeCourse extends JDialog {
 	private JPanel getPanel() {
 		if (panel == null) {
 			panel = new JPanel();
-			panel.setBounds(5, 730, 940, 45);
-			GridBagLayout gbl_panel = new GridBagLayout();
-			gbl_panel.columnWidths = new int[]{358, 79, 79, 0};
-			gbl_panel.rowHeights = new int[]{30, 0};
-			gbl_panel.columnWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
-			gbl_panel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
-			panel.setLayout(gbl_panel);
-			GridBagConstraints gbc_btnEliminar = new GridBagConstraints();
-			gbc_btnEliminar.anchor = GridBagConstraints.WEST;
-			gbc_btnEliminar.fill = GridBagConstraints.VERTICAL;
-			gbc_btnEliminar.insets = new Insets(0, 0, 0, 5);
-			gbc_btnEliminar.gridx = 1;
-			gbc_btnEliminar.gridy = 0;
-			panel.add(getBtnEliminar(), gbc_btnEliminar);
-			GridBagConstraints gbc_btnCerrar = new GridBagConstraints();
-			gbc_btnCerrar.fill = GridBagConstraints.BOTH;
-			gbc_btnCerrar.gridx = 2;
-			gbc_btnCerrar.gridy = 0;
-			panel.add(getBtnCerrar(), gbc_btnCerrar);
+			panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+			panel.add(getBtnEliminar());
+			panel.add(getBtnCerrar());
 		}
 		return panel;
 	}
