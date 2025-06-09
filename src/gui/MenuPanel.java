@@ -1,5 +1,6 @@
 package gui;
 
+import gui.report.views.BestResearchersJDialog;
 import gui.views.CoursesFormView;
 import gui.views.CoursesTableView;
 import gui.views.ResearchLineFormView;
@@ -16,6 +17,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JDialog;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -24,6 +26,7 @@ import javax.swing.JPanel;
 import schooling.Faculty;
 import utils.Mock;
 import gui.views.ResearchersActivityTableView;
+
 import javax.swing.ImageIcon;
 
 public class MenuPanel extends JPanel {
@@ -163,6 +166,18 @@ public class MenuPanel extends JPanel {
 	private JMenuItem getBestResearchersMenu() {
 		if (bestResearchersMenu == null) {
 			bestResearchersMenu = new JMenuItem("Mejores investigadores");
+			bestResearchersMenu.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					try {
+						BestResearchersJDialog dialog = new BestResearchersJDialog();
+						
+						dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+						dialog.setVisible(true);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			});
 			bestResearchersMenu.setBackground(Color.WHITE);
 		}
 		return bestResearchersMenu;
