@@ -400,4 +400,44 @@ public class Faculty {
 		
 		return r;
 	}
+
+	public boolean removeResearcher(int id) {
+		Researcher researcher = findResearcher(id);
+		boolean canBeRemoved = true;
+		
+		if (researcher == null) throw new IllegalArgumentException("Researcher with ID " + id + " does not exist");
+		
+		if (researcher instanceof Profesor) {
+			canBeRemoved = !isChief((Profesor)researcher) && !isInstructor((Profesor)researcher);
+		}
+		
+		if (canBeRemoved) {
+			ResearchMatter matter = findMatterOf(id);
+			
+			matter.getResearchers().remove(researcher);
+			researchers.remove(researcher);
+		}
+		
+		return canBeRemoved;
+	}
+
+	private boolean isInstructor(Profesor profesor) {
+		boolean result = false;
+		int i = 0;
+		
+		while (!result && i < researchLines.size()) {
+			ArrayList<PostgraduateCourse> courses = researchLines.get(i).getMasteryPlan().getCourses();
+			int k = 0;
+			
+			while (!result && k < courses.size()) {
+				result = courses.get(k).getInstructor() == profesor;
+				
+				k++;
+			}
+			
+			i++;
+		}
+		
+		return result;
+	}
 }

@@ -4,7 +4,6 @@ import gui.component.ErrorLabel;
 import gui.component.MultipleInput;
 import gui.event.OnResearchActivityActionTriggered;
 
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -272,7 +271,6 @@ public class BookChapterForm extends JPanel {
 			});
 			btnNewButton.setBackground(Constants.getInsertionBtnColor());
 			btnNewButton.setFont(new Font("Segoe UI", Font.BOLD, 15));
-			btnNewButton.setForeground(Color.WHITE);
 		}
 		return btnNewButton;
 	}

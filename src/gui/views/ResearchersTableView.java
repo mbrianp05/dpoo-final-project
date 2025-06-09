@@ -2,7 +2,6 @@ package gui.views;
 
 import gui.component.TitleLabel;
 import gui.event.OnAddedResearcher;
-import gui.event.OnRemovedResearcher;
 import gui.event.OnResearchActivityActionTriggered;
 import gui.model.ResearcherTableModel;
 import gui.researchers.EditResearcherJDialog;
@@ -36,6 +35,9 @@ import javax.swing.event.ChangeListener;
 import schooling.Faculty;
 import schooling.Researcher;
 import utils.Constants;
+import utils.Icons;
+
+import javax.swing.JButton;
 
 public class ResearchersTableView extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -57,13 +59,14 @@ public class ResearchersTableView extends JPanel {
 	private EditResearcherJDialog current;
 	private JLabel lblTema;
 	private JTextField textFieldMatterFilter;
+	private JButton btnRemove;
 
 	public ResearchersTableView() {
 		this.faculty = Faculty.newInstance();
 
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{100, 70, 100, 100, 30, 0, 0, 30, 0, 0, 30, 70, 70, 100, 0};
-		gridBagLayout.rowHeights = new int[]{70, 45, 60, 35, 207, 0, 0};
+		gridBagLayout.columnWidths = new int[]{100, 70, 100, 100, 45, 0, 0, 30, 0, 0, 45, 70, 70, 100, 0};
+		gridBagLayout.rowHeights = new int[]{70, 45, 60, 40, 207, 0, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
@@ -116,6 +119,12 @@ public class ResearchersTableView extends JPanel {
 		gbc_textFieldMatterFilter.gridx = 9;
 		gbc_textFieldMatterFilter.gridy = 3;
 		add(getTextFieldMatterFilter(), gbc_textFieldMatterFilter);
+		GridBagConstraints gbc_btnRemove = new GridBagConstraints();
+		gbc_btnRemove.fill = GridBagConstraints.BOTH;
+		gbc_btnRemove.insets = new Insets(0, 0, 5, 5);
+		gbc_btnRemove.gridx = 10;
+		gbc_btnRemove.gridy = 3;
+		add(getBtnRemove(), gbc_btnRemove);
 		GridBagConstraints gbc_lblPuntuacin = new GridBagConstraints();
 		gbc_lblPuntuacin.fill = GridBagConstraints.BOTH;
 		gbc_lblPuntuacin.insets = new Insets(0, 0, 5, 5);
@@ -259,6 +268,10 @@ public class ResearchersTableView extends JPanel {
 			table.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent event) {
+					if (event.getClickCount() == 1 && table.getSelectedRow() >= 0) {
+						btnRemove.setVisible(true);
+					}
+					
 					if (event.getClickCount() > 1 && table.getSelectedRow() >= 0) {
 						int row = table.getSelectedRow();
 						int ID = Integer.valueOf((String)table.getModel().getValueAt(row, 0));
@@ -272,12 +285,6 @@ public class ResearchersTableView extends JPanel {
 									public void newResearcher(int researcherID) {
 										updateTable();
 										sendFeedback();
-									}
-								});
-								current.listenTo(new OnRemovedResearcher() {
-									@Override
-									public void removed(int ID) {
-										updateTable();
 									}
 								});
 								current.listenTo(new OnResearchActivityActionTriggered() {
@@ -338,5 +345,33 @@ public class ResearchersTableView extends JPanel {
 			textFieldMatterFilter.setColumns(10);
 		}
 		return textFieldMatterFilter;
+	}
+	
+	private void removeResearcher() {
+		int input = JOptionPane.showConfirmDialog(null, "¿Estás seguro de eliminar al investigador?");
+		
+		if (input == JOptionPane.OK_OPTION) {
+			int id = Integer.valueOf((String)table.getModel().getValueAt(table.getSelectedRow(), 0));
+			
+			if (!faculty.removeResearcher(id)) {
+				JOptionPane.showMessageDialog(null, "El investigador que desea eliminar imparte cursos o es jefe de alguna línea. Busca el sutituto e inténtalo después", "Error al eliminar el investigador", JOptionPane.ERROR_MESSAGE);
+			} else {
+				updateTable();
+			}
+		}
+	}
+	
+	private JButton getBtnRemove() {
+		if (btnRemove == null) {
+			btnRemove = new JButton(Icons.getRemoveIcon());
+			btnRemove.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+			btnRemove.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					removeResearcher();
+				}
+			});
+			btnRemove.setVisible(false);
+		}
+		return btnRemove;
 	}
 }

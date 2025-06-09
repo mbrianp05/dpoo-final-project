@@ -2,7 +2,6 @@ package gui.researchers;
 
 import gui.event.OnAddedResearcher;
 import gui.event.OnProfesorFormActionTriggered;
-import gui.event.OnRemovedResearcher;
 import gui.event.OnResearchActivityActionTriggered;
 
 import java.awt.BorderLayout;
@@ -17,9 +16,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.ButtonGroup;
-import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.border.EmptyBorder;
@@ -39,12 +36,6 @@ public class EditResearcherJDialog extends JDialog {
 
 	private Researcher researcher;
 	private Faculty faculty;
-
-	private JPanel panel;
-	private JButton btnRemove;
-	private JButton btnA;
-	
-	private OnRemovedResearcher listener;
 	
 	private JPanel radiosWrapper;
 	private JRadioButton rbtnResearcherActivity;
@@ -77,16 +68,10 @@ public class EditResearcherJDialog extends JDialog {
 		
 		GridBagLayout gbl_contentPanel = new GridBagLayout();
 		gbl_contentPanel.columnWidths = new int[]{40, 0, 40, 0};
-		gbl_contentPanel.rowHeights = new int[]{30, 20, 0, 0, 0};
+		gbl_contentPanel.rowHeights = new int[]{30, 20, 0, 0};
 		gbl_contentPanel.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
-		gbl_contentPanel.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
+		gbl_contentPanel.rowWeights = new double[]{0.0, 0.0, 1.0, Double.MIN_VALUE};
 		contentPanel.setLayout(gbl_contentPanel);
-		GridBagConstraints gbc_panel = new GridBagConstraints();
-		gbc_panel.gridwidth = 3;
-		gbc_panel.anchor = GridBagConstraints.NORTH;
-		gbc_panel.fill = GridBagConstraints.HORIZONTAL;
-		gbc_panel.gridx = 0;
-		gbc_panel.gridy = 3;
 
 		GridBagConstraints gbc_radiosWrapper = new GridBagConstraints();
 		gbc_radiosWrapper.gridheight = 2;
@@ -97,13 +82,10 @@ public class EditResearcherJDialog extends JDialog {
 		contentPanel.add(getRadiosWrapper(), gbc_radiosWrapper);
 		GridBagConstraints gbc_panelsWrapper = new GridBagConstraints();
 		gbc_panelsWrapper.gridwidth = 3;
-		gbc_panelsWrapper.insets = new Insets(0, 0, 5, 0);
 		gbc_panelsWrapper.fill = GridBagConstraints.BOTH;
 		gbc_panelsWrapper.gridx = 0;
 		gbc_panelsWrapper.gridy = 2;
 		contentPanel.add(getPanelsWrapper(), gbc_panelsWrapper);
-
-		contentPanel.add(getPanel(), gbc_panel);
 		getButtonGroup();
 	}
 
@@ -132,10 +114,6 @@ public class EditResearcherJDialog extends JDialog {
 		}
 	}
 	
-	public void listenTo(OnRemovedResearcher listener) {
-		this.listener = listener;
-	}
-
 	private String[] getMatters() {
 		String[] matters = ArrayLib.cast(faculty.getResearchMattersNames());
 		
@@ -155,53 +133,6 @@ public class EditResearcherJDialog extends JDialog {
 		}
 		
 		return matters;
-	}
-	
-	private JPanel getPanel() {
-		if (panel == null) {
-			panel = new JPanel();
-			panel.add(getBtnRemove());
-			panel.add(getBtnA());
-		}
-		return panel;
-	}
-	private JButton getBtnRemove() {
-		if (btnRemove == null) {
-			btnRemove = new JButton("Eliminar");
-			btnRemove.setFont(new Font("Segoe UI", Font.PLAIN, 15));
-			btnRemove.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent arg0) {
-					setAlwaysOnTop(false);
-					int input = JOptionPane.showConfirmDialog(null, "Deseas eliminar a este investigador", "Eliminar", JOptionPane.WARNING_MESSAGE);
-
-					setAlwaysOnTop(true);
-					
-					if (input == JOptionPane.YES_OPTION) {
-						faculty.getResearchers().remove(researcher);
-
-						if (listener != null) {
-							listener.removed(researcher.getID());
-						}
-						
-						researcher = null;
-						setVisible(false);
-					}
-				}
-			});
-		}
-		return btnRemove;
-	}
-	private JButton getBtnA() {
-		if (btnA == null) {
-			btnA = new JButton("Cerrar");
-			btnA.setFont(new Font("Segoe UI", Font.PLAIN, 15));
-			btnA.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent arg0) {
-					setVisible(false);
-				}
-			});
-		}
-		return btnA;
 	}
 	private JPanel getRadiosWrapper() {
 		if (radiosWrapper == null) {
@@ -292,9 +223,9 @@ public class EditResearcherJDialog extends JDialog {
 			formPannelWrapper = new JPanel();
 			GridBagLayout gbl_formPannelWrapper = new GridBagLayout();
 			gbl_formPannelWrapper.columnWidths = new int[]{100, 0, 100, 0};
-			gbl_formPannelWrapper.rowHeights = new int[]{45, 0, 0, 0};
+			gbl_formPannelWrapper.rowHeights = new int[]{45, 0, 0};
 			gbl_formPannelWrapper.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
-			gbl_formPannelWrapper.rowWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
+			gbl_formPannelWrapper.rowWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
 			formPannelWrapper.setLayout(gbl_formPannelWrapper);
 			GridBagConstraints formGrid = new GridBagConstraints();
 			formGrid.insets = new Insets(0, 0, 5, 5);

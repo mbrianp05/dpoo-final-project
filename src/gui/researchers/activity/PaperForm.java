@@ -227,7 +227,6 @@ public class PaperForm extends JPanel {
 					submit();
 				}
 			});
-			btnRegistrar.setForeground(Color.WHITE);
 			btnRegistrar.setBackground(Constants.getInsertionBtnColor());
 			btnRegistrar.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		}
