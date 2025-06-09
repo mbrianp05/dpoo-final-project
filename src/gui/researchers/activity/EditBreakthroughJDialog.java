@@ -1,6 +1,9 @@
 package gui.researchers.activity;
 
+import gui.event.OnResearchActivityActionTriggered;
+
 import java.awt.BorderLayout;
+
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -17,8 +20,8 @@ public class EditBreakthroughJDialog extends JDialog {
 	private Researcher researcher;
 
 	private BookChapterForm bookChapterForm;
-	private PaperForm paperForm;
 	private PresentationForm presentationForm;
+	private PaperForm paperForm;
 
 	private final JPanel contentPanel = new JPanel();
 	
@@ -39,6 +42,10 @@ public class EditBreakthroughJDialog extends JDialog {
 		if (breakthrough instanceof Chapter) contentPanel.add(getBookChapterForm());
 		if (breakthrough instanceof Paper) contentPanel.add(getPaperForm());
 		if (breakthrough instanceof Presentation) contentPanel.add(getPresentationForm());
+	}
+	
+	public void listenTo(OnResearchActivityActionTriggered listener) {
+		if (bookChapterForm != null) bookChapterForm.listenTo(listener);
 	}
 	
 	private BookChapterForm getBookChapterForm() {

@@ -27,6 +27,7 @@ import utils.Validation;
 public class BookChapterForm extends JPanel {
 	private Researcher researcher;
 	private Chapter breakthrough;
+
 	private OnResearchActivityActionTriggered listener;
 
 	private static final long serialVersionUID = 8688995113018695988L;
@@ -403,28 +404,30 @@ public class BookChapterForm extends JPanel {
 			String ISSN = textFieldISSN.getText();
 			int vol = (Integer)spinnerVol.getValue();
 
-			if (breakthrough == null) {
-				try {
+			
+			try {
+				if (breakthrough == null) {
 					researcher.addBookChapter(chapter, authors, editors, editorial, ISSN, bookName, vol);
-
-					if (listener != null) {
-						listener.actionPerformed();
-					}
-
-					reset();
-				} catch (IllegalArgumentException exception) {
-					errorISSN.setVisible(true);
+				} else {
+					Validation.removeValue("ISSN", breakthrough.getISSN());
+					
+					breakthrough.setTitle(chapter);
+					breakthrough.setBookName(bookName);
+					breakthrough.setEditorial(editorial);
+					breakthrough.setAuthors(authors);
+					breakthrough.setEditors(editors);
+					breakthrough.setISSN(ISSN);
+					breakthrough.setVolume(vol);
 				}
-			} else {
-				breakthrough.setTitle(chapter);
-				breakthrough.setBookName(bookName);
-				breakthrough.setEditorial(editorial);
-				breakthrough.setAuthors(authors);
-				breakthrough.setEditors(editors);
-				breakthrough.setISSN(ISSN);
-				breakthrough.setVolume(vol);
+
+				sendFeedback();
+
+				if (listener != null) {
+					listener.actionPerformed();
+				}
+			} catch (IllegalArgumentException exception) {
+				errorISSN.setVisible(true);
 			}
-			sendFeedback();
 		}
 	}
 	private ErrorLabel getErrorBookName() {

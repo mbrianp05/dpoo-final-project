@@ -278,5 +278,7 @@ public class MultipleInput extends JPanel {
 			
 			this.values.add(item);
 		}
+		
+		updateCombobox();
 	}
 }

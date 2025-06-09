@@ -1,6 +1,7 @@
 package gui.views;
 
 import gui.component.TitleLabel;
+import gui.event.OnResearchActivityActionTriggered;
 import gui.model.ResearchersActivityTableModel;
 import gui.researchers.activity.EditBreakthroughJDialog;
 
@@ -101,6 +102,13 @@ public class ResearchersActivityTableView extends JPanel {
 			Researcher researcher = faculty.findResearcherByBreakthrough(selectedBreakthrough);
 			
 			EditBreakthroughJDialog dialog = new EditBreakthroughJDialog(researcher, selectedBreakthrough);
+			dialog.listenTo(new OnResearchActivityActionTriggered() {
+				@Override
+				public void actionPerformed() {
+					updateTable();
+				}
+			});
+			
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {

@@ -8,15 +8,15 @@ import java.util.regex.Pattern;
 
 public class Validation {
 	private static HashMap<String, ArrayList<String>> storage = new HashMap<>();
-	
+
 	public static boolean notEmpty(String str) {
 		return !str.trim().isEmpty();
 	}
-	
+
 	public static boolean unique(String entity, String value) {
 		ArrayList<String> values = storage.get(entity);
 		boolean exists = false;
-		
+
 		if (values == null) {
 			storage.put(entity, new ArrayList<String>(Arrays.asList(value)));
 		} else {
@@ -26,22 +26,22 @@ public class Validation {
 				exists = true;
 			}
 		}
-		
+
 		return !exists;
 	}
-	
+
 	public static boolean validISBN(String str) {
 		String cleanInput = str.replaceAll("-", "").replaceAll(" ", "").replaceAll("_", "");
 		boolean valid = false;
-		
-		
+
+
 		if (cleanInput.length() == 10 || cleanInput.length() == 13) {
 			Pattern pattern = Pattern.compile("^(?:ISBN(?:-1[03])?:? )?(?=[0-9X]{10}$|(?=(?:[0-9]+[- ]){3})[- 0-9X]{13}$|97[89][0-9]{10}$|(?=(?:[0-9]+[- ]){4})[- 0-9]{17}$)(?:97[89][- ]?)?[0-9]{1,5}[- ]?[0-9]+[- ]?[0-9]+[- ]?[0-9X]$");
 			Matcher matcher = pattern.matcher(str.trim());
-				
+
 			valid = matcher.find();
 		}
-		
+
 		return valid;
 	}
 
@@ -50,15 +50,23 @@ public class Validation {
 
 		if (valid) {
 			valid = str.trim().length() == 14;
-			
+
 			if (valid) {
 				Pattern pattern = Pattern.compile("^ISSN [0-9]{4}-(([0-9]{4})|([0-9]{3}X))$");
 				Matcher matcher = pattern.matcher(str.trim());
-				
+
 				valid = matcher.find();
 			}
 		}
 
 		return valid;
+	}
+
+	public static void removeValue(String entity, String issn) {
+		ArrayList<String> values = storage.get(entity);
+		
+		if (values != null) {
+			values.remove(issn);
+		}
 	}
 }
