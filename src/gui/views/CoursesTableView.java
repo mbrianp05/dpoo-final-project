@@ -84,7 +84,7 @@ public class CoursesTableView extends JPanel {
 		add(getLblLblinstruct(), gbc_lblLblinstruct);
 		GridBagConstraints gbc_filterByInstruct = new GridBagConstraints();
 		gbc_filterByInstruct.insets = new Insets(0, 0, 5, 5);
-		gbc_filterByInstruct.fill = GridBagConstraints.HORIZONTAL;
+		gbc_filterByInstruct.fill = GridBagConstraints.BOTH;
 		gbc_filterByInstruct.gridx = 4;
 		gbc_filterByInstruct.gridy = 3;
 		add(getFilterByInstruct(), gbc_filterByInstruct);
