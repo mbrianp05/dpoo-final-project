@@ -28,7 +28,6 @@ public class AddChiefJDialog extends JDialog {
 	}
 
 	public AddChiefJDialog(String[] matters, OnSetChief listener, ProfesorFormData data) {
-		getContentPane().setBackground(Color.WHITE);
 		setResizable(false);
 		this.matters = matters;
 		this.listener = listener;
@@ -54,7 +53,6 @@ public class AddChiefJDialog extends JDialog {
 	private ProfesorForm getProfesorForm() {
 		if (profesorForm == null) {
 			profesorForm = new ProfesorForm(matters, data);
-			profesorForm.setBackground(Color.WHITE);
 			profesorForm.listenTo(new OnProfesorFormActionTriggered() {
 				@Override
 				public void actionPerformed(ProfesorFormData data) {
