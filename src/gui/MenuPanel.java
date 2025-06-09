@@ -26,6 +26,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
 import schooling.Faculty;
+import utils.Icons;
 import utils.Mock;
 import gui.views.ResearchersActivityTableView;
 
@@ -372,7 +373,7 @@ public class MenuPanel extends JPanel {
 	
 	private JButton getBtnCerrar() {
 		if (btnCerrar == null) {
-			btnCerrar = new JButton("Cerrar");
+			btnCerrar = new JButton(Icons.getCloseIcon());
 			btnCerrar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					if (listener != null) listener.actionPerformed();

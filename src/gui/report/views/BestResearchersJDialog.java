@@ -23,7 +23,9 @@ import schooling.Faculty;
 import schooling.Researcher;
 
 import java.awt.Font;
+
 import javax.swing.JButton;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -80,6 +82,7 @@ public class BestResearchersJDialog extends JDialog {
 		}
 		{
 			JButton btnNewButton = new JButton("Cerrar");
+			btnNewButton.setBorder(null);
 			btnNewButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					setVisible(false);

@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 
 import utils.ArrayLib;
 import utils.Constants;
+import utils.Icons;
 import utils.Validation;
 
 import java.awt.GridBagConstraints;
@@ -34,15 +35,15 @@ public class MultipleInput extends JPanel {
 	private ArrayList<String> values;
 	private OnDeletedInput removedListener;
 	private OnAddedInput newListener;
-	
+
 	public MultipleInput(String mainLabelText, String secondaryLabelText) {
 		this.mainLabelText = mainLabelText;
 		this.secondaryLabelText = secondaryLabelText;
 		values = new ArrayList<>();
-		
+
 		setBackground(Color.WHITE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{0, 100, 100, 0, 0, 0};
+		gridBagLayout.columnWidths = new int[]{0, 36, 36, 0, 35, 0};
 		gridBagLayout.rowHeights = new int[]{36, 35, 35, 36, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
@@ -62,7 +63,6 @@ public class MultipleInput extends JPanel {
 		add(getBtnEdit(), gbc_btnEdit);
 		GridBagConstraints gbc_btnRemove = new GridBagConstraints();
 		gbc_btnRemove.fill = GridBagConstraints.BOTH;
-		gbc_btnRemove.anchor = GridBagConstraints.WEST;
 		gbc_btnRemove.insets = new Insets(0, 0, 5, 5);
 		gbc_btnRemove.gridx = 2;
 		gbc_btnRemove.gridy = 0;
@@ -99,17 +99,17 @@ public class MultipleInput extends JPanel {
 		gbc_errorMessage.gridy = 3;
 		add(getErrorMessage(), gbc_errorMessage);
 	}
-	
+
 	public void listenTo(OnDeletedInput listener) {
 		this.removedListener = listener;
 	}
-	
+
 	public void listenTo(OnAddedInput listener) { 
 		this.newListener = listener;
 	}
-	
+
 	private static final long serialVersionUID = 7427373212103007553L;
-	
+
 	private JLabel lblNewLabel;
 	private JLabel label;
 	private JComboBox<String> comboBox;
@@ -118,11 +118,11 @@ public class MultipleInput extends JPanel {
 	private JButton btnEdit;
 	private JButton btnRemove;
 	private ErrorLabel errorMessage;
-	
+
 	public int amountOfItems() {
 		return values.size();
 	}
-	
+
 	private JLabel getLblNewLabel() {
 		if (lblNewLabel == null) {
 			lblNewLabel = new JLabel(mainLabelText);
@@ -130,7 +130,7 @@ public class MultipleInput extends JPanel {
 		}
 		return lblNewLabel;
 	}
-	
+
 	private JLabel getLabel() {
 		if (label == null) {
 			label = new JLabel(secondaryLabelText);
@@ -139,7 +139,7 @@ public class MultipleInput extends JPanel {
 		}
 		return label;
 	}
-	
+
 	private JComboBox<String> getComboBox() {
 		if (comboBox == null) {
 			comboBox = new JComboBox<>();
@@ -148,7 +148,7 @@ public class MultipleInput extends JPanel {
 		}
 		return comboBox;
 	}
-	
+
 	private JTextField getTextField() {
 		if (textField == null) {
 			textField = new JTextField();
@@ -158,24 +158,25 @@ public class MultipleInput extends JPanel {
 		}
 		return textField;
 	}
-	
+
 	private JButton getButton() {
 		if (button == null) {
-			button = new JButton("+");
+			button = new JButton(Icons.getRegisterIcon());
+			button.setBorder(null);
 			button.setBackground(Color.WHITE);
 			button.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					if (Validation.notEmpty(textField.getText())) {
 						String newValue = textField.getText();
-						
+
 						errorMessage.setVisible(false);
 						values.add(newValue);
 						textField.setText("");
-						
+
 						updateCombobox();
-						
+
 						comboBox.setSelectedIndex(comboBox.getModel().getSize() - 1);
-						
+
 						if (newListener != null) {
 							newListener.newItem(newValue);
 						}
@@ -188,10 +189,11 @@ public class MultipleInput extends JPanel {
 		}
 		return button;
 	}
-	
+
 	private JButton getBtnEdit() {
 		if (btnEdit == null) {
-			btnEdit = new JButton("Editar");
+			btnEdit = new JButton(Icons.getEditIcon());
+			btnEdit.setBorder(null);
 			btnEdit.setBackground(Color.WHITE);
 			btnEdit.setVisible(false);
 			btnEdit.addActionListener(new ActionListener() {
@@ -204,7 +206,7 @@ public class MultipleInput extends JPanel {
 
 							values.set(index, newInput);
 							updateCombobox();
-							
+
 							comboBox.setSelectedIndex(index);
 						} else {
 							JOptionPane.showMessageDialog(null, "El nuevo nombre no puede estar vacío", "Error", JOptionPane.ERROR_MESSAGE);
@@ -216,10 +218,11 @@ public class MultipleInput extends JPanel {
 		}
 		return btnEdit;
 	}
-	
+
 	private JButton getBtnRemove() {
 		if (btnRemove == null) {
-			btnRemove = new JButton("Eliminar");
+			btnRemove = new JButton(Icons.getRemoveIcon());
+			btnRemove.setBorder(null);
 			btnRemove.setVisible(false);
 			btnRemove.setBackground(Color.WHITE);
 			btnRemove.addActionListener(new ActionListener() {
@@ -229,13 +232,13 @@ public class MultipleInput extends JPanel {
 
 					if (input == JOptionPane.YES_OPTION) {
 						int index = comboBox.getSelectedIndex();
-						
+
 						values.remove(index);
 
 						if (index > 0) {
 							comboBox.setSelectedIndex(index - 1);
 						}
-						
+
 						updateCombobox();
 
 						if (removedListener != null) {
@@ -248,7 +251,7 @@ public class MultipleInput extends JPanel {
 		}
 		return btnRemove;
 	}
-	
+
 	private ErrorLabel getErrorMessage() {
 		if (errorMessage == null) {
 			errorMessage = new ErrorLabel();
@@ -257,7 +260,7 @@ public class MultipleInput extends JPanel {
 		}
 		return errorMessage;
 	}
-	
+
 	private void updateCombobox() {
 		comboBox.setModel(new DefaultComboBoxModel<>(getValues()));
 		boolean visibility = amountOfItems() > 0;
@@ -265,7 +268,7 @@ public class MultipleInput extends JPanel {
 		btnEdit.setVisible(visibility);
 		btnRemove.setVisible(visibility);
 	}
-	
+
 	public String[] getValues() {
 		return ArrayLib.cast(values);
 	}
@@ -276,7 +279,7 @@ public class MultipleInput extends JPanel {
 		errorMessage.setVisible(false);
 		updateCombobox();
 	}
-	
+
 	public ErrorLabel getErrorLbl() {
 		return errorMessage;
 	}
