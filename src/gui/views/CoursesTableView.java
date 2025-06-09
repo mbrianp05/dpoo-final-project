@@ -158,6 +158,7 @@ public class CoursesTableView extends JPanel {
 						if(select == null || !select.isVisible()) {
 							try {
 								select = new EditPostgradeCourse(course);
+								select.setVisible(true);
 								select.listenTo(new OnAddedCourse() {								
 									@Override
 									public void added(String name, Profesor instruct) {

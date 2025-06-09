@@ -32,6 +32,8 @@ import java.awt.Color;
 
 public class CourseForm extends JPanel {
 	public CourseForm() {
+		faculty = Faculty.newInstance();
+		
 		setBackground(Color.WHITE);
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		add(getPanel());
@@ -62,8 +64,11 @@ public class CourseForm extends JPanel {
 	private void fetchInstructors() {
 		ArrayList<Profesor> profs = faculty.getProfesorsWithDegree(Degree.Doctor);
 		String[] names = new String[profs.size()];
+		profIDs = new int[profs.size()];
 
 		for(int i = 0; i < profs.size(); i++){
+			System.out.println(profs.get(i).getName());
+			
 			names[i] = profs.get(i).getName();
 			profIDs[i] = profs.get(i).getID();
 		}
