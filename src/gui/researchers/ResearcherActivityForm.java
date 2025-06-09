@@ -1,21 +1,18 @@
 package gui.researchers;
 
-import javax.swing.JPanel;
+import gui.event.OnResearchActivityActionTriggered;
+import gui.researchers.activity.BookChapterForm;
+import gui.researchers.activity.PaperForm;
+import gui.researchers.activity.PresentationForm;
 
-import java.awt.Color;
+import java.awt.Font;
+import java.awt.GridBagLayout;
 
 import javax.swing.BoxLayout;
+import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 import schooling.Researcher;
-import gui.event.OnResearchActivityActionTriggered;
-import gui.researchers.activity.BookChapterForm;
-
-import java.awt.GridBagLayout;
-import java.awt.Font;
-
-import gui.researchers.activity.PaperForm;
-import gui.researchers.activity.PresentationForm;
 
 public class ResearcherActivityForm extends JPanel {
 	private Researcher researcher;
@@ -29,7 +26,6 @@ public class ResearcherActivityForm extends JPanel {
 	public ResearcherActivityForm(Researcher researcher) {
 		this.researcher = researcher;
 		
-		setBackground(Color.WHITE);
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		add(getTabbedPane());
 	}
@@ -44,7 +40,6 @@ public class ResearcherActivityForm extends JPanel {
 		if (tabbedPane == null) {
 			tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 			tabbedPane.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-			tabbedPane.setBackground(Color.WHITE);
 			tabbedPane.addTab("Capítulo", null, getBookChapterForm(), null);
 			tabbedPane.addTab("Artículo", null, getPaperForm(), null);
 			tabbedPane.addTab("Ponencia", null, getPresentationForm(), null);

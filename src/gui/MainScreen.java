@@ -3,28 +3,21 @@ package gui;
 import gui.event.OnAuthenticate;
 import gui.event.OnCloseApp;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.UIManager;
-import javax.swing.border.EmptyBorder;
-
-import java.awt.Color;
-
-import javax.swing.JLayeredPane;
-
-import com.formdev.flatlaf.FlatLightLaf;
-
-import utils.Constants;
-import auth.Authentication;
-
 import java.awt.BorderLayout;
-import java.awt.Font;
-import java.awt.GridBagLayout;
+import java.awt.EventQueue;
 import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.Toolkit;
+
+import javax.swing.JFrame;
+import javax.swing.JLayeredPane;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+
+import auth.Authentication;
+
+import com.formdev.flatlaf.FlatDarkLaf;
 
 public class MainScreen extends JFrame {
 	private static final long serialVersionUID = -5078546845004098026L;
@@ -51,7 +44,7 @@ public class MainScreen extends JFrame {
 	}
 
 	public MainScreen() {
-		FlatLightLaf.setup();
+		FlatDarkLaf.setup();
 //		setDefaults();
 		
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -62,7 +55,6 @@ public class MainScreen extends JFrame {
 		setBounds(100, 100, 1029, 930);
 		
 		contentPane = new JPanel();
-		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		
 		setContentPane(contentPane);
@@ -74,18 +66,6 @@ public class MainScreen extends JFrame {
 		contentPane.setLayout(gbl_contentPane);
 		
 		resolveView();
-	}
-	
-	private void setDefaults() {
-		UIManager.put("OptionPane.messageFont", Constants.getLabelFont());
-		UIManager.put("OptionPane.buttonFont", Constants.getLabelFont());
-		UIManager.put("OptionPane.titleFont", Constants.getLabelFont().deriveFont(Font.BOLD));
-		UIManager.put("Label.font", Constants.getLabelFont());
-		UIManager.put("ComboBox.background", Color.WHITE);
-		UIManager.put("Button.background", Color.WHITE);
-		UIManager.put("OptionPane.buttonFont", Constants.getLabelFont());
-		UIManager.put("Button.focus", new Color(20, 20, 20, 0));
-		UIManager.put("TextField.font", Constants.getLabelFont());
 	}
 	
 	private void resolveView() {

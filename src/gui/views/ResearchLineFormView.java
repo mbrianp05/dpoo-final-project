@@ -1,36 +1,8 @@
 package gui.views;
 
-import javax.swing.JPanel;
-
-import java.awt.Color;
-
-import javax.swing.JLabel;
-
-import java.awt.Font;
-
-import schooling.Faculty;
-import schooling.Profesor;
-import schooling.ResearchLine;
-import schooling.ResearchMatter;
-import utils.Constants;
-import utils.EnumsDictionary;
-import utils.Validation;
-
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-
-import javax.swing.JDialog;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import javax.swing.JSpinner;
-import javax.swing.JButton;
-import javax.swing.SpinnerNumberModel;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
 import gui.component.ErrorLabel;
+import gui.component.MultipleInput;
+import gui.component.TitleLabel;
 import gui.event.OnAddedInput;
 import gui.event.OnAddedResearchLine;
 import gui.event.OnDeletedInput;
@@ -39,9 +11,30 @@ import gui.reasearchline.AddChiefJDialog;
 import gui.researchers.ProfesorFormData;
 
 import java.awt.CardLayout;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-import gui.component.MultipleInput;
-import gui.component.TitleLabel;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
+
+import schooling.Faculty;
+import schooling.Profesor;
+import schooling.ResearchLine;
+import schooling.ResearchMatter;
+import utils.Constants;
+import utils.EnumsDictionary;
+import utils.Validation;
 
 public class ResearchLineFormView extends JPanel {
 	private static final long serialVersionUID = 3971105665570208468L;
@@ -83,8 +76,6 @@ public class ResearchLineFormView extends JPanel {
 	public ResearchLineFormView(Faculty faculty) {
 		this.faculty = faculty;
 		chief = null;
-
-		setBackground(Color.WHITE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{100, 0, 75, 288, 50, 100, 0};
 		gridBagLayout.rowHeights = new int[]{70, 45, 60, 0, 35, 35, 0, 35, 0, 35, 35, 0, 35, 50, 40, 0, 0};
@@ -231,7 +222,6 @@ public class ResearchLineFormView extends JPanel {
 	private JLabel getLblCrditoNecesario() {
 		if (lblCrditoNecesario == null) {
 			lblCrditoNecesario = new JLabel("Cr\u00E9dito necesario");
-			lblCrditoNecesario.setForeground(Color.DARK_GRAY);
 			lblCrditoNecesario.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		}
 		return lblCrditoNecesario;
@@ -254,7 +244,6 @@ public class ResearchLineFormView extends JPanel {
 	private JButton getBtnNewButton() {
 		if (btnNewButton == null) {
 			btnNewButton = new JButton("Agregar");
-			btnNewButton.setForeground(Color.WHITE);
 			btnNewButton.setFont(new Font("Segoe UI", Font.BOLD, 15));
 			btnNewButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
@@ -374,7 +363,6 @@ public class ResearchLineFormView extends JPanel {
 			});
 			btnSetChief.setEnabled(false);
 			btnSetChief.setFont(Constants.getLabelFont());
-			btnSetChief.setBackground(Color.WHITE);
 		}
 		return btnSetChief;
 	}
@@ -389,7 +377,6 @@ public class ResearchLineFormView extends JPanel {
 	private JPanel getPanelWrapper() {
 		if (panelWrapper == null) {
 			panelWrapper = new JPanel();
-			panelWrapper.setBackground(Color.WHITE);
 			panelWrapper.setLayout(new CardLayout(0, 0));
 			panelWrapper.add(getAddChiefForm(), "Add Chief");
 			panelWrapper.add(getChangeChief(), "Change Chief");
@@ -399,7 +386,6 @@ public class ResearchLineFormView extends JPanel {
 	private JPanel getAddChiefForm() {
 		if (addChiefForm == null) {
 			addChiefForm = new JPanel();
-			addChiefForm.setBackground(Color.WHITE);
 			GridBagLayout gbl_addChiefForm = new GridBagLayout();
 			gbl_addChiefForm.columnWidths = new int[]{0, 0, 0};
 			gbl_addChiefForm.rowHeights = new int[]{0, 30, 30, 0};
@@ -559,7 +545,6 @@ public class ResearchLineFormView extends JPanel {
 					openChiefDialog();
 				}
 			});
-			btnEditChief.setBackground(Color.WHITE);
 			btnEditChief.setFont(Constants.getLabelFont());
 			btnEditChief.setVisible(false);
 		}

@@ -1,50 +1,41 @@
 package gui.views;
 
+import gui.component.TitleLabel;
 import gui.event.OnAddedResearcher;
 import gui.event.OnRemovedResearcher;
 import gui.event.OnResearchActivityActionTriggered;
 import gui.model.ResearcherTableModel;
 import gui.researchers.EditResearcherJDialog;
 
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-
 import java.awt.Font;
-
-import javax.swing.JDialog;
-import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.JCheckBox;
-import javax.swing.JSpinner;
-
-import java.awt.Color;
-
-import javax.swing.JTextField;
-import javax.swing.JScrollPane;
-
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
-import javax.swing.SwingConstants;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.ChangeEvent;
-import javax.swing.SpinnerNumberModel;
-
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-
+import javax.swing.JCheckBox;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingConstants;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import schooling.Faculty;
 import schooling.Researcher;
 import utils.Constants;
-
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import gui.component.TitleLabel;
 
 public class ResearchersTableView extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -70,7 +61,6 @@ public class ResearchersTableView extends JPanel {
 	public ResearchersTableView() {
 		this.faculty = Faculty.newInstance();
 
-		setBackground(Color.WHITE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{100, 70, 100, 100, 30, 0, 0, 30, 0, 0, 30, 70, 70, 100, 0};
 		gridBagLayout.rowHeights = new int[]{70, 45, 60, 35, 207, 0, 0};
@@ -165,7 +155,6 @@ public class ResearchersTableView extends JPanel {
 					tmodel.includeStudents(filterStudents.isSelected());
 				}
 			});
-			filterStudents.setBackground(Color.WHITE);
 			filterStudents.setSelected(true);
 		}
 
@@ -183,7 +172,6 @@ public class ResearchersTableView extends JPanel {
 					tmodel.includeProfesors(filterProfesors.isSelected());
 				}
 			});
-			filterProfesors.setBackground(Color.WHITE);
 			filterProfesors.setSelected(true);
 		}
 
@@ -311,7 +299,6 @@ public class ResearchersTableView extends JPanel {
 			table.setFillsViewportHeight(true);
 			table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			table.setFont(new Font("Segoe UI", Font.PLAIN, 15));
-			table.setBackground(Color.WHITE);
 		}
 		return table;
 	}

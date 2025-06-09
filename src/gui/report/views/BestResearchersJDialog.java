@@ -1,33 +1,25 @@
 package gui.report.views;
 
-import java.awt.BorderLayout;
-
-import javax.swing.JDialog;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-
-import java.awt.Color;
-
 import gui.component.TitleLabel;
 
-import java.awt.GridBagLayout;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
-
-import javax.swing.JLabel;
-
+import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 
 import schooling.Faculty;
 import schooling.Researcher;
-
-import java.awt.Font;
-
-import javax.swing.JButton;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class BestResearchersJDialog extends JDialog {
 	private static final long serialVersionUID = 1L;
@@ -40,7 +32,6 @@ public class BestResearchersJDialog extends JDialog {
 		setResizable(false);
 		setBounds(100, 100, 552, 365);
 		getContentPane().setLayout(new BorderLayout());
-		contentPanel.setBackground(Color.WHITE);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		GridBagLayout gbl_contentPanel = new GridBagLayout();

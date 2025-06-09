@@ -1,8 +1,30 @@
 package gui.views;
 
+import gui.component.TitleLabel;
 import gui.event.OnAddedCourse;
 
+import java.awt.CardLayout;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
+import javax.swing.BoxLayout;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.border.LineBorder;
 
 import schooling.Degree;
 import schooling.Faculty;
@@ -10,36 +32,6 @@ import schooling.Profesor;
 import schooling.ResearchLine;
 import utils.Constants;
 import utils.Validation;
-
-import javax.swing.JLabel;
-
-import java.awt.Font;
-
-import javax.swing.JComboBox;
-
-import java.awt.Color;
-import java.awt.CardLayout;
-import java.util.ArrayList;
-
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import javax.swing.JButton;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
-import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
-
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-
-import javax.swing.JTextArea;
-import javax.swing.BoxLayout;
-import javax.swing.border.LineBorder;
-import gui.component.TitleLabel;
 
 public class CoursesFormView extends JPanel {
 	private static final long serialVersionUID = -1419886921835562157L;
@@ -70,7 +62,6 @@ public class CoursesFormView extends JPanel {
 	private JPanel panel_1;
 
 	public CoursesFormView(Faculty faculty) {
-		setBackground(Color.WHITE);
 
 		this.faculty = faculty;
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -139,8 +130,7 @@ public class CoursesFormView extends JPanel {
 	
 	private JComboBox<String> getMasteryPlans() {
 		if (masteryPlans == null) {
-			masteryPlans = new JComboBox<String>();
-			masteryPlans.setBackground(Color.WHITE);
+			masteryPlans = new JComboBox<>();
 			masteryPlans.setFont(Constants.getLabelFont());
 
 			fetchMasteryPlans();
@@ -157,7 +147,6 @@ public class CoursesFormView extends JPanel {
 	private JComboBox<String> getSelectInstructor() {
 		if (selectInstructor == null) {
 			selectInstructor = new JComboBox<>();
-			selectInstructor.setBackground(Color.WHITE);
 			selectInstructor.setFont(Constants.getLabelFont());
 
 			fetchInstructors();
@@ -181,7 +170,6 @@ public class CoursesFormView extends JPanel {
 	private JTextField getTxtCourseName() {
 		if (txtCourseName == null) {
 			txtCourseName = new JTextField();
-			txtCourseName.setBackground(Color.WHITE);
 			txtCourseName.setFont(Constants.getLabelFont());
 			txtCourseName.setColumns(10);
 		}
@@ -205,7 +193,6 @@ public class CoursesFormView extends JPanel {
 	private JPanel getCourseForm() {
 		if (courseForm == null) {
 			courseForm = new JPanel();
-			courseForm.setBackground(Color.WHITE);
 			GridBagLayout gbl_courseForm = new GridBagLayout();
 			gbl_courseForm.columnWidths = new int[]{0, 56, 83, 0};
 			gbl_courseForm.rowHeights = new int[]{-56, 35, 30, 0, 35, 30, 0, 35, 30, 35, 30, 0, 107, 32, 40, 0};
@@ -339,7 +326,6 @@ public class CoursesFormView extends JPanel {
 			txtDescrip.setRows(5);
 			txtDescrip.setTabSize(2);
 			txtDescrip.setColumns(10);
-			txtDescrip.setBackground(Color.WHITE);
 			txtDescrip.setFont(Constants.getLabelFont());
 		}
 		return txtDescrip;
@@ -348,7 +334,6 @@ public class CoursesFormView extends JPanel {
 		if (btnAgregar == null) {
 			btnAgregar = new JButton("Agregar");
 			btnAgregar.setFont(new Font("Segoe UI", Font.BOLD, 15));
-			btnAgregar.setForeground(Color.WHITE);
 			btnAgregar.setBackground(Constants.getInsertionBtnColor());
 			btnAgregar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
@@ -456,7 +441,6 @@ public class CoursesFormView extends JPanel {
 	private JSpinner getSpinnerCreds() {
 		if (spinnerCreds == null) {
 			spinnerCreds = new JSpinner();
-			spinnerCreds.setBackground(Color.WHITE);
 			spinnerCreds.setFont(Constants.getLabelFont());
 			spinnerCreds.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
 		}

@@ -1,47 +1,37 @@
 package gui.researchers;
 
-import gui.event.OnProfesorFormActionTriggered;
 import gui.event.OnAddedResearcher;
+import gui.event.OnProfesorFormActionTriggered;
 import gui.event.OnRemovedResearcher;
 import gui.event.OnResearchActivityActionTriggered;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.MatteBorder;
 
+import schooling.Faculty;
 import schooling.Profesor;
 import schooling.ResearchLine;
 import schooling.ResearchMatter;
 import schooling.Researcher;
 import schooling.Student;
-
-import java.awt.Color;
-
-import schooling.Faculty;
 import utils.ArrayLib;
-
-import java.awt.Toolkit;
-
-import javax.swing.JButton;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-
-import javax.swing.JRadioButton;
-
-import java.awt.Font;
-
-import javax.swing.ButtonGroup;
-
-import java.awt.CardLayout;
-
-import javax.swing.border.MatteBorder;
 
 public class EditResearcherJDialog extends JDialog {
 	private static final long serialVersionUID = -8039865322179654975L;
@@ -72,16 +62,13 @@ public class EditResearcherJDialog extends JDialog {
 		setModal(true);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(EditResearcherJDialog.class.getResource("/com/sun/javafx/scene/web/skin/FontBackgroundColor_16x16_JFX.png")));
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		setBackground(Color.WHITE);
 
 		setResizable(false);
 		setTitle("Editar datos de investigador");
-		getContentPane().setBackground(Color.WHITE);
 		setBounds(100, 100, 897, 835);
 		
 		getContentPane().setLayout(new BorderLayout());
 		
-		contentPanel.setBackground(Color.WHITE);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -200,7 +187,6 @@ public class EditResearcherJDialog extends JDialog {
 					}
 				}
 			});
-			btnRemove.setBackground(Color.WHITE);
 		}
 		return btnRemove;
 	}
@@ -213,7 +199,6 @@ public class EditResearcherJDialog extends JDialog {
 					setVisible(false);
 				}
 			});
-			btnA.setBackground(Color.WHITE);
 		}
 		return btnA;
 	}
@@ -221,7 +206,6 @@ public class EditResearcherJDialog extends JDialog {
 		if (radiosWrapper == null) {
 			radiosWrapper = new JPanel();
 			radiosWrapper.setBorder(null);
-			radiosWrapper.setBackground(Color.WHITE);
 			radiosWrapper.add(getRadioButton_2());
 			radiosWrapper.add(getRadioButton_1());
 		}
@@ -243,7 +227,6 @@ public class EditResearcherJDialog extends JDialog {
 			});
 			
 			rbtnResearcherActivity.setFont(new Font("Segoe UI", Font.PLAIN, 15));
-			rbtnResearcherActivity.setBackground(Color.WHITE);
 		}
 		return rbtnResearcherActivity;
 	}
@@ -257,7 +240,6 @@ public class EditResearcherJDialog extends JDialog {
 			});
 			rbtnResearcherInfo.setSelected(true);
 			rbtnResearcherInfo.setFont(new Font("Segoe UI", Font.PLAIN, 15));
-			rbtnResearcherInfo.setBackground(Color.WHITE);
 		}
 		return rbtnResearcherInfo;
 	}
@@ -274,7 +256,6 @@ public class EditResearcherJDialog extends JDialog {
 		if (panelsWrapper == null) {
 			panelsWrapper = new JPanel();
 			panelsWrapper.setBorder(new MatteBorder(1, 0, 0, 0, (Color) Color.LIGHT_GRAY));
-			panelsWrapper.setBackground(Color.WHITE);
 			panelsWrapper.setLayout(new CardLayout(0, 0));
 			
 			panelsWrapper.add(getFormPannelWrapper(), "Researcher Form");
@@ -308,7 +289,6 @@ public class EditResearcherJDialog extends JDialog {
 	private JPanel getFormPannelWrapper() {
 		if (formPannelWrapper == null) {
 			formPannelWrapper = new JPanel();
-			formPannelWrapper.setBackground(Color.WHITE);
 			GridBagLayout gbl_formPannelWrapper = new GridBagLayout();
 			gbl_formPannelWrapper.columnWidths = new int[]{100, 0, 100, 0};
 			gbl_formPannelWrapper.rowHeights = new int[]{45, 0, 0, 0};

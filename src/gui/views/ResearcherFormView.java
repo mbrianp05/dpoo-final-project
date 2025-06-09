@@ -1,35 +1,28 @@
 package gui.views;
 
-import gui.event.OnProfesorFormActionTriggered;
+import gui.component.TitleLabel;
 import gui.event.OnAddedResearcher;
+import gui.event.OnProfesorFormActionTriggered;
 import gui.researchers.ProfesorForm;
 import gui.researchers.ProfesorFormData;
 import gui.researchers.StudentForm;
 
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.ButtonGroup;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-
-import java.awt.Color;
+import javax.swing.JRadioButton;
 
 import schooling.Faculty;
 import utils.ArrayLib;
 import utils.Constants;
-
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-
-import java.awt.Insets;
-
-import javax.swing.JRadioButton;
-
-import java.awt.BorderLayout;
-
-import javax.swing.ButtonGroup;
-
-import java.awt.CardLayout;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import gui.component.TitleLabel;
 
 public class ResearcherFormView extends JPanel {
 	private static final long serialVersionUID = 1751242066126705510L;
@@ -46,8 +39,6 @@ public class ResearcherFormView extends JPanel {
 	
 	public ResearcherFormView() {
 		this.faculty = Faculty.newInstance();
-		
-		setBackground(Color.WHITE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{100, 0, 100, 0};
 		gridBagLayout.rowHeights = new int[]{70, 45, 40, 20, 0, 0, 0};
@@ -102,7 +93,6 @@ public class ResearcherFormView extends JPanel {
 	private JPanel getPanel() {
 		if (panel == null) {
 			panel = new JPanel();
-			panel.setBackground(Color.WHITE);
 			panel.setLayout(new BorderLayout(0, 0));
 			panel.add(getAddStudent());
 			panel.add(getAddProfesor(), BorderLayout.WEST);
@@ -121,7 +111,6 @@ public class ResearcherFormView extends JPanel {
 				}
 			});
 			addStudent.setFont(Constants.getLabelFont());
-			addStudent.setBackground(Color.WHITE);
 		}
 		return addStudent;
 	}
@@ -136,7 +125,6 @@ public class ResearcherFormView extends JPanel {
 			});
 			addProfesor.setSelected(true);
 			addProfesor.setFont(Constants.getLabelFont());
-			addProfesor.setBackground(Color.WHITE);
 		}
 		return addProfesor;
 	}
@@ -153,7 +141,6 @@ public class ResearcherFormView extends JPanel {
 	private JPanel getWrapperPanel() {
 		if (wrapperPanel == null) {
 			wrapperPanel = new JPanel();
-			wrapperPanel.setBackground(Color.WHITE);
 			wrapperPanel.setLayout(new CardLayout(0, 0));
 			wrapperPanel.add(getProfesorForm(), "Profesor Form");
 			wrapperPanel.add(getStudentForm(), "Student Form");

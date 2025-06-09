@@ -1,8 +1,9 @@
 package gui.component;
 
-import javax.swing.JTextField;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+
+import javax.swing.JTextField;
 
 public class JTextLimited extends JTextField{
 	

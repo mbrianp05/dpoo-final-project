@@ -2,18 +2,15 @@ package gui.reasearchline;
 
 import gui.event.OnProfesorFormActionTriggered;
 import gui.event.OnSetChief;
-
-import javax.swing.JDialog;
-
-import java.awt.Color;
-import java.awt.GridBagLayout;
-
-
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-
 import gui.researchers.ProfesorForm;
 import gui.researchers.ProfesorFormData;
+
+import java.awt.Color;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+
+import javax.swing.JDialog;
 
 public class AddChiefJDialog extends JDialog {
 	private static final long serialVersionUID = 3142798032279882910L;
@@ -38,7 +35,6 @@ public class AddChiefJDialog extends JDialog {
 		this.data = data;
 		setTitle("Insertar datos el jefe de la l\u00EDnea");
 		setModal(true);
-		setBackground(Color.WHITE);
 		setBounds(100, 100, 626, 670);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{70, 0, 70, 0};

@@ -3,31 +3,27 @@ package gui.component;
 import gui.event.OnAddedInput;
 import gui.event.OnDeletedInput;
 
-import javax.swing.JPanel;
-
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import utils.ArrayLib;
 import utils.Constants;
 import utils.Icons;
 import utils.Validation;
-
-import java.awt.GridBagConstraints;
-import java.util.ArrayList;
-import java.awt.Insets;
-
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import javax.swing.JButton;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.Font;
 
 public class MultipleInput extends JPanel {
 	private String mainLabelText;
@@ -41,7 +37,6 @@ public class MultipleInput extends JPanel {
 		this.secondaryLabelText = secondaryLabelText;
 		values = new ArrayList<>();
 
-		setBackground(Color.WHITE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 36, 36, 0, 35, 0};
 		gridBagLayout.rowHeights = new int[]{36, 35, 35, 36, 0};
@@ -143,7 +138,6 @@ public class MultipleInput extends JPanel {
 	private JComboBox<String> getComboBox() {
 		if (comboBox == null) {
 			comboBox = new JComboBox<>();
-			comboBox.setBackground(Color.WHITE);
 			comboBox.setFont(Constants.getLabelFont());
 		}
 		return comboBox;
@@ -152,7 +146,6 @@ public class MultipleInput extends JPanel {
 	private JTextField getTextField() {
 		if (textField == null) {
 			textField = new JTextField();
-			textField.setBackground(Color.WHITE);
 			textField.setColumns(10);
 			textField.setFont(Constants.getLabelFont());
 		}
@@ -163,7 +156,6 @@ public class MultipleInput extends JPanel {
 		if (button == null) {
 			button = new JButton(Icons.getRegisterIcon());
 			button.setBorder(null);
-			button.setBackground(Color.WHITE);
 			button.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					if (Validation.notEmpty(textField.getText())) {
@@ -194,7 +186,6 @@ public class MultipleInput extends JPanel {
 		if (btnEdit == null) {
 			btnEdit = new JButton(Icons.getEditIcon());
 			btnEdit.setBorder(null);
-			btnEdit.setBackground(Color.WHITE);
 			btnEdit.setVisible(false);
 			btnEdit.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
@@ -224,7 +215,6 @@ public class MultipleInput extends JPanel {
 			btnRemove = new JButton(Icons.getRemoveIcon());
 			btnRemove.setBorder(null);
 			btnRemove.setVisible(false);
-			btnRemove.setBackground(Color.WHITE);
 			btnRemove.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					String item = (String)comboBox.getSelectedItem();

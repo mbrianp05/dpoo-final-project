@@ -1,35 +1,29 @@
 package gui.views;
 
+import gui.component.TitleLabel;
 import gui.model.CoursesTableModel;
 
-import javax.swing.JPanel;
-
-import schooling.Faculty;
-import utils.Constants;
-
-import java.awt.GridBagLayout;
-import java.awt.Color;
-
-import javax.swing.JLabel;
-
-import java.awt.GridBagConstraints;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Insets;
-
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
-import javax.swing.SpinnerNumberModel;
-import javax.swing.SwingConstants;
-import javax.swing.JTextField;
-
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
-import javax.swing.event.ChangeListener;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
-import gui.component.TitleLabel;
+import javax.swing.event.ChangeListener;
+
+import schooling.Faculty;
+import utils.Constants;
 
 public class CoursesTableView extends JPanel {
 	private static final long serialVersionUID = 7564447082179207965L;
@@ -52,8 +46,6 @@ public class CoursesTableView extends JPanel {
 	 */
 	public CoursesTableView() {
 		this.faculty = Faculty.newInstance();
-		
-		setBackground(Color.WHITE);
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{100, 0, 30, 0, 0, 30, 0, 0, 30, 0, 0, 100, 0};
@@ -149,7 +141,6 @@ public class CoursesTableView extends JPanel {
 			table.setRowHeight(24);
 			table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			table.setFillsViewportHeight(true);
-			table.setBackground(Color.WHITE);
 			table.setFont(Constants.getLabelFont());
 		}
 		return table;

@@ -1,46 +1,37 @@
 package gui.researchers.activity;
 
+import gui.component.ErrorLabel;
 import gui.event.OnResearchActivityActionTriggered;
 
-import javax.swing.JPanel;
-
 import java.awt.Color;
-import java.awt.GridBagLayout;
-
-import javax.swing.JLabel;
-
-import java.awt.GridBagConstraints;
 import java.awt.Font;
-
-import javax.swing.JTextField;
-
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.Year;
 
-import javax.swing.JSpinner;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import schooling.Researcher;
 import utils.Constants;
 import utils.DateHelper;
 import utils.Month;
 import utils.Validation;
-
-import javax.swing.border.TitledBorder;
-import javax.swing.border.LineBorder;
-import javax.swing.JOptionPane;
-import javax.swing.SpinnerNumberModel;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
-import javax.swing.event.ChangeListener;
-import javax.swing.event.ChangeEvent;
-
-import gui.component.ErrorLabel;
 
 public class PresentationForm extends JPanel {
 	private static final long serialVersionUID = 1218122467482657932L;
@@ -69,7 +60,6 @@ public class PresentationForm extends JPanel {
 	public PresentationForm(Researcher researcher) {
 		this.researcher = researcher;
 		
-		setBackground(Color.WHITE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{100, 0, 100, 100, 0};
 		gridBagLayout.rowHeights = new int[]{70, 0, 35, 40, 0, 35, 40, 0, 35, 40, 0, 40, 0, 40, 0};

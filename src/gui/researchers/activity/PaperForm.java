@@ -1,39 +1,31 @@
 package gui.researchers.activity;
 
+import gui.component.ErrorLabel;
 import gui.event.OnResearchActivityActionTriggered;
 
-import javax.swing.JPanel;
-
 import java.awt.Color;
-import java.awt.GridBagLayout;
-
-import javax.swing.JLabel;
-
-import java.awt.GridBagConstraints;
 import java.awt.Font;
-
-import javax.swing.JTextField;
-
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.time.Year;
 
-import javax.swing.JOptionPane;
-import javax.swing.JSpinner;
-import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
 
 import schooling.Researcher;
 import schooling.TargetedGroup;
 import utils.Constants;
 import utils.Validation;
-
-import javax.swing.SpinnerNumberModel;
-import javax.swing.DefaultComboBoxModel;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
-import gui.component.ErrorLabel;
 
 public class PaperForm extends JPanel {
 	private static final long serialVersionUID = 8204693817348078346L;
@@ -57,7 +49,6 @@ public class PaperForm extends JPanel {
 	public PaperForm(Researcher researcher) {
 		this.researcher = researcher;
 		
-		setBackground(Color.WHITE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{100, 0, 0, 30, 0, 0, 30, 0, 0, 30, 0, 0, 100, 0};
 		gridBagLayout.rowHeights = new int[]{70, 0, 35, 40, 0, 40, 0, 0};

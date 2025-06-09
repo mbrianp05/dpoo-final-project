@@ -7,10 +7,10 @@ import gui.views.CoursesTableView;
 import gui.views.ResearchLineFormView;
 import gui.views.ResearchLinesTableView;
 import gui.views.ResearcherFormView;
+import gui.views.ResearchersActivityTableView;
 import gui.views.ResearchersTableView;
 
 import java.awt.CardLayout;
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -19,20 +19,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
 
 import schooling.Faculty;
 import utils.Icons;
 import utils.Mock;
-import gui.views.ResearchersActivityTableView;
-
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.border.Border;
 
 public class MenuPanel extends JPanel {
 	private static final long serialVersionUID = 3762125698246597691L;
@@ -73,27 +71,20 @@ public class MenuPanel extends JPanel {
 		// Mock data
 		Mock.mockFacultyData(faculty);
 
-		setBackground(Color.WHITE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{1092, 1092, 5, 0};
+		gridBagLayout.columnWidths = new int[]{1092, 1092, 0};
 		gridBagLayout.rowHeights = new int[]{74, 421, 0};
-		gridBagLayout.columnWeights = new double[]{1.0, 1.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.columnWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		GridBagConstraints gbc_menuBar = new GridBagConstraints();
+		gbc_menuBar.gridwidth = 2;
 		gbc_menuBar.fill = GridBagConstraints.BOTH;
-		gbc_menuBar.insets = new Insets(0, 0, 5, 5);
+		gbc_menuBar.insets = new Insets(0, 0, 5, 0);
 		gbc_menuBar.gridx = 0;
 		gbc_menuBar.gridy = 0;
 		add(getMenuBar(), gbc_menuBar);
-		GridBagConstraints gbc_btnCerrar = new GridBagConstraints();
-		gbc_btnCerrar.anchor = GridBagConstraints.EAST;
-		gbc_btnCerrar.insets = new Insets(0, 0, 5, 5);
-		gbc_btnCerrar.gridx = 1;
-		gbc_btnCerrar.gridy = 0;
-		add(getBtnCerrar(), gbc_btnCerrar);
 		GridBagConstraints gbc_contentPanel = new GridBagConstraints();
-		gbc_contentPanel.insets = new Insets(0, 0, 0, 5);
 		gbc_contentPanel.gridwidth = 2;
 		gbc_contentPanel.fill = GridBagConstraints.BOTH;
 		gbc_contentPanel.gridx = 0;
@@ -103,10 +94,10 @@ public class MenuPanel extends JPanel {
 	private JMenuBar getMenuBar() {
 		if (menuBar == null) {
 			menuBar = new JMenuBar();
-			menuBar.setBackground(Color.WHITE);
 			menuBar.add(getManagement());
 			menuBar.add(getMnData());
 			menuBar.add(getReports());
+			menuBar.add(getBtnCerrar());
 		}
 		return menuBar;
 	}
@@ -114,7 +105,6 @@ public class MenuPanel extends JPanel {
 		if (management == null) {
 			management = new JMenu("Administraci\u00F3n");
 			management.setSelectedIcon(new ImageIcon(MenuPanel.class.getResource("/com/sun/javafx/scene/control/skin/caspian/images/vk-medium-pressed.png")));
-			management.setBackground(Color.WHITE);
 			management.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 			management.add(getNewResearcherMenu());
 			management.add(getAddCourse());
@@ -145,7 +135,6 @@ public class MenuPanel extends JPanel {
 					switchView("Researcher Form");
 				}
 			});
-			newResearcherMenu.setBackground(Color.WHITE);
 			newResearcherMenu.setSelected(true);
 		}
 		return newResearcherMenu;
@@ -160,7 +149,6 @@ public class MenuPanel extends JPanel {
 					switchView("Courses Form");
 				}
 			});
-			addCourse.setBackground(Color.WHITE);
 		}
 		return addCourse;
 	}
@@ -168,7 +156,6 @@ public class MenuPanel extends JPanel {
 	private JMenu getReports() {
 		if (reports == null) {
 			reports = new JMenu("Reportes");
-			reports.setBackground(Color.WHITE);
 			reports.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 			reports.add(getBestResearchersMenu());
 			reports.add(getTrendingMattersMenu());
@@ -194,42 +181,36 @@ public class MenuPanel extends JPanel {
 					}
 				}
 			});
-			bestResearchersMenu.setBackground(Color.WHITE);
 		}
 		return bestResearchersMenu;
 	}
 	private JMenuItem getTrendingMattersMenu() {
 		if (trendingMattersMenu == null) {
 			trendingMattersMenu = new JMenuItem("Temas populares");
-			trendingMattersMenu.setBackground(Color.WHITE);
 		}
 		return trendingMattersMenu;
 	}
 	private JMenuItem getTotalCoursesMenu() {
 		if (totalCoursesMenu == null) {
 			totalCoursesMenu = new JMenuItem("Total de cursos");
-			totalCoursesMenu.setBackground(Color.WHITE);
 		}
 		return totalCoursesMenu;
 	}
 	private JMenuItem getBestMarksMenu() {
 		if (bestMarksMenu == null) {
 			bestMarksMenu = new JMenuItem("Mejores notas");
-			bestMarksMenu.setBackground(Color.WHITE);
 		}
 		return bestMarksMenu;
 	}
 	private JMenuItem getAprovalPendingMenu() {
 		if (aprovalPendingMenu == null) {
 			aprovalPendingMenu = new JMenuItem("Maestr\u00EDas para aprobar");
-			aprovalPendingMenu.setBackground(Color.WHITE);
 		}
 		return aprovalPendingMenu;
 	}
 	private JMenuItem getMostPaperMenu() {
 		if (mostPaperMenu == null) {
 			mostPaperMenu = new JMenuItem("Investigadores con m\u00E1s art\u00EDculos");
-			mostPaperMenu.setBackground(Color.WHITE);
 		}
 		return mostPaperMenu;
 	}
@@ -241,14 +222,12 @@ public class MenuPanel extends JPanel {
 					switchView("Researchers Table");
 				}
 			});
-			researchersTableMenu.setBackground(Color.WHITE);
 		}
 		return researchersTableMenu;
 	}
 	private JPanel getContentPanel() {
 		if (contentPanel == null) {
 			contentPanel = new JPanel();
-			contentPanel.setBackground(Color.WHITE);
 			contentPanel.setLayout(new CardLayout(0, 0));	
 			contentPanel.add(getResearchLinesFormView(), "Research Lines Form");
 			contentPanel.add(getResearcherForm(), "Researcher Form");
@@ -283,7 +262,6 @@ public class MenuPanel extends JPanel {
 	private JMenuItem getCoursesTableMenu() {
 		if (coursesTableMenu == null) {
 			coursesTableMenu = new JMenuItem("Cursos de postgrado");
-			coursesTableMenu.setBackground(Color.WHITE);
 			coursesTableMenu.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					switchView("Courses Table");
@@ -303,7 +281,6 @@ public class MenuPanel extends JPanel {
 	private JMenuItem getAddLineMenu() {
 		if (addLineMenu == null) {
 			addLineMenu = new JMenuItem("Agregar l\u00EDnea");
-			addLineMenu.setBackground(Color.WHITE);
 			addLineMenu.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					switchView("Research Lines Form");
@@ -322,7 +299,6 @@ public class MenuPanel extends JPanel {
 		if (mnData == null) {
 			mnData = new JMenu("Datos");
 			mnData.setFont(new Font("Segoe UI", Font.PLAIN, 20));
-			mnData.setBackground(Color.WHITE);
 			mnData.add(getResearchersTableMenu());
 			mnData.add(getResearchLinesMenu());
 			mnData.add(getCoursesTableMenu());
@@ -333,7 +309,6 @@ public class MenuPanel extends JPanel {
 	private JMenuItem getResearchLinesMenu() {
 		if (researchLinesMenu == null) {
 			researchLinesMenu = new JMenuItem("L\u00EDneas de investigaci\u00F3n");
-			researchLinesMenu.setBackground(Color.WHITE);
 			researchLinesMenu.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					switchView("Research Lines Table");
@@ -357,7 +332,6 @@ public class MenuPanel extends JPanel {
 	private JMenuItem getResearchActivityMenu() {
 		if (researchActivityMenu == null) {
 			researchActivityMenu = new JMenuItem("Actividad investigativa");
-			researchActivityMenu.setBackground(Color.WHITE);
 			researchActivityMenu.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					switchView("Researchers Activity Table");
@@ -380,7 +354,6 @@ public class MenuPanel extends JPanel {
 				}
 			});
 			btnCerrar.setFont(new Font("Segoe UI", Font.PLAIN, 20));
-			btnCerrar.setBackground(Color.WHITE);
 			
 			Border emptyBorder = BorderFactory.createEmptyBorder();
 			btnCerrar.setBorder(emptyBorder);

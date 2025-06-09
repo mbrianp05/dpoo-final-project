@@ -2,26 +2,23 @@ package gui;
 
 import gui.event.OnAuthenticate;
 
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-
+import java.awt.Color;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
-import java.awt.Color;
-
 import auth.Authentication;
-
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import javax.swing.JPasswordField;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class AuthenticationPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -36,7 +33,6 @@ public class AuthenticationPanel extends JPanel {
 	private JButton btnAcceder;
 
 	public AuthenticationPanel() {
-		setBackground(Color.WHITE);
 		setBorder(new LineBorder(new Color(255, 0, 51), 2, true));
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 400, 0, 0};

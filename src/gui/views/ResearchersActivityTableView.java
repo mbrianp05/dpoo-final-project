@@ -1,27 +1,21 @@
 package gui.views;
 
+import gui.component.TitleLabel;
 import gui.model.ResearchersActivityTableModel;
 
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-
 import java.awt.Font;
-
-import javax.swing.JTable;
-
-import java.awt.Color;
-
-import javax.swing.JScrollPane;
-import javax.swing.SwingConstants;
-
-import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Insets;
 
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
 
 import utils.Constants;
-import gui.component.TitleLabel;
 
 public class ResearchersActivityTableView extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -34,7 +28,6 @@ public class ResearchersActivityTableView extends JPanel {
 	private TitleLabel lblDatosDeInvestigadores;
 	
 	public ResearchersActivityTableView() {
-		setBackground(Color.WHITE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{100, 70, 100, 100, 30, 100, 0, 0, 70, 70, 100, 0};
 		gridBagLayout.rowHeights = new int[]{70, 45, 60, 35, 207, 0, 0};
@@ -93,7 +86,6 @@ public class ResearchersActivityTableView extends JPanel {
 			table.setFillsViewportHeight(true);
 			table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			table.setFont(new Font("Segoe UI", Font.PLAIN, 15));
-			table.setBackground(Color.WHITE);
 		}
 		
 		return table;

@@ -4,34 +4,26 @@ import gui.component.ErrorLabel;
 import gui.component.ResearchMatterComboBox;
 import gui.event.OnAddedResearcher;
 
+import java.awt.BorderLayout;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.ComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 import schooling.Faculty;
 import schooling.ResearchMatter;
 import schooling.Student;
-
-import java.awt.Color;
-import java.awt.GridBagLayout;
-
-import javax.swing.JLabel;
-
-import java.awt.Font;
-
-import javax.swing.ComboBoxModel;
-import javax.swing.JTextField;
-
 import utils.Constants;
 import utils.Validation;
-
-import javax.swing.JButton;
-
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.BorderLayout;
-
-import javax.swing.SwingConstants;
 
 public class StudentForm extends JPanel {
 	private static final long serialVersionUID = 5814578189776579606L;
@@ -58,7 +50,6 @@ public class StudentForm extends JPanel {
 		this.student = student;
 		this.editing = student != null;
 
-		setBackground(Color.WHITE);
 		setLayout(new BorderLayout(0, 0));
 		add(getPanel());
 	}
@@ -137,7 +128,6 @@ public class StudentForm extends JPanel {
 				}
 			});
 			btnSubmit.setBackground(Constants.getInsertionBtnColor());
-			btnSubmit.setForeground(Color.WHITE);
 			btnSubmit.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		}
 		return btnSubmit;
@@ -150,7 +140,6 @@ public class StudentForm extends JPanel {
 	private ResearchMatterComboBox getResearchMatterComboBox() {
 		if (researchMatterComboBox == null) {
 			researchMatterComboBox = new ResearchMatterComboBox(faculty);
-			researchMatterComboBox.setBackground(Color.WHITE);
 			researchMatterComboBox.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 
 			if (editing) {
@@ -177,7 +166,6 @@ public class StudentForm extends JPanel {
 	private JPanel getPanel() {
 		if (panel == null) {
 			panel = new JPanel();
-			panel.setBackground(Color.WHITE);
 			GridBagLayout gbl_panel = new GridBagLayout();
 			gbl_panel.columnWidths = new int[]{383, 0};
 			gbl_panel.rowHeights = new int[]{29, 35, 50, 0, 35, 50, 35, 0};

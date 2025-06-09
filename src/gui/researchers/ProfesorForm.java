@@ -3,34 +3,26 @@ package gui.researchers;
 import gui.component.ErrorLabel;
 import gui.event.OnProfesorFormActionTriggered;
 
+import java.awt.BorderLayout;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 import schooling.Degree;
-
-import java.awt.Color;
-import java.awt.GridBagLayout;
-
-import javax.swing.JLabel;
-
-import java.awt.Font;
-
-import javax.swing.JTextField;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
-
 import schooling.ProfesorCategory;
 import utils.Constants;
 import utils.Validation;
-
-import javax.swing.JButton;
-
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.BorderLayout;
-
-import javax.swing.SwingConstants;
 
 public class ProfesorForm extends JPanel {
 	private static final long serialVersionUID = 5814578189776579606L;
@@ -64,7 +56,6 @@ public class ProfesorForm extends JPanel {
 		this.profesor = data;
 		this.researchMatters = researchMatters;
 
-		setBackground(Color.WHITE);
 		setLayout(new BorderLayout(0, 0));
 		add(getPanel());
 	}
@@ -110,7 +101,6 @@ public class ProfesorForm extends JPanel {
 		if (comboBoxProfesorCategory == null) {
 			comboBoxProfesorCategory = new JComboBox<>();
 			comboBoxProfesorCategory.setFont(Constants.getLabelFont());
-			comboBoxProfesorCategory.setBackground(Color.WHITE);
 			comboBoxProfesorCategory.setModel(new DefaultComboBoxModel<>(new String[] {"Instructor", "Asistente", "Auxiliar", "Titular"}));
 			comboBoxProfesorCategory.setSelectedIndex(0);
 
@@ -143,7 +133,6 @@ public class ProfesorForm extends JPanel {
 		if (comboBoxDegree == null) {
 			comboBoxDegree = new JComboBox<>();
 			comboBoxDegree.setFont(Constants.getLabelFont());
-			comboBoxDegree.setBackground(Color.WHITE);
 			comboBoxDegree.setModel(new DefaultComboBoxModel<>(new String[] {"Ninguna", "M\u00E1ster", "Doctor"}));
 			comboBoxDegree.setSelectedIndex(0);
 
@@ -258,7 +247,6 @@ public class ProfesorForm extends JPanel {
 				}
 			});
 			btnSubmit.setBackground(Constants.getInsertionBtnColor());
-			btnSubmit.setForeground(Color.WHITE);
 			btnSubmit.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		}
 		
@@ -277,7 +265,6 @@ public class ProfesorForm extends JPanel {
 	private JComboBox<String> getResearchMatterComboBox() {
 		if (researchMatterComboBox == null) {
 			researchMatterComboBox = new JComboBox<>();
-			researchMatterComboBox.setBackground(Color.WHITE);
 			researchMatterComboBox.setFont(Constants.getLabelFont());
 
 			setResearchMatters(researchMatters);
@@ -289,8 +276,6 @@ public class ProfesorForm extends JPanel {
 	private JPanel getPanel() {
 		if (panel == null) {
 			panel = new JPanel();
-			panel.setBackground(Color.WHITE);
-			
 			GridBagLayout gbl_panel = new GridBagLayout();
 			gbl_panel.columnWidths = new int[]{400, 0};
 			gbl_panel.rowHeights = new int[]{29, 35, 50, 0, 35, 50, 0, 35, 50, 0, 35, 50, 35, 0};

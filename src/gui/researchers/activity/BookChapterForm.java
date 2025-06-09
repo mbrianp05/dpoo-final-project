@@ -1,36 +1,28 @@
 package gui.researchers.activity;
 
-import javax.swing.JPanel;
+import gui.component.ErrorLabel;
+import gui.component.MultipleInput;
+import gui.event.OnResearchActivityActionTriggered;
 
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
 
 import schooling.Researcher;
 import utils.Constants;
 import utils.Validation;
-
-import java.awt.GridBagConstraints;
-
-import javax.swing.JTextField;
-
-import java.awt.Insets;
-import java.awt.Font;
-
-import javax.swing.JButton;
-
-import gui.component.MultipleInput;
-import gui.event.OnResearchActivityActionTriggered;
-
-import javax.swing.JOptionPane;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
-import gui.component.ErrorLabel;
 
 public class BookChapterForm extends JPanel {
 	private Researcher researcher;
@@ -59,7 +51,6 @@ public class BookChapterForm extends JPanel {
 	public BookChapterForm(Researcher researcher) {
 		this.researcher = researcher;
 		
-		setBackground(Color.WHITE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{100, 0, 0, 0, 30, 0, 100};
 		gridBagLayout.rowHeights = new int[]{12, 0, 35, 30, 0, 35, 30, 0, 10, 0, 35, 30, 0, 35, 30, 35, 30, 20, 0, 0};
