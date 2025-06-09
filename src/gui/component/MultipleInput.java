@@ -271,4 +271,12 @@ public class MultipleInput extends JPanel {
 	public ErrorLabel getErrorLbl() {
 		return errorMessage;
 	}
+
+	public void with(String[] values) {
+		for (String item: values) {
+			if (!Validation.notEmpty(item)) throw new IllegalArgumentException("There is an empty item");
+			
+			this.values.add(item);
+		}
+	}
 }

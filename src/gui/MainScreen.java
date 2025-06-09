@@ -76,7 +76,7 @@ public class MainScreen extends JFrame {
 			UIManager.put("TableHeader.border", BorderFactory.createEmptyBorder(0, 0, 0, 0));
 //			UIManager.put("Table.foreground", new Color(240, 240, 240));
 //			
-//			UIManager.put("TableHeader.font", Constants.getLabelFont());
+			UIManager.put("TableHeader.font", Constants.getLabelFont());
 //			UIManager.put("TableHeader.background", new Color(50, 50, 50));
 //			UIManager.put("TableHeader.foreground", new Color(240, 240, 240));
 //

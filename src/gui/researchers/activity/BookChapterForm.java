@@ -19,14 +19,16 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
+import schooling.Chapter;
 import schooling.Researcher;
 import utils.Constants;
 import utils.Validation;
 
 public class BookChapterForm extends JPanel {
 	private Researcher researcher;
+	private Chapter breakthrough;
 	private OnResearchActivityActionTriggered listener;
-	
+
 	private static final long serialVersionUID = 8688995113018695988L;
 	private JLabel lblBookName;
 	private JTextField textFieldBookName;
@@ -46,13 +48,22 @@ public class BookChapterForm extends JPanel {
 	private ErrorLabel errorEditorial;
 	private ErrorLabel errorISSN;
 	private ErrorLabel errorVol;
-	
+
+
 	public BookChapterForm(Researcher researcher) {
+		this(researcher, null);
+	}
+
+	/**
+	 * @wbp.parser.constructor
+	 */
+	public BookChapterForm(Researcher researcher, Chapter breakthrough) {
 		this.researcher = researcher;
-		
+		this.breakthrough = breakthrough;
+
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{100, 0, 0, 0, 30, 0, 100};
-		gridBagLayout.rowHeights = new int[]{12, 0, 35, 30, 0, 35, 30, 0, 10, 0, 35, 30, 0, 35, 30, 35, 30, 20, 0, 0};
+		gridBagLayout.rowHeights = new int[]{50, 0, 35, 30, 0, 35, 30, 0, 10, 0, 35, 30, 0, 35, 30, 35, 30, 20, 0, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
@@ -178,7 +189,7 @@ public class BookChapterForm extends JPanel {
 		gbc_btnNewButton.gridx = 5;
 		gbc_btnNewButton.gridy = 17;
 		add(getBtnNewButton(), gbc_btnNewButton);
-		
+
 		reset();
 	}
 
@@ -263,7 +274,7 @@ public class BookChapterForm extends JPanel {
 	}
 	private JButton getBtnNewButton() {
 		if (btnNewButton == null) {
-			btnNewButton = new JButton("Agregar");
+			btnNewButton = new JButton(breakthrough == null ? "Agregar" : "Editar");
 			btnNewButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					submit();
@@ -288,19 +299,35 @@ public class BookChapterForm extends JPanel {
 		}
 		return editorsInput;
 	}
-	
+
+	private void initForm() {
+		if (breakthrough != null) {
+			textFieldBookName.setText(breakthrough.getBookName());
+			textFieldChapter.setText(breakthrough.getTitle());
+			textFieldEditorial.setText(breakthrough.getEditorial());
+			textFieldISSN.setText(breakthrough.getISSN());
+			authorsInput.with(breakthrough.getAuthors());
+			editorsInput.with(breakthrough.getEditors());
+			spinnerVol.setValue(breakthrough.getVolume());
+		}
+	}
+
 	private void reset() {
-		textFieldBookName.setText("");
-		textFieldChapter.setText("");
-		textFieldEditorial.setText("");
-		textFieldISSN.setText("");
-		authorsInput.reset();
-		editorsInput.reset();
-		spinnerVol.setValue(1);
-		
+		if (breakthrough == null) {
+			textFieldBookName.setText("");
+			textFieldChapter.setText("");
+			textFieldEditorial.setText("");
+			textFieldISSN.setText("");
+			authorsInput.reset();
+			editorsInput.reset();
+			spinnerVol.setValue(1);
+		} else {
+			initForm();
+		}
+
 		resetErrorLabels();
 	}
-	
+
 	private void resetErrorLabels() {
 		errorBookName.setVisible(false);
 		errorChapter.setVisible(false);
@@ -310,12 +337,12 @@ public class BookChapterForm extends JPanel {
 		editorsInput.getErrorLbl().setVisible(false);
 		authorsInput.getErrorLbl().setVisible(false);
 	}
-	
+
 	private boolean checkValidity() {
 		resetErrorLabels();
-		
+
 		boolean isValid = true;
-		
+
 		String bookName = textFieldBookName.getText();
 		String chapter = textFieldChapter.getText();
 		String editorial = textFieldEditorial.getText();
@@ -323,49 +350,49 @@ public class BookChapterForm extends JPanel {
 		int editorsSize = editorsInput.amountOfItems();
 		String ISSN = textFieldISSN.getText();
 		int vol = (Integer)spinnerVol.getValue();
-		
+
 		if (!Validation.notEmpty(bookName)) {
 			errorBookName.setVisible(true);
 			isValid = false;
 		}
-		
+
 		if (!Validation.notEmpty(chapter)) {
 			errorChapter.setVisible(true);
 			isValid = false;
 		}
-		
+
 		if (!Validation.notEmpty(editorial)) {
 			errorEditorial.setVisible(true);
 			isValid = false;
 		}
-		
+
 		if (authorsSize == 0) {
 			authorsInput.getErrorLbl().setVisible(true);
 			isValid = false;
 		}
-		
+
 		if (editorsSize == 0) {
 			editorsInput.getErrorLbl().setVisible(true);
 			isValid = false;
 		}
-		
+
 		if (!Validation.validISSN(ISSN)) {
 			errorISSN.setVisible(true);
 			isValid = false;
 		}
-		
+
 		if (vol < 1) {
 			errorVol.setVisible(true);
 			isValid = false;
 		}
-		
+
 		return isValid;
 	}
-	
+
 	private void sendFeedback() {
 		JOptionPane.showMessageDialog(null, "¡Se ha registrado el capítulo correctamente!", "Mensaje", JOptionPane.PLAIN_MESSAGE);
 	}
-	
+
 	private void submit() {
 		if (checkValidity()) {
 			String bookName = textFieldBookName.getText();
@@ -375,19 +402,29 @@ public class BookChapterForm extends JPanel {
 			String[] editors = editorsInput.getValues();
 			String ISSN = textFieldISSN.getText();
 			int vol = (Integer)spinnerVol.getValue();
-			
-			try {
-				researcher.addBookChapter(chapter, authors, editors, editorial, ISSN, bookName, vol);
-				
-				if (listener != null) {
-					listener.actionPerformed();
+
+			if (breakthrough == null) {
+				try {
+					researcher.addBookChapter(chapter, authors, editors, editorial, ISSN, bookName, vol);
+
+					if (listener != null) {
+						listener.actionPerformed();
+					}
+
+					reset();
+				} catch (IllegalArgumentException exception) {
+					errorISSN.setVisible(true);
 				}
-				
-				reset();
-				sendFeedback();
-			} catch (IllegalArgumentException exception) {
-				errorISSN.setVisible(true);
+			} else {
+				breakthrough.setTitle(chapter);
+				breakthrough.setBookName(bookName);
+				breakthrough.setEditorial(editorial);
+				breakthrough.setAuthors(authors);
+				breakthrough.setEditors(editors);
+				breakthrough.setISSN(ISSN);
+				breakthrough.setVolume(vol);
 			}
+			sendFeedback();
 		}
 	}
 	private ErrorLabel getErrorBookName() {

@@ -11,17 +11,28 @@ import schooling.Researcher;
 
 public class ResearchersActivityTableModel extends DefaultTableModel {
 	private static final long serialVersionUID = -1630353171311020485L;
+	
 	private Faculty faculty;
-
+	private ArrayList<Breakthrough> breakthroughs;
+	
 	public ResearchersActivityTableModel() {
 		this.faculty = Faculty.newInstance();
 
 		String[] columns = {"Nombre", "Investigador", "Puntuación", "Identificador"};
 		this.setColumnIdentifiers(columns);
 
+		init();
 		fill();
 	}
 
+	public void init() {
+		breakthroughs = faculty.getBreakthroughs();
+	}
+	
+	public ArrayList<Breakthrough> getData() {
+		return breakthroughs;
+	}
+	
 	public boolean isCellEditable(int row, int col) {
 		return false;
 	}
@@ -53,9 +64,7 @@ public class ResearchersActivityTableModel extends DefaultTableModel {
 	public void fill() {
 		emptyTable();
 
-		ArrayList<Breakthrough> data = faculty.getBreakthroughs();
-
-		for (Breakthrough b: data) {
+		for (Breakthrough b: breakthroughs) {
 			addNew(b);
 		}
 	}

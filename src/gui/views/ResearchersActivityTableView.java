@@ -2,12 +2,14 @@ package gui.views;
 
 import gui.component.TitleLabel;
 import gui.model.ResearchersActivityTableModel;
+import gui.researchers.activity.EditBreakthroughJDialog;
 
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -15,19 +17,29 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 
+import schooling.Breakthrough;
+import schooling.Faculty;
+import schooling.Researcher;
 import utils.Constants;
+
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class ResearchersActivityTableView extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JLabel lblFiltrar;
 	private JScrollPane scrollPane;
 
+	private Faculty faculty;
+	
 	private ResearchersActivityTableModel researcherModel;
 	private JTable table;
 
 	private TitleLabel lblDatosDeInvestigadores;
 	
 	public ResearchersActivityTableView() {
+		this.faculty = Faculty.newInstance();
+		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{100, 70, 100, 100, 30, 100, 0, 0, 70, 70, 100, 0};
 		gridBagLayout.rowHeights = new int[]{70, 45, 60, 35, 207, 0, 0};
@@ -78,9 +90,35 @@ public class ResearchersActivityTableView extends JPanel {
 		return scrollPane;
 	}
 	
+	private ResearchersActivityTableModel getTableModel() {
+		return (ResearchersActivityTableModel)table.getModel();
+	}
+	
+	private void openEditBreakthroughDialog() {
+		try {
+			int selectedIndex = table.getSelectedRow();
+			Breakthrough selectedBreakthrough = getTableModel().getData().get(selectedIndex);
+			Researcher researcher = faculty.findResearcherByBreakthrough(selectedBreakthrough);
+			
+			EditBreakthroughJDialog dialog = new EditBreakthroughJDialog(researcher, selectedBreakthrough);
+			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			dialog.setVisible(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	private JTable getTable_1() {
 		if (table == null) {
 			table = new JTable();
+			table.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent event) {
+					if (event.getClickCount() > 1) {
+						openEditBreakthroughDialog();
+					}
+				}
+			});
 			table.setFont(Constants.getLabelFont());
 			table.setRowHeight(24);
 			table.setFillsViewportHeight(true);
