@@ -18,8 +18,6 @@ import utils.Constants;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 
-import javax.swing.JLabel;
-
 import java.awt.Insets;
 
 import javax.swing.JRadioButton;
@@ -31,11 +29,12 @@ import javax.swing.ButtonGroup;
 import java.awt.CardLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import gui.component.TitleLabel;
 
 public class ResearcherFormView extends JPanel {
 	private static final long serialVersionUID = 1751242066126705510L;
 	private Faculty faculty;
-	private JLabel lblInsertarInvestigador;
+	private TitleLabel lblInsertarInvestigador;
 	private JPanel panel;
 	private JRadioButton addStudent;
 	private JRadioButton addProfesor;
@@ -92,9 +91,10 @@ public class ResearcherFormView extends JPanel {
 		this.listener = listener;
 	}
 	
-	private JLabel getLblInsertarInvestigador() {
+	private TitleLabel getLblInsertarInvestigador() {
 		if (lblInsertarInvestigador == null) {
-			lblInsertarInvestigador = new JLabel("Insertar datos del investigador");
+			lblInsertarInvestigador = new TitleLabel();
+			lblInsertarInvestigador.setText("Insertar datos del investigador");
 			lblInsertarInvestigador.setFont(Constants.getTitleFont());
 		}
 		return lblInsertarInvestigador;

@@ -29,10 +29,11 @@ import java.awt.event.KeyEvent;
 import javax.swing.JSpinner;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
+import gui.component.TitleLabel;
 
 public class CoursesTableView extends JPanel {
 	private static final long serialVersionUID = 7564447082179207965L;
-	private JLabel lblCursosDePostgrado;
+	private TitleLabel lblCursosDePostgrado;
 	private JScrollPane scrollPane;
 	private JTable table;
 	private CoursesTableModel coursesTableModel;
@@ -126,9 +127,10 @@ public class CoursesTableView extends JPanel {
 		
 	}
 
-	private JLabel getLblCursosDePostgrado() {
+	private TitleLabel getLblCursosDePostgrado() {
 		if (lblCursosDePostgrado == null) {
-			lblCursosDePostgrado = new JLabel("Cursos de postgrado registrados");
+			lblCursosDePostgrado = new TitleLabel();
+			lblCursosDePostgrado.setText("Cursos de postgrado registrados");
 			lblCursosDePostgrado.setFont(new Font("Segoe UI", Font.PLAIN, 25));
 		}
 		return lblCursosDePostgrado;

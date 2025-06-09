@@ -69,8 +69,6 @@ public class EditResearcherJDialog extends JDialog {
 	public EditResearcherJDialog(Researcher researcher) {
 		this.faculty = Faculty.newInstance();
 		this.researcher = researcher;
-
-		setAlwaysOnTop(true);
 		setModal(true);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(EditResearcherJDialog.class.getResource("/com/sun/javafx/scene/web/skin/FontBackgroundColor_16x16_JFX.png")));
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -286,7 +284,7 @@ public class EditResearcherJDialog extends JDialog {
 	}
 	private StudentForm getStudentForm_1() {
 		if (studentForm_1 == null) {
-			studentForm_1 = new StudentForm();
+			studentForm_1 = new StudentForm((Student)researcher);
 		}
 		return studentForm_1;
 	}

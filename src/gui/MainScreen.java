@@ -1,6 +1,7 @@
 package gui;
 
 import gui.event.OnAuthenticate;
+import gui.event.OnCloseApp;
 
 import java.awt.EventQueue;
 
@@ -96,6 +97,12 @@ public class MainScreen extends JFrame {
 	private MenuPanel getMenuPanel() {
 		if (menuPanel == null) {
 			menuPanel = new MenuPanel();
+			menuPanel.listenTo(new OnCloseApp() {
+				@Override
+				public void actionPerformed() {
+					setVisible(false);
+				}
+			});
 		}
 		return menuPanel;
 	}

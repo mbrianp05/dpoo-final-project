@@ -39,11 +39,12 @@ import java.awt.Insets;
 import javax.swing.JTextArea;
 import javax.swing.BoxLayout;
 import javax.swing.border.LineBorder;
+import gui.component.TitleLabel;
 
 public class CoursesFormView extends JPanel {
 	private static final long serialVersionUID = -1419886921835562157L;
 	private Faculty faculty;
-	private JLabel lblInsertarDatosDe;
+	private TitleLabel lblInsertarDatosDe;
 	private JLabel lblNewLabel;
 	private JComboBox<String> masteryPlans;
 	private JLabel lblInstructor;
@@ -97,9 +98,10 @@ public class CoursesFormView extends JPanel {
 		this.listener = listener;
 	}
 	
-	private JLabel getLblInsertarDatosDe() {
+	private TitleLabel getLblInsertarDatosDe() {
 		if (lblInsertarDatosDe == null) {
-			lblInsertarDatosDe = new JLabel("Insertar datos de curso de postgrado");
+			lblInsertarDatosDe = new TitleLabel();
+			lblInsertarDatosDe.setText("Insertar datos de curso de postgrado");
 			lblInsertarDatosDe.setFont(new Font("Segoe UI", Font.PLAIN, 25));
 		}
 		return lblInsertarDatosDe;

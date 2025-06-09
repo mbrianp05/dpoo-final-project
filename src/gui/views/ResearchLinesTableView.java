@@ -24,6 +24,7 @@ import javax.swing.ListSelectionModel;
 import utils.Constants;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import gui.component.TitleLabel;
 
 public class ResearchLinesTableView extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -35,7 +36,7 @@ public class ResearchLinesTableView extends JPanel {
 	private ResearchLinesTableModel tableModel;
 	private JTable table;
 
-	private JLabel lblDatosDeInvestigadores;
+	private TitleLabel lblDatosDeInvestigadores;
 	private JTextField filterByChief;
 	private JLabel lblResponsable;
 
@@ -151,9 +152,10 @@ public class ResearchLinesTableView extends JPanel {
 		((ResearchLinesTableModel)table.getModel()).fill();
 	}
 	
-	private JLabel getLblDatosDeInvestigadores() {
+	private TitleLabel getLblDatosDeInvestigadores() {
 		if (lblDatosDeInvestigadores == null) {
-			lblDatosDeInvestigadores = new JLabel("Datos de l\u00EDneas de investigaci\u00F3n");
+			lblDatosDeInvestigadores = new TitleLabel();
+			lblDatosDeInvestigadores.setText("Datos de l\u00EDneas de investigaci\u00F3n");
 			lblDatosDeInvestigadores.setFont(Constants.getTitleFont());
 		}
 		return lblDatosDeInvestigadores;

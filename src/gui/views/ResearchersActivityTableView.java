@@ -21,6 +21,7 @@ import java.awt.Insets;
 import javax.swing.ListSelectionModel;
 
 import utils.Constants;
+import gui.component.TitleLabel;
 
 public class ResearchersActivityTableView extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -30,7 +31,7 @@ public class ResearchersActivityTableView extends JPanel {
 	private ResearchersActivityTableModel researcherModel;
 	private JTable table;
 
-	private JLabel lblDatosDeInvestigadores;
+	private TitleLabel lblDatosDeInvestigadores;
 	
 	public ResearchersActivityTableView() {
 		setBackground(Color.WHITE);
@@ -102,9 +103,10 @@ public class ResearchersActivityTableView extends JPanel {
 		((ResearchersActivityTableModel)table.getModel()).fill();
 	}
 	
-	private JLabel getLblDatosDeInvestigadores() {
+	private TitleLabel getLblDatosDeInvestigadores() {
 		if (lblDatosDeInvestigadores == null) {
-			lblDatosDeInvestigadores = new JLabel("Datos de la actividad investigativa");
+			lblDatosDeInvestigadores = new TitleLabel();
+			lblDatosDeInvestigadores.setText("Datos de la actividad investigativa");
 			lblDatosDeInvestigadores.setFont(Constants.getTitleFont());
 		}
 		
