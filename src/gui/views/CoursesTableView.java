@@ -12,6 +12,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -29,9 +31,6 @@ import schooling.Faculty;
 import schooling.PostgraduateCourse;
 import schooling.Profesor;
 import utils.Constants;
-
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 public class CoursesTableView extends JPanel {
 	private static final long serialVersionUID = 7564447082179207965L;

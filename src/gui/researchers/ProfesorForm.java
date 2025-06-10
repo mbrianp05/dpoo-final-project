@@ -206,7 +206,7 @@ public class ProfesorForm extends JPanel {
 	}
 
 	private void resetForm() {
-		errorLabel.setText("");
+		errorLabel.setVisible(false);
 		textFieldName.setText("");
 
 		if (researchMatterComboBox.getModel().getSize() >= 0) {
@@ -233,8 +233,10 @@ public class ProfesorForm extends JPanel {
 			if (listener != null) {
 				listener.actionPerformed(new ProfesorFormData(name, matter, degree, category));
 			}
+			
+			errorLabel.setVisible(false);
 		} else {
-			errorLabel.setText("El nombre es requerido");
+			errorLabel.setVisible(true);
 		}
 	}
 
@@ -386,7 +388,8 @@ public class ProfesorForm extends JPanel {
 		if (errorLabel == null) {
 			errorLabel = new ErrorLabel();
 			errorLabel.setVerticalAlignment(SwingConstants.TOP);
-			errorLabel.setText("");
+			errorLabel.setText("El nombre es requerido");
+			errorLabel.setVisible(false);
 		}
 		
 		return errorLabel;

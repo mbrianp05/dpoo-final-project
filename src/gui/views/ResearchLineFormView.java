@@ -51,7 +51,7 @@ public class ResearchLineFormView extends JPanel {
 	private JSpinner minCreditsSpinner;
 	private JButton btnNewButton;
 
-	private ErrorLabel errorLabel;
+	private ErrorLabel errorMatters;
 	private ErrorLabel errorName;
 	private JLabel lblJefeDeLa;
 	private JButton btnSetChief;
@@ -59,12 +59,12 @@ public class ResearchLineFormView extends JPanel {
 	private JPanel panelWrapper;
 	private JPanel addChiefForm;
 	private JPanel changeChief;
-	private ErrorLabel lblNoChiefError;
+	private ErrorLabel errorChief;
 	private JLabel lblChiefName;
 	private JLabel lblChiefDegree;
 	private JLabel lblChiefMatter;
 	private JLabel lblChiefCat;
-	private ErrorLabel lblCreditsError;
+	private ErrorLabel errorCredits;
 	private JLabel lblChiefData;
 	private JButton btnEditChief;
 	private JLabel lblNombre_1;
@@ -78,9 +78,9 @@ public class ResearchLineFormView extends JPanel {
 		chief = null;
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{100, 0, 75, 288, 50, 100, 0};
-		gridBagLayout.rowHeights = new int[]{70, 45, 60, 0, 35, 35, 0, 35, 0, 35, 35, 0, 35, 50, 40, 0, 0};
+		gridBagLayout.rowHeights = new int[]{70, 45, 60, 0, 35, 35, 0, 35, 0, 0, 35, 35, 0, 35, 50, 40, 0, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		GridBagConstraints gbc_lblAgregarLneaDe = new GridBagConstraints();
 		gbc_lblAgregarLneaDe.gridwidth = 4;
@@ -117,27 +117,27 @@ public class ResearchLineFormView extends JPanel {
 		gbc_multipleInput.gridx = 1;
 		gbc_multipleInput.gridy = 6;
 		add(getMultipleInput(), gbc_multipleInput);
+		GridBagConstraints gbc_errorMatters = new GridBagConstraints();
+		gbc_errorMatters.anchor = GridBagConstraints.NORTHWEST;
+		gbc_errorMatters.gridwidth = 4;
+		gbc_errorMatters.insets = new Insets(0, 0, 5, 5);
+		gbc_errorMatters.gridx = 1;
+		gbc_errorMatters.gridy = 7;
+		add(getErrorMatters(), gbc_errorMatters);
 		GridBagConstraints gbc_lblChiefData = new GridBagConstraints();
 		gbc_lblChiefData.fill = GridBagConstraints.HORIZONTAL;
 		gbc_lblChiefData.anchor = GridBagConstraints.SOUTH;
 		gbc_lblChiefData.insets = new Insets(0, 0, 5, 5);
 		gbc_lblChiefData.gridx = 1;
-		gbc_lblChiefData.gridy = 7;
+		gbc_lblChiefData.gridy = 8;
 		add(getLblChiefData(), gbc_lblChiefData);
-		GridBagConstraints gbc_errorLabel = new GridBagConstraints();
-		gbc_errorLabel.anchor = GridBagConstraints.NORTHWEST;
-		gbc_errorLabel.gridwidth = 2;
-		gbc_errorLabel.insets = new Insets(0, 0, 5, 5);
-		gbc_errorLabel.gridx = 2;
-		gbc_errorLabel.gridy = 7;
-		add(getErrorLabel(), gbc_errorLabel);
 		GridBagConstraints gbc_panelWrapper = new GridBagConstraints();
 		gbc_panelWrapper.gridwidth = 4;
 		gbc_panelWrapper.gridheight = 2;
 		gbc_panelWrapper.insets = new Insets(0, 0, 5, 5);
 		gbc_panelWrapper.fill = GridBagConstraints.BOTH;
 		gbc_panelWrapper.gridx = 1;
-		gbc_panelWrapper.gridy = 8;
+		gbc_panelWrapper.gridy = 9;
 		add(getPanelWrapper(), gbc_panelWrapper);
 		GridBagConstraints gbc_btnEditChief = new GridBagConstraints();
 		gbc_btnEditChief.anchor = GridBagConstraints.EAST;
@@ -145,7 +145,7 @@ public class ResearchLineFormView extends JPanel {
 		gbc_btnEditChief.gridwidth = 2;
 		gbc_btnEditChief.insets = new Insets(0, 0, 5, 5);
 		gbc_btnEditChief.gridx = 3;
-		gbc_btnEditChief.gridy = 10;
+		gbc_btnEditChief.gridy = 11;
 		add(getBtnEditChief(), gbc_btnEditChief);
 		GridBagConstraints gbc_lblMaestra = new GridBagConstraints();
 		gbc_lblMaestra.fill = GridBagConstraints.HORIZONTAL;
@@ -153,36 +153,50 @@ public class ResearchLineFormView extends JPanel {
 		gbc_lblMaestra.gridwidth = 2;
 		gbc_lblMaestra.insets = new Insets(0, 0, 5, 5);
 		gbc_lblMaestra.gridx = 1;
-		gbc_lblMaestra.gridy = 11;
+		gbc_lblMaestra.gridy = 12;
 		add(getLblMaestra(), gbc_lblMaestra);
 		GridBagConstraints gbc_lblCrditoNecesario = new GridBagConstraints();
 		gbc_lblCrditoNecesario.fill = GridBagConstraints.BOTH;
 		gbc_lblCrditoNecesario.insets = new Insets(0, 0, 5, 5);
 		gbc_lblCrditoNecesario.gridx = 1;
-		gbc_lblCrditoNecesario.gridy = 12;
+		gbc_lblCrditoNecesario.gridy = 13;
 		add(getLblCrditoNecesario(), gbc_lblCrditoNecesario);
 		GridBagConstraints gbc_minCreditsSpinner = new GridBagConstraints();
 		gbc_minCreditsSpinner.fill = GridBagConstraints.BOTH;
 		gbc_minCreditsSpinner.insets = new Insets(0, 0, 5, 5);
 		gbc_minCreditsSpinner.gridx = 2;
-		gbc_minCreditsSpinner.gridy = 12;
+		gbc_minCreditsSpinner.gridy = 13;
 		add(getMinCreditsSpinner(), gbc_minCreditsSpinner);
-		GridBagConstraints gbc_lblCreditsError = new GridBagConstraints();
-		gbc_lblCreditsError.gridwidth = 2;
-		gbc_lblCreditsError.insets = new Insets(0, 0, 5, 5);
-		gbc_lblCreditsError.gridx = 1;
-		gbc_lblCreditsError.gridy = 13;
-		add(getLblCreditsError(), gbc_lblCreditsError);
+		GridBagConstraints gbc_errorCredits = new GridBagConstraints();
+		gbc_errorCredits.fill = GridBagConstraints.HORIZONTAL;
+		gbc_errorCredits.gridwidth = 2;
+		gbc_errorCredits.insets = new Insets(0, 0, 5, 5);
+		gbc_errorCredits.gridx = 3;
+		gbc_errorCredits.gridy = 13;
+		add(getErrorCredits(), gbc_errorCredits);
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
 		gbc_btnNewButton.fill = GridBagConstraints.VERTICAL;
 		gbc_btnNewButton.gridwidth = 2;
 		gbc_btnNewButton.anchor = GridBagConstraints.EAST;
 		gbc_btnNewButton.insets = new Insets(0, 0, 5, 5);
 		gbc_btnNewButton.gridx = 3;
-		gbc_btnNewButton.gridy = 14;
+		gbc_btnNewButton.gridy = 15;
 		add(getBtnNewButton(), gbc_btnNewButton);
+		
+		initForm();
 	}
 
+	private void hideErrors() {
+		errorName.setVisible(false);
+		errorChief.setVisible(false);
+		errorCredits.setVisible(false);
+		errorMatters.setVisible(false);
+	}
+	
+	private void initForm() {
+		hideErrors();
+	}
+	
 	public void listenTo(OnAddedResearchLine listener) {
 		this.listener = listener;
 	}
@@ -247,16 +261,15 @@ public class ResearchLineFormView extends JPanel {
 			btnNewButton.setFont(new Font("Segoe UI", Font.BOLD, 15));
 			btnNewButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
+					hideErrors();
+					
 					if (Validation.notEmpty(textFieldName.getText())) {
 						errorName.setText("");
 						if (multipleInput.amountOfItems() > 0) {
 							if (chief != null) {
-								lblNoChiefError.setVisible(false);
+								errorChief.setVisible(false);
 
 								if ((int)minCreditsSpinner.getValue() > 0) {		
-									lblCreditsError.setText("");
-									errorLabel.setText("");
-									
 									Profesor chiefProfesor = registerChief();
 									String name = faculty.addResearchLine(textFieldName.getText(), chiefProfesor, (int)minCreditsSpinner.getValue());
 									ResearchLine line = faculty.findResearchLine(name);
@@ -272,20 +285,19 @@ public class ResearchLineFormView extends JPanel {
 									ResearchMatter chiefResearchMatter = faculty.findResearchMatter(chief.getMatter());
 									chiefResearchMatter.addResearcher(chiefProfesor);
 									
-									JOptionPane.showMessageDialog(null, "¡Se ha registrado la línea correctamente!", "Mensaje", JOptionPane.PLAIN_MESSAGE);
-
+									sendFeedback();
 									resetForm();
 								} else {
-									lblCreditsError.setText("Todos los planes de maestría deben exigir al menos 1 crédito");
+									errorCredits.setVisible(true);
 								}
 							} else {
-								lblNoChiefError.setVisible(true);
+								errorChief.setVisible(true);
 							}
 						} else {
-							errorLabel.setText("Debe existir al menos un tema de investigación");
+							errorMatters.setVisible(true);
 						}
 					} else {
-						errorName.setText("El nombre no puede estar vacío");
+						errorName.setVisible(true);
 					}
 				}
 			});
@@ -294,12 +306,16 @@ public class ResearchLineFormView extends JPanel {
 		return btnNewButton;
 	}
 
-	private ErrorLabel getErrorLabel() {
-		if (errorLabel == null) {
-			errorLabel = new ErrorLabel();
-			errorLabel.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+	private void sendFeedback() {
+		JOptionPane.showMessageDialog(null, "¡Se ha registrado la línea correctamente!", "Mensaje", JOptionPane.PLAIN_MESSAGE);
+	}
+	
+	private ErrorLabel getErrorMatters() {
+		if (errorMatters == null) {
+			errorMatters = new ErrorLabel();
+			errorMatters.setText("Debe existir al menos un tema de investigaci\u00F3n");
 		}
-		return errorLabel;
+		return errorMatters;
 	}
 
 	private void resetForm() {
@@ -308,6 +324,8 @@ public class ResearchLineFormView extends JPanel {
 		multipleInput.reset();
 		chief = null;
 
+		hideErrors();
+		
 		switchPanel("Add Chief");
 
 		btnEditChief.setVisible(false);
@@ -317,6 +335,7 @@ public class ResearchLineFormView extends JPanel {
 	private ErrorLabel getErrorName() {
 		if (errorName == null) {
 			errorName = new ErrorLabel();
+			errorName.setText("El nombre es requerido");
 		}
 		return errorName;
 	}
@@ -409,14 +428,14 @@ public class ResearchLineFormView extends JPanel {
 			gbc_lblChiefWarning.gridx = 1;
 			gbc_lblChiefWarning.gridy = 1;
 			addChiefForm.add(getLblChiefWarning(), gbc_lblChiefWarning);
-			GridBagConstraints gbc_lblNoChiefError = new GridBagConstraints();
-			gbc_lblNoChiefError.gridwidth = 2;
-			gbc_lblNoChiefError.anchor = GridBagConstraints.NORTH;
-			gbc_lblNoChiefError.fill = GridBagConstraints.HORIZONTAL;
-			gbc_lblNoChiefError.weighty = 1.0;
-			gbc_lblNoChiefError.gridx = 0;
-			gbc_lblNoChiefError.gridy = 2;
-			addChiefForm.add(getLblNoChiefError(), gbc_lblNoChiefError);
+			GridBagConstraints gbc_errorChief = new GridBagConstraints();
+			gbc_errorChief.gridwidth = 2;
+			gbc_errorChief.anchor = GridBagConstraints.NORTH;
+			gbc_errorChief.fill = GridBagConstraints.HORIZONTAL;
+			gbc_errorChief.weighty = 1.0;
+			gbc_errorChief.gridx = 0;
+			gbc_errorChief.gridy = 2;
+			addChiefForm.add(getErrorChief(), gbc_errorChief);
 		}
 		return addChiefForm;
 	}
@@ -474,14 +493,13 @@ public class ResearchLineFormView extends JPanel {
 		return changeChief;
 	}
 	
-	private ErrorLabel getLblNoChiefError() {
-		if (lblNoChiefError == null) {
-			lblNoChiefError = new ErrorLabel();
-			lblNoChiefError.setVisible(false);
-			lblNoChiefError.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-			lblNoChiefError.setText("Agrega al profesor responsable");
+	private ErrorLabel getErrorChief() {
+		if (errorChief == null) {
+			errorChief = new ErrorLabel();
+			errorChief.setVisible(false);
+			errorChief.setText("Agrega al profesor responsable");
 		}
-		return lblNoChiefError;
+		return errorChief;
 	}
 	
 	private JLabel getLblChiefName() {
@@ -520,11 +538,12 @@ public class ResearchLineFormView extends JPanel {
 		return lblChiefCat;
 	}
 	
-	private ErrorLabel getLblCreditsError() {
-		if (lblCreditsError == null) {
-			lblCreditsError = new ErrorLabel();
+	private ErrorLabel getErrorCredits() {
+		if (errorCredits == null) {
+			errorCredits = new ErrorLabel();
+			errorCredits.setText("Los cr\u00E9ditos deben ser mayor que 0");
 		}
-		return lblCreditsError;
+		return errorCredits;
 	}
 	
 	private JLabel getLblChiefData() {

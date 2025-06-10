@@ -6,32 +6,26 @@ import gui.event.OnRemovedCourse;
 import gui.researchers.EditResearcherJDialog;
 
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.border.EmptyBorder;
 
 import schooling.Faculty;
 import schooling.PostgraduateCourse;
-
-import javax.swing.JRadioButton;
-
-import java.awt.Font;
-
-import javax.swing.JButton;
-
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-
-import javax.swing.ButtonGroup;
-
-import java.awt.Insets;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.FlowLayout;
-import javax.swing.BoxLayout;
 
 public class EditPostgradeCourse extends JDialog {
 

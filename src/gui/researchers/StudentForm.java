@@ -80,8 +80,8 @@ public class StudentForm extends JPanel {
 	}
 
 	private void resetForm() {
-		errorLabel.setText("");
-		textFieldName.setText("");
+		errorLabel.setVisible(false);
+		textFieldName.setVisible(false);
 
 		if (researchMatterComboBox.getModel().getSize() >= 0) {
 			researchMatterComboBox.setSelectedIndex(0);
@@ -100,7 +100,7 @@ public class StudentForm extends JPanel {
 
 			resetForm();
 		} else {
-			errorLabel.setText("El nombre es requerido");
+			errorLabel.setVisible(true);
 		}
 	}
 
@@ -113,8 +113,10 @@ public class StudentForm extends JPanel {
 			if (listener != null) {
 				listener.newResearcher(student.getID());
 			}
+			
+			errorLabel.setVisible(false);
 		} else {
-			errorLabel.setText("El nombre es requerido");
+			errorLabel.setVisible(true);
 		}
 	}
 
@@ -227,7 +229,8 @@ public class StudentForm extends JPanel {
 		if (errorLabel == null) {
 			errorLabel = new ErrorLabel();
 			errorLabel.setVerticalAlignment(SwingConstants.TOP);
-			errorLabel.setText("");
+			errorLabel.setText("El nombre es requerido");
+			errorLabel.setVisible(false);
 		}
 		return errorLabel;
 	}

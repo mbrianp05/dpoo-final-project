@@ -8,6 +8,7 @@ import gui.researchers.ProfesorFormData;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.Toolkit;
 
 import javax.swing.JDialog;
 
@@ -27,6 +28,7 @@ public class AddChiefJDialog extends JDialog {
 	}
 
 	public AddChiefJDialog(String[] matters, OnSetChief listener, ProfesorFormData data) {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(AddChiefJDialog.class.getResource("/com/sun/javafx/scene/web/skin/FontBackgroundColor_16x16_JFX.png")));
 		setResizable(false);
 		setLocationRelativeTo(null);
 		

@@ -17,6 +17,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -36,8 +37,6 @@ import schooling.Faculty;
 import schooling.Researcher;
 import utils.Constants;
 import utils.Icons;
-
-import javax.swing.JButton;
 
 public class ResearchersTableView extends JPanel {
 	private static final long serialVersionUID = 1L;

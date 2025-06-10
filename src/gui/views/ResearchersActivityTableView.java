@@ -9,6 +9,8 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -22,9 +24,6 @@ import schooling.Breakthrough;
 import schooling.Faculty;
 import schooling.Researcher;
 import utils.Constants;
-
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 public class ResearchersActivityTableView extends JPanel {
 	private static final long serialVersionUID = 1L;

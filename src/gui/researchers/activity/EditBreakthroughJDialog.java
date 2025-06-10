@@ -3,6 +3,7 @@ package gui.researchers.activity;
 import gui.event.OnResearchActivityActionTriggered;
 
 import java.awt.BorderLayout;
+import java.awt.Toolkit;
 
 import javax.swing.JDialog;
 import javax.swing.JPanel;
@@ -26,6 +27,7 @@ public class EditBreakthroughJDialog extends JDialog {
 	private final JPanel contentPanel = new JPanel();
 	
 	public EditBreakthroughJDialog(Researcher researcher, Breakthrough breakthrough) {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(EditBreakthroughJDialog.class.getResource("/com/sun/javafx/scene/web/skin/FontBackgroundColor_16x16_JFX.png")));
 		this.breakthrough = breakthrough;
 		this.researcher = researcher;
 		
