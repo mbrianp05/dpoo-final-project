@@ -26,7 +26,6 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.border.LineBorder;
 
-import schooling.Degree;
 import schooling.Faculty;
 import schooling.Profesor;
 import schooling.ResearchLine;
@@ -117,7 +116,11 @@ public class CoursesFormView extends JPanel {
 	}
 	
 	private void fetchInstructors() {
-		ArrayList<Profesor> profs = faculty.getProfesorsWithDegree(Degree.Doctor);
+		String lineName = masteryPlans.getSelectedItem().toString();
+
+		ResearchLine line = faculty.findResearchLine(lineName);
+		
+		ArrayList<Profesor> profs = faculty.getDoctorsSelectedLine(line);
 		String[] names = new String[profs.size()];
 
 		for(int i = 0; i < profs.size(); i++){
@@ -131,6 +134,11 @@ public class CoursesFormView extends JPanel {
 	private JComboBox<String> getMasteryPlans() {
 		if (masteryPlans == null) {
 			masteryPlans = new JComboBox<>();
+			masteryPlans.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					fetchInstructors();
+				}
+			});
 			masteryPlans.setFont(Constants.getLabelFont());
 
 			fetchMasteryPlans();

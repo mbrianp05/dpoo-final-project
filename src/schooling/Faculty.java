@@ -67,6 +67,23 @@ public class Faculty {
 		return profesors;
 	}
 	
+	public ArrayList<Profesor> getDoctorsSelectedLine(ResearchLine line) {
+		return line.getRelatedDoctors();
+	}
+	
+	public ResearchLine findLineByCourse(PostgraduateCourse course) {
+		
+		ResearchLine line = null;
+		
+		for(ResearchLine r: researchLines) {
+			if(r.getMasteryPlan().getCourses().contains(course)) {
+				line = r;
+			}
+		}
+		
+		return line;
+	}
+	
 	public ArrayList<Profesor> getProfesorsWithDegree(Degree degree) {
 		ArrayList<Profesor> profs = new ArrayList<>();
 		
@@ -347,7 +364,7 @@ public class Faculty {
 		}
 
 		return line;
-	}
+	}	
 	
 	public ArrayList<MasteryPlan> getMasteryPlans() {
 		ArrayList<MasteryPlan> masteries = new ArrayList<>();

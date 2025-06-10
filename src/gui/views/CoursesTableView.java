@@ -2,7 +2,6 @@ package gui.views;
 
 import gui.component.TitleLabel;
 import gui.event.OnAddedCourse;
-import gui.event.OnRemovedCourse;
 import gui.model.CoursesTableModel;
 import gui.reasearchline.EditPostgradeCourse;
 
@@ -157,19 +156,13 @@ public class CoursesTableView extends JPanel {
 						if(select == null || !select.isVisible()) {
 							try {
 								select = new EditPostgradeCourse(course);
-								select.setVisible(true);
 								select.listenTo(new OnAddedCourse() {								
 									@Override
 									public void added(String name, Profesor instruct) {
 										updateTable();
 									}
-								});
-								select.listenTo(new OnRemovedCourse() {
-									@Override
-									public void removed(String name) {
-										
-									}
-								});
+								});								
+								select.setVisible(true);
 							} catch (Exception e) {
 								e.printStackTrace();
 							}

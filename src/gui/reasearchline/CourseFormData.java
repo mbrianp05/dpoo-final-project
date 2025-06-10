@@ -16,7 +16,7 @@ public final class CourseFormData {
 		this.credits = credits;
 	}
 	
-	public static CourseFormData courseForm (PostgraduateCourse course) {
+	public static CourseFormData courseForm(PostgraduateCourse course) {
 		return new CourseFormData(course.getName(), course.getDescription(), course.getInstructor(), course.getCredits());
 	}
 	

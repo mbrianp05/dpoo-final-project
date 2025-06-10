@@ -6,6 +6,7 @@ import gui.event.OnRemovedCourse;
 import gui.researchers.EditResearcherJDialog;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -26,6 +27,7 @@ import javax.swing.border.EmptyBorder;
 
 import schooling.Faculty;
 import schooling.PostgraduateCourse;
+import schooling.ResearchLine;
 
 public class EditPostgradeCourse extends JDialog {
 
@@ -36,12 +38,14 @@ public class EditPostgradeCourse extends JDialog {
 	private Faculty faculty;
 	
 	private OnRemovedCourse listenerRemove;
+	private OnAddedCourse listenerAdded;
 	
 	private JPanel operationPanel;
 	private JRadioButton rBtnEditCourse;
 	private JRadioButton rBtnMatriculations;
 	
 	private CourseForm courseForm;
+	
 	private JButton btnEliminar;
 	private JButton btnCerrar;
 	private JPanel panelWrapper;
@@ -94,26 +98,20 @@ public class EditPostgradeCourse extends JDialog {
 		getButtonGroup();
 	}
 
-	public void listenTo(final OnAddedCourse listener) {
-		courseForm.listenTo(new OnCoursesFormActionTriggered() {			
-			@Override
-			public void actionPerformed(CourseFormData data) {
-				PostgraduateCourse c = (PostgraduateCourse)course;
-				
-				c.setName(data.getName());
-				c.setDescription(data.getDescription());
-				c.setInstructor(data.getInstructor());
-				c.setCredits(data.getCredits());
-				
-				listener.added(c.getName(), c.getInstructor());
-			}
-		});
+	public void listenTo(OnAddedCourse listener) {
+		this.listenerAdded = listener;
 	}
 	
 	public void listenTo(OnRemovedCourse listenerRemove) {
 		this.listenerRemove = listenerRemove;
 		
 	}
+	
+	private void switchPanel(String id) {
+		CardLayout cl = (CardLayout)panelWrapper.getLayout();
+		cl.show(panelWrapper, id);
+	}
+	
 	private JPanel getOperationPanel() {
 		if (operationPanel == null) {
 			operationPanel = new JPanel();
@@ -127,6 +125,11 @@ public class EditPostgradeCourse extends JDialog {
 	private JRadioButton getRBtnEditCourse() {
 		if (rBtnEditCourse == null) {
 			rBtnEditCourse = new JRadioButton("Editar curso");
+			rBtnEditCourse.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					switchPanel("Course Form");
+				}
+			});
 			rBtnEditCourse.setSelected(true);
 			rBtnEditCourse.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 15));
 		}
@@ -135,14 +138,32 @@ public class EditPostgradeCourse extends JDialog {
 	private JRadioButton getRBtnMatriculations() {
 		if (rBtnMatriculations == null) {
 			rBtnMatriculations = new JRadioButton("Ver matr\u00EDculas");
+			rBtnMatriculations.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					switchPanel("Matric Table");
+				}
+			});
 			rBtnMatriculations.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 15));
 		}
 		return rBtnMatriculations;
 	}
 	private CourseForm getCourseForm() {
 		if (courseForm == null) {
-			courseForm = new CourseForm();
+			
+			ResearchLine line = faculty.findLineByCourse(course);
+			courseForm = new CourseForm(CourseFormData.courseForm(course), line);
 			courseForm.setLayout(new BoxLayout(courseForm, BoxLayout.X_AXIS));
+			courseForm.listenTo(new OnCoursesFormActionTriggered() {
+				@Override
+				public void actionPerformed(CourseFormData data) {
+					course.setName(data.getName());
+					course.setCredits(data.getCredits());
+					course.setInstructor(data.getInstructor());
+					course.setDescription(data.getDescription());
+					
+					if (listenerAdded != null) listenerAdded.added(data.getName(), data.getInstructor());
+				}
+			});
 		}
 		return courseForm;
 	}
@@ -186,17 +207,14 @@ public class EditPostgradeCourse extends JDialog {
 	private JPanel getPanelWrapper() {
 		if (panelWrapper == null) {
 			panelWrapper = new JPanel();
-			GridBagLayout gbl_panelWrapper = new GridBagLayout();
-			gbl_panelWrapper.columnWidths = new int[]{911, 0};
-			gbl_panelWrapper.rowHeights = new int[]{622, 0};
-			gbl_panelWrapper.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-			gbl_panelWrapper.rowWeights = new double[]{0.0, Double.MIN_VALUE};
-			panelWrapper.setLayout(gbl_panelWrapper);
 			GridBagConstraints gbc_courseForm = new GridBagConstraints();
 			gbc_courseForm.fill = GridBagConstraints.BOTH;
 			gbc_courseForm.gridx = 0;
 			gbc_courseForm.gridy = 0;
-			panelWrapper.add(getCourseForm(), gbc_courseForm);
+			panelWrapper.setLayout(new CardLayout(0, 0));
+			
+			
+			panelWrapper.add(getCourseForm(), "name_230137649790300");
 		}
 		return panelWrapper;
 	}
@@ -224,6 +242,11 @@ public class EditPostgradeCourse extends JDialog {
 	private JRadioButton getRBtnMatriculate() {
 		if (rBtnMatriculate == null) {
 			rBtnMatriculate = new JRadioButton("Matr\u00EDcula");
+			rBtnMatriculate.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					switchPanel("Add Matric");
+				}
+			});
 			rBtnMatriculate.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 15));
 		}
 		return rBtnMatriculate;
