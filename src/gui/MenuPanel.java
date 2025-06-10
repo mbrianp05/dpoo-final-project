@@ -14,6 +14,7 @@ import java.awt.CardLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -29,7 +30,6 @@ import javax.swing.JPanel;
 import javax.swing.border.Border;
 
 import schooling.Faculty;
-import utils.Icons;
 import utils.Mock;
 
 public class MenuPanel extends JPanel {
@@ -106,7 +106,6 @@ public class MenuPanel extends JPanel {
 	private JMenu getManagement() {
 		if (management == null) {
 			management = new JMenu("Administraci\u00F3n");
-			management.setSelectedIcon(new ImageIcon(MenuPanel.class.getResource("/com/sun/javafx/scene/control/skin/caspian/images/vk-medium-pressed.png")));
 			management.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 			management.add(getNewResearcherMenu());
 			management.add(getAddCourse());
@@ -349,7 +348,10 @@ public class MenuPanel extends JPanel {
 	
 	private JButton getBtnCerrar() {
 		if (btnCerrar == null) {
-			btnCerrar = new JButton(Icons.getCloseIcon());
+			ImageIcon icon = new ImageIcon(BestResearchersJDialog.class.getResource("/resources/images/close-x.png"));
+			icon = new ImageIcon(icon.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
+			
+			btnCerrar = new JButton(icon);
 			btnCerrar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					if (listener != null) listener.actionPerformed();

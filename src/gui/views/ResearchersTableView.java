@@ -9,6 +9,7 @@ import gui.researchers.EditResearcherJDialog;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -36,7 +37,8 @@ import javax.swing.event.ChangeListener;
 import schooling.Faculty;
 import schooling.Researcher;
 import utils.Constants;
-import utils.Icons;
+
+import javax.swing.ImageIcon;
 
 public class ResearchersTableView extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -369,7 +371,12 @@ public class ResearchersTableView extends JPanel {
 	
 	private JButton getBtnRemove() {
 		if (btnRemove == null) {
-			btnRemove = new JButton(Icons.getRemoveIcon());
+			btnRemove = new JButton();
+			
+			ImageIcon icon = new ImageIcon(ResearchersTableView.class.getResource("/resources/images/trash.png"));
+			icon = new ImageIcon(icon.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
+			
+			btnRemove.setSelectedIcon(icon);
 			btnRemove.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 			btnRemove.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {

@@ -2,16 +2,19 @@ package gui.component;
 
 import gui.event.OnAddedInput;
 import gui.event.OnDeletedInput;
+import gui.report.views.BestResearchersJDialog;
 
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -21,7 +24,6 @@ import javax.swing.JTextField;
 
 import utils.ArrayLib;
 import utils.Constants;
-import utils.Icons;
 import utils.Validation;
 
 public class MultipleInput extends JPanel {
@@ -152,7 +154,10 @@ public class MultipleInput extends JPanel {
 
 	private JButton getButton() {
 		if (button == null) {
-			button = new JButton(Icons.getRegisterIcon());
+			ImageIcon icon = new ImageIcon(BestResearchersJDialog.class.getResource("/resources/images/register.png"));
+			icon = new ImageIcon(icon.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
+			
+			button = new JButton(icon);
 			button.setBorder(null);
 			button.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
@@ -182,7 +187,10 @@ public class MultipleInput extends JPanel {
 
 	private JButton getBtnEdit() {
 		if (btnEdit == null) {
-			btnEdit = new JButton(Icons.getEditIcon());
+			ImageIcon icon = new ImageIcon(BestResearchersJDialog.class.getResource("/resources/images/edit.png"));
+			icon = new ImageIcon(icon.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
+			
+			btnEdit = new JButton(icon);
 			btnEdit.setBorder(null);
 			btnEdit.setVisible(false);
 			btnEdit.addActionListener(new ActionListener() {
@@ -210,7 +218,10 @@ public class MultipleInput extends JPanel {
 
 	private JButton getBtnRemove() {
 		if (btnRemove == null) {
-			btnRemove = new JButton(Icons.getRemoveIcon());
+			ImageIcon icon = new ImageIcon(BestResearchersJDialog.class.getResource("/resources/images/trash.png"));
+			icon = new ImageIcon(icon.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
+			
+			btnRemove = new JButton(icon);
 			btnRemove.setBorder(null);
 			btnRemove.setVisible(false);
 			btnRemove.addActionListener(new ActionListener() {

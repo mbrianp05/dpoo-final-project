@@ -1,17 +1,20 @@
 package gui.report.views;
 
 import gui.component.TitleLabel;
+import gui.views.ResearchersTableView;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
@@ -22,7 +25,6 @@ import javax.swing.table.DefaultTableModel;
 
 import schooling.Faculty;
 import schooling.Researcher;
-import utils.Icons;
 
 public class BestResearchersJDialog extends JDialog {
 	private static final long serialVersionUID = 1L;
@@ -49,6 +51,11 @@ public class BestResearchersJDialog extends JDialog {
 		contentPanel.setLayout(gbl_contentPanel);
 		{
 			TitleLabel tlblMejoresInvetigadores = new TitleLabel();
+			
+			ImageIcon icon = new ImageIcon(BestResearchersJDialog.class.getResource("/resources/images/research.png"));
+			icon = new ImageIcon(icon.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
+			
+			tlblMejoresInvetigadores.setIcon(icon);
 			tlblMejoresInvetigadores.setText("Mejores invetigadores");
 			GridBagConstraints gbc_tlblMejoresInvetigadores = new GridBagConstraints();
 			gbc_tlblMejoresInvetigadores.insets = new Insets(0, 0, 5, 5);
@@ -58,7 +65,10 @@ public class BestResearchersJDialog extends JDialog {
 			contentPanel.add(tlblMejoresInvetigadores, gbc_tlblMejoresInvetigadores);
 		}
 		{
-			JButton btnNewButton = new JButton(Icons.getCloseIcon());
+			ImageIcon icon = new ImageIcon(BestResearchersJDialog.class.getResource("/resources/images/close-x.png"));
+			icon = new ImageIcon(icon.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
+			
+			JButton btnNewButton = new JButton(icon);
 			btnNewButton.setBorder(null);
 			btnNewButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {

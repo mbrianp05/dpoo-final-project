@@ -19,17 +19,16 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.border.LineBorder;
 
 import schooling.Faculty;
 import schooling.Profesor;
 import schooling.ResearchLine;
 import utils.Constants;
 import utils.Validation;
-
-import javax.swing.JTextArea;
-import javax.swing.border.LineBorder;
 
 public class CourseForm extends JPanel {
 
