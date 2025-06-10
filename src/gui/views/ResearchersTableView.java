@@ -162,6 +162,7 @@ public class ResearchersTableView extends JPanel {
 				public void actionPerformed(ActionEvent arg0) {
 					ResearcherTableModel tmodel = (ResearcherTableModel)table.getModel();
 					tmodel.includeStudents(filterStudents.isSelected());
+					btnRemove.setVisible(false);
 				}
 			});
 			filterStudents.setSelected(true);
@@ -179,6 +180,7 @@ public class ResearchersTableView extends JPanel {
 				public void actionPerformed(ActionEvent arg0) {
 					ResearcherTableModel tmodel = (ResearcherTableModel)table.getModel();
 					tmodel.includeProfesors(filterProfesors.isSelected());
+					btnRemove.setVisible(false);
 				}
 			});
 			filterProfesors.setSelected(true);
@@ -216,6 +218,7 @@ public class ResearchersTableView extends JPanel {
 				public void keyTyped(KeyEvent arg0) {
 					ResearcherTableModel tmodel = (ResearcherTableModel)table.getModel();
 					tmodel.setMinScore((int)spinner.getValue());
+					btnRemove.setVisible(false);
 				}
 			});
 			spinner.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
@@ -223,6 +226,7 @@ public class ResearchersTableView extends JPanel {
 				public void stateChanged(ChangeEvent event) {
 					ResearcherTableModel tmodel = (ResearcherTableModel)table.getModel();
 					tmodel.setMinScore((int)spinner.getValue());
+					btnRemove.setVisible(false);
 				}
 			});
 		}
@@ -247,6 +251,7 @@ public class ResearchersTableView extends JPanel {
 					if (event.getKeyCode() != 16) {		
 						ResearcherTableModel tmodel = (ResearcherTableModel)table.getModel();
 						tmodel.setFilterName(filterByName.getText());
+						btnRemove.setVisible(false);
 					}
 				}
 			});
@@ -312,6 +317,7 @@ public class ResearchersTableView extends JPanel {
 
 	public void updateTable() {
 		((ResearcherTableModel)table.getModel()).fill();
+		btnRemove.setVisible(false);
 	}
 	private TitleLabel getLblDatosDeInvestigadores() {
 		if (lblDatosDeInvestigadores == null) {
@@ -338,6 +344,7 @@ public class ResearchersTableView extends JPanel {
 					if (event.getKeyCode() != 16) {		
 						ResearcherTableModel tmodel = (ResearcherTableModel)table.getModel();
 						tmodel.setFilterMatter(textFieldMatterFilter.getText());
+						btnRemove.setVisible(false);
 					}
 				}
 			});
