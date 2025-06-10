@@ -25,7 +25,11 @@ import javax.swing.SpinnerNumberModel;
 import schooling.Faculty;
 import schooling.Profesor;
 import schooling.ResearchLine;
+import utils.Constants;
 import utils.Validation;
+
+import javax.swing.JTextArea;
+import javax.swing.border.LineBorder;
 
 public class CourseForm extends JPanel {
 
@@ -38,7 +42,7 @@ public class CourseForm extends JPanel {
 	private JLabel lblCredits;
 	private JSpinner spinner;
 	private JLabel lblDescripcin;
-	private JTextField txtDescr;
+	private JTextArea txtDescr;
 	private JButton btnSave;
 	private JPanel panel;
 
@@ -50,6 +54,7 @@ public class CourseForm extends JPanel {
 	private ResearchLine line;
 	private Faculty faculty;
 	private JLabel errorLbl;
+	private JPanel panel_1;
 
 	public void listenTo(OnCoursesFormActionTriggered listener) {
 		this.listener = listener;
@@ -201,10 +206,15 @@ public class CourseForm extends JPanel {
 		}
 		return lblDescripcin;
 	}
-	private JTextField getTxtDescr() {
+	private JTextArea getTxtDescr() {
 		if (txtDescr == null) {
-			txtDescr = new JTextField();
+			txtDescr = new JTextArea();
+			txtDescr.setLineWrap(true);
+			txtDescr.setWrapStyleWord(true);
+			txtDescr.setRows(5);
+			txtDescr.setTabSize(2);
 			txtDescr.setColumns(10);
+			txtDescr.setFont(Constants.getLabelFont());
 			
 			if(course != null) {
 				txtDescr.setText(course.getDescription());
@@ -286,13 +296,13 @@ public class CourseForm extends JPanel {
 			gbc_lblDescripcin.gridx = 1;
 			gbc_lblDescripcin.gridy = 9;
 			panel.add(getLblDescripcin(), gbc_lblDescripcin);
-			GridBagConstraints gbc_txtDescr = new GridBagConstraints();
-			gbc_txtDescr.fill = GridBagConstraints.BOTH;
-			gbc_txtDescr.insets = new Insets(0, 0, 5, 5);
-			gbc_txtDescr.gridwidth = 2;
-			gbc_txtDescr.gridx = 1;
-			gbc_txtDescr.gridy = 10;
-			panel.add(getTxtDescr(), gbc_txtDescr);
+			GridBagConstraints gbc_panel_1 = new GridBagConstraints();
+			gbc_panel_1.gridwidth = 2;
+			gbc_panel_1.insets = new Insets(0, 0, 5, 5);
+			gbc_panel_1.fill = GridBagConstraints.BOTH;
+			gbc_panel_1.gridx = 1;
+			gbc_panel_1.gridy = 10;
+			panel.add(getPanel_1(), gbc_panel_1);
 			GridBagConstraints gbc_errorLbl = new GridBagConstraints();
 			gbc_errorLbl.gridwidth = 2;
 			gbc_errorLbl.anchor = GridBagConstraints.WEST;
@@ -317,5 +327,14 @@ public class CourseForm extends JPanel {
 			errorLbl.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 15));
 		}
 		return errorLbl;
+	}
+	private JPanel getPanel_1() {
+		if (panel_1 == null) {
+			panel_1 = new JPanel();
+			panel_1.setBorder(new LineBorder(Color.LIGHT_GRAY));
+			panel_1.setLayout(new BoxLayout(panel_1, BoxLayout.X_AXIS));
+			panel_1.add(getTxtDescr());
+		}
+		return panel_1;
 	}
 }
