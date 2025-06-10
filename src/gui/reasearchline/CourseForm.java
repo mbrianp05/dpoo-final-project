@@ -24,6 +24,7 @@ import javax.swing.BoxLayout;
 import schooling.Degree;
 import schooling.Faculty;
 import schooling.Profesor;
+import schooling.ResearchLine;
 import utils.Validation;
 
 import java.awt.event.ActionListener;
@@ -31,15 +32,8 @@ import java.awt.event.ActionEvent;
 import java.awt.Color;
 
 public class CourseForm extends JPanel {
-	public CourseForm() {
-		faculty = Faculty.newInstance();
-		
-		setBackground(Color.WHITE);
-		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-		add(getPanel());
-	}
 
-	private OnCoursesFormActionTriggered listener;
+	
 	private static final long serialVersionUID = 1L;
 	private JLabel lblName;
 	private JTextField txtName;
@@ -54,6 +48,8 @@ public class CourseForm extends JPanel {
 
 	private int[] profIDs;
 
+	private OnCoursesFormActionTriggered listener;
+	private CourseFormData course;
 	private Faculty faculty;
 	private JLabel errorLbl;
 
@@ -62,7 +58,10 @@ public class CourseForm extends JPanel {
 	}
 
 	private void fetchInstructors() {
-		ArrayList<Profesor> profs = faculty.getProfesorsWithDegree(Degree.Doctor);
+		
+		ResearchLine line = faculty.findLineByCourse();
+		
+		ArrayList<Profesor> profs = faculty.getDoctorsSelectedLine(line);
 		String[] names = new String[profs.size()];
 		profIDs = new int[profs.size()];
 
@@ -76,10 +75,34 @@ public class CourseForm extends JPanel {
 		cmboxInstruct.setModel(new DefaultComboBoxModel<>(names));
 	}
 
+	public CourseForm(CourseFormData data) {
+		faculty = Faculty.newInstance();
+		
+		this.course = data;
+		
+		setBackground(Color.WHITE);
+		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+		add(getPanel());
+	}
+	
+	private void resetForm() {
+		errorLbl.setText("");
+		txtName.setText("");
+		
+		if(cmboxInstruct.getModel().getSize() >= 0) {
+			cmboxInstruct.setSelectedIndex(0);
+		} else {
+			cmboxInstruct.setSelectedIndex(-1);
+		}
+		
+		spinner.setValue(0);
+		txtDescr.setText("");
+	}
+	
 	private void updateCourse() {
 		if(Validation.notEmpty(txtName.getText())) {
 			if(Validation.notEmpty(txtDescr.getText())) {
-				if((int)spinner.getValue() == 0) {
+				if((int)spinner.getValue() != 0) {
 
 					int index = cmboxInstruct.getSelectedIndex();
 
@@ -87,6 +110,10 @@ public class CourseForm extends JPanel {
 					String description = txtDescr.getText();			
 					Profesor instructor = (Profesor) faculty.findResearcher(profIDs[index]);
 					int creds = (int)spinner.getValue();
+					
+					if(course == null) {
+						resetForm();
+					}
 					
 					if(listener != null) {
 						listener.actionPerformed(new CourseFormData(name, description, instructor, creds));
@@ -117,13 +144,17 @@ public class CourseForm extends JPanel {
 			txtName = new JTextField();
 			txtName.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 15));
 			txtName.setColumns(10);
+			
+			if(course != null) {
+				txtName.setText(course.getName());
+			}
 		}
 		return txtName;
 	}
 	private JLabel getLblInstructor() {
 		if (lblInstructor == null) {
 			lblInstructor = new JLabel("Instructor");
-			lblInstructor.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+			lblInstructor.setFont(new Font("Segoe UI", Font.PLAIN, 15));				
 		}
 		return lblInstructor;
 	}
@@ -132,6 +163,10 @@ public class CourseForm extends JPanel {
 			cmboxInstruct = new JComboBox<String>();
 			cmboxInstruct.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 15));
 
+			if(course != null) {
+				cmboxInstruct.setSelectedItem(course.getInstructor());
+			}
+			
 			fetchInstructors();
 		}
 		return cmboxInstruct;
@@ -148,6 +183,10 @@ public class CourseForm extends JPanel {
 			spinner = new JSpinner();
 			spinner.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
 			spinner.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 15));
+			
+			if(course != null) {
+				spinner.setValue(course.getCredits());
+			}
 		}
 		return spinner;
 	}
@@ -162,6 +201,10 @@ public class CourseForm extends JPanel {
 		if (txtDescr == null) {
 			txtDescr = new JTextField();
 			txtDescr.setColumns(10);
+			
+			if(course != null) {
+				txtDescr.setText(course.getDescription());
+			}
 		}
 		return txtDescr;
 	}

@@ -117,7 +117,11 @@ public class CoursesFormView extends JPanel {
 	}
 	
 	private void fetchInstructors() {
-		ArrayList<Profesor> profs = faculty.getProfesorsWithDegree(Degree.Doctor);
+		String lineName = masteryPlans.getSelectedItem().toString();
+
+		ResearchLine line = faculty.findResearchLine(lineName);
+		
+		ArrayList<Profesor> profs = faculty.getDoctorsSelectedLine(line);
 		String[] names = new String[profs.size()];
 
 		for(int i = 0; i < profs.size(); i++){

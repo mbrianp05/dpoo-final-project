@@ -6,6 +6,7 @@ import gui.event.OnRemovedCourse;
 import gui.researchers.EditResearcherJDialog;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Toolkit;
 
 import javax.swing.JDialog;
@@ -31,6 +32,7 @@ import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.FlowLayout;
+
 import javax.swing.BoxLayout;
 
 public class EditPostgradeCourse extends JDialog {
@@ -48,6 +50,7 @@ public class EditPostgradeCourse extends JDialog {
 	private JRadioButton rBtnMatriculations;
 	
 	private CourseForm courseForm;
+	
 	private JButton btnEliminar;
 	private JButton btnCerrar;
 	private JPanel panelWrapper;
@@ -120,6 +123,12 @@ public class EditPostgradeCourse extends JDialog {
 		this.listenerRemove = listenerRemove;
 		
 	}
+	
+	private void switchPanel(String id) {
+		CardLayout cl = (CardLayout)panelWrapper.getLayout();
+		cl.show(panelWrapper, id);
+	}
+	
 	private JPanel getOperationPanel() {
 		if (operationPanel == null) {
 			operationPanel = new JPanel();
@@ -133,6 +142,11 @@ public class EditPostgradeCourse extends JDialog {
 	private JRadioButton getRBtnEditCourse() {
 		if (rBtnEditCourse == null) {
 			rBtnEditCourse = new JRadioButton("Editar curso");
+			rBtnEditCourse.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					switchPanel("Course Form");
+				}
+			});
 			rBtnEditCourse.setSelected(true);
 			rBtnEditCourse.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 15));
 		}
@@ -141,13 +155,19 @@ public class EditPostgradeCourse extends JDialog {
 	private JRadioButton getRBtnMatriculations() {
 		if (rBtnMatriculations == null) {
 			rBtnMatriculations = new JRadioButton("Ver matr\u00EDculas");
+			rBtnMatriculations.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					switchPanel("Matric Table");
+				}
+			});
 			rBtnMatriculations.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 15));
 		}
 		return rBtnMatriculations;
 	}
 	private CourseForm getCourseForm() {
 		if (courseForm == null) {
-			courseForm = new CourseForm();
+			
+			courseForm = new CourseForm(CourseFormData.courseForm(course));
 			courseForm.setLayout(new BoxLayout(courseForm, BoxLayout.X_AXIS));
 		}
 		return courseForm;
@@ -202,7 +222,9 @@ public class EditPostgradeCourse extends JDialog {
 			gbc_courseForm.fill = GridBagConstraints.BOTH;
 			gbc_courseForm.gridx = 0;
 			gbc_courseForm.gridy = 0;
-			panelWrapper.add(getCourseForm(), gbc_courseForm);
+			
+			
+			panelWrapper.add(getCourseForm(), "Course Form");
 		}
 		return panelWrapper;
 	}
@@ -230,6 +252,11 @@ public class EditPostgradeCourse extends JDialog {
 	private JRadioButton getRBtnMatriculate() {
 		if (rBtnMatriculate == null) {
 			rBtnMatriculate = new JRadioButton("Matr\u00EDcula");
+			rBtnMatriculate.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					switchPanel("Add Matric");
+				}
+			});
 			rBtnMatriculate.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 15));
 		}
 		return rBtnMatriculate;

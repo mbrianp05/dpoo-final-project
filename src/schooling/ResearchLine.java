@@ -51,4 +51,22 @@ public class ResearchLine {
 	public ArrayList<ResearchMatter> getMatters() {
 		return matters;
 	}
+	
+	public ArrayList<Profesor> getRelatedDoctors() {
+		ArrayList<Profesor> doctors = new ArrayList<>();
+		
+		for(ResearchMatter r: matters) {
+			for(Researcher res: r.getResearchers()) {
+				if(res instanceof Profesor) {
+					Profesor prof = (Profesor)res;
+					
+					if(prof.getDegree() == Degree.Doctor) {
+						doctors.add(prof);
+					}
+				}
+			}
+		}
+		
+		return doctors;
+	}
 }
