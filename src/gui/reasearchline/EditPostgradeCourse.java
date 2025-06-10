@@ -16,6 +16,7 @@ import javax.swing.border.EmptyBorder;
 
 import schooling.Faculty;
 import schooling.PostgraduateCourse;
+import schooling.Profesor;
 import schooling.ResearchLine;
 
 import javax.swing.JRadioButton;
@@ -45,6 +46,7 @@ public class EditPostgradeCourse extends JDialog {
 	private Faculty faculty;
 	
 	private OnRemovedCourse listenerRemove;
+	private OnAddedCourse listenerAdded;
 	
 	private JPanel operationPanel;
 	private JRadioButton rBtnEditCourse;
@@ -104,20 +106,8 @@ public class EditPostgradeCourse extends JDialog {
 		getButtonGroup();
 	}
 
-	public void listenTo(final OnAddedCourse listener) {
-		courseForm.listenTo(new OnCoursesFormActionTriggered() {			
-			@Override
-			public void actionPerformed(CourseFormData data) {
-				PostgraduateCourse c = (PostgraduateCourse)course;
-				
-				c.setName(data.getName());
-				c.setDescription(data.getDescription());
-				c.setInstructor(data.getInstructor());
-				c.setCredits(data.getCredits());
-				
-				listener.added(c.getName(), c.getInstructor());
-			}
-		});
+	public void listenTo(OnAddedCourse listener) {
+		this.listenerAdded = listener;
 	}
 	
 	public void listenTo(OnRemovedCourse listenerRemove) {
@@ -171,6 +161,17 @@ public class EditPostgradeCourse extends JDialog {
 			ResearchLine line = faculty.findLineByCourse(course);
 			courseForm = new CourseForm(CourseFormData.courseForm(course), line);
 			courseForm.setLayout(new BoxLayout(courseForm, BoxLayout.X_AXIS));
+			courseForm.listenTo(new OnCoursesFormActionTriggered() {
+				@Override
+				public void actionPerformed(CourseFormData data) {
+					course.setName(data.getName());
+					course.setCredits(data.getCredits());
+					course.setInstructor(data.getInstructor());
+					course.setDescription(data.getDescription());
+					
+					if (listenerAdded != null) listenerAdded.added(data.getName(), data.getInstructor());
+				}
+			});
 		}
 		return courseForm;
 	}
@@ -214,19 +215,14 @@ public class EditPostgradeCourse extends JDialog {
 	private JPanel getPanelWrapper() {
 		if (panelWrapper == null) {
 			panelWrapper = new JPanel();
-			GridBagLayout gbl_panelWrapper = new GridBagLayout();
-			gbl_panelWrapper.columnWidths = new int[]{911, 0};
-			gbl_panelWrapper.rowHeights = new int[]{622, 0};
-			gbl_panelWrapper.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-			gbl_panelWrapper.rowWeights = new double[]{0.0, Double.MIN_VALUE};
-			panelWrapper.setLayout(gbl_panelWrapper);
 			GridBagConstraints gbc_courseForm = new GridBagConstraints();
 			gbc_courseForm.fill = GridBagConstraints.BOTH;
 			gbc_courseForm.gridx = 0;
 			gbc_courseForm.gridy = 0;
+			panelWrapper.setLayout(new CardLayout(0, 0));
 			
 			
-			panelWrapper.add(getCourseForm(), "Course Form");
+			panelWrapper.add(getCourseForm(), "name_230137649790300");
 		}
 		return panelWrapper;
 	}

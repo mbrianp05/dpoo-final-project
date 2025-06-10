@@ -134,6 +134,11 @@ public class CoursesFormView extends JPanel {
 	private JComboBox<String> getMasteryPlans() {
 		if (masteryPlans == null) {
 			masteryPlans = new JComboBox<>();
+			masteryPlans.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					fetchInstructors();
+				}
+			});
 			masteryPlans.setFont(Constants.getLabelFont());
 
 			fetchMasteryPlans();

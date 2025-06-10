@@ -8,6 +8,7 @@ import javax.swing.JLabel;
 import java.awt.Font;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JSpinner;
@@ -46,6 +47,7 @@ public class CourseForm extends JPanel {
 	private JPanel panel;
 
 	private int[] profIDs;
+	private String[] names;
 
 	private OnCoursesFormActionTriggered listener;
 	private CourseFormData course;
@@ -60,7 +62,7 @@ public class CourseForm extends JPanel {
 	private void fetchInstructors() {
 				
 		ArrayList<Profesor> profs = faculty.getDoctorsSelectedLine(line);
-		String[] names = new String[profs.size()];
+		names = new String[profs.size()];
 		profIDs = new int[profs.size()];
 
 		for(int i = 0; i < profs.size(); i++){
@@ -98,6 +100,10 @@ public class CourseForm extends JPanel {
 		txtDescr.setText("");
 	}
 	
+	private void sendFeedback() {
+		JOptionPane.showMessageDialog(null, "¡Se ha actualizado el curso correctamente!", "Mensaje", JOptionPane.PLAIN_MESSAGE);
+	}
+	
 	private void updateCourse() {
 		if(Validation.notEmpty(txtName.getText())) {
 			if(Validation.notEmpty(txtDescr.getText())) {
@@ -107,16 +113,19 @@ public class CourseForm extends JPanel {
 
 					String name = txtName.getText();
 					String description = txtDescr.getText();			
-					Profesor instructor = (Profesor) faculty.findResearcher(profIDs[index]);
+					Profesor instructor = (Profesor)faculty.findResearcher(profIDs[index]);
 					int creds = (int)spinner.getValue();
 					
 					if(course == null) {
 						resetForm();
 					}
 					
+					
 					if(listener != null) {
 						listener.actionPerformed(new CourseFormData(name, description, instructor, creds));
 					}
+					
+					sendFeedback();
 				}
 				else {
 					errorLbl.setText("Los créditos otorgados por el curso no pueden ser 0");
