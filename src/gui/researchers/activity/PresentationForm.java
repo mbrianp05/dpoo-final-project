@@ -58,6 +58,9 @@ public class PresentationForm extends JPanel {
 	private ErrorLabel errorISBN;
 	private ErrorLabel errorLocation;
 	
+	/**
+	 * @wbp.parser.constructor
+	 */
 	public PresentationForm(Researcher researcher) {
 		this(researcher, null);
 	}

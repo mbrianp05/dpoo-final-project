@@ -9,14 +9,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 
-import javax.swing.BorderFactory;
 import javax.swing.JDialog;
-import javax.swing.JButton;
-
-import utils.Icons;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class AddChiefJDialog extends JDialog {
 	private static final long serialVersionUID = 3142798032279882910L;

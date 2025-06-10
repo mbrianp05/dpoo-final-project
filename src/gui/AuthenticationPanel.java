@@ -33,12 +33,12 @@ public class AuthenticationPanel extends JPanel {
 	private JButton btnAcceder;
 
 	public AuthenticationPanel() {
-		setBorder(new LineBorder(new Color(255, 0, 51), 2, true));
+		setBorder(new LineBorder(new Color(0, 51, 255), 2, true));
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{0, 400, 0, 0};
-		gridBagLayout.rowHeights = new int[]{0, 0, 0, 30, 40, 0, 0, 40, 50, 40, 0, 0};
+		gridBagLayout.columnWidths = new int[]{40, 400, 40, 0};
+		gridBagLayout.rowHeights = new int[]{40, 0, 30, 30, 40, 30, 0, 40, 50, 40, 40, 0};
 		gridBagLayout.columnWeights = new double[]{1.0, 1.0, 1.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		GridBagConstraints gbc_lblAuthorization = new GridBagConstraints();
 		gbc_lblAuthorization.fill = GridBagConstraints.BOTH;

@@ -387,7 +387,7 @@ public class ResearchLineFormView extends JPanel {
 			addChiefForm = new JPanel();
 			GridBagLayout gbl_addChiefForm = new GridBagLayout();
 			gbl_addChiefForm.columnWidths = new int[]{0, 0, 0};
-			gbl_addChiefForm.rowHeights = new int[]{0, 30, 30, 0};
+			gbl_addChiefForm.rowHeights = new int[]{35, 30, 30, 0};
 			gbl_addChiefForm.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
 			gbl_addChiefForm.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
 			addChiefForm.setLayout(gbl_addChiefForm);

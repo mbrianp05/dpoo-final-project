@@ -64,6 +64,7 @@ public class MenuPanel extends JPanel {
 	private JButton btnCerrar;
 
 	private OnCloseApp listener;
+	private JMenuItem padding;
 	
 	public MenuPanel() {
 		this.faculty = Faculty.newInstance();
@@ -97,6 +98,7 @@ public class MenuPanel extends JPanel {
 			menuBar.add(getManagement());
 			menuBar.add(getMnData());
 			menuBar.add(getReports());
+			menuBar.add(getPadding());
 			menuBar.add(getBtnCerrar());
 		}
 		return menuBar;
@@ -359,5 +361,11 @@ public class MenuPanel extends JPanel {
 			btnCerrar.setBorder(emptyBorder);
 		}
 		return btnCerrar;
+	}
+	private JMenuItem getPadding() {
+		if (padding == null) {
+			padding = new JMenuItem("");
+		}
+		return padding;
 	}
 }
