@@ -26,7 +26,6 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.border.LineBorder;
 
-import schooling.Degree;
 import schooling.Faculty;
 import schooling.Profesor;
 import schooling.ResearchLine;

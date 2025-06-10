@@ -21,7 +21,6 @@ import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 
-import schooling.Degree;
 import schooling.Faculty;
 import schooling.Profesor;
 import schooling.ResearchLine;
@@ -50,6 +49,7 @@ public class CourseForm extends JPanel {
 
 	private OnCoursesFormActionTriggered listener;
 	private CourseFormData course;
+	private ResearchLine line;
 	private Faculty faculty;
 	private JLabel errorLbl;
 
@@ -58,9 +58,7 @@ public class CourseForm extends JPanel {
 	}
 
 	private void fetchInstructors() {
-		
-		ResearchLine line = faculty.findLineByCourse();
-		
+				
 		ArrayList<Profesor> profs = faculty.getDoctorsSelectedLine(line);
 		String[] names = new String[profs.size()];
 		profIDs = new int[profs.size()];
@@ -75,9 +73,10 @@ public class CourseForm extends JPanel {
 		cmboxInstruct.setModel(new DefaultComboBoxModel<>(names));
 	}
 
-	public CourseForm(CourseFormData data) {
+	public CourseForm(CourseFormData data, ResearchLine line) {
 		faculty = Faculty.newInstance();
 		
+		this.line = line;
 		this.course = data;
 		
 		setBackground(Color.WHITE);

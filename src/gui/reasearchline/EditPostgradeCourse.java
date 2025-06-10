@@ -16,6 +16,7 @@ import javax.swing.border.EmptyBorder;
 
 import schooling.Faculty;
 import schooling.PostgraduateCourse;
+import schooling.ResearchLine;
 
 import javax.swing.JRadioButton;
 
@@ -167,7 +168,8 @@ public class EditPostgradeCourse extends JDialog {
 	private CourseForm getCourseForm() {
 		if (courseForm == null) {
 			
-			courseForm = new CourseForm(CourseFormData.courseForm(course));
+			ResearchLine line = faculty.findLineByCourse(course);
+			courseForm = new CourseForm(CourseFormData.courseForm(course), line);
 			courseForm.setLayout(new BoxLayout(courseForm, BoxLayout.X_AXIS));
 		}
 		return courseForm;
