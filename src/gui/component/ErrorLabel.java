@@ -17,7 +17,7 @@ public class ErrorLabel extends JLabel {
 		icon = new ImageIcon(icon.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
 		
 		setIcon(icon);
-		setForeground(new Color(255, 0, 51));
+		setForeground(new Color(204, 102, 102));
 		setFont(new Font("Segoe UI", Font.PLAIN, 13));
 	}
 }

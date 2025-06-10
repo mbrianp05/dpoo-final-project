@@ -1,15 +1,18 @@
 package gui;
 
+import gui.component.ErrorLabel;
 import gui.event.OnAuthenticate;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -25,7 +28,7 @@ public class AuthenticationPanel extends JPanel {
 	
 	private JLabel lblAuthorization;
 	private JLabel lblIngresaElCdigo;
-	private JLabel errorMsg;
+	private ErrorLabel errorMsg;
 	private JPasswordField passcode;
 	private OnAuthenticate onAuthenticateEvent;
 	private JLabel lblContrasea;
@@ -33,7 +36,6 @@ public class AuthenticationPanel extends JPanel {
 	private JButton btnAcceder;
 
 	public AuthenticationPanel() {
-		setBorder(new LineBorder(new Color(0, 51, 255), 2, true));
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{40, 400, 40, 0};
 		gridBagLayout.rowHeights = new int[]{40, 0, 30, 30, 40, 30, 0, 40, 50, 40, 40, 0};
@@ -93,6 +95,8 @@ public class AuthenticationPanel extends JPanel {
 		if (Authentication.authorize(textFieldUsername.getText(), String.valueOf(passcode.getPassword()))) {
 			if (onAuthenticateEvent != null)
 				onAuthenticateEvent.granted();
+			
+			errorMsg.setVisible(false);
 		} else {
 			passcode.setText("");
 			errorMsg.setVisible(true);
@@ -111,7 +115,11 @@ public class AuthenticationPanel extends JPanel {
 
 	private JLabel getLblIngresaElCdigo() {
 		if (lblIngresaElCdigo == null) {
+			ImageIcon icon = new ImageIcon(AuthenticationPanel.class.getResource("/resources/images/user-alt.png"));
+			icon = new ImageIcon(icon.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
+			
 			lblIngresaElCdigo = new JLabel("Nombre de usuario");
+			lblIngresaElCdigo.setIcon(icon);
 			lblIngresaElCdigo.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 			lblIngresaElCdigo.setHorizontalAlignment(SwingConstants.LEFT);
 		}
@@ -119,12 +127,12 @@ public class AuthenticationPanel extends JPanel {
 		return lblIngresaElCdigo;
 	}
 
-	private JLabel getErrorMsg() {
+	private ErrorLabel getErrorMsg() {
 		if (errorMsg == null) {
-			errorMsg = new JLabel("Credenciales no válidas");
+			errorMsg = new ErrorLabel();
+			errorMsg.setText("Las credenciales no son correctas");
 			errorMsg.setBackground(Color.WHITE);
 			errorMsg.setFont(new Font("Segoe UI", Font.PLAIN, 15));
-			errorMsg.setForeground(new Color(204, 102, 102));
 			errorMsg.setVisible(false);
 		}
 
@@ -140,6 +148,10 @@ public class AuthenticationPanel extends JPanel {
 	private JLabel getLblContrasea() {
 		if (lblContrasea == null) {
 			lblContrasea = new JLabel("Contraseña");
+			ImageIcon icon = new ImageIcon(AuthenticationPanel.class.getResource("/resources/images/lock.png"));
+			icon = new ImageIcon(icon.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
+			
+			lblContrasea.setIcon(icon);
 			lblContrasea.setHorizontalAlignment(SwingConstants.LEFT);
 			lblContrasea.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 		}
