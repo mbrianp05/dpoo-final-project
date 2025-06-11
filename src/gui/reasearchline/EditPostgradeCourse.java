@@ -18,9 +18,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
-import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.border.EmptyBorder;
@@ -37,7 +35,6 @@ public class EditPostgradeCourse extends JDialog {
 	private PostgraduateCourse course;
 	private Faculty faculty;
 	
-	private OnRemovedCourse listenerRemove;
 	private OnAddedCourse listenerAdded;
 	
 	private JPanel operationPanel;
@@ -45,12 +42,8 @@ public class EditPostgradeCourse extends JDialog {
 	private JRadioButton rBtnMatriculations;
 	
 	private CourseForm courseForm;
-	
-	private JButton btnEliminar;
-	private JButton btnCerrar;
 	private JPanel panelWrapper;
 	private ButtonGroup buttonGroup;
-	private JPanel panel;
 	private JRadioButton rBtnMatriculate;
 	
 	public EditPostgradeCourse(PostgraduateCourse course) {
@@ -89,11 +82,6 @@ public class EditPostgradeCourse extends JDialog {
 		gbc_panelWrapper.gridx = 0;
 		gbc_panelWrapper.gridy = 1;
 		contentPanel.add(getPanelWrapper(), gbc_panelWrapper);
-		GridBagConstraints gbc_panel = new GridBagConstraints();
-		gbc_panel.fill = GridBagConstraints.BOTH;
-		gbc_panel.gridx = 0;
-		gbc_panel.gridy = 2;
-		contentPanel.add(getPanel(), gbc_panel);
 		
 		getButtonGroup();
 	}
@@ -103,7 +91,6 @@ public class EditPostgradeCourse extends JDialog {
 	}
 	
 	public void listenTo(OnRemovedCourse listenerRemove) {
-		this.listenerRemove = listenerRemove;
 		
 	}
 	
@@ -167,43 +154,6 @@ public class EditPostgradeCourse extends JDialog {
 		}
 		return courseForm;
 	}
-	private JButton getBtnEliminar() {
-		if (btnEliminar == null) {
-			btnEliminar = new JButton("Eliminar");
-			btnEliminar.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent arg0) {
-					
-					setAlwaysOnTop(false);
-					int input = JOptionPane.showConfirmDialog(null, "Deseas eliminar a este curso", "Eliminar", JOptionPane.WARNING_MESSAGE);					
-					setAlwaysOnTop(true);
-					
-					if(input == JOptionPane.YES_OPTION) {
-						
-						faculty.getCoursesList().remove(course);
-						
-						if(listenerRemove != null) {
-							listenerRemove.removed(course.getName());
-						}
-						
-						course = null;
-						setVisible(false);
-					}
-				}
-			});
-		}
-		return btnEliminar;
-	}
-	private JButton getBtnCerrar() {
-		if (btnCerrar == null) {
-			btnCerrar = new JButton("Cerrar");
-			btnCerrar.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent arg0) {
-					setVisible(false);
-				}
-			});
-		}
-		return btnCerrar;
-	}
 	private JPanel getPanelWrapper() {
 		if (panelWrapper == null) {
 			panelWrapper = new JPanel();
@@ -229,15 +179,6 @@ public class EditPostgradeCourse extends JDialog {
 			buttonGroup.add(rBtnEditCourse);
 		}
 		return buttonGroup;
-	}
-	private JPanel getPanel() {
-		if (panel == null) {
-			panel = new JPanel();
-			panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
-			panel.add(getBtnEliminar());
-			panel.add(getBtnCerrar());
-		}
-		return panel;
 	}
 	private JRadioButton getRBtnMatriculate() {
 		if (rBtnMatriculate == null) {
