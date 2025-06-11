@@ -175,6 +175,7 @@ public class MenuPanel extends JPanel {
 					try {
 						BestResearchersJDialog dialog = new BestResearchersJDialog();
 						
+						dialog.setLocationRelativeTo(null);
 						dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 						dialog.setVisible(true);
 					} catch (Exception e) {

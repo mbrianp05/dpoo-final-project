@@ -9,21 +9,22 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
 import schooling.Faculty;
 import schooling.Researcher;
+import utils.Constants;
 
 public class BestResearchersJDialog extends JDialog {
 	private static final long serialVersionUID = 1L;
@@ -32,15 +33,16 @@ public class BestResearchersJDialog extends JDialog {
 	private JTable table;
 
 	public BestResearchersJDialog() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(BestResearchersJDialog.class.getResource("/com/sun/javafx/scene/control/skin/modena/HTMLEditor-Copy.png")));
-		setTitle("Reporte de mejores invetigadores");
-		setLocationRelativeTo(null);
+		//		setIconImage(Toolkit.getDefaultToolkit().getImage(BestResearchersJDialog.class.getResource("/com/sun/javafx/scene/control/skin/modena/HTMLEditor-Copy.png")));
+		//		setTitle("Reporte de mejores invetigadores");
+		setUndecorated(true);
 		setModal(true);
 		setModalExclusionType(ModalExclusionType.APPLICATION_EXCLUDE);
 		setResizable(false);
 		setBounds(100, 100, 552, 365);
 		getContentPane().setLayout(new BorderLayout());
-		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPanel.setBackground(new Color(255, 205, 205));
+		contentPanel.setBorder(new LineBorder(new Color(255, 205, 205), 3, true));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		GridBagLayout gbl_contentPanel = new GridBagLayout();
 		gbl_contentPanel.columnWidths = new int[]{0, 0};
@@ -50,10 +52,10 @@ public class BestResearchersJDialog extends JDialog {
 		contentPanel.setLayout(gbl_contentPanel);
 		{
 			TitleLabel tlblMejoresInvetigadores = new TitleLabel();
-			
+
 			ImageIcon icon = new ImageIcon(BestResearchersJDialog.class.getResource("/resources/images/research.png"));
 			icon = new ImageIcon(icon.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
-			
+
 			tlblMejoresInvetigadores.setIcon(icon);
 			tlblMejoresInvetigadores.setText("Mejores invetigadores");
 			GridBagConstraints gbc_tlblMejoresInvetigadores = new GridBagConstraints();
@@ -66,9 +68,10 @@ public class BestResearchersJDialog extends JDialog {
 		{
 			ImageIcon icon = new ImageIcon(BestResearchersJDialog.class.getResource("/resources/images/close-x.png"));
 			icon = new ImageIcon(icon.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
-			
+
 			JButton btnNewButton = new JButton(icon);
-			btnNewButton.setBorder(null);
+			btnNewButton.setBorder(BorderFactory.createEmptyBorder());
+			btnNewButton.setBackground(new Color(0, 0, 0, 0f));
 			btnNewButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					setVisible(false);
@@ -92,25 +95,33 @@ public class BestResearchersJDialog extends JDialog {
 				contentPanel.add(scrollPane, gbc_scrollPane);
 				{
 					table = new JTable();
+					table.setFont(Constants.getLabelFont());
+					table.setEnabled(false);
+					table.getTableHeader().setBorder(BorderFactory.createEmptyBorder());
+					table.getTableHeader().setBackground(new Color(255, 205, 205));
+					table.getTableHeader().setFont(Constants.getLabelFont());
+					table.setGridColor(new Color(255, 205, 205));
+					table.setBackground(new Color(255, 205, 205));
+					table.setRowHeight(25);
 					table.setModel(new DefaultTableModel(
-						new Object[][] {},
-						new String[] {
-							"Nombre", "Puntuaci\u00F3n"
-						}
-					) {
+							new Object[][] {},
+							new String[] {
+									"Nombre", "Puntuaci\u00F3n"
+							}
+							) {
 						private static final long serialVersionUID = 6062319489520125102L;
-						
+
 						public boolean isCellEditable(int row, int column) {
 							return false;
 						}
 					});
-					
+
 					Faculty faculty = Faculty.newInstance();
-					
+
 					for (Researcher r: faculty.bestResearchers()) {
 						((DefaultTableModel)table.getModel()).addRow(new Object[] { r.getName(), r.getScore() });
 					}
-					
+
 					table.setRowHeight(24);
 					table.getColumnModel().getColumn(0).setPreferredWidth(150);
 					table.getColumnModel().getColumn(1).setPreferredWidth(80);
