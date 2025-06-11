@@ -23,6 +23,9 @@ public class Mock {
 		
 		faculty.addStudent("Brian", "IAs Generativas");
 		
+		line.getMatters().get(0).addResearcher(faculty.findResearcher(profesorID));
+		line.getMatters().get(1).addResearcher(faculty.findResearcher(profesorID2));
+		
 		faculty.getResearchers().get(0).addBookChapter("Chapter 1", new String[]{"@a"}, new String[] {"@a"}, "FESX", "ISSN 1233-032X", "Name", 1);
 		faculty.getResearchers().get(0).addBookChapter("Chapter 2", new String[]{"@a"}, new String[] {"@a"}, "ABSH", "ISSN 1233-0321", "Name", 1);
 		//-----------------------------

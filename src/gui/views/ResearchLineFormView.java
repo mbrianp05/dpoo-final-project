@@ -18,6 +18,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -39,6 +40,7 @@ import utils.Validation;
 public class ResearchLineFormView extends JPanel {
 	private static final long serialVersionUID = 3971105665570208468L;
 	private Faculty faculty;
+	private ResearchLine line;
 	private OnAddedResearchLine listener;
 
 	private ProfesorFormData chief;
@@ -72,9 +74,14 @@ public class ResearchLineFormView extends JPanel {
 	private JLabel lblCategora;
 	private JLabel lblMateria;
 	private MultipleInput multipleInput;
+	
+	public ResearchLineFormView() {
+		this(null);
+	}
 
-	public ResearchLineFormView(Faculty faculty) {
-		this.faculty = faculty;
+	public ResearchLineFormView(ResearchLine line) {
+		this.faculty = Faculty.newInstance();
+		this.line = line;
 		chief = null;
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{100, 0, 75, 288, 50, 100, 0};
@@ -195,6 +202,25 @@ public class ResearchLineFormView extends JPanel {
 	
 	private void initForm() {
 		hideErrors();
+		
+		if (line != null) {
+			textFieldName.setText(line.getName());
+			minCreditsSpinner.setValue(line.getMasteryPlan().getMinCredits());
+			
+			ArrayList<ResearchMatter> m = line.getMatters();
+			String matters[] = new String[m.size()];
+			
+			for (int i = 0; i < matters.length; i++) {
+				matters[i] = m.get(i).getName();
+			}
+			
+			multipleInput.with(matters);
+			
+			Profesor p = line.getChief();
+			chief = ProfesorFormData.fromResearcher(line.getChief(), faculty.findMatterOf(p.getID()).getName());
+			
+			switchPanel("Change Chief");
+		}
 	}
 	
 	public void listenTo(OnAddedResearchLine listener) {

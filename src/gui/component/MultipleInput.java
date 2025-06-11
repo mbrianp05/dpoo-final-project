@@ -25,6 +25,8 @@ import javax.swing.JTextField;
 import utils.ArrayLib;
 import utils.Constants;
 import utils.Validation;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class MultipleInput extends JPanel {
 	private String mainLabelText;
@@ -44,13 +46,6 @@ public class MultipleInput extends JPanel {
 		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
-		GridBagConstraints gbc_comboBox = new GridBagConstraints();
-		gbc_comboBox.gridwidth = 5;
-		gbc_comboBox.insets = new Insets(0, 0, 5, 0);
-		gbc_comboBox.fill = GridBagConstraints.BOTH;
-		gbc_comboBox.gridx = 1;
-		gbc_comboBox.gridy = 1;
-		add(getComboBox(), gbc_comboBox);
 		GridBagConstraints gbc_btnEdit = new GridBagConstraints();
 		gbc_btnEdit.fill = GridBagConstraints.BOTH;
 		gbc_btnEdit.insets = new Insets(0, 0, 5, 5);
@@ -63,6 +58,13 @@ public class MultipleInput extends JPanel {
 		gbc_btnRemove.gridx = 2;
 		gbc_btnRemove.gridy = 0;
 		add(getBtnRemove(), gbc_btnRemove);
+		GridBagConstraints gbc_comboBox = new GridBagConstraints();
+		gbc_comboBox.gridwidth = 5;
+		gbc_comboBox.insets = new Insets(0, 0, 5, 0);
+		gbc_comboBox.fill = GridBagConstraints.BOTH;
+		gbc_comboBox.gridx = 1;
+		gbc_comboBox.gridy = 1;
+		add(getComboBox(), gbc_comboBox);
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
 		gbc_lblNewLabel.fill = GridBagConstraints.BOTH;
 		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
@@ -139,6 +141,7 @@ public class MultipleInput extends JPanel {
 		if (comboBox == null) {
 			comboBox = new JComboBox<>();
 			comboBox.setFont(Constants.getLabelFont());
+			updateCombobox();
 		}
 		return comboBox;
 	}
@@ -146,12 +149,43 @@ public class MultipleInput extends JPanel {
 	private JTextField getTextField() {
 		if (textField == null) {
 			textField = new JTextField();
+			textField.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyTyped(KeyEvent event) {
+					int eKeyCode = KeyEvent.getExtendedKeyCodeForChar(event.getKeyChar());
+					
+					if (eKeyCode == 10) {
+						addValue();
+					}
+				}
+			});
 			textField.setColumns(10);
 			textField.setFont(Constants.getLabelFont());
 		}
 		return textField;
 	}
 
+	private void addValue() {
+		if (Validation.notEmpty(textField.getText())) {
+			comboBox.setEnabled(true);
+			String newValue = textField.getText();
+
+			errorMessage.setVisible(false);
+			values.add(newValue);
+			textField.setText("");
+
+			updateCombobox();
+
+			comboBox.setSelectedIndex(comboBox.getModel().getSize() - 1);
+
+			if (newListener != null) {
+				newListener.newItem(newValue);
+			}
+		} else {
+			errorMessage.setVisible(true);
+		}
+	}
+	
 	private JButton getButton() {
 		if (button == null) {
 			ImageIcon icon = new ImageIcon(BestResearchersJDialog.class.getResource("/resources/images/register.png"));
@@ -161,23 +195,7 @@ public class MultipleInput extends JPanel {
 			button.setBorder(null);
 			button.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					if (Validation.notEmpty(textField.getText())) {
-						String newValue = textField.getText();
-
-						errorMessage.setVisible(false);
-						values.add(newValue);
-						textField.setText("");
-
-						updateCombobox();
-
-						comboBox.setSelectedIndex(comboBox.getModel().getSize() - 1);
-
-						if (newListener != null) {
-							newListener.newItem(newValue);
-						}
-					} else {
-						errorMessage.setVisible(true);
-					}
+					addValue();
 				}
 			});
 			button.setFont(Constants.getLabelFont());
@@ -240,6 +258,8 @@ public class MultipleInput extends JPanel {
 
 						updateCombobox();
 
+						if (values.size() == 0) comboBox.setEnabled(false);
+						
 						if (removedListener != null) {
 							removedListener.deletedItem(item);
 						}
@@ -266,6 +286,7 @@ public class MultipleInput extends JPanel {
 
 		btnEdit.setVisible(visibility);
 		btnRemove.setVisible(visibility);
+		comboBox.setEnabled(values.size() != 0);
 	}
 
 	public String[] getValues() {

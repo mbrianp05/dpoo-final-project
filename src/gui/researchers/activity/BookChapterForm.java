@@ -421,6 +421,7 @@ public class BookChapterForm extends JPanel {
 					breakthrough.setVolume(vol);
 				}
 
+				reset();
 				sendFeedback();
 
 				if (listener != null) {

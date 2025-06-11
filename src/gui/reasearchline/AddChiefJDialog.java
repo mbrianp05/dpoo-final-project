@@ -32,7 +32,7 @@ public class AddChiefJDialog extends JDialog {
 		setResizable(false);
 		setLocationRelativeTo(null);
 		
-		setBounds(100, 100, 970, 835);
+		setBounds(100, 100, 800, 679);
 		
 		this.matters = matters;
 		this.listener = listener;

@@ -65,9 +65,9 @@ public class ResearchersTableView extends JPanel {
 		this.faculty = Faculty.newInstance();
 
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{100, 70, 100, 100, 45, 0, 0, 30, 0, 0, 60, 70, 70, 100, 0};
+		gridBagLayout.columnWidths = new int[]{100, 70, 100, 100, 0, 0, 180, 30, 0, 180, 60, 70, 70, 100, 0};
 		gridBagLayout.rowHeights = new int[]{70, 45, 60, 40, 207, 0, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		GridBagConstraints gbc_lblDatosDeInvestigadores = new GridBagConstraints();
@@ -120,7 +120,7 @@ public class ResearchersTableView extends JPanel {
 		gbc_textFieldMatterFilter.gridy = 3;
 		add(getTextFieldMatterFilter(), gbc_textFieldMatterFilter);
 		GridBagConstraints gbc_btnRemove = new GridBagConstraints();
-		gbc_btnRemove.fill = GridBagConstraints.BOTH;
+		gbc_btnRemove.fill = GridBagConstraints.VERTICAL;
 		gbc_btnRemove.insets = new Insets(0, 0, 5, 5);
 		gbc_btnRemove.gridx = 10;
 		gbc_btnRemove.gridy = 3;
@@ -273,7 +273,7 @@ public class ResearchersTableView extends JPanel {
 			table.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent event) {
-					if (event.getClickCount() == 1 && table.getSelectedRow() >= 0) {
+					if (table.getSelectedRow() >= 0) {
 						btnRemove.setVisible(true);
 					}
 					
@@ -375,7 +375,7 @@ public class ResearchersTableView extends JPanel {
 			ImageIcon icon = new ImageIcon(ResearchersTableView.class.getResource("/resources/images/trash.png"));
 			icon = new ImageIcon(icon.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
 			
-			btnRemove.setSelectedIcon(icon);
+			btnRemove.setIcon(icon);
 			btnRemove.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 			btnRemove.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {

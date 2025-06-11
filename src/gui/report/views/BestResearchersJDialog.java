@@ -4,23 +4,25 @@ import gui.component.TitleLabel;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 
 import schooling.Faculty;
 import schooling.Researcher;
@@ -31,22 +33,25 @@ public class BestResearchersJDialog extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTable table;
+	final private Color mainColor;
+	final private Color borderColor;
 
 	public BestResearchersJDialog() {
-		//		setIconImage(Toolkit.getDefaultToolkit().getImage(BestResearchersJDialog.class.getResource("/com/sun/javafx/scene/control/skin/modena/HTMLEditor-Copy.png")));
-		//		setTitle("Reporte de mejores invetigadores");
+		mainColor = new Color(255, 215, 215);
+		borderColor = new Color(220, 140, 140);
+		
 		setUndecorated(true);
 		setModal(true);
 		setModalExclusionType(ModalExclusionType.APPLICATION_EXCLUDE);
 		setResizable(false);
 		setBounds(100, 100, 552, 365);
 		getContentPane().setLayout(new BorderLayout());
-		contentPanel.setBackground(new Color(255, 205, 205));
-		contentPanel.setBorder(new LineBorder(new Color(255, 205, 205), 3, true));
+		contentPanel.setBackground(mainColor);
+		contentPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		GridBagLayout gbl_contentPanel = new GridBagLayout();
 		gbl_contentPanel.columnWidths = new int[]{0, 0};
-		gbl_contentPanel.rowHeights = new int[]{34, 0, 0, 0};
+		gbl_contentPanel.rowHeights = new int[]{34, 10, 0, 0};
 		gbl_contentPanel.columnWeights = new double[]{1.0, 0.0};
 		gbl_contentPanel.rowWeights = new double[]{0.0, 0.0, 1.0, Double.MIN_VALUE};
 		contentPanel.setLayout(gbl_contentPanel);
@@ -69,14 +74,16 @@ public class BestResearchersJDialog extends JDialog {
 			ImageIcon icon = new ImageIcon(BestResearchersJDialog.class.getResource("/resources/images/close-x.png"));
 			icon = new ImageIcon(icon.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
 
-			JButton btnNewButton = new JButton(icon);
-			btnNewButton.setBorder(BorderFactory.createEmptyBorder());
-			btnNewButton.setBackground(new Color(0, 0, 0, 0f));
-			btnNewButton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent arg0) {
-					setVisible(false);
+			JLabel btnNewButton = new JLabel(icon);
+			btnNewButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			btnNewButton.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent arg0) {
+					closeDialog();
 				}
 			});
+			btnNewButton.setBorder(BorderFactory.createEmptyBorder());
+			btnNewButton.setBackground(new Color(0, 0, 0, 0f));
 			btnNewButton.setBackground(Color.WHITE);
 			btnNewButton.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 			GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
@@ -96,13 +103,6 @@ public class BestResearchersJDialog extends JDialog {
 				{
 					table = new JTable();
 					table.setFont(Constants.getLabelFont());
-					table.setEnabled(false);
-					table.getTableHeader().setBorder(BorderFactory.createEmptyBorder());
-					table.getTableHeader().setBackground(new Color(255, 205, 205));
-					table.getTableHeader().setFont(Constants.getLabelFont());
-					table.setGridColor(new Color(255, 205, 205));
-					table.setBackground(new Color(255, 205, 205));
-					table.setRowHeight(25);
 					table.setModel(new DefaultTableModel(
 							new Object[][] {},
 							new String[] {
@@ -115,6 +115,19 @@ public class BestResearchersJDialog extends JDialog {
 							return false;
 						}
 					});
+					table.getTableHeader().setDefaultRenderer(new TableCellRenderer() {
+						@Override
+						public Component getTableCellRendererComponent(JTable table, Object value,
+								boolean isSelected, boolean hasFocus, int row, int column) {
+							JLabel label = new JLabel(value.toString());
+							label.setFont(Constants.getLabelFont().deriveFont(Font.PLAIN, 17));
+							label.setBackground(mainColor);
+							label.setBorder(BorderFactory.createMatteBorder(1, 0, 1, 0, borderColor));
+							label.setOpaque(true);
+							
+							return label;
+						}
+					});
 
 					Faculty faculty = Faculty.newInstance();
 
@@ -122,6 +135,9 @@ public class BestResearchersJDialog extends JDialog {
 						((DefaultTableModel)table.getModel()).addRow(new Object[] { r.getName(), r.getScore() });
 					}
 
+					table.setEnabled(false);
+					table.setBackground(mainColor);
+					table.setGridColor(mainColor);
 					table.setRowHeight(24);
 					table.getColumnModel().getColumn(0).setPreferredWidth(150);
 					table.getColumnModel().getColumn(1).setPreferredWidth(80);
@@ -133,4 +149,7 @@ public class BestResearchersJDialog extends JDialog {
 		}
 	}
 
+	private void closeDialog() {
+		dispose();
+	}
 }

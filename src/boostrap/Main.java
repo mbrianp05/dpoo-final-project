@@ -33,6 +33,7 @@ public class Main {
 			UIManager.put("OptionPane.messageFont", Constants.getLabelFont());
 			UIManager.put("TextField.margin", new Insets(0, 6, 0, 6));
 			UIManager.put("PasswordField.margin", new Insets(0, 6, 0, 6));
+			UIManager.put("TextField.font", Constants.getLabelFont());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

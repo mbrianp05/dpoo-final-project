@@ -293,7 +293,7 @@ public class MenuPanel extends JPanel {
 	}
 	private ResearchLineFormView getResearchLinesFormView() {
 		if (researchLineFormView == null) {
-			researchLineFormView = new ResearchLineFormView(faculty);
+			researchLineFormView = new ResearchLineFormView();
 		}
 		return researchLineFormView;
 	}
