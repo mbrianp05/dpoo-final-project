@@ -6,6 +6,7 @@ import gui.event.OnAuthenticate;
 
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Insets;
 import java.awt.Toolkit;
 
 import javax.swing.BorderFactory;
@@ -30,6 +31,8 @@ public class Main {
 			UIManager.put("TableHeader.font", Constants.getLabelFont());
 			UIManager.put("OptionPane.background", new Color(255, 255, 255));
 			UIManager.put("OptionPane.messageFont", Constants.getLabelFont());
+			UIManager.put("TextField.margin", new Insets(0, 6, 0, 6));
+			UIManager.put("PasswordField.margin", new Insets(0, 6, 0, 6));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -12,11 +12,8 @@ public class Login extends JFrame {
 	private JPanel contentPane;
 	private AuthenticationPanel authenticationPanel;
 	
-	/**
-	 * Create the frame.
-	 */
 	public Login() {
-		setSize(618, 458);
+		setSize(600, 440);
 		setUndecorated(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		contentPane = new JPanel();

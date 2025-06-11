@@ -42,9 +42,9 @@ public class AuthenticationPanel extends JPanel {
 	public AuthenticationPanel() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{40, 0, 400, 40, 0};
-		gridBagLayout.rowHeights = new int[]{40, 0, 30, 30, 40, 30, 0, 40, 50, 40, 40, 0};
+		gridBagLayout.rowHeights = new int[]{40, 0, 50, 30, 40, 30, 0, 40, 50, 40, 40, 0};
 		gridBagLayout.columnWeights = new double[]{1.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		GridBagConstraints gbc_lblAuthorization = new GridBagConstraints();
 		gbc_lblAuthorization.gridwidth = 2;
@@ -53,6 +53,14 @@ public class AuthenticationPanel extends JPanel {
 		gbc_lblAuthorization.gridx = 1;
 		gbc_lblAuthorization.gridy = 1;
 		add(getLblAuthorization(), gbc_lblAuthorization);
+		GridBagConstraints gbc_errorMsg = new GridBagConstraints();
+		gbc_errorMsg.fill = GridBagConstraints.BOTH;
+		gbc_errorMsg.gridwidth = 2;
+		gbc_errorMsg.anchor = GridBagConstraints.NORTHWEST;
+		gbc_errorMsg.insets = new Insets(0, 0, 5, 5);
+		gbc_errorMsg.gridx = 1;
+		gbc_errorMsg.gridy = 2;
+		add(getErrorMsg(), gbc_errorMsg);
 		GridBagConstraints gbc_lblIngresaElCdigo = new GridBagConstraints();
 		gbc_lblIngresaElCdigo.gridwidth = 2;
 		gbc_lblIngresaElCdigo.fill = GridBagConstraints.BOTH;
@@ -81,13 +89,6 @@ public class AuthenticationPanel extends JPanel {
 		gbc_passcode.gridx = 1;
 		gbc_passcode.gridy = 7;
 		add(getPasscode(), gbc_passcode);
-		GridBagConstraints gbc_errorMsg = new GridBagConstraints();
-		gbc_errorMsg.gridwidth = 2;
-		gbc_errorMsg.anchor = GridBagConstraints.NORTHWEST;
-		gbc_errorMsg.insets = new Insets(0, 0, 5, 5);
-		gbc_errorMsg.gridx = 1;
-		gbc_errorMsg.gridy = 8;
-		add(getErrorMsg(), gbc_errorMsg);
 		GridBagConstraints gbc_panel = new GridBagConstraints();
 		gbc_panel.gridwidth = 2;
 		gbc_panel.anchor = GridBagConstraints.EAST;
