@@ -450,6 +450,21 @@ public class Faculty {
 		
 		return canBeRemoved;
 	}
+	
+	public boolean removeCourseFromLine(String name) {
+		PostgraduateCourse course = findCourseByName(name);
+		ResearchLine line = findLineByCourse(course);
+		
+		boolean removible = true;
+		
+		if(line.getMasteryPlan().getCourses().contains(course)) {
+			line.getMasteryPlan().getCourses().remove(course);
+		} else {
+			removible = false;
+		}
+		
+		return removible;
+	}
 
 	private boolean isInstructor(Profesor profesor) {
 		boolean result = false;

@@ -29,6 +29,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
+import schooling.Degree;
 import schooling.Faculty;
 import utils.Mock;
 
@@ -65,7 +66,7 @@ public class MenuPanel extends JPanel {
 
 	private OnCloseApp listener;
 	private JMenuItem padding;
-	
+
 	public MenuPanel() {
 		this.faculty = Faculty.newInstance();
 
@@ -118,12 +119,12 @@ public class MenuPanel extends JPanel {
 	private void switchView(String view) {
 		CardLayout cl = (CardLayout)(contentPanel.getLayout());
 		cl.show(contentPanel, view);
-		
+
 		researchLinesTableView.updateTable();
 		coursesTableView.updateTable();
 		researchersTableView.updateTable();
 		researchersActivityTableView.updateTable();
-		
+
 		coursesFormView.update();
 		researcherFormView.update();
 	}
@@ -143,13 +144,18 @@ public class MenuPanel extends JPanel {
 
 	// boton de insertar curso
 	private JMenuItem getAddCourse() {
-		if (addCourse == null) {
-			addCourse = new JMenuItem("Nuevo curso");
-			addCourse.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent arg0) {
-					switchView("Courses Form");
-				}
-			});
+		if (addCourse == null) {			
+				addCourse = new JMenuItem("Nuevo curso");
+				addCourse.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						switchView("Courses Form");
+					}
+				});
+			}
+		if(faculty.getReseachLines().size() > 0 && faculty.getProfesorsWithDegree(Degree.Doctor).size() > 0) {
+			addCourse.setVisible(true);
+		} else {
+			addCourse.setVisible(false);
 		}
 		return addCourse;
 	}
@@ -174,7 +180,7 @@ public class MenuPanel extends JPanel {
 				public void actionPerformed(ActionEvent arg0) {
 					try {
 						BestResearchersJDialog dialog = new BestResearchersJDialog();
-						
+
 						dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 						dialog.setVisible(true);
 					} catch (Exception e) {
@@ -271,7 +277,7 @@ public class MenuPanel extends JPanel {
 		}
 		return coursesTableMenu;
 	}
-	
+
 	private CoursesTableView getCoursesTableView() {
 		if (coursesTableView == null) {
 			coursesTableView = new CoursesTableView();
@@ -341,16 +347,16 @@ public class MenuPanel extends JPanel {
 		}
 		return researchActivityMenu;
 	}
-	
+
 	public void listenTo(OnCloseApp listener) {
 		this.listener = listener;
 	}
-	
+
 	private JButton getBtnCerrar() {
 		if (btnCerrar == null) {
 			ImageIcon icon = new ImageIcon(BestResearchersJDialog.class.getResource("/resources/images/close-x.png"));
 			icon = new ImageIcon(icon.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
-			
+
 			btnCerrar = new JButton(icon);
 			btnCerrar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
@@ -358,7 +364,7 @@ public class MenuPanel extends JPanel {
 				}
 			});
 			btnCerrar.setFont(new Font("Segoe UI", Font.PLAIN, 20));
-			
+
 			Border emptyBorder = BorderFactory.createEmptyBorder();
 			btnCerrar.setBorder(emptyBorder);
 		}

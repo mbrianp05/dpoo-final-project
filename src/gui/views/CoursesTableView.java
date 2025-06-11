@@ -8,13 +8,18 @@ import gui.reasearchline.EditPostgradeCourse;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
@@ -30,6 +35,8 @@ import schooling.Faculty;
 import schooling.PostgraduateCourse;
 import schooling.Profesor;
 import utils.Constants;
+
+import javax.swing.JButton;
 
 public class CoursesTableView extends JPanel {
 	private static final long serialVersionUID = 7564447082179207965L;
@@ -48,6 +55,7 @@ public class CoursesTableView extends JPanel {
 	private Faculty faculty;
 	private JLabel lblLblinstruct;
 	private JTextField filterByInstruct;
+	private JButton btnRemove;
 
 	/**
 	 * Create the panel.
@@ -101,6 +109,12 @@ public class CoursesTableView extends JPanel {
 		gbc_filterByInstruct.gridx = 7;
 		gbc_filterByInstruct.gridy = 3;
 		add(getFilterByInstruct(), gbc_filterByInstruct);
+		GridBagConstraints gbc_btnBorrar = new GridBagConstraints();
+		gbc_btnBorrar.fill = GridBagConstraints.VERTICAL;
+		gbc_btnBorrar.insets = new Insets(0, 0, 5, 5);
+		gbc_btnBorrar.gridx = 8;
+		gbc_btnBorrar.gridy = 3;
+		add(getBtnRemove(), gbc_btnBorrar);
 		GridBagConstraints gbc_lblInstructor = new GridBagConstraints();
 		gbc_lblInstructor.anchor = GridBagConstraints.EAST;
 		gbc_lblInstructor.fill = GridBagConstraints.VERTICAL;
@@ -152,7 +166,7 @@ public class CoursesTableView extends JPanel {
 						int row = table.getSelectedRow();
 						String courseName = String.valueOf((String)table.getModel().getValueAt(row, 0));
 						PostgraduateCourse course = faculty.findCourseByName(courseName);
-						
+
 						if(select == null || !select.isVisible()) {
 							try {
 								select = new EditPostgradeCourse(course);
@@ -264,5 +278,37 @@ public class CoursesTableView extends JPanel {
 			filterByInstruct.setColumns(10);
 		}
 		return filterByInstruct;
+	}
+
+	public void removeCourse() {
+		int input = JOptionPane.showConfirmDialog(null, "¿Estás seguro de eliminar el curso?");
+
+		if (input == JOptionPane.OK_OPTION) {
+			String name = String.valueOf((String)table.getModel().getValueAt(table.getSelectedRow(), 0));										
+			
+			if(!faculty.removeCourseFromLine(name)) {
+				JOptionPane.showMessageDialog(null, "El curso que desea eliminar no existe", "Error al eliminar el curso", JOptionPane.ERROR_MESSAGE);
+			} else {
+				updateTable();
+			}
+		}
+	}
+	private JButton getBtnRemove() {
+		if (btnRemove == null) {
+			btnRemove = new JButton();
+
+			ImageIcon icon = new ImageIcon(ResearchersTableView.class.getResource("/resources/images/trash.png"));
+			icon = new ImageIcon(icon.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
+
+			btnRemove.setSelectedIcon(icon);
+			btnRemove.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+			btnRemove.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					removeCourse();
+				}
+			});
+			btnRemove.setVisible(true);
+		}
+		return btnRemove;
 	}
 }
