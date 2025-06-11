@@ -19,7 +19,6 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.border.LineBorder;
 
 import auth.Authentication;
 
@@ -34,59 +33,68 @@ public class AuthenticationPanel extends JPanel {
 	private JLabel lblContrasea;
 	private JTextField textFieldUsername;
 	private JButton btnAcceder;
+	private JPanel panel;
+	private JButton btnExit;
 
 	public AuthenticationPanel() {
+		setBackground(new Color(0,0,0,0));
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{40, 400, 40, 0};
+		gridBagLayout.columnWidths = new int[]{40, 0, 400, 40, 0};
 		gridBagLayout.rowHeights = new int[]{40, 0, 30, 30, 40, 30, 0, 40, 50, 40, 40, 0};
-		gridBagLayout.columnWeights = new double[]{1.0, 1.0, 1.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.columnWeights = new double[]{1.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		GridBagConstraints gbc_lblAuthorization = new GridBagConstraints();
+		gbc_lblAuthorization.gridwidth = 2;
 		gbc_lblAuthorization.fill = GridBagConstraints.BOTH;
 		gbc_lblAuthorization.insets = new Insets(0, 0, 5, 5);
 		gbc_lblAuthorization.gridx = 1;
 		gbc_lblAuthorization.gridy = 1;
 		add(getLblAuthorization(), gbc_lblAuthorization);
 		GridBagConstraints gbc_lblIngresaElCdigo = new GridBagConstraints();
+		gbc_lblIngresaElCdigo.gridwidth = 2;
 		gbc_lblIngresaElCdigo.fill = GridBagConstraints.BOTH;
 		gbc_lblIngresaElCdigo.insets = new Insets(0, 0, 5, 5);
 		gbc_lblIngresaElCdigo.gridx = 1;
 		gbc_lblIngresaElCdigo.gridy = 3;
 		add(getLblIngresaElCdigo(), gbc_lblIngresaElCdigo);
 		GridBagConstraints gbc_textFieldUsername = new GridBagConstraints();
+		gbc_textFieldUsername.gridwidth = 2;
 		gbc_textFieldUsername.insets = new Insets(0, 0, 5, 5);
 		gbc_textFieldUsername.fill = GridBagConstraints.BOTH;
 		gbc_textFieldUsername.gridx = 1;
 		gbc_textFieldUsername.gridy = 4;
 		add(getTextFieldUsername(), gbc_textFieldUsername);
 		GridBagConstraints gbc_lblContrasea = new GridBagConstraints();
+		gbc_lblContrasea.gridwidth = 2;
 		gbc_lblContrasea.fill = GridBagConstraints.BOTH;
 		gbc_lblContrasea.insets = new Insets(0, 0, 5, 5);
 		gbc_lblContrasea.gridx = 1;
 		gbc_lblContrasea.gridy = 6;
 		add(getLblContrasea(), gbc_lblContrasea);
 		GridBagConstraints gbc_passcode = new GridBagConstraints();
+		gbc_passcode.gridwidth = 2;
 		gbc_passcode.insets = new Insets(0, 0, 5, 5);
 		gbc_passcode.fill = GridBagConstraints.BOTH;
 		gbc_passcode.gridx = 1;
 		gbc_passcode.gridy = 7;
 		add(getPasscode(), gbc_passcode);
 		GridBagConstraints gbc_errorMsg = new GridBagConstraints();
+		gbc_errorMsg.gridwidth = 2;
 		gbc_errorMsg.anchor = GridBagConstraints.NORTHWEST;
 		gbc_errorMsg.insets = new Insets(0, 0, 5, 5);
 		gbc_errorMsg.gridx = 1;
 		gbc_errorMsg.gridy = 8;
 		add(getErrorMsg(), gbc_errorMsg);
-		GridBagConstraints gbc_btnAcceder = new GridBagConstraints();
-		gbc_btnAcceder.anchor = GridBagConstraints.EAST;
-		gbc_btnAcceder.fill = GridBagConstraints.VERTICAL;
-		gbc_btnAcceder.insets = new Insets(0, 0, 5, 5);
-		gbc_btnAcceder.gridx = 1;
-		gbc_btnAcceder.gridy = 9;
-		add(getBtnAcceder(), gbc_btnAcceder);
+		GridBagConstraints gbc_panel = new GridBagConstraints();
+		gbc_panel.gridwidth = 2;
+		gbc_panel.anchor = GridBagConstraints.EAST;
+		gbc_panel.insets = new Insets(0, 0, 5, 5);
+		gbc_panel.gridx = 1;
+		gbc_panel.gridy = 9;
+		add(getPanel(), gbc_panel);
 	}
-
+	
 	public void listenTo(OnAuthenticate listener) {
 		onAuthenticateEvent = listener;
 	}
@@ -131,7 +139,6 @@ public class AuthenticationPanel extends JPanel {
 		if (errorMsg == null) {
 			errorMsg = new ErrorLabel();
 			errorMsg.setText("Las credenciales no son correctas");
-			errorMsg.setBackground(Color.WHITE);
 			errorMsg.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 			errorMsg.setVisible(false);
 		}
@@ -167,6 +174,7 @@ public class AuthenticationPanel extends JPanel {
 	private JButton getBtnAcceder() {
 		if (btnAcceder == null) {
 			btnAcceder = new JButton("Acceder");
+			btnAcceder.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 			btnAcceder.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					verifyCredentials();
@@ -176,5 +184,27 @@ public class AuthenticationPanel extends JPanel {
 			btnAcceder.setHorizontalAlignment(SwingConstants.LEFT);
 		}
 		return btnAcceder;
+	}
+	private JPanel getPanel() {
+		if (panel == null) {
+			panel = new JPanel();
+			panel.setBackground(new Color(0, 0, 0, 0));
+			panel.add(getBtnAcceder());
+			panel.add(getBtnExit());
+		}
+		return panel;
+	}
+	private JButton getBtnExit() {
+		if (btnExit == null) {
+			btnExit = new JButton("Salir");
+			btnExit.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+				}
+			});
+			btnExit.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+			btnExit.setHorizontalAlignment(SwingConstants.LEFT);
+			btnExit.setBackground(Color.WHITE);
+		}
+		return btnExit;
 	}
 }

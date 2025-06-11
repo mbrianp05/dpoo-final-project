@@ -44,9 +44,7 @@ public class Main {
 					try {
 						final Login frame = new Login();
 						
-						frame.pack();
 						frame.setLocationRelativeTo(null);
-						
 						frame.listenTo(new OnAuthenticate() {
 							@Override
 							public void granted() {

@@ -1,7 +1,6 @@
 package gui.report.views;
 
 import gui.component.TitleLabel;
-import gui.views.ResearchersTableView;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
