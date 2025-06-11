@@ -1,8 +1,11 @@
 package gui;
 
+import gui.event.OnCloseApp;
+
+import java.awt.CardLayout;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import java.awt.CardLayout;
 
 public class MainScreen extends JFrame {
 	private static final long serialVersionUID = -5078546845004098026L;
@@ -20,9 +23,16 @@ public class MainScreen extends JFrame {
 		contentPane.setLayout(new CardLayout(0, 0));
 		contentPane.add(getMenuPanel(), "name_209251203888700");
 	}
+	
 	private MenuPanel getMenuPanel() {
 		if (menuPanel == null) {
 			menuPanel = new MenuPanel();
+			menuPanel.listenTo(new OnCloseApp() {
+				@Override
+				public void actionPerformed() {
+					dispose();
+				}
+			});
 		}
 		return menuPanel;
 	}

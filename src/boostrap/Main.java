@@ -11,8 +11,8 @@ import java.awt.Toolkit;
 import javax.swing.BorderFactory;
 import javax.swing.UIManager;
 
-import auth.Authentication;
 import utils.Constants;
+import auth.Authentication;
 
 public class Main {
 	private static void setDefaults() {

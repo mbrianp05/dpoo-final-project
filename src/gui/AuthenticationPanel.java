@@ -2,6 +2,7 @@ package gui;
 
 import gui.component.ErrorLabel;
 import gui.event.OnAuthenticate;
+import gui.event.OnCloseApp;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -36,8 +37,9 @@ public class AuthenticationPanel extends JPanel {
 	private JPanel panel;
 	private JButton btnExit;
 
+	private OnCloseApp onCloseListener;
+	
 	public AuthenticationPanel() {
-		setBackground(new Color(0,0,0,0));
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{40, 0, 400, 40, 0};
 		gridBagLayout.rowHeights = new int[]{40, 0, 30, 30, 40, 30, 0, 40, 50, 40, 40, 0};
@@ -95,6 +97,10 @@ public class AuthenticationPanel extends JPanel {
 		add(getPanel(), gbc_panel);
 	}
 	
+	public void listenTo(OnCloseApp listener) {
+		onCloseListener = listener;
+	}
+	
 	public void listenTo(OnAuthenticate listener) {
 		onAuthenticateEvent = listener;
 	}
@@ -149,6 +155,7 @@ public class AuthenticationPanel extends JPanel {
 	private JPasswordField getPasscode() {
 		if (passcode == null) {
 			passcode = new JPasswordField();
+			passcode.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 		}
 		return passcode;
 	}
@@ -167,6 +174,7 @@ public class AuthenticationPanel extends JPanel {
 	private JTextField getTextFieldUsername() {
 		if (textFieldUsername == null) {
 			textFieldUsername = new JTextField();
+			textFieldUsername.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 			textFieldUsername.setColumns(10);
 		}
 		return textFieldUsername;
@@ -199,6 +207,7 @@ public class AuthenticationPanel extends JPanel {
 			btnExit = new JButton("Salir");
 			btnExit.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
+					onCloseListener.actionPerformed();
 				}
 			});
 			btnExit.setFont(new Font("Segoe UI", Font.PLAIN, 15));
