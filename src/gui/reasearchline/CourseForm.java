@@ -239,7 +239,7 @@ public class CourseForm extends JPanel {
 			panel.setBackground(Color.WHITE);
 			GridBagLayout gbl_panel = new GridBagLayout();
 			gbl_panel.columnWidths = new int[]{70, 0, 311, 70, 0};
-			gbl_panel.rowHeights = new int[]{40, 21, 27, 30, 21, 27, 30, 16, 30, 16, 90, 45, 40, 0};
+			gbl_panel.rowHeights = new int[]{40, 21, 35, 30, 21, 27, 30, 16, 30, 16, 90, 45, 40, 0};
 			gbl_panel.columnWeights = new double[]{0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
 			gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 			panel.setLayout(gbl_panel);
