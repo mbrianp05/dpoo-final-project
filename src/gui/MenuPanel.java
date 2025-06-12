@@ -2,6 +2,8 @@ package gui;
 
 import gui.event.OnCloseApp;
 import gui.report.views.BestResearchersJDialog;
+import gui.report.views.MostPapersPlublishedByOneResearcherJDialog;
+import gui.report.views.TrendingMattersJDialog;
 import gui.views.CoursesFormView;
 import gui.views.CoursesTableView;
 import gui.views.ResearchLineFormView;
@@ -194,6 +196,18 @@ public class MenuPanel extends JPanel {
 	private JMenuItem getTrendingMattersMenu() {
 		if (trendingMattersMenu == null) {
 			trendingMattersMenu = new JMenuItem("Temas populares");
+			trendingMattersMenu.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					try {
+						TrendingMattersJDialog dialog = new TrendingMattersJDialog();
+						dialog.setLocationRelativeTo(null);
+						dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+						dialog.setVisible(true);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			});
 		}
 		return trendingMattersMenu;
 	}
@@ -218,6 +232,18 @@ public class MenuPanel extends JPanel {
 	private JMenuItem getMostPaperMenu() {
 		if (mostPaperMenu == null) {
 			mostPaperMenu = new JMenuItem("Investigadores con m\u00E1s art\u00EDculos");
+			mostPaperMenu.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					try {
+						MostPapersPlublishedByOneResearcherJDialog dialog = new MostPapersPlublishedByOneResearcherJDialog();
+						dialog.setLocationRelativeTo(null);
+						dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+						dialog.setVisible(true);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			});
 		}
 		return mostPaperMenu;
 	}

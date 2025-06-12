@@ -25,10 +25,10 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
 import schooling.Faculty;
-import schooling.Researcher;
+import schooling.ResearchMatter;
 import utils.Constants;
 
-public class BestResearchersJDialog extends JDialog {
+public class TrendingMattersJDialog extends JDialog {
 	private static final long serialVersionUID = 1L;
 
 	private final JPanel contentPanel = new JPanel();
@@ -36,9 +36,9 @@ public class BestResearchersJDialog extends JDialog {
 	final private Color mainColor;
 	final private Color borderColor;
 
-	public BestResearchersJDialog() {
-		mainColor = new Color(255, 215, 215);
-		borderColor = new Color(220, 140, 140);
+	public TrendingMattersJDialog() {
+		mainColor = new Color(136, 255, 255);
+		borderColor = new Color(25, 128, 128);
 		
 		setUndecorated(true);
 		setModal(true);
@@ -62,7 +62,7 @@ public class BestResearchersJDialog extends JDialog {
 			icon = new ImageIcon(icon.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
 
 			tlblMejoresInvetigadores.setIcon(icon);
-			tlblMejoresInvetigadores.setText("Mejores invetigadores");
+			tlblMejoresInvetigadores.setText("Temas populares");
 			GridBagConstraints gbc_tlblMejoresInvetigadores = new GridBagConstraints();
 			gbc_tlblMejoresInvetigadores.insets = new Insets(0, 0, 5, 5);
 			gbc_tlblMejoresInvetigadores.anchor = GridBagConstraints.NORTHWEST;
@@ -106,7 +106,7 @@ public class BestResearchersJDialog extends JDialog {
 					table.setModel(new DefaultTableModel(
 							new Object[][] {},
 							new String[] {
-									"Nombre", "Puntuaci\u00F3n"
+									"Materia de investigación", "Cantidad de investigadores"
 							}
 							) {
 						private static final long serialVersionUID = 6062319489520125102L;
@@ -128,15 +128,15 @@ public class BestResearchersJDialog extends JDialog {
 							return label;
 						}
 					});
-
 					table.getTableHeader().setReorderingAllowed(false);
-					
+
 					Faculty faculty = Faculty.newInstance();
 
-					for (Researcher r: faculty.bestResearchers()) {
-						((DefaultTableModel)table.getModel()).addRow(new Object[] { r.getName(), r.getScore() });
+					for (ResearchMatter r: faculty.trendingMatters()) {
+						((DefaultTableModel)table.getModel()).addRow(new Object[] { r.getName(), r.getResearchers().size() });
 					}
 
+					
 					table.setEnabled(false);
 					table.setBackground(mainColor);
 					table.setGridColor(mainColor);

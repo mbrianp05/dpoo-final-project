@@ -219,16 +219,22 @@ public class Faculty {
 
 	// REPORTE 3: (Brian): La mayor cantidad de art�culos publicado por un mismo
 	// investigador
-	public int mostPaperPublished() {
+	public ArrayList<Researcher> mostPaperPublished() {
+		ArrayList<Researcher> result = new ArrayList<>();
 		int highest = 0;
-
+		
 		for (Researcher r : researchers) {
 			if (r.getPapers().size() > highest) {
 				highest = r.getPapers().size();
+				result.clear();
+			}
+			
+			if (r.getPapers().size() == highest) {
+				result.add(r);
 			}
 		}
 
-		return highest;
+		return result;
 	}
 
 	// REPORTE 4: (Aleksandr): Los profesores que tienen los cr�ditos necesarios
