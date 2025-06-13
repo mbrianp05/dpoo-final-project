@@ -39,7 +39,7 @@ public class BestResearchersJDialog extends JDialog {
 	public BestResearchersJDialog() {
 		mainColor = new Color(255, 215, 215);
 		borderColor = new Color(220, 140, 140);
-		
+
 		setUndecorated(true);
 		setModal(true);
 		setModalExclusionType(ModalExclusionType.APPLICATION_EXCLUDE);
@@ -74,18 +74,22 @@ public class BestResearchersJDialog extends JDialog {
 			ImageIcon icon = new ImageIcon(BestResearchersJDialog.class.getResource("/resources/images/close-x.png"));
 			icon = new ImageIcon(icon.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
 
-			JLabel btnNewButton = new JLabel(icon);
+			final JLabel btnNewButton = new JLabel(icon);
+			
+			btnNewButton.setOpaque(false);
 			btnNewButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			btnNewButton.setBorder(BorderFactory.createEmptyBorder());
+			btnNewButton.setBackground(new Color(0, 0, 0, 0f));
+			btnNewButton.setBackground(Color.WHITE);
+			btnNewButton.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+			
 			btnNewButton.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent arg0) {
 					closeDialog();
 				}
 			});
-			btnNewButton.setBorder(BorderFactory.createEmptyBorder());
-			btnNewButton.setBackground(new Color(0, 0, 0, 0f));
-			btnNewButton.setBackground(Color.WHITE);
-			btnNewButton.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+			
 			GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
 			gbc_btnNewButton.insets = new Insets(0, 0, 5, 0);
 			gbc_btnNewButton.fill = GridBagConstraints.BOTH;
@@ -124,13 +128,13 @@ public class BestResearchersJDialog extends JDialog {
 							label.setBackground(mainColor);
 							label.setBorder(BorderFactory.createMatteBorder(1, 0, 1, 0, borderColor));
 							label.setOpaque(true);
-							
+
 							return label;
 						}
 					});
 
 					table.getTableHeader().setReorderingAllowed(false);
-					
+
 					Faculty faculty = Faculty.newInstance();
 
 					for (Researcher r: faculty.bestResearchers()) {
