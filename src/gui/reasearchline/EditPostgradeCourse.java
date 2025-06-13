@@ -2,7 +2,6 @@ package gui.reasearchline;
 
 import gui.event.OnAddedCourse;
 import gui.event.OnCoursesFormActionTriggered;
-import gui.event.OnRemovedCourse;
 import gui.researchers.EditResearcherJDialog;
 
 import java.awt.BorderLayout;
@@ -44,8 +43,7 @@ public class EditPostgradeCourse extends JDialog {
 	private CourseForm courseForm;
 	private JPanel panelWrapper;
 	private ButtonGroup buttonGroup;
-	private JRadioButton rBtnMatriculate;
-	private MatriculationMarkAssignment matriculationMarkAssignment;
+	private MaskAssignmentForm maskAssignmentForm;
 
 	public EditPostgradeCourse(PostgraduateCourse course) {
 		setTitle("Editar datos del curso");
@@ -67,9 +65,9 @@ public class EditPostgradeCourse extends JDialog {
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		GridBagLayout gbl_contentPanel = new GridBagLayout();
 		gbl_contentPanel.columnWidths = new int[]{945, 0};
-		gbl_contentPanel.rowHeights = new int[]{0, 0, 0, 0};
+		gbl_contentPanel.rowHeights = new int[]{0, 0, 0};
 		gbl_contentPanel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-		gbl_contentPanel.rowWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
+		gbl_contentPanel.rowWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
 		contentPanel.setLayout(gbl_contentPanel);
 		GridBagConstraints gbc_operationPanel = new GridBagConstraints();
 		gbc_operationPanel.fill = GridBagConstraints.BOTH;
@@ -79,7 +77,6 @@ public class EditPostgradeCourse extends JDialog {
 		contentPanel.add(getOperationPanel(), gbc_operationPanel);
 		GridBagConstraints gbc_panelWrapper = new GridBagConstraints();
 		gbc_panelWrapper.fill = GridBagConstraints.BOTH;
-		gbc_panelWrapper.insets = new Insets(0, 0, 5, 0);
 		gbc_panelWrapper.gridx = 0;
 		gbc_panelWrapper.gridy = 1;
 		contentPanel.add(getPanelWrapper(), gbc_panelWrapper);
@@ -89,10 +86,6 @@ public class EditPostgradeCourse extends JDialog {
 
 	public void listenTo(OnAddedCourse listener) {
 		this.listenerAdded = listener;
-	}
-
-	public void listenTo(OnRemovedCourse listenerRemove) {
-
 	}
 
 	private void switchPanel(String id) {
@@ -106,24 +99,9 @@ public class EditPostgradeCourse extends JDialog {
 			operationPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 			operationPanel.add(getRBtnEditCourse());
 			operationPanel.add(getRBtnAssignMarks());
-			operationPanel.add(getRBtnMatriculate());
 		}
 		return operationPanel;
 	}
-
-
-	private JRadioButton getRBtnMatriculate() {
-		if (rBtnMatriculate == null) {
-			rBtnMatriculate = new JRadioButton("Matr\u00EDcular");
-			rBtnMatriculate.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent arg0) {
-					switchPanel("Add Matric");
-				}
-			});
-			rBtnMatriculate.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 15));
-		}
-		return rBtnMatriculate;
-	}	
 
 
 	private JRadioButton getRBtnEditCourse() {
@@ -144,7 +122,7 @@ public class EditPostgradeCourse extends JDialog {
 			rBtnAssignMarks = new JRadioButton("Asignar Notas");
 			rBtnAssignMarks.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					switchPanel("Assign Marks");
+					switchPanel("Matriculations Form");
 				}
 			});
 			rBtnAssignMarks.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 15));
@@ -153,7 +131,6 @@ public class EditPostgradeCourse extends JDialog {
 	}
 	private CourseForm getCourseForm() {
 		if (courseForm == null) {
-
 			ResearchLine line = faculty.findLineByCourse(course);
 			courseForm = new CourseForm(CourseFormData.courseForm(course), line);
 			courseForm.setLayout(new BoxLayout(courseForm, BoxLayout.X_AXIS));
@@ -172,11 +149,11 @@ public class EditPostgradeCourse extends JDialog {
 		return courseForm;
 	}
 
-	private MatriculationMarkAssignment getMatriculationMarkAssignment() {
-		if (matriculationMarkAssignment == null) {
-			matriculationMarkAssignment = new MatriculationMarkAssignment(course);
+	private MaskAssignmentForm getMatriculationMarkAssignment() {
+		if (maskAssignmentForm == null) {
+			maskAssignmentForm = new MaskAssignmentForm(course);
 		}
-		return matriculationMarkAssignment;
+		return maskAssignmentForm;
 	}
 	private JPanel getPanelWrapper() {
 		if (panelWrapper == null) {
@@ -188,8 +165,8 @@ public class EditPostgradeCourse extends JDialog {
 			panelWrapper.setLayout(new CardLayout(0, 0));
 
 
-			panelWrapper.add(getCourseForm(), "name_230137649790300");
-			panelWrapper.add(getMatriculationMarkAssignment(), "name_457066443149200");
+			panelWrapper.add(getCourseForm(), "Course Form");
+			panelWrapper.add(getMatriculationMarkAssignment(), "Matriculations Form");
 		}
 		return panelWrapper;
 	}
@@ -199,7 +176,6 @@ public class EditPostgradeCourse extends JDialog {
 	private ButtonGroup getButtonGroup() {
 		if (buttonGroup == null) {
 			buttonGroup = new ButtonGroup();
-			buttonGroup.add(rBtnMatriculate);
 			buttonGroup.add(rBtnAssignMarks);
 			buttonGroup.add(rBtnEditCourse);
 		}

@@ -72,7 +72,6 @@ public class Faculty {
 	}
 
 	public ResearchLine findLineByCourse(PostgraduateCourse course) {
-
 		ResearchLine line = null;
 
 		for(ResearchLine r: researchLines) {
@@ -472,19 +471,22 @@ public class Faculty {
 		return removible;
 	}
 
-	public ArrayList<Profesor> getMatriculationsAtCourse(PostgraduateCourse course) {
-		ArrayList<Profesor> profs = new ArrayList<>();
+	public ArrayList<Matriculation> getMatriculationsAtCourse(PostgraduateCourse course) {
+		ArrayList<Matriculation> matriculations = new ArrayList<>();
 
 		ResearchLine r = findLineByCourse(course);
+		
+		System.out.println();
+		
 		MasteryPlan plan = r.getMasteryPlan();
 
 		for(Matriculation mat: plan.getMatriculations()) {
 			if(mat.getCourse() == course) {
-				profs.add(mat.getProfesor());
+				matriculations.add(mat);
 			}
 		}
 
-		return profs;
+		return matriculations;
 	}
 
 	private boolean isInstructor(Profesor profesor) {
