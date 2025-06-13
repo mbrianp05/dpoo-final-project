@@ -10,6 +10,10 @@ public class Matriculation {
         setCourse(course);
     }
 
+    public void noMarkYet() {
+    	mark = -1;
+    }
+    
     public void setMark(int mark) {
     	if (mark > 5 || mark < 2) throw new IllegalArgumentException("La nota válida está entre 2 y 5");
     	

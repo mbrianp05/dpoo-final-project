@@ -13,6 +13,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
@@ -20,6 +21,7 @@ import javax.swing.SpinnerNumberModel;
 import schooling.Faculty;
 import schooling.Matriculation;
 import schooling.PostgraduateCourse;
+
 import javax.swing.BoxLayout;
 
 public class MaskAssignmentForm extends JPanel {
@@ -37,24 +39,35 @@ public class MaskAssignmentForm extends JPanel {
 	private JButton btnNewButton;
 	private JCheckBox chckbxHabilitarNota;
 
+	private int[] profesorIDs;
+
 	public MaskAssignmentForm(PostgraduateCourse course) {
 		faculty = Faculty.newInstance();
 		this.course = course;
+
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		add(getPanel());
 	}
-	
+
+	private ArrayList<Matriculation> getMatriculations() {
+		return faculty.getMatriculationsAtCourse(course);
+	}
+
 	private void fillProfessors() {
-		ArrayList<Matriculation> matriculations = faculty.getMatriculationsAtCourse(course);
+		ArrayList<Matriculation> matriculations = getMatriculations();
 		String[] names = new String[matriculations.size()];
-		
+		profesorIDs = new int[matriculations.size()];
+
 		for(int i = 0; i < matriculations.size(); i++) {
+			System.out.println(matriculations.get(i).getProfesor().getName());
+
 			names[i] = matriculations.get(i).getProfesor().getName();
+			profesorIDs[i] = matriculations.get(i).getProfesor().getID();
 		}
-		
+
 		comboBox.setModel(new DefaultComboBoxModel<>(names));
 	}
-	
+
 	private JPanel getPanel() {
 		if (panel == null) {
 			panel = new JPanel();
@@ -110,11 +123,48 @@ public class MaskAssignmentForm extends JPanel {
 		}
 		return panel;
 	}
+
+	private Matriculation getSelectedMatriculation() {
+		Matriculation m = null;
+
+		if (profesorIDs.length > 0) {
+			int index = comboBox.getSelectedIndex() != -1 ? comboBox.getSelectedIndex() : 0;
+			int selectedProfesorID = profesorIDs[index];
+			int i = 0;
+			
+			ArrayList<Matriculation> matriculations = getMatriculations();
+			
+			while (i < matriculations.size()) {
+				if (matriculations.get(i).getProfesor().getID() == selectedProfesorID) {
+					m = matriculations.get(i);
+				}
+				
+				i++;
+			}
+		}
+
+		return m;
+	}
+
+	private void setMarkValue() {
+		Matriculation m = getSelectedMatriculation();
+
+		if (m.getMark() != -1)
+			spinnerNota.setValue(m.getMark());
+		else
+			spinnerNota.setValue(2);
+	}
+
 	private JComboBox<String> getComboBox() {
 		if (comboBox == null) {
 			comboBox = new JComboBox<String>();
-			comboBox.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 15));
-			
+			comboBox.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					setMarkValue();
+				}
+			});
+			comboBox.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+
 			fillProfessors();
 		}
 		return comboBox;
@@ -139,6 +189,8 @@ public class MaskAssignmentForm extends JPanel {
 			spinnerNota.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 			spinnerNota.setModel(new SpinnerNumberModel(2, 2, 5, 1));
 			spinnerNota.setEnabled(chckbxHabilitarNota.isSelected());
+
+			setMarkValue();
 		}
 		return spinnerNota;
 	}
@@ -147,6 +199,14 @@ public class MaskAssignmentForm extends JPanel {
 			btnNewButton = new JButton("Actualizar");
 			btnNewButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
+					if (chckbxHabilitarNota.isSelected() && comboBox.getSelectedIndex() != -1) {
+						getSelectedMatriculation().setMark((Integer)spinnerNota.getValue());
+					} else {
+						getSelectedMatriculation().noMarkYet();
+						setMarkValue();
+					}
+
+					sendFeedback();
 				}
 			});
 			btnNewButton.setFont(new Font("Segoe UI", Font.BOLD, 15));
@@ -159,11 +219,19 @@ public class MaskAssignmentForm extends JPanel {
 			chckbxHabilitarNota.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					spinnerNota.setEnabled(chckbxHabilitarNota.isSelected());
+					spinnerNota.setValue(2);
 				}
 			});
-			
+
 			chckbxHabilitarNota.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+
+			if (profesorIDs.length > 0)
+				chckbxHabilitarNota.setSelected(getSelectedMatriculation().getMark() != -1);
 		}
 		return chckbxHabilitarNota;
+	}
+	
+	private void sendFeedback() {
+		JOptionPane.showMessageDialog(null, "¡La nota del profesor ha sido asignada correctamente!");
 	}
 }
