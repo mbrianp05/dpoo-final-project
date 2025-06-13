@@ -15,7 +15,15 @@ public class ResearchersActivityTableModel extends DefaultTableModel {
 	private Faculty faculty;
 	private ArrayList<Breakthrough> breakthroughs;
 	
+	private String filterName;
+	private String filterResearcher;
+	private int filterScore;
+	
 	public ResearchersActivityTableModel() {
+		filterName = "";
+		filterResearcher = "";
+		filterScore = 0;
+		
 		this.faculty = Faculty.newInstance();
 
 		String[] columns = {"Nombre", "Investigador", "Puntuación", "Identificador"};
@@ -25,6 +33,21 @@ public class ResearchersActivityTableModel extends DefaultTableModel {
 		fill();
 	}
 
+	public void setFilterName(String filter) {
+		filterName = filter;		
+		fill();
+	}
+	
+	public void setFilterResearcher(String filter) {
+		filterResearcher = filter;
+		fill();
+	}
+	
+	public void setFilterScore(int score) {
+		filterScore = score;
+		fill();
+	}
+	
 	public void init() {
 		breakthroughs = faculty.getBreakthroughs();
 	}
@@ -60,12 +83,60 @@ public class ResearchersActivityTableModel extends DefaultTableModel {
 			removeRow(0);
 		}
 	}
+	
+	private ArrayList<Breakthrough> filterByName(ArrayList<Breakthrough> data) {
+		ArrayList<Breakthrough> filter = new ArrayList<>();
+		
+		for (Breakthrough b: data) {
+			if (b.getName().startsWith(filterName)) {
+				filter.add(b);
+			}
+		}
+		
+		return filter;
+	}
+	
+	private ArrayList<Breakthrough> filterByResearcher(ArrayList<Breakthrough> data) {
+		ArrayList<Breakthrough> filter = new ArrayList<>();
+		
+		for (Breakthrough b: data) {
+			try {
+				if (faculty.findResearcherByBreakthrough(b).getName().startsWith(filterResearcher)) {
+					filter.add(b);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return filter;
+	}
 
+	private ArrayList<Breakthrough> filterByScore(ArrayList<Breakthrough> data) {
+		ArrayList<Breakthrough> filter = data;
+		
+		if (filterScore != 0) {
+			filter.clear();
+			
+			for (Breakthrough b: breakthroughs) {
+				if (b.getScore() == filterScore) filter.add(b);
+			}
+		}
+		
+		return filter;
+	}
+	
 	public void fill() {
 		init();
 		emptyTable();
-
-		for (Breakthrough b: breakthroughs) {
+		
+		ArrayList<Breakthrough> data = breakthroughs;
+		
+		data = filterByName(data);
+		data = filterByResearcher(data);
+		data = filterByScore(data);
+		
+		for (Breakthrough b: data) {
 			addNew(b);
 		}
 	}

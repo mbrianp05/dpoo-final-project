@@ -64,8 +64,8 @@ public class CoursesTableView extends JPanel {
 		this.faculty = Faculty.newInstance();
 
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{100, 0, 30, 0, 0, 30, 0, 0, 30, 0, 0, 100, 0};
-		gridBagLayout.rowHeights = new int[]{70, 45, 60, 35, 90, 0, 0};
+		gridBagLayout.columnWidths = new int[]{100, 0, 30, 0, 0, 30, 0, 0, 62, 0, 70, 100, 0};
+		gridBagLayout.rowHeights = new int[]{70, 45, 60, 40, 90, 0, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
@@ -79,7 +79,6 @@ public class CoursesTableView extends JPanel {
 		add(getLblCursosDePostgrado(), gbc_lblCursosDePostgrado);
 		GridBagConstraints gbc_lblFiltrar = new GridBagConstraints();
 		gbc_lblFiltrar.fill = GridBagConstraints.BOTH;
-		gbc_lblFiltrar.anchor = GridBagConstraints.NORTHEAST;
 		gbc_lblFiltrar.insets = new Insets(0, 0, 5, 5);
 		gbc_lblFiltrar.gridx = 1;
 		gbc_lblFiltrar.gridy = 3;
@@ -98,7 +97,6 @@ public class CoursesTableView extends JPanel {
 		add(getFilterByName(), gbc_filterByName);
 		GridBagConstraints gbc_lblLblinstruct = new GridBagConstraints();
 		gbc_lblLblinstruct.fill = GridBagConstraints.BOTH;
-		gbc_lblLblinstruct.anchor = GridBagConstraints.EAST;
 		gbc_lblLblinstruct.insets = new Insets(0, 0, 5, 5);
 		gbc_lblLblinstruct.gridx = 6;
 		gbc_lblLblinstruct.gridy = 3;
@@ -110,7 +108,7 @@ public class CoursesTableView extends JPanel {
 		gbc_filterByInstruct.gridy = 3;
 		add(getFilterByInstruct(), gbc_filterByInstruct);
 		GridBagConstraints gbc_btnBorrar = new GridBagConstraints();
-		gbc_btnBorrar.fill = GridBagConstraints.VERTICAL;
+		gbc_btnBorrar.fill = GridBagConstraints.BOTH;
 		gbc_btnBorrar.insets = new Insets(0, 0, 5, 5);
 		gbc_btnBorrar.gridx = 8;
 		gbc_btnBorrar.gridy = 3;
@@ -162,11 +160,14 @@ public class CoursesTableView extends JPanel {
 			table.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent event) {
+					int row = table.getSelectedRow();
+
+					if (row >= 0) btnRemove.setVisible(true);
 					if (event.getClickCount() > 1 && table.getSelectedRow() >= 0) {
-						int row = table.getSelectedRow();
 						String courseName = String.valueOf((String)table.getModel().getValueAt(row, 0));
 						PostgraduateCourse course = faculty.findCourseByName(courseName);
 
+						
 						if(select == null || !select.isVisible()) {
 							try {
 								select = new EditPostgradeCourse(course);
@@ -218,6 +219,8 @@ public class CoursesTableView extends JPanel {
 					if(event.getKeyCode() != 16) {
 						CoursesTableModel ctmodel = (CoursesTableModel)table.getModel();
 						ctmodel.setFilterName(filterByName.getText());
+						
+						btnRemove.setVisible(false);
 					}
 				}
 			});
@@ -245,6 +248,8 @@ public class CoursesTableView extends JPanel {
 				public void keyTyped(KeyEvent arg0) {
 					CoursesTableModel ctmodel = (CoursesTableModel)table.getModel();
 					ctmodel.setFilterCreds((int)filterCreds.getValue());
+					
+					btnRemove.setVisible(false);
 				}
 			});
 			filterCreds.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
@@ -252,6 +257,8 @@ public class CoursesTableView extends JPanel {
 				public void stateChanged(ChangeEvent event) {
 					CoursesTableModel ctmodel = (CoursesTableModel)table.getModel();
 					ctmodel.setFilterCreds((int)filterCreds.getValue());
+				
+					btnRemove.setVisible(false);
 				}
 			});
 		}
@@ -272,6 +279,8 @@ public class CoursesTableView extends JPanel {
 				public void keyReleased(KeyEvent event) {
 					CoursesTableModel ctModel = (CoursesTableModel)table.getModel();
 					ctModel.setFilterByInstruc(filterByInstruct.getText());
+					
+					btnRemove.setVisible(false);
 				}
 			});
 			filterByInstruct.setFont(new Font("Segoe UI", Font.PLAIN, 15));
@@ -300,14 +309,14 @@ public class CoursesTableView extends JPanel {
 			ImageIcon icon = new ImageIcon(ResearchersTableView.class.getResource("/resources/images/trash.png"));
 			icon = new ImageIcon(icon.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
 
-			btnRemove.setSelectedIcon(icon);
+			btnRemove.setIcon(icon);
 			btnRemove.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 			btnRemove.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					removeCourse();
 				}
 			});
-			btnRemove.setVisible(true);
+			btnRemove.setVisible(false);
 		}
 		return btnRemove;
 	}

@@ -189,7 +189,7 @@ public class MultipleInput extends JPanel {
 	private JButton getButton() {
 		if (button == null) {
 			ImageIcon icon = new ImageIcon(BestResearchersJDialog.class.getResource("/resources/images/register.png"));
-			icon = new ImageIcon(icon.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
+			icon = new ImageIcon(icon.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH));
 			
 			button = new JButton(icon);
 			button.setBorder(null);

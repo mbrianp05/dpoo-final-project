@@ -69,4 +69,18 @@ public class ResearchLine {
 		
 		return doctors;
 	}
+	
+	public int getResearchersInvolvedCount() {
+		int count = 0;
+		
+		for (ResearchMatter m: matters) {
+			count += m.getResearchers().size();
+		}
+		
+		return count;
+	}
+
+	public boolean hasResearcher() {
+		return getResearchersInvolvedCount() == 0;
+	}
 }

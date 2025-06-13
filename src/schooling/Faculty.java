@@ -47,7 +47,7 @@ public class Faculty {
 		return name;
 	}
 
-	public ArrayList<ResearchLine> getReseachLines() {
+	public ArrayList<ResearchLine> getResearchLines() {
 		return researchLines;
 	}
 
@@ -320,7 +320,7 @@ public class Faculty {
 	public ArrayList<PostgraduateCourse> getCoursesList () {
 		ArrayList<PostgraduateCourse> courses = new ArrayList<>();
 
-		for(ResearchLine r: getReseachLines()){
+		for(ResearchLine r: getResearchLines()){
 			MasteryPlan p = r.getMasteryPlan();
 			for(PostgraduateCourse c: p.getCourses()){
 				courses.add(c);

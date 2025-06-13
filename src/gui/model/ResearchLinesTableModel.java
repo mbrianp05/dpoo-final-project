@@ -138,7 +138,7 @@ public class ResearchLinesTableModel extends DefaultTableModel {
 	public void fill() {
 		emptyTable();
 		
-		ArrayList<ResearchLine> data = faculty.getReseachLines();
+		ArrayList<ResearchLine> data = faculty.getResearchLines();
 		
 		data = filterByChief(data);
 		data = filterByName(data);

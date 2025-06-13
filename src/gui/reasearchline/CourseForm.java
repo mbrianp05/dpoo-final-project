@@ -31,9 +31,8 @@ import utils.Constants;
 import utils.Validation;
 
 public class CourseForm extends JPanel {
-
-	
 	private static final long serialVersionUID = 1L;
+
 	private JLabel lblName;
 	private JTextField txtName;
 	private JLabel lblInstructor;
@@ -239,7 +238,7 @@ public class CourseForm extends JPanel {
 			panel.setBackground(Color.WHITE);
 			GridBagLayout gbl_panel = new GridBagLayout();
 			gbl_panel.columnWidths = new int[]{70, 0, 311, 70, 0};
-			gbl_panel.rowHeights = new int[]{40, 21, 35, 30, 21, 27, 30, 16, 30, 16, 90, 45, 40, 0};
+			gbl_panel.rowHeights = new int[]{40, 21, 35, 30, 21, 35, 30, 35, 30, 16, 90, 45, 40, 0};
 			gbl_panel.columnWeights = new double[]{0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
 			gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 			panel.setLayout(gbl_panel);
@@ -252,7 +251,7 @@ public class CourseForm extends JPanel {
 			panel.add(getLblName(), gbc_lblName);
 			GridBagConstraints gbc_txtName = new GridBagConstraints();
 			gbc_txtName.anchor = GridBagConstraints.NORTH;
-			gbc_txtName.fill = GridBagConstraints.HORIZONTAL;
+			gbc_txtName.fill = GridBagConstraints.BOTH;
 			gbc_txtName.insets = new Insets(0, 0, 5, 5);
 			gbc_txtName.gridwidth = 2;
 			gbc_txtName.gridx = 1;
@@ -267,7 +266,7 @@ public class CourseForm extends JPanel {
 			panel.add(getLblInstructor(), gbc_lblInstructor);
 			GridBagConstraints gbc_cmboxInstruct = new GridBagConstraints();
 			gbc_cmboxInstruct.anchor = GridBagConstraints.NORTH;
-			gbc_cmboxInstruct.fill = GridBagConstraints.HORIZONTAL;
+			gbc_cmboxInstruct.fill = GridBagConstraints.BOTH;
 			gbc_cmboxInstruct.insets = new Insets(0, 0, 5, 5);
 			gbc_cmboxInstruct.gridwidth = 2;
 			gbc_cmboxInstruct.gridx = 1;

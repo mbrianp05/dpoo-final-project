@@ -35,7 +35,7 @@ public class EditBreakthroughJDialog extends JDialog {
 		setResizable(false);
 		setTitle("Editar aporte investigativo");
 		setLocationRelativeTo(null);
-		setBounds(100, 100, 897, 835);
+		setBounds(100, 100, 897, 790);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);

@@ -105,7 +105,7 @@ public class CoursesFormView extends JPanel {
 	}
 	
 	private void fetchMasteryPlans() {
-		ArrayList<ResearchLine> lines = faculty.getReseachLines();
+		ArrayList<ResearchLine> lines = faculty.getResearchLines();
 		String [] names = new String[lines.size()];
 
 		for(int i = 0; i < lines.size(); i++){

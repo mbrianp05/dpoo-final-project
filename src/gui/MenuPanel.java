@@ -154,7 +154,7 @@ public class MenuPanel extends JPanel {
 					}
 				});
 			}
-		if(faculty.getReseachLines().size() > 0 && faculty.getProfesorsWithDegree(Degree.Doctor).size() > 0) {
+		if(faculty.getResearchLines().size() > 0 && faculty.getProfesorsWithDegree(Degree.Doctor).size() > 0) {
 			addCourse.setVisible(true);
 		} else {
 			addCourse.setVisible(false);
