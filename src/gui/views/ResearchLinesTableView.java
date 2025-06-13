@@ -189,6 +189,7 @@ public class ResearchLinesTableView extends JPanel {
 	private JTable getTable_1() {
 		if (table == null) {
 			table = new JTable();
+			table.getTableHeader().setReorderingAllowed(false);
 			table.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent event) {

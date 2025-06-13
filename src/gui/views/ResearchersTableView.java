@@ -270,6 +270,7 @@ public class ResearchersTableView extends JPanel {
 		if (table == null) {
 			table = new JTable();
 			table.setRowHeight(24);
+			table.getTableHeader().setReorderingAllowed(false);
 			table.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent event) {

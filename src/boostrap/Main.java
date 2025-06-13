@@ -36,6 +36,7 @@ public class Main {
 			UIManager.put("PasswordField.margin", new Insets(0, 6, 0, 6));
 			UIManager.put("TextField.font", Constants.getLabelFont());
 			UIManager.put("ComboBox.font", Constants.getLabelFont());
+//			 UIManager.put("MenuItem.selectionBackground", new Color(100, 150, 200));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

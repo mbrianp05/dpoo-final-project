@@ -9,10 +9,15 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -27,12 +32,6 @@ import schooling.Breakthrough;
 import schooling.Faculty;
 import schooling.Researcher;
 import utils.Constants;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import javax.swing.JRadioButton;
-import javax.swing.JCheckBox;
 
 public class ResearchersActivityTableView extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -201,6 +200,7 @@ public class ResearchersActivityTableView extends JPanel {
 					}
 				}
 			});
+			table.getTableHeader().setReorderingAllowed(false);
 			table.setFont(Constants.getLabelFont());
 			table.setRowHeight(24);
 			table.setFillsViewportHeight(true);
