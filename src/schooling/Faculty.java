@@ -66,33 +66,33 @@ public class Faculty {
 
 		return profesors;
 	}
-	
+
 	public ArrayList<Profesor> getDoctorsSelectedLine(ResearchLine line) {
 		return line.getRelatedDoctors();
 	}
-	
+
 	public ResearchLine findLineByCourse(PostgraduateCourse course) {
-		
+
 		ResearchLine line = null;
-		
+
 		for(ResearchLine r: researchLines) {
 			if(r.getMasteryPlan().getCourses().contains(course)) {
 				line = r;
 			}
 		}
-		
+
 		return line;
 	}
-	
+
 	public ArrayList<Profesor> getProfesorsWithDegree(Degree degree) {
 		ArrayList<Profesor> profs = new ArrayList<>();
-		
+
 		for(Profesor p: getProfesors()){
 			if (p.getDegree() != null && p.getDegree() == degree) {
 				profs.add(p);
 			}
 		}
-		
+
 		return profs;
 	}
 
@@ -222,13 +222,13 @@ public class Faculty {
 	public ArrayList<Researcher> mostPaperPublished() {
 		ArrayList<Researcher> result = new ArrayList<>();
 		int highest = 0;
-		
+
 		for (Researcher r : researchers) {
 			if (r.getPapers().size() > highest) {
 				highest = r.getPapers().size();
 				result.clear();
 			}
-			
+
 			if (r.getPapers().size() == highest) {
 				result.add(r);
 			}
@@ -331,7 +331,7 @@ public class Faculty {
 
 	public PostgraduateCourse findCourseByName (String name) {
 		PostgraduateCourse course = null;
-		
+
 		for (MasteryPlan m: getMasteryPlans()) {
 			for(PostgraduateCourse p: m.getCourses()) {
 				if(name.equalsIgnoreCase(p.getName())) {
@@ -341,7 +341,7 @@ public class Faculty {
 		}
 		return course;
 	}
-	
+
 	// Cambia de materia de investigacion a un investigador
 	public void moveToOtherMatter(int ID, String newMatterName) {
 		ResearchMatter newMatter = findResearchMatter(newMatterName);
@@ -371,14 +371,14 @@ public class Faculty {
 
 		return line;
 	}	
-	
+
 	public ArrayList<MasteryPlan> getMasteryPlans() {
 		ArrayList<MasteryPlan> masteries = new ArrayList<>();
-		
+
 		for(ResearchLine r: researchLines) {
 			masteries.add(r.getMasteryPlan());
 		}
-		
+
 		return masteries;
 	}
 
@@ -398,97 +398,112 @@ public class Faculty {
 	public ResearchLine findReseachLineByChief(Profesor researcher) {
 		ResearchLine line = null;
 		int i = 0;
-		
+
 		while (line == null && i < researchLines.size()) {
 			if (researchLines.get(i).getChief() == researcher) line = researchLines.get(i);
-			
+
 			i++;
 		}
-		
+
 		return line;
 	}
 
 	public ArrayList<Breakthrough> getBreakthroughs() {
 		ArrayList<Breakthrough> breakthroughs = new ArrayList<>();
-	
+
 		for (Researcher r: researchers) {
 			breakthroughs.addAll(r.getBreakthroughs());
 		}
-		
+
 		return breakthroughs;
 	}
-	
+
 	public Researcher findResearcherByBreakthrough(Breakthrough breakthrough) throws Exception {
 		Researcher r = null;
 		int i = 0;
-		
+
 		while (r == null && i < researchers.size()) {
 			if (researchers.get(i).getBreakthroughs().contains(breakthrough)) {
 				r = researchers.get(i);
 			}
-			
+
 			i++;
 		}
-		
+
 		if (r == null) {
 			throw new Exception("There is a registered breakthrough by a non-existant researcher");
 		}
-		
+
 		return r;
 	}
 
 	public boolean removeResearcher(int id) {
 		Researcher researcher = findResearcher(id);
 		boolean canBeRemoved = true;
-		
+
 		if (researcher == null) throw new IllegalArgumentException("Researcher with ID " + id + " does not exist");
-		
+
 		if (researcher instanceof Profesor) {
 			canBeRemoved = !isChief((Profesor)researcher) && !isInstructor((Profesor)researcher);
 		}
-		
+
 		if (canBeRemoved) {
 			ResearchMatter matter = findMatterOf(id);
-			
+
 			matter.getResearchers().remove(researcher);
 			researchers.remove(researcher);
 		}
-		
+
 		return canBeRemoved;
 	}
-	
+
 	public boolean removeCourseFromLine(String name) {
 		PostgraduateCourse course = findCourseByName(name);
 		ResearchLine line = findLineByCourse(course);
-		
+
 		boolean removible = true;
-		
+
 		if(line.getMasteryPlan().getCourses().contains(course)) {
 			line.getMasteryPlan().getCourses().remove(course);
 		} else {
 			removible = false;
 		}
-		
+
 		return removible;
+	}
+
+	public ArrayList<Profesor> getMatriculationsAtCourse(PostgraduateCourse course) {
+		ArrayList<Profesor> profs = new ArrayList<>();
+
+		ResearchLine r = findLineByCourse(course);
+		MasteryPlan plan = r.getMasteryPlan();
+
+		for(Matriculation mat: plan.getMatriculations()) {
+			if(mat.getCourse() == course) {
+				profs.add(mat.getProfesor());
+			}
+		}
+
+		return profs;
 	}
 
 	private boolean isInstructor(Profesor profesor) {
 		boolean result = false;
 		int i = 0;
-		
+
 		while (!result && i < researchLines.size()) {
 			ArrayList<PostgraduateCourse> courses = researchLines.get(i).getMasteryPlan().getCourses();
 			int k = 0;
-			
+
 			while (!result && k < courses.size()) {
 				result = courses.get(k).getInstructor() == profesor;
-				
+
 				k++;
 			}
-			
+
 			i++;
 		}
-		
+
 		return result;
 	}
 }
