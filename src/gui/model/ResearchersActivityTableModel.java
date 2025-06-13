@@ -5,8 +5,11 @@ import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 
 import schooling.Breakthrough;
+import schooling.Chapter;
 import schooling.Faculty;
 import schooling.HasUniqueIndentifier;
+import schooling.Paper;
+import schooling.Presentation;
 import schooling.Researcher;
 
 public class ResearchersActivityTableModel extends DefaultTableModel {
@@ -17,12 +20,18 @@ public class ResearchersActivityTableModel extends DefaultTableModel {
 	
 	private String filterName;
 	private String filterResearcher;
+	private boolean includePapers;
+	private boolean includePresentations;
+	private boolean includeChapters;
 	private int filterScore;
 	
 	public ResearchersActivityTableModel() {
 		filterName = "";
 		filterResearcher = "";
 		filterScore = 0;
+		includePapers = true;
+		includePresentations = true;
+		includeChapters = true;
 		
 		this.faculty = Faculty.newInstance();
 
@@ -33,6 +42,19 @@ public class ResearchersActivityTableModel extends DefaultTableModel {
 		fill();
 	}
 
+	public void includePapers(boolean include) {
+		includePapers = include;
+		fill();
+	}
+	public void includePresentations(boolean include) {
+		includePresentations = include;
+		fill();
+	}
+	public void includeChapters(boolean include) {
+		includeChapters = include;
+		fill();
+	}
+	
 	public void setFilterName(String filter) {
 		filterName = filter;		
 		fill();
@@ -126,6 +148,18 @@ public class ResearchersActivityTableModel extends DefaultTableModel {
 		return filter;
 	}
 	
+	private ArrayList<Breakthrough> filterByInclusions(ArrayList<Breakthrough> data) {
+		ArrayList<Breakthrough> filter = new ArrayList<>();
+		
+		for (Breakthrough b: data) {
+			if (includePapers && b instanceof Paper) filter.add(b);
+			if (includePresentations && b instanceof Presentation) filter.add(b);
+			if (includeChapters && b instanceof Chapter) filter.add(b);
+		}
+		
+		return filter;
+	}
+	
 	public void fill() {
 		init();
 		emptyTable();
@@ -135,6 +169,7 @@ public class ResearchersActivityTableModel extends DefaultTableModel {
 		data = filterByName(data);
 		data = filterByResearcher(data);
 		data = filterByScore(data);
+		data = filterByInclusions(data);
 		
 		for (Breakthrough b: data) {
 			addNew(b);

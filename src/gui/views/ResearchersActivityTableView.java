@@ -32,6 +32,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.JRadioButton;
+import javax.swing.JCheckBox;
 
 public class ResearchersActivityTableView extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -50,9 +51,9 @@ public class ResearchersActivityTableView extends JPanel {
 	private JTextField textField_1;
 	private JLabel lblPuntuacin;
 	private JComboBox<Integer> comboBox;
-	private JRadioButton rdbtnCaptulos;
-	private JRadioButton rdbtnArtculos;
-	private JRadioButton rdbtnPonencias;
+	private JCheckBox filterChapter;
+	private JCheckBox filterPaper;
+	private JCheckBox filterPresentation;
 	
 	public ResearchersActivityTableView() {
 		this.faculty = Faculty.newInstance();
@@ -76,24 +77,24 @@ public class ResearchersActivityTableView extends JPanel {
 		gbc_lblFiltrar.gridx = 1;
 		gbc_lblFiltrar.gridy = 3;
 		add(getLblFiltrar(), gbc_lblFiltrar);
-		GridBagConstraints gbc_rdbtnCaptulos = new GridBagConstraints();
-		gbc_rdbtnCaptulos.fill = GridBagConstraints.BOTH;
-		gbc_rdbtnCaptulos.insets = new Insets(0, 0, 5, 5);
-		gbc_rdbtnCaptulos.gridx = 2;
-		gbc_rdbtnCaptulos.gridy = 3;
-		add(getRdbtnCaptulos(), gbc_rdbtnCaptulos);
-		GridBagConstraints gbc_rdbtnArtculos = new GridBagConstraints();
-		gbc_rdbtnArtculos.fill = GridBagConstraints.BOTH;
-		gbc_rdbtnArtculos.insets = new Insets(0, 0, 5, 5);
-		gbc_rdbtnArtculos.gridx = 3;
-		gbc_rdbtnArtculos.gridy = 3;
-		add(getRdbtnArtculos(), gbc_rdbtnArtculos);
-		GridBagConstraints gbc_rdbtnPonencias = new GridBagConstraints();
-		gbc_rdbtnPonencias.fill = GridBagConstraints.BOTH;
-		gbc_rdbtnPonencias.insets = new Insets(0, 0, 5, 5);
-		gbc_rdbtnPonencias.gridx = 4;
-		gbc_rdbtnPonencias.gridy = 3;
-		add(getRdbtnPonencias(), gbc_rdbtnPonencias);
+		GridBagConstraints gbc_filterChapter = new GridBagConstraints();
+		gbc_filterChapter.fill = GridBagConstraints.BOTH;
+		gbc_filterChapter.insets = new Insets(0, 0, 5, 5);
+		gbc_filterChapter.gridx = 2;
+		gbc_filterChapter.gridy = 3;
+		add(getFilterChapter(), gbc_filterChapter);
+		GridBagConstraints gbc_filterPaper = new GridBagConstraints();
+		gbc_filterPaper.fill = GridBagConstraints.BOTH;
+		gbc_filterPaper.insets = new Insets(0, 0, 5, 5);
+		gbc_filterPaper.gridx = 3;
+		gbc_filterPaper.gridy = 3;
+		add(getFilterPaper(), gbc_filterPaper);
+		GridBagConstraints gbc_filterPresentation = new GridBagConstraints();
+		gbc_filterPresentation.fill = GridBagConstraints.BOTH;
+		gbc_filterPresentation.insets = new Insets(0, 0, 5, 5);
+		gbc_filterPresentation.gridx = 4;
+		gbc_filterPresentation.gridy = 3;
+		add(getFilterPresentation(), gbc_filterPresentation);
 		GridBagConstraints gbc_lblNombre = new GridBagConstraints();
 		gbc_lblNombre.fill = GridBagConstraints.BOTH;
 		gbc_lblNombre.anchor = GridBagConstraints.EAST;
@@ -292,28 +293,43 @@ public class ResearchersActivityTableView extends JPanel {
 		}
 		return comboBox;
 	}
-	private JRadioButton getRdbtnCaptulos() {
-		if (rdbtnCaptulos == null) {
-			rdbtnCaptulos = new JRadioButton("Cap\u00EDtulos");
-			rdbtnCaptulos.setSelected(true);
-			rdbtnCaptulos.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+	private JCheckBox getFilterChapter() {
+		if (filterChapter == null) {
+			filterChapter = new JCheckBox("Cap\u00EDtulos");
+			filterChapter.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					getTableModel().includeChapters(filterChapter.isSelected());
+				}
+			});
+			filterChapter.setSelected(true);
+			filterChapter.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 		}
-		return rdbtnCaptulos;
+		return filterChapter;
 	}
-	private JRadioButton getRdbtnArtculos() {
-		if (rdbtnArtculos == null) {
-			rdbtnArtculos = new JRadioButton("Art\u00EDculos");
-			rdbtnArtculos.setSelected(true);
-			rdbtnArtculos.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+	private JCheckBox getFilterPaper() {
+		if (filterPaper == null) {
+			filterPaper = new JCheckBox("Art\u00EDculos");
+			filterPaper.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					getTableModel().includePapers(filterPaper.isSelected());
+				}
+			});
+			filterPaper.setSelected(true);
+			filterPaper.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 		}
-		return rdbtnArtculos;
+		return filterPaper;
 	}
-	private JRadioButton getRdbtnPonencias() {
-		if (rdbtnPonencias == null) {
-			rdbtnPonencias = new JRadioButton("Ponencias");
-			rdbtnPonencias.setSelected(true);
-			rdbtnPonencias.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+	private JCheckBox getFilterPresentation() {
+		if (filterPresentation == null) {
+			filterPresentation = new JCheckBox("Ponencias");
+			filterPresentation.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					getTableModel().includePresentations(filterPresentation.isSelected());
+				}
+			});
+			filterPresentation.setSelected(true);
+			filterPresentation.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 		}
-		return rdbtnPonencias;
+		return filterPresentation;
 	}
 }
