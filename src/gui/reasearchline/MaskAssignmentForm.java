@@ -147,12 +147,14 @@ public class MaskAssignmentForm extends JPanel {
 	}
 
 	private void setMarkValue() {
-		Matriculation m = getSelectedMatriculation();
-
-		if (m.getMark() != -1)
-			spinnerNota.setValue(m.getMark());
-		else
-			spinnerNota.setValue(2);
+		if (profesorIDs.length > 0) {
+			Matriculation m = getSelectedMatriculation();
+			
+			if (m.getMark() != -1)
+				spinnerNota.setValue(m.getMark());
+			else
+				spinnerNota.setValue(2);
+		}
 	}
 
 	private JComboBox<String> getComboBox() {
