@@ -116,7 +116,7 @@ public class CoursesTableModel extends DefaultTableModel {
 	}
 
 	public void addNew(PostgraduateCourse c){
-		Object[] newRow = new Object[]{c.getName(), c.getInstructor().getName(), faculty.findLineByCourse(c).getName(), String.valueOf(c.getCredits()), c.getDescription()};
+		Object[] newRow = new Object[]{c.getName(), c.getInstructor().getName(), faculty.findResearchLineByCourse(c).getName(), String.valueOf(c.getCredits()), c.getDescription()};
 
 		addRow(newRow);
 	}

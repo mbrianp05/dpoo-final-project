@@ -80,4 +80,33 @@ public class ResearchLine {
 	public boolean hasResearcher() {
 		return getResearchersInvolvedCount() == 0;
 	}
+
+	public ResearchMatter findMatter(String name) {
+		ResearchMatter m = null;
+		int i = 0;
+		
+		while(m == null && i < matters.size()) {
+			if (matters.get(i).getName().equals(name)) {
+				m = matters.get(i);
+			}
+			
+			i++;
+		}
+		
+		return m;
+	}
+
+	public ArrayList<Profesor> getProfesorsInvolved() {
+		ArrayList<Profesor> profesors = new ArrayList<>();
+		
+		for (ResearchMatter m: matters) {
+			for (Researcher r: m.getResearchers()) {
+				if (r instanceof Profesor) {
+					profesors.add((Profesor)r);
+				}
+			}
+		}
+		
+		return profesors;
+	}
 }

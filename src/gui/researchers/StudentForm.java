@@ -53,7 +53,7 @@ public class StudentForm extends JPanel {
 		setLayout(new BorderLayout(0, 0));
 		add(getPanel());
 	}
-
+	
 	public void listenTo(OnAddedResearcher listener) {
 		this.listener = listener;
 	}

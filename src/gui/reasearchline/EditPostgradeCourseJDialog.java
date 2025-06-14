@@ -133,7 +133,7 @@ public class EditPostgradeCourseJDialog extends JDialog {
 	}
 	private CourseForm getCourseForm() {
 		if (courseForm == null) {
-			ResearchLine line = faculty.findLineByCourse(course);
+			ResearchLine line = faculty.findResearchLineByCourse(course);
 			courseForm = new CourseForm(CourseFormData.courseForm(course), line);
 			courseForm.setLayout(new BoxLayout(courseForm, BoxLayout.X_AXIS));
 			courseForm.listenTo(new OnCoursesFormActionTriggered() {

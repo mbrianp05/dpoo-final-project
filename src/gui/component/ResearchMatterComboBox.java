@@ -31,13 +31,13 @@ public class ResearchMatterComboBox extends JComboBox<String> {
 			throw new IllegalArgumentException("The profesor given does not lead any research line");
 		}
 
-		ArrayList<ResearchMatter> matters = faculty.findResearchLine(profesor).getMatters();
+		ArrayList<ResearchMatter> matters = faculty.findResearchLineByChief(profesor).getMatters();
 		String[] names = new String[matters.size()];
 
 		for (int i = 0; i < matters.size(); i++) {
 			names[i] = matters.get(i).getName();
 		}
 		
-		setModel(new DefaultComboBoxModel<String>(names));
+		setModel(new DefaultComboBoxModel<>(names));
 	}
 }

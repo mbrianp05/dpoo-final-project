@@ -3,8 +3,6 @@ package schooling;
 import java.util.ArrayList;
 
 public class MasteryPlan {
-	private int minCredits;
-
 	private ArrayList<Matriculation> matriculations;
 	private ArrayList<PostgraduateCourse> courses;
 
@@ -23,7 +21,6 @@ public class MasteryPlan {
 
 	public void addCourse(String name, String description, Profesor instructor, int credits) {
 		courses.add(new PostgraduateCourse(name, description, instructor, credits));
-		minCredits += credits;
 	}
 
 	public ArrayList<PostgraduateCourse> getCourses() {
@@ -31,6 +28,12 @@ public class MasteryPlan {
 	}
 
 	public int getMinCredits() {
+		int minCredits = 0;
+		
+		for (PostgraduateCourse course: courses) {
+			minCredits += course.getCredits();
+		}
+		
 		return minCredits;
 	}
 
@@ -52,17 +55,11 @@ public class MasteryPlan {
 		ArrayList<Profesor> profesors = new ArrayList<>();
 
 		for (Profesor profesor : getInvolvedPrfesors()) {
-			if (profesor.getCredits() == minCredits) {
+			if (profesor.getCredits() == getMinCredits()) {
 				profesors.add(profesor);
 			}
 		}
 
 		return profesors;
-	}
-
-	public void substractNecessaryCredits(int credits) {
-		if (credits > minCredits) throw new IllegalArgumentException("Cannot substract a higher amount of credits than there is now");
-		
-		minCredits -= credits;
 	}
 }

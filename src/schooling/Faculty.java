@@ -71,7 +71,7 @@ public class Faculty {
 		return line.getRelatedDoctors();
 	}
 
-	public ResearchLine findLineByCourse(PostgraduateCourse course) {
+	public ResearchLine findResearchLineByCourse(PostgraduateCourse course) {
 		ResearchLine line = null;
 
 		for(ResearchLine r: researchLines) {
@@ -365,19 +365,6 @@ public class Faculty {
 			matter.getResearchers().remove(r);
 	}
 
-	public ResearchLine findResearchLine(Profesor profesor) {
-		ResearchLine line = null;
-		int i = 0;
-
-		while (line == null && i < researchLines.size()) {
-			if (researchLines.get(i).getChief() == profesor) line = researchLines.get(i);
-
-			i++;
-		}
-
-		return line;
-	}	
-
 	public ArrayList<MasteryPlan> getMasteryPlans() {
 		ArrayList<MasteryPlan> masteries = new ArrayList<>();
 
@@ -401,7 +388,7 @@ public class Faculty {
 		return found;
 	}
 
-	public ResearchLine findReseachLineByChief(Profesor researcher) {
+	public ResearchLine findResearchLineByChief(Profesor researcher) {
 		ResearchLine line = null;
 		int i = 0;
 
@@ -465,12 +452,11 @@ public class Faculty {
 
 	public boolean removeCourseFromLine(String name) {
 		PostgraduateCourse course = findCourseByName(name);
-		ResearchLine line = findLineByCourse(course);
+		ResearchLine line = findResearchLineByCourse(course);
 
 		boolean removible = true;
 
 		if(line.getMasteryPlan().getCourses().contains(course)) {
-			line.getMasteryPlan().substractNecessaryCredits(course.getCredits());
 			line.getMasteryPlan().getCourses().remove(course);
 		} else {
 			removible = false;
@@ -482,7 +468,7 @@ public class Faculty {
 	public ArrayList<Matriculation> getMatriculationsAtCourse(PostgraduateCourse course) {
 		ArrayList<Matriculation> matriculations = new ArrayList<>();
 
-		ResearchLine r = findLineByCourse(course);
+		ResearchLine r = findResearchLineByCourse(course);
 
 		MasteryPlan plan = r.getMasteryPlan();
 
@@ -495,7 +481,7 @@ public class Faculty {
 		return matriculations;
 	}
 
-	private boolean isInstructor(Profesor profesor) {
+	public boolean isInstructor(Profesor profesor) {
 		boolean result = false;
 		int i = 0;
 
@@ -513,5 +499,17 @@ public class Faculty {
 		}
 
 		return result;
+	}
+
+	public ResearchLine findResearchLineByMatter(ResearchMatter m) {
+		ResearchLine line = null;
+		int i = 0;
+		
+		while (line == null && i < researchLines.size()){
+			if (researchLines.get(i).getMatters().contains(m)) line = researchLines.get(i);
+			i++;
+		}
+		
+		return line;
 	}
 }

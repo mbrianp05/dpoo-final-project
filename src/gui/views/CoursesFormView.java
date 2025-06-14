@@ -61,8 +61,8 @@ public class CoursesFormView extends JPanel {
 	private int[] profIDs = new int[500];
 	private JPanel panel_1;
 
-	public CoursesFormView(Faculty faculty) {
-		this.faculty = faculty;
+	public CoursesFormView() {
+		this.faculty = Faculty.newInstance();
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{100, 0, 100, 0};
@@ -354,7 +354,7 @@ public class CoursesFormView extends JPanel {
 						if(Validation.notEmpty(txtCourseName.getText())) {
 							errorName.setVisible(false);
 
-							if(selectInstructor!= null) {
+							if(selectInstructor.getSelectedIndex() >= 0) {
 								errorInstruct.setVisible(false);
 
 								if((int)spinnerCreds.getValue() != 0) {

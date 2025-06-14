@@ -117,7 +117,6 @@ public class CourseForm extends JPanel {
 						resetForm();
 					}
 					
-					
 					if(listener != null) {
 						listener.actionPerformed(new CourseFormData(name, description, instructor, creds));
 					}

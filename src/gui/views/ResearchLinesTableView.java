@@ -1,18 +1,24 @@
 package gui.views;
 
 import gui.component.TitleLabel;
+import gui.event.OnAddedResearchLine;
+import gui.event.OnMovedChief;
 import gui.model.ResearchLinesTableModel;
 import gui.reasearchline.EditResearchLineJDialog;
+import gui.reasearchline.MoveResearcherToOtherMatterJDialog;
 
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -32,10 +38,9 @@ import javax.swing.event.ChangeListener;
 
 import schooling.Faculty;
 import schooling.ResearchLine;
+import schooling.ResearchMatter;
+import utils.ArrayLib;
 import utils.Constants;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class ResearchLinesTableView extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -174,11 +179,11 @@ public class ResearchLinesTableView extends JPanel {
 		}
 		return filterByName;
 	}
-	
+
 	private ResearchLinesTableModel getTableModel() {
 		return (ResearchLinesTableModel)table.getModel();
 	}
-	
+
 	private JScrollPane getScrollPane() {
 		if (scrollPane == null) {
 			scrollPane = new JScrollPane();
@@ -194,12 +199,18 @@ public class ResearchLinesTableView extends JPanel {
 				@Override
 				public void mouseClicked(MouseEvent event) {
 					if (table.getSelectedRow() >= 0) btnRemove.setVisible(true);
-					
+
 					if (event.getClickCount() > 1 && table.getSelectedRow() >= 0) {
 						ResearchLine line = getTableModel().getShownResearchLines().get(table.getSelectedRow());
-						
+
 						try {
 							EditResearchLineJDialog dialog = new EditResearchLineJDialog(line);
+							dialog.listenTo(new OnAddedResearchLine() {
+								@Override
+								public void added(String name) {
+									updateTable();
+								}
+							});
 							dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 							dialog.setVisible(true);
 						} catch (Exception e) {
@@ -221,7 +232,7 @@ public class ResearchLinesTableView extends JPanel {
 		getTableModel().fill();
 		btnRemove.setVisible(false);
 	}
-	
+
 	private TitleLabel getLblDatosDeInvestigadores() {
 		if (lblDatosDeInvestigadores == null) {
 			lblDatosDeInvestigadores = new TitleLabel();
@@ -305,31 +316,65 @@ public class ResearchLinesTableView extends JPanel {
 		}
 		return spinnerFilterCredits;
 	}
+
+	private void openChiefDialog() {
+		ArrayList<String> matters = Faculty.newInstance().getResearchMattersNames();
+		final ResearchLine line = getTableModel().getShownResearchLines().get(table.getSelectedRow());
+
+		for (ResearchMatter m: line.getMatters()) {
+			if (matters.contains(m.getName())) matters.remove(m.getName());
+		}
+
+		try {
+			MoveResearcherToOtherMatterJDialog dialog = new MoveResearcherToOtherMatterJDialog(
+				line.getChief(), 
+				ArrayLib.cast(matters), 
+				new OnMovedChief() {
+					@Override
+					public void moved(String newMatter) {
+						Faculty f = Faculty.newInstance();
+						
+						f.moveToOtherMatter(line.getChief().getID(), newMatter);
+						f.getResearchLines().remove(line);
+						
+						updateTable();
+						
+						JOptionPane.showMessageDialog(null, "Línea eliminada correctamente");
+					}
+				}
+			);
+			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			dialog.setVisible(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	private JButton getBtnRemove() {
 		if (btnRemove == null) {
 			btnRemove = new JButton("");
-			
+
 			btnRemove.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					int input = JOptionPane.showConfirmDialog(null, "Confirma tu desición de eliminar la línea");
-					
+
 					if (input == JOptionPane.OK_OPTION) {
 						Faculty faculty = Faculty.newInstance();
 						String researchLineName = (String)table.getValueAt(table.getSelectedRow(), 0);
 						ResearchLine line = faculty.findResearchLine(researchLineName);
-						
+
 						if (line.getResearchersInvolvedCount() == 1) {
-							faculty.getResearchLines().remove(line);
+							openChiefDialog();
 						} else {
 							JOptionPane.showMessageDialog(null, "Existen investigadores en esta línea. Asegúrate de moverlos a otra línea e intentálo después", "No se puede eliminar la línea", JOptionPane.ERROR_MESSAGE);
 						}
 					}
 				}
 			});
-			
+
 			ImageIcon icon = new ImageIcon(ResearchersTableView.class.getResource("/resources/images/trash.png"));
 			icon = new ImageIcon(icon.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
-			
+
 			btnRemove.setIcon(icon);
 			btnRemove.setVisible(false);
 		}

@@ -61,8 +61,6 @@ public class MaskAssignmentForm extends JPanel {
 		profesorIDs = new int[matriculations.size()];
 
 		for(int i = 0; i < matriculations.size(); i++) {
-			System.out.println(matriculations.get(i).getProfesor().getName());
-
 			names[i] = matriculations.get(i).getProfesor().getName();
 			profesorIDs[i] = matriculations.get(i).getProfesor().getID();
 		}
@@ -188,7 +186,7 @@ public class MaskAssignmentForm extends JPanel {
 	}
 	private JLabel getLblProfesor() {
 		if (lblProfesor == null) {
-			lblProfesor = new JLabel("Profesor");
+			lblProfesor = new JLabel("Profesor matriculado");
 			lblProfesor.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 		}
 		return lblProfesor;

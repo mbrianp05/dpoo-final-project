@@ -1,5 +1,7 @@
 package gui.reasearchline;
 
+import gui.event.OnAddedResearchLine;
+
 import java.awt.BorderLayout;
 import java.awt.Toolkit;
 
@@ -32,6 +34,10 @@ public class EditResearchLineJDialog extends JDialog {
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
 		contentPanel.add(getResearchLineForm());
+	}
+	
+	public void listenTo(OnAddedResearchLine listener) {
+		researchLineForm.listenTo(listener);
 	}
 
 	private ResearchLineForm getResearchLineForm() {

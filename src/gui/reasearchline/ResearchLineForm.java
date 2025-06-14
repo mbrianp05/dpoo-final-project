@@ -1,5 +1,6 @@
 package gui.reasearchline;
 
+import gui.component.CanBeRemoved;
 import gui.component.ErrorLabel;
 import gui.component.MultipleInput;
 import gui.event.OnAddedInput;
@@ -18,7 +19,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.BoxLayout;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -38,20 +42,19 @@ public class ResearchLineForm extends JPanel {
 	private Faculty faculty;
 	private ResearchLine line;
 	private OnAddedResearchLine listener;
-
 	private ProfesorFormData chief;
+
 	private JLabel lblNombre;
 	private JTextField textFieldName;
 	private JButton btnNewButton;
 
 	private ErrorLabel errorMatters;
 	private ErrorLabel errorName;
-	private JLabel lblJefeDeLa;
 	private JButton btnSetChief;
 	private JLabel lblChiefWarning;
-	private JPanel panelWrapper;
+	private JPanel setChiefPanel;
 	private JPanel addChiefForm;
-	private JPanel changeChief;
+	private JPanel editChiefPanel;
 	private ErrorLabel errorChief;
 	private JLabel lblChiefName;
 	private JLabel lblChiefDegree;
@@ -64,7 +67,10 @@ public class ResearchLineForm extends JPanel {
 	private JLabel lblCategora;
 	private JLabel lblMateria;
 	private MultipleInput multipleInput;
-	
+	private JPanel panel;
+	private JPanel changeChiefPanel;
+	private JComboBox<String> chiefCandidatesComboBox;
+
 	public ResearchLineForm() {
 		this(null);
 	}
@@ -74,34 +80,34 @@ public class ResearchLineForm extends JPanel {
 		this.line = line;
 		chief = null;
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{100, 0, 75, 288, 50, 100, 0};
-		gridBagLayout.rowHeights = new int[]{70, 0, 35, 35, 0, 35, 0, 0, 35, 35, 50, 40, 0, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.columnWidths = new int[]{100, 0, 288, 100, 0};
+		gridBagLayout.rowHeights = new int[]{70, 0, 35, 35, 0, 35, 0, 0, 35, 50, 40, 0, 0};
+		gridBagLayout.columnWeights = new double[]{0.0, 1.0, 1.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		GridBagConstraints gbc_lblNombre = new GridBagConstraints();
-		gbc_lblNombre.gridwidth = 4;
+		gbc_lblNombre.gridwidth = 2;
 		gbc_lblNombre.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNombre.fill = GridBagConstraints.BOTH;
 		gbc_lblNombre.gridx = 1;
 		gbc_lblNombre.gridy = 1;
 		add(getLblNombre(), gbc_lblNombre);
 		GridBagConstraints gbc_textFieldName = new GridBagConstraints();
-		gbc_textFieldName.gridwidth = 4;
+		gbc_textFieldName.gridwidth = 2;
 		gbc_textFieldName.insets = new Insets(0, 0, 5, 5);
 		gbc_textFieldName.fill = GridBagConstraints.BOTH;
 		gbc_textFieldName.gridx = 1;
 		gbc_textFieldName.gridy = 2;
 		add(getTextFieldName(), gbc_textFieldName);
 		GridBagConstraints gbc_errorName = new GridBagConstraints();
-		gbc_errorName.gridwidth = 4;
+		gbc_errorName.gridwidth = 2;
 		gbc_errorName.anchor = GridBagConstraints.NORTHWEST;
 		gbc_errorName.insets = new Insets(0, 0, 5, 5);
 		gbc_errorName.gridx = 1;
 		gbc_errorName.gridy = 3;
 		add(getErrorName(), gbc_errorName);
 		GridBagConstraints gbc_multipleInput = new GridBagConstraints();
-		gbc_multipleInput.gridwidth = 4;
+		gbc_multipleInput.gridwidth = 2;
 		gbc_multipleInput.insets = new Insets(0, 0, 5, 5);
 		gbc_multipleInput.fill = GridBagConstraints.BOTH;
 		gbc_multipleInput.gridx = 1;
@@ -109,58 +115,55 @@ public class ResearchLineForm extends JPanel {
 		add(getMultipleInput(), gbc_multipleInput);
 		GridBagConstraints gbc_errorMatters = new GridBagConstraints();
 		gbc_errorMatters.anchor = GridBagConstraints.NORTHWEST;
-		gbc_errorMatters.gridwidth = 4;
+		gbc_errorMatters.gridwidth = 2;
 		gbc_errorMatters.insets = new Insets(0, 0, 5, 5);
 		gbc_errorMatters.gridx = 1;
 		gbc_errorMatters.gridy = 5;
 		add(getErrorMatters(), gbc_errorMatters);
 		GridBagConstraints gbc_lblChiefData = new GridBagConstraints();
-		gbc_lblChiefData.fill = GridBagConstraints.HORIZONTAL;
+		gbc_lblChiefData.fill = GridBagConstraints.BOTH;
 		gbc_lblChiefData.anchor = GridBagConstraints.SOUTH;
 		gbc_lblChiefData.insets = new Insets(0, 0, 5, 5);
 		gbc_lblChiefData.gridx = 1;
 		gbc_lblChiefData.gridy = 6;
 		add(getLblChiefData(), gbc_lblChiefData);
-		GridBagConstraints gbc_panelWrapper = new GridBagConstraints();
-		gbc_panelWrapper.gridwidth = 4;
-		gbc_panelWrapper.gridheight = 2;
-		gbc_panelWrapper.insets = new Insets(0, 0, 5, 5);
-		gbc_panelWrapper.fill = GridBagConstraints.BOTH;
-		gbc_panelWrapper.gridx = 1;
-		gbc_panelWrapper.gridy = 7;
-		add(getPanelWrapper(), gbc_panelWrapper);
+		GridBagConstraints gbc_panel = new GridBagConstraints();
+		gbc_panel.gridwidth = 2;
+		gbc_panel.insets = new Insets(0, 0, 5, 5);
+		gbc_panel.fill = GridBagConstraints.BOTH;
+		gbc_panel.gridx = 1;
+		gbc_panel.gridy = 7;
+		add(getPanel(), gbc_panel);
 		GridBagConstraints gbc_btnEditChief = new GridBagConstraints();
 		gbc_btnEditChief.anchor = GridBagConstraints.EAST;
 		gbc_btnEditChief.fill = GridBagConstraints.VERTICAL;
-		gbc_btnEditChief.gridwidth = 2;
 		gbc_btnEditChief.insets = new Insets(0, 0, 5, 5);
-		gbc_btnEditChief.gridx = 3;
-		gbc_btnEditChief.gridy = 9;
+		gbc_btnEditChief.gridx = 2;
+		gbc_btnEditChief.gridy = 8;
 		add(getBtnEditChief(), gbc_btnEditChief);
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
 		gbc_btnNewButton.fill = GridBagConstraints.VERTICAL;
-		gbc_btnNewButton.gridwidth = 2;
 		gbc_btnNewButton.anchor = GridBagConstraints.EAST;
 		gbc_btnNewButton.insets = new Insets(0, 0, 5, 5);
-		gbc_btnNewButton.gridx = 3;
-		gbc_btnNewButton.gridy = 11;
+		gbc_btnNewButton.gridx = 2;
+		gbc_btnNewButton.gridy = 10;
 		add(getBtnNewButton(), gbc_btnNewButton);
-		
+
 		initForm();
 	}
 
 	private void hideErrors() {
 		errorName.setVisible(false);
-		errorChief.setVisible(false);
+		
+		if (line == null) {
+			errorChief.setVisible(false);
+		}
+
 		errorMatters.setVisible(false);
 	}
-	
-	private void initForm() {
-		hideErrors();
-		
+
+	private void initMultipleInput() {
 		if (line != null) {
-			textFieldName.setText(line.getName());
-			
 			ArrayList<ResearchMatter> m = line.getMatters();
 			String matters[] = new String[m.size()];
 			
@@ -169,14 +172,25 @@ public class ResearchLineForm extends JPanel {
 			}
 			
 			multipleInput.with(matters);
-			
-			Profesor p = line.getChief();
-			chief = ProfesorFormData.fromResearcher(line.getChief(), faculty.findMatterOf(p.getID()).getName());
-			
-			switchPanel("Change Chief");
 		}
 	}
 	
+	private void initForm() {
+		hideErrors();
+		initMultipleInput();
+
+		if (line != null) {
+			textFieldName.setText(line.getName());
+
+			Profesor p = line.getChief();
+			chief = ProfesorFormData.fromResearcher(line.getChief(), faculty.findMatterOf(p.getID()).getName());
+
+			if (line == null) {
+				switchPanel("Edit Chief");
+			}
+		}
+	}
+
 	public void listenTo(OnAddedResearchLine listener) {
 		this.listener = listener;
 	}
@@ -196,52 +210,129 @@ public class ResearchLineForm extends JPanel {
 		return textFieldName;
 	}
 
-	public Profesor registerChief() {
-		int id = faculty.addProfesor(chief.getName(), chief.getDegree(), chief.getCategory(), null);
-		
-		return (Profesor)faculty.findResearcher(id);
+	public Profesor getChief() {
+		Profesor profesor = null;
+
+		if (line == null) {
+			int id = faculty.addProfesor(chief.getName(), chief.getDegree(), chief.getCategory(), null);
+			profesor = (Profesor)faculty.findResearcher(id);
+		} else {
+			int i = getChiefCandidatesComboBox().getSelectedIndex();
+			Profesor p = getCandidates().get(i);
+			
+			line.setChief(p);
+		}
+
+		return profesor;
+	}
+
+	private boolean checkValidity() {
+		hideErrors();
+		boolean isValid = true;
+
+		String name = textFieldName.getText();
+
+		int mattersCount = multipleInput.amountOfItems();
+
+		if (!Validation.notEmpty(name)) {
+			errorName.setVisible(true);
+			isValid = false;
+		}
+
+		if (mattersCount == 0) {
+			errorMatters.setVisible(true);
+			isValid = false;
+		}
+
+		if (chief == null) {
+			errorChief.setVisible(true);
+			isValid = false;
+		}
+
+		return isValid;
+	}
+
+	private void submit() {
+		if (checkValidity()) {
+			String name = textFieldName.getText();
+
+			Profesor chiefProfesor = getChief();
+			ResearchLine line = this.line;
+
+			if (this.line == null) {
+				faculty.addResearchLine(name, chiefProfesor);
+				line = faculty.findResearchLine(name);
+			} else {
+				line.setName(name);
+				
+				// IMPORTANTE ELIMINAR SE DEBE HACER PRIMERO QUE EDITAR
+				// PORQUE SINO SE PIERDE EL ID
+				for (String matter : removedMatters()) {
+					line.getMatters().remove(line.findMatter(matter));
+				}
+
+				for (String matter : multipleInput.getValues()) {
+					String id = multipleInput.getIdentifier(matter);
+
+					if (id != null) {
+						ResearchMatter m = line.findMatter(id);
+
+						Validation.removeValue(m.getClass().getSimpleName() + ".name", matter);
+						line.findMatter(id).setName(matter);
+					}
+				}
+			}
+
+			for (String matter : insertedMatters()) {
+				line.addMatter(matter);
+			}
+
+			if (listener != null) {
+				listener.added(textFieldName.getText());
+			}
+
+			if (this.line == null) {
+				ResearchMatter chiefResearchMatter = faculty.findResearchMatter(chief.getMatter());
+				chiefResearchMatter.addResearcher(chiefProfesor);
+			}
+
+			resetForm();
+			sendFeedback();
+		}
+	}
+
+	private ArrayList<String> removedMatters() {
+		ArrayList<String> removed = new ArrayList<>();
+
+		for (ResearchMatter m: line.getMatters()) {
+			if (!multipleInput.has(m.getName())) {
+				removed.add(m.getName());
+			}
+		}
+
+		return removed;
+	}
+
+	private ArrayList<String> insertedMatters() {
+		String[] matters = multipleInput.getValues();
+		ArrayList<String> actualMatters = new ArrayList<>();
+
+		for (String matter: matters) {
+			String id = multipleInput.getIdentifier(matter);
+
+			if (id == null) actualMatters.add(matter);
+		}
+
+		return actualMatters;
 	}
 
 	private JButton getBtnNewButton() {
 		if (btnNewButton == null) {
-			btnNewButton = new JButton("Agregar");
+			btnNewButton = new JButton(line == null ? "Agregar" : "Guardar cambios");
 			btnNewButton.setFont(new Font("Segoe UI", Font.BOLD, 15));
 			btnNewButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					hideErrors();
-					
-					if (Validation.notEmpty(textFieldName.getText())) {
-						errorName.setText("");
-						if (multipleInput.amountOfItems() > 0) {
-							if (chief != null) {
-								errorChief.setVisible(false);
-
-									Profesor chiefProfesor = registerChief();
-									String name = faculty.addResearchLine(textFieldName.getText(), chiefProfesor);
-									ResearchLine line = faculty.findResearchLine(name);
-
-									for (String matter : multipleInput.getValues()) {
-										line.addMatter(matter);
-									}
-
-									if (listener != null) {
-										listener.added(textFieldName.getText());
-									}
-
-									ResearchMatter chiefResearchMatter = faculty.findResearchMatter(chief.getMatter());
-									chiefResearchMatter.addResearcher(chiefProfesor);
-									
-									resetForm();
-									sendFeedback();
-							} else {
-								errorChief.setVisible(true);
-							}
-						} else {
-							errorMatters.setVisible(true);
-						}
-					} else {
-						errorName.setVisible(true);
-					}
+					submit();
 				}
 			});
 			btnNewButton.setBackground(Constants.getInsertionBtnColor());
@@ -252,7 +343,7 @@ public class ResearchLineForm extends JPanel {
 	private void sendFeedback() {
 		JOptionPane.showMessageDialog(null, "¡Se ha registrado la línea correctamente!", "Mensaje", JOptionPane.PLAIN_MESSAGE);
 	}
-	
+
 	private ErrorLabel getErrorMatters() {
 		if (errorMatters == null) {
 			errorMatters = new ErrorLabel();
@@ -262,16 +353,28 @@ public class ResearchLineForm extends JPanel {
 	}
 
 	private void resetForm() {
-		textFieldName.setText("");
-		multipleInput.reset();
-		chief = null;
-
 		hideErrors();
-		
-		switchPanel("Add Chief");
 
-		btnEditChief.setVisible(false);
-		lblChiefData.setVisible(false);
+		if (line == null) {
+			textFieldName.setText("");
+			chief = null;
+
+			if (line == null) {
+				switchPanel("Add Chief");
+			}
+
+			btnEditChief.setVisible(false);
+			lblChiefData.setVisible(false);
+		}
+
+		int i = multipleInput.getSelectedIndex();
+		
+		multipleInput.reset();
+		initMultipleInput();
+		
+		if (line != null) {
+			multipleInput.setSelectedIndex(i);
+		}
 	}
 
 	private ErrorLabel getErrorName() {
@@ -282,21 +385,13 @@ public class ResearchLineForm extends JPanel {
 		return errorName;
 	}
 
-	private JLabel getLblJefeDeLa() {
-		if (lblJefeDeLa == null) {
-			lblJefeDeLa = new JLabel("Jefe de la l\u00EDnea");
-			lblJefeDeLa.setFont(Constants.getLabelFont());
-		}
-		return lblJefeDeLa;
-	}
-
 	private void openChiefDialog() {
 		try {
 			AddChiefJDialog dialog = new AddChiefJDialog(multipleInput.getValues(), new OnSetChief() {
 				@Override
 				public void set(ProfesorFormData data) {
 					chief = data;
-					switchPanel("Change Chief");
+					switchPanel("Edit Chief");
 
 					lblChiefData.setVisible(true);
 					btnEditChief.setVisible(true);
@@ -334,14 +429,14 @@ public class ResearchLineForm extends JPanel {
 		}
 		return lblChiefWarning;
 	}
-	private JPanel getPanelWrapper() {
-		if (panelWrapper == null) {
-			panelWrapper = new JPanel();
-			panelWrapper.setLayout(new CardLayout(0, 0));
-			panelWrapper.add(getAddChiefForm(), "Add Chief");
-			panelWrapper.add(getChangeChief(), "Change Chief");
+	private JPanel getSetChiefPanel() {
+		if (setChiefPanel == null) {
+			setChiefPanel = new JPanel();
+			setChiefPanel.setLayout(new CardLayout(0, 0));
+			setChiefPanel.add(getAddChiefForm(), "Add Chief");
+			setChiefPanel.add(getEditChiefPanel(), "Edit Chief");
 		}
-		return panelWrapper;
+		return setChiefPanel;
 	}
 	private JPanel getAddChiefForm() {
 		if (addChiefForm == null) {
@@ -352,12 +447,7 @@ public class ResearchLineForm extends JPanel {
 			gbl_addChiefForm.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
 			gbl_addChiefForm.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
 			addChiefForm.setLayout(gbl_addChiefForm);
-			GridBagConstraints gbc_lblJefeDeLa = new GridBagConstraints();
-			gbc_lblJefeDeLa.fill = GridBagConstraints.BOTH;
-			gbc_lblJefeDeLa.insets = new Insets(0, 0, 5, 5);
-			gbc_lblJefeDeLa.gridx = 0;
-			gbc_lblJefeDeLa.gridy = 0;
-			addChiefForm.add(getLblJefeDeLa(), gbc_lblJefeDeLa);
+			
 			GridBagConstraints gbc_btnSetChief = new GridBagConstraints();
 			gbc_btnSetChief.fill = GridBagConstraints.BOTH;
 			gbc_btnSetChief.insets = new Insets(0, 0, 5, 0);
@@ -381,60 +471,60 @@ public class ResearchLineForm extends JPanel {
 		}
 		return addChiefForm;
 	}
-	private JPanel getChangeChief() {
-		if (changeChief == null) {
-			changeChief = new JPanel();
-			changeChief.setForeground(new Color(0, 0, 0));
-			changeChief.setBackground(new Color(204, 255, 255));
-			GridBagLayout gbl_changeChief = new GridBagLayout();
-			gbl_changeChief.columnWidths = new int[]{0, 0, 0, 0, 0};
-			gbl_changeChief.rowHeights = new int[]{0, 0, 30, 0};
-			gbl_changeChief.columnWeights = new double[]{1.0, 1.0, 1.0, 1.0, Double.MIN_VALUE};
-			gbl_changeChief.rowWeights = new double[]{1.0, 0.0, 1.0, Double.MIN_VALUE};
-			changeChief.setLayout(gbl_changeChief);
+	private JPanel getEditChiefPanel() {
+		if (editChiefPanel == null) {
+			editChiefPanel = new JPanel();
+			editChiefPanel.setForeground(new Color(0, 0, 0));
+			editChiefPanel.setBackground(new Color(204, 255, 255));
+			GridBagLayout gbl_editChiefPanel = new GridBagLayout();
+			gbl_editChiefPanel.columnWidths = new int[]{0, 0, 0, 0, 0};
+			gbl_editChiefPanel.rowHeights = new int[]{0, 0, 30, 0};
+			gbl_editChiefPanel.columnWeights = new double[]{1.0, 1.0, 1.0, 1.0, Double.MIN_VALUE};
+			gbl_editChiefPanel.rowWeights = new double[]{1.0, 0.0, 1.0, Double.MIN_VALUE};
+			editChiefPanel.setLayout(gbl_editChiefPanel);
 			GridBagConstraints gbc_lblNombre_1 = new GridBagConstraints();
 			gbc_lblNombre_1.insets = new Insets(0, 0, 5, 5);
 			gbc_lblNombre_1.gridx = 0;
 			gbc_lblNombre_1.gridy = 1;
-			changeChief.add(getLblNombre_1(), gbc_lblNombre_1);
+			editChiefPanel.add(getLblNombre_1(), gbc_lblNombre_1);
 			GridBagConstraints gbc_lblCategoraCientfica = new GridBagConstraints();
 			gbc_lblCategoraCientfica.insets = new Insets(0, 0, 5, 5);
 			gbc_lblCategoraCientfica.gridx = 1;
 			gbc_lblCategoraCientfica.gridy = 1;
-			changeChief.add(getLblCategoraCientfica(), gbc_lblCategoraCientfica);
+			editChiefPanel.add(getLblCategoraCientfica(), gbc_lblCategoraCientfica);
 			GridBagConstraints gbc_lblCategora = new GridBagConstraints();
 			gbc_lblCategora.insets = new Insets(0, 0, 5, 5);
 			gbc_lblCategora.gridx = 2;
 			gbc_lblCategora.gridy = 1;
-			changeChief.add(getLblCategora(), gbc_lblCategora);
+			editChiefPanel.add(getLblCategora(), gbc_lblCategora);
 			GridBagConstraints gbc_lblMateria = new GridBagConstraints();
 			gbc_lblMateria.insets = new Insets(0, 0, 5, 0);
 			gbc_lblMateria.gridx = 3;
 			gbc_lblMateria.gridy = 1;
-			changeChief.add(getLblMateria(), gbc_lblMateria);
+			editChiefPanel.add(getLblMateria(), gbc_lblMateria);
 			GridBagConstraints gbc_lblChiefName = new GridBagConstraints();
 			gbc_lblChiefName.insets = new Insets(0, 0, 0, 5);
 			gbc_lblChiefName.gridx = 0;
 			gbc_lblChiefName.gridy = 2;
-			changeChief.add(getLblChiefName(), gbc_lblChiefName);
+			editChiefPanel.add(getLblChiefName(), gbc_lblChiefName);
 			GridBagConstraints gbc_lblChiefDegree = new GridBagConstraints();
 			gbc_lblChiefDegree.insets = new Insets(0, 0, 0, 5);
 			gbc_lblChiefDegree.gridx = 1;
 			gbc_lblChiefDegree.gridy = 2;
-			changeChief.add(getLblChiefDegree(), gbc_lblChiefDegree);
+			editChiefPanel.add(getLblChiefDegree(), gbc_lblChiefDegree);
 			GridBagConstraints gbc_lblChiefCat = new GridBagConstraints();
 			gbc_lblChiefCat.insets = new Insets(0, 0, 0, 5);
 			gbc_lblChiefCat.gridx = 2;
 			gbc_lblChiefCat.gridy = 2;
-			changeChief.add(getLblChiefCat(), gbc_lblChiefCat);
+			editChiefPanel.add(getLblChiefCat(), gbc_lblChiefCat);
 			GridBagConstraints gbc_lblChiefMatter = new GridBagConstraints();
 			gbc_lblChiefMatter.gridx = 3;
 			gbc_lblChiefMatter.gridy = 2;
-			changeChief.add(getLblChiefMatter(), gbc_lblChiefMatter);
+			editChiefPanel.add(getLblChiefMatter(), gbc_lblChiefMatter);
 		}
-		return changeChief;
+		return editChiefPanel;
 	}
-	
+
 	private ErrorLabel getErrorChief() {
 		if (errorChief == null) {
 			errorChief = new ErrorLabel();
@@ -443,7 +533,7 @@ public class ResearchLineForm extends JPanel {
 		}
 		return errorChief;
 	}
-	
+
 	private JLabel getLblChiefName() {
 		if (lblChiefName == null) {
 			lblChiefName = new JLabel("");
@@ -452,7 +542,7 @@ public class ResearchLineForm extends JPanel {
 		}
 		return lblChiefName;
 	}
-	
+
 	private JLabel getLblChiefDegree() {
 		if (lblChiefDegree == null) {
 			lblChiefDegree = new JLabel("");
@@ -461,7 +551,7 @@ public class ResearchLineForm extends JPanel {
 		}
 		return lblChiefDegree;
 	}
-	
+
 	private JLabel getLblChiefMatter() {
 		if (lblChiefMatter == null) {
 			lblChiefMatter = new JLabel("");
@@ -470,7 +560,7 @@ public class ResearchLineForm extends JPanel {
 		}
 		return lblChiefMatter;
 	}
-	
+
 	private JLabel getLblChiefCat() {
 		if (lblChiefCat == null) {
 			lblChiefCat = new JLabel("");
@@ -479,16 +569,15 @@ public class ResearchLineForm extends JPanel {
 		}
 		return lblChiefCat;
 	}
-	
+
 	private JLabel getLblChiefData() {
 		if (lblChiefData == null) {
-			lblChiefData = new JLabel("Datos del jefe");
+			lblChiefData = new JLabel("Jefe de la l\u00EDnea");
 			lblChiefData.setFont(Constants.getLabelFont());
-			lblChiefData.setVisible(false);
 		}
 		return lblChiefData;
 	}
-	
+
 	private JButton getBtnEditChief() {
 		if (btnEditChief == null) {
 			btnEditChief = new JButton("Editar");
@@ -502,7 +591,7 @@ public class ResearchLineForm extends JPanel {
 		}
 		return btnEditChief;
 	}
-	
+
 	private JLabel getLblNombre_1() {
 		if (lblNombre_1 == null) {
 			lblNombre_1 = new JLabel("Nombre");
@@ -511,7 +600,7 @@ public class ResearchLineForm extends JPanel {
 		}
 		return lblNombre_1;
 	}
-	
+
 	private JLabel getLblCategoraCientfica() {
 		if (lblCategoraCientfica == null) {
 			lblCategoraCientfica = new JLabel("Categor\u00EDa cient\u00EDfica");
@@ -520,7 +609,7 @@ public class ResearchLineForm extends JPanel {
 		}
 		return lblCategoraCientfica;
 	}
-	
+
 	private JLabel getLblCategora() {
 		if (lblCategora == null) {
 			lblCategora = new JLabel("Categor\u00EDa");
@@ -529,7 +618,7 @@ public class ResearchLineForm extends JPanel {
 		}
 		return lblCategora;
 	}
-	
+
 	private JLabel getLblMateria() {
 		if (lblMateria == null) {
 			lblMateria = new JLabel("Materia");
@@ -538,51 +627,125 @@ public class ResearchLineForm extends JPanel {
 		}
 		return lblMateria;
 	}
-	
+
 	private void checkChiefButtonAvailability() {
 		boolean noItems = multipleInput.amountOfItems() == 0;
-		
+
 		btnSetChief.setEnabled(!noItems);
 		lblChiefWarning.setVisible(noItems);
 	}
-	
+
 	private String getChiefMatter() {
 		String matter = null;
-		
+
 		if (chief != null) {
 			matter = chief.getMatter();
 		}
-		
+
 		return matter;
 	}
-	
+
 	private MultipleInput getMultipleInput() {
 		if (multipleInput == null) {
 			multipleInput = new MultipleInput("Temas", "Añadir un tema");
-			multipleInput.listenTo(new OnDeletedInput() {
-				@Override
-				public void deletedItem(String item) {
-					if (chief != null) {
-						if (getChiefMatter().equals(item)) {
-							chief = null;
-						}
+
+			if (line != null) {
+				multipleInput.setNotPermittedDeletionMsg("No se puede eliminar un tema con investigadores");
+				multipleInput.canRemove(new CanBeRemoved() {
+					@Override
+					public boolean granted(String item) {
+						return line.findMatter(item).getResearchers().size() == 0;
 					}
-					
-					checkChiefButtonAvailability();
-				}
-			});
-			multipleInput.listenTo(new OnAddedInput() {
-				@Override
-				public void newItem(String item) {
-					checkChiefButtonAvailability();
-				}
-			});
+				});
+			} else {
+				multipleInput.listenTo(new OnDeletedInput() {
+					@Override
+					public void deletedItem(String item) {
+						if (chief != null) {
+							if (getChiefMatter().equals(item)) {
+								chief = null;
+							}
+						}
+						
+						checkChiefButtonAvailability();
+					}
+				});
+				multipleInput.listenTo(new OnAddedInput() {
+					@Override
+					public void newItem(String item) {
+						checkChiefButtonAvailability();
+					}
+				});
+			}
 		}
 		return multipleInput;
 	}
-	
+
 	private void switchPanel(String id) {
-		CardLayout cl = (CardLayout)(panelWrapper.getLayout());
-		cl.show(panelWrapper, id);
+		CardLayout cl = (CardLayout)(setChiefPanel.getLayout());
+		cl.show(setChiefPanel, id);
+	}
+	
+	private JPanel getPanel() {
+		if (panel == null) {
+			panel = new JPanel();
+			panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+			
+			if (line == null) {
+				panel.add(getSetChiefPanel());
+			} else {
+				panel.add(getChangeChiefPanel());
+			}
+		}
+		return panel;
+	}
+	private JPanel getChangeChiefPanel() {
+		if (changeChiefPanel == null) {
+			changeChiefPanel = new JPanel();
+			
+			GridBagLayout gbl_changeChiefPanel = new GridBagLayout();
+			gbl_changeChiefPanel.columnWidths = new int[]{0, 0};
+			gbl_changeChiefPanel.rowHeights = new int[]{35, 0};
+			gbl_changeChiefPanel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+			gbl_changeChiefPanel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+			changeChiefPanel.setLayout(gbl_changeChiefPanel);
+			
+			GridBagConstraints gbc_chiefCandidatesComboBox = new GridBagConstraints();
+			gbc_chiefCandidatesComboBox.fill = GridBagConstraints.BOTH;
+			gbc_chiefCandidatesComboBox.gridx = 0;
+			gbc_chiefCandidatesComboBox.gridy = 0;
+			changeChiefPanel.add(getChiefCandidatesComboBox(), gbc_chiefCandidatesComboBox);
+		}
+		return changeChiefPanel;
+	}
+	
+	private ArrayList<Profesor> getCandidates() {
+		ArrayList<Profesor> chiefCandidates = new ArrayList<>();
+		chiefCandidates.add(line.getChief());
+		
+		for (Profesor p: line.getProfesorsInvolved()) {
+			if (!faculty.isChief(p)) {
+				chiefCandidates.add(p);
+			}
+		}
+		
+		return chiefCandidates;
+	}
+	
+	private JComboBox<String> getChiefCandidatesComboBox() {
+		if (chiefCandidatesComboBox == null) {
+			chiefCandidatesComboBox = new JComboBox<>();
+			
+			ArrayList<Profesor> chiefCandidates = getCandidates();
+			String[] names = new String[chiefCandidates.size()];
+			
+			for (int i = 0; i < names.length; i++) {
+				names[i] = chiefCandidates.get(i).getName();
+			}
+			
+			chiefCandidatesComboBox.setModel(new DefaultComboBoxModel<>(names));
+		}
+		
+		return chiefCandidatesComboBox;
 	}
 }
