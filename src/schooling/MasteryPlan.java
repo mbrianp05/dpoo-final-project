@@ -57,11 +57,11 @@ public class MasteryPlan {
 	}
 
 	public ArrayList<Profesor> profesorsToAproveMastery() {
-		ArrayList<Profesor> profesors = getInvolvedPrfesors();
+		ArrayList<Profesor> profesors = new ArrayList<>();
 
-		for (Profesor profesor : profesors) {
-			if (profesor.getCredits() < minCredits) {
-				profesors.remove(profesor);
+		for (Profesor profesor : getInvolvedPrfesors()) {
+			if (profesor.getCredits() >= minCredits) {
+				profesors.add(profesor);
 			}
 		}
 

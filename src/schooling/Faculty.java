@@ -248,52 +248,24 @@ public class Faculty {
 		return aprovalPendings;
 	}
 
-	// REPORTE 5: (Aleksandr): Total de cursos de postgrado proporcionados por el
-	// vicedecanato
-	public int totalPostgradeCourses() {
-		int total = 0;
+	// REPORTE 5: (Aleksandr): Maestrias con la mayor matrícula
+	public ArrayList<ResearchLine> trendingMasteryPlans() {
+		ArrayList<ResearchLine> best = new ArrayList<>();
+		int mayorMatric = 0;
 
-		for (ResearchLine line : researchLines) {
-			MasteryPlan plan = line.getMasteryPlan();
-
-			if (plan != null)
-				total += plan.getCourses().size();
-		}
-
-		return total;
-	}
-
-	private ArrayList<Matriculation> getMatriculationsOf(int ID) {
-		ArrayList<Matriculation> matriculations = new ArrayList<>();
-
-		for (ResearchLine l: researchLines) {
-			for (Matriculation m: l.getMasteryPlan().getMatriculations()) {
-				if (m.getProfesor().getID() == ID) {
-					matriculations.add(m);
+		for(ResearchLine r: researchLines) {
+			if(r.getMasteryPlan().getMatriculations().size() > mayorMatric) {
+				best.clear();
+				mayorMatric = r.getMasteryPlan().getMatriculations().size();
+				best.add(r);
+			} else {
+				if(r.getMasteryPlan().getMatriculations().size() == mayorMatric) {
+					best.add(r);
 				}
 			}
 		}
-
-		return matriculations;
+		return best;
 	}
-
-	private double getAverageMarksOf(int ID) {
-		Researcher r = findResearcher(ID);
-
-		if (r == null || !(r instanceof Profesor)) {
-			throw new IllegalArgumentException("Researcher with ID " + ID + " either doesn't exits or its not a profesor");
-		}
-
-		int total = 0;
-		ArrayList<Matriculation> matriculations = getMatriculationsOf(r.getID());
-
-		for (Matriculation m: matriculations) {
-			total += m.getMark();
-		}
-
-		return total / (double)Math.max(1, matriculations.size());
-	}
-
 
 	// Reporte 6: (Aleksandr): Los profesores con mejor promedio de notas
 	public ArrayList<Profesor> profesorsWithBestAverage() {
@@ -314,6 +286,37 @@ public class Faculty {
 		}
 
 		return profesors;
+	}
+
+	private ArrayList<Matriculation> getMatriculationsOf(int ID) {
+		ArrayList<Matriculation> matriculations = new ArrayList<>();
+
+		for (ResearchLine l: researchLines) {
+			for (Matriculation m: l.getMasteryPlan().getMatriculations()) {
+				if (m.getProfesor().getID() == ID) {
+					matriculations.add(m);
+				}
+			}
+		}
+
+		return matriculations;
+	}
+
+	public double getAverageMarksOf(int ID) {
+		Researcher r = findResearcher(ID);
+
+		if (r == null || !(r instanceof Profesor)) {
+			throw new IllegalArgumentException("Researcher with ID " + ID + " either doesn't exits or its not a profesor");
+		}
+
+		int total = 0;
+		ArrayList<Matriculation> matriculations = getMatriculationsOf(r.getID());
+
+		for (Matriculation m: matriculations) {
+			total += m.getMark();
+		}
+
+		return total / (double)Math.max(1, matriculations.size());
 	}
 
 	public ArrayList<PostgraduateCourse> getCoursesList () {
@@ -475,9 +478,9 @@ public class Faculty {
 		ArrayList<Matriculation> matriculations = new ArrayList<>();
 
 		ResearchLine r = findLineByCourse(course);
-		
+
 		System.out.println();
-		
+
 		MasteryPlan plan = r.getMasteryPlan();
 
 		for(Matriculation mat: plan.getMatriculations()) {

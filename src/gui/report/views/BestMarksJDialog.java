@@ -25,10 +25,10 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
 import schooling.Faculty;
-import schooling.Researcher;
+import schooling.Profesor;
 import utils.Constants;
 
-public class BestResearchersJDialog extends JDialog {
+public class BestMarksJDialog extends JDialog {
 	private static final long serialVersionUID = 1L;
 
 	private final JPanel contentPanel = new JPanel();
@@ -36,9 +36,9 @@ public class BestResearchersJDialog extends JDialog {
 	final private Color mainColor;
 	final private Color borderColor;
 
-	public BestResearchersJDialog() {
-		mainColor = new Color(175, 238, 238);
-		borderColor = new Color(220, 140, 140);
+	public BestMarksJDialog() {
+		mainColor = new Color(255, 215, 215);
+		borderColor = new Color(0, 128, 128);
 
 		setUndecorated(true);
 		setModal(true);
@@ -46,7 +46,7 @@ public class BestResearchersJDialog extends JDialog {
 		setResizable(false);
 		setBounds(100, 100, 552, 365);
 		getContentPane().setLayout(new BorderLayout());
-		contentPanel.setBackground(mainColor);
+		contentPanel.setBackground(new Color(175, 238, 238));
 		contentPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		GridBagLayout gbl_contentPanel = new GridBagLayout();
@@ -58,11 +58,11 @@ public class BestResearchersJDialog extends JDialog {
 		{
 			TitleLabel tlblMejoresInvetigadores = new TitleLabel();
 
-			ImageIcon icon = new ImageIcon(BestResearchersJDialog.class.getResource("/resources/images/research.png"));
+			ImageIcon icon = new ImageIcon(BestMarksJDialog.class.getResource("/resources/images/research.png"));
 			icon = new ImageIcon(icon.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
 
 			tlblMejoresInvetigadores.setIcon(icon);
-			tlblMejoresInvetigadores.setText("Mejores invetigadores");
+			tlblMejoresInvetigadores.setText("Mejores notas de profesores");
 			GridBagConstraints gbc_tlblMejoresInvetigadores = new GridBagConstraints();
 			gbc_tlblMejoresInvetigadores.insets = new Insets(0, 0, 5, 5);
 			gbc_tlblMejoresInvetigadores.anchor = GridBagConstraints.NORTHWEST;
@@ -71,7 +71,7 @@ public class BestResearchersJDialog extends JDialog {
 			contentPanel.add(tlblMejoresInvetigadores, gbc_tlblMejoresInvetigadores);
 		}
 		{
-			ImageIcon icon = new ImageIcon(BestResearchersJDialog.class.getResource("/resources/images/close-x.png"));
+			ImageIcon icon = new ImageIcon(BestMarksJDialog.class.getResource("/resources/images/close-x.png"));
 			icon = new ImageIcon(icon.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
 
 			final JLabel btnNewButton = new JLabel(icon);
@@ -110,7 +110,7 @@ public class BestResearchersJDialog extends JDialog {
 					table.setModel(new DefaultTableModel(
 							new Object[][] {},
 							new String[] {
-									"Nombre", "Puntuaci\u00F3n"
+									"Nombre", "Promedio"
 							}
 							) {
 						private static final long serialVersionUID = 6062319489520125102L;
@@ -137,12 +137,12 @@ public class BestResearchersJDialog extends JDialog {
 
 					Faculty faculty = Faculty.newInstance();
 
-					for (Researcher r: faculty.bestResearchers()) {
-						((DefaultTableModel)table.getModel()).addRow(new Object[] { r.getName(), r.getScore() });
+					for (Profesor p: faculty.profesorsWithBestAverage()) {
+						((DefaultTableModel)table.getModel()).addRow(new Object[] { p.getName(), faculty.getAverageMarksOf(p.getID()) });
 					}
 
 					table.setEnabled(false);
-					table.setBackground(mainColor);
+					table.setBackground(new Color(175, 238, 238));
 					table.setGridColor(mainColor);
 					table.setRowHeight(24);
 					table.getColumnModel().getColumn(0).setPreferredWidth(150);
@@ -158,4 +158,5 @@ public class BestResearchersJDialog extends JDialog {
 	private void closeDialog() {
 		dispose();
 	}
+
 }

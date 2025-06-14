@@ -2,6 +2,13 @@ package gui.report.views;
 
 import gui.component.TitleLabel;
 
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JDialog;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -14,31 +21,25 @@ import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JDialog;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
 import schooling.Faculty;
-import schooling.Researcher;
+import schooling.Profesor;
 import utils.Constants;
 
-public class BestResearchersJDialog extends JDialog {
+public class ApprovalPendingsJDialog extends JDialog {
 	private static final long serialVersionUID = 1L;
-
+	
 	private final JPanel contentPanel = new JPanel();
-	private JTable table;
 	final private Color mainColor;
 	final private Color borderColor;
-
-	public BestResearchersJDialog() {
-		mainColor = new Color(175, 238, 238);
-		borderColor = new Color(220, 140, 140);
+	private JTable table;
+	
+	public ApprovalPendingsJDialog() {
+		mainColor = new Color(102, 205, 170);
+		borderColor = new Color(47, 79, 79);
 
 		setUndecorated(true);
 		setModal(true);
@@ -46,7 +47,7 @@ public class BestResearchersJDialog extends JDialog {
 		setResizable(false);
 		setBounds(100, 100, 552, 365);
 		getContentPane().setLayout(new BorderLayout());
-		contentPanel.setBackground(mainColor);
+		contentPanel.setBackground(new Color(102, 205, 170));
 		contentPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		GridBagLayout gbl_contentPanel = new GridBagLayout();
@@ -56,46 +57,46 @@ public class BestResearchersJDialog extends JDialog {
 		gbl_contentPanel.rowWeights = new double[]{0.0, 0.0, 1.0, Double.MIN_VALUE};
 		contentPanel.setLayout(gbl_contentPanel);
 		{
-			TitleLabel tlblMejoresInvetigadores = new TitleLabel();
+			TitleLabel tlblMaestriasListas = new TitleLabel();
 
-			ImageIcon icon = new ImageIcon(BestResearchersJDialog.class.getResource("/resources/images/research.png"));
+			ImageIcon icon = new ImageIcon(ApprovalPendingsJDialog.class.getResource("/resources/images/course.png"));
 			icon = new ImageIcon(icon.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
 
-			tlblMejoresInvetigadores.setIcon(icon);
-			tlblMejoresInvetigadores.setText("Mejores invetigadores");
-			GridBagConstraints gbc_tlblMejoresInvetigadores = new GridBagConstraints();
-			gbc_tlblMejoresInvetigadores.insets = new Insets(0, 0, 5, 5);
-			gbc_tlblMejoresInvetigadores.anchor = GridBagConstraints.NORTHWEST;
-			gbc_tlblMejoresInvetigadores.gridx = 0;
-			gbc_tlblMejoresInvetigadores.gridy = 0;
-			contentPanel.add(tlblMejoresInvetigadores, gbc_tlblMejoresInvetigadores);
+			tlblMaestriasListas.setIcon(icon);
+			tlblMaestriasListas.setText("Profesores listos para defender maestr\u00EDas");
+			GridBagConstraints gbc_tlblMaestriasListas = new GridBagConstraints();
+			gbc_tlblMaestriasListas.insets = new Insets(0, 0, 5, 5);
+			gbc_tlblMaestriasListas.anchor = GridBagConstraints.NORTHWEST;
+			gbc_tlblMaestriasListas.gridx = 0;
+			gbc_tlblMaestriasListas.gridy = 0;
+			contentPanel.add(tlblMaestriasListas, gbc_tlblMaestriasListas);
 		}
 		{
-			ImageIcon icon = new ImageIcon(BestResearchersJDialog.class.getResource("/resources/images/close-x.png"));
+			ImageIcon icon = new ImageIcon(ApprovalPendingsJDialog.class.getResource("/resources/images/close-x.png"));
 			icon = new ImageIcon(icon.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
 
-			final JLabel btnNewButton = new JLabel(icon);
+			final JLabel btnCloseButton = new JLabel(icon);
 			
-			btnNewButton.setOpaque(false);
-			btnNewButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-			btnNewButton.setBorder(BorderFactory.createEmptyBorder());
-			btnNewButton.setBackground(new Color(0, 0, 0, 0f));
-			btnNewButton.setBackground(Color.WHITE);
-			btnNewButton.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+			btnCloseButton.setOpaque(false);
+			btnCloseButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			btnCloseButton.setBorder(BorderFactory.createEmptyBorder());
+			btnCloseButton.setBackground(new Color(0, 0, 0, 0f));
+			btnCloseButton.setBackground(Color.WHITE);
+			btnCloseButton.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 			
-			btnNewButton.addMouseListener(new MouseAdapter() {
+			btnCloseButton.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent arg0) {
 					closeDialog();
 				}
 			});
 			
-			GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
-			gbc_btnNewButton.insets = new Insets(0, 0, 5, 0);
-			gbc_btnNewButton.fill = GridBagConstraints.BOTH;
-			gbc_btnNewButton.gridx = 1;
-			gbc_btnNewButton.gridy = 0;
-			contentPanel.add(btnNewButton, gbc_btnNewButton);
+			GridBagConstraints gbc_btnCloseButton = new GridBagConstraints();
+			gbc_btnCloseButton.insets = new Insets(0, 0, 5, 0);
+			gbc_btnCloseButton.fill = GridBagConstraints.BOTH;
+			gbc_btnCloseButton.gridx = 1;
+			gbc_btnCloseButton.gridy = 0;
+			contentPanel.add(btnCloseButton, gbc_btnCloseButton);
 			{
 				JScrollPane scrollPane = new JScrollPane();
 				GridBagConstraints gbc_scrollPane = new GridBagConstraints();
@@ -110,7 +111,7 @@ public class BestResearchersJDialog extends JDialog {
 					table.setModel(new DefaultTableModel(
 							new Object[][] {},
 							new String[] {
-									"Nombre", "Puntuaci\u00F3n"
+									"Nombre", "Créditos acumulados"
 							}
 							) {
 						private static final long serialVersionUID = 6062319489520125102L;
@@ -137,13 +138,13 @@ public class BestResearchersJDialog extends JDialog {
 
 					Faculty faculty = Faculty.newInstance();
 
-					for (Researcher r: faculty.bestResearchers()) {
-						((DefaultTableModel)table.getModel()).addRow(new Object[] { r.getName(), r.getScore() });
+					for (Profesor p: faculty.pendingAprovals()) {
+						((DefaultTableModel)table.getModel()).addRow(new Object[] { p.getName(), p.getCredits() });
 					}
 
 					table.setEnabled(false);
-					table.setBackground(mainColor);
-					table.setGridColor(mainColor);
+					table.setBackground(new Color(102, 205, 170));
+					table.setGridColor(new Color(255, 228, 181));
 					table.setRowHeight(24);
 					table.getColumnModel().getColumn(0).setPreferredWidth(150);
 					table.getColumnModel().getColumn(1).setPreferredWidth(80);
@@ -155,7 +156,9 @@ public class BestResearchersJDialog extends JDialog {
 		}
 	}
 
+
 	private void closeDialog() {
 		dispose();
 	}
+	
 }

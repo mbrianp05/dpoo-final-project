@@ -1,6 +1,9 @@
 package gui;
 
 import gui.event.OnCloseApp;
+import gui.report.views.ApprovalPendingsJDialog;
+import gui.report.views.BestMarksJDialog;
+import gui.report.views.TrendingMasteriesJDialog;
 import gui.report.views.BestResearchersJDialog;
 import gui.report.views.MostPapersPlublishedByOneResearcherJDialog;
 import gui.report.views.TrendingMattersJDialog;
@@ -45,7 +48,7 @@ public class MenuPanel extends JPanel {
 	private JMenu reports;
 	private JMenuItem bestResearchersMenu;
 	private JMenuItem trendingMattersMenu;
-	private JMenuItem totalCoursesMenu;
+	private JMenuItem bestMasteryPlansMenu;
 	private JMenuItem bestMarksMenu;
 	private JMenuItem aprovalPendingMenu;
 	private JMenuItem mostPaperMenu;
@@ -147,13 +150,13 @@ public class MenuPanel extends JPanel {
 	// boton de insertar curso
 	private JMenuItem getAddCourse() {
 		if (addCourse == null) {			
-				addCourse = new JMenuItem("Nuevo curso");
-				addCourse.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent arg0) {
-						switchView("Courses Form");
-					}
-				});
-			}
+			addCourse = new JMenuItem("Nuevo curso");
+			addCourse.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					switchView("Courses Form");
+				}
+			});
+		}
 		if(faculty.getResearchLines().size() > 0 && faculty.getProfesorsWithDegree(Degree.Doctor).size() > 0) {
 			addCourse.setVisible(true);
 		} else {
@@ -169,7 +172,7 @@ public class MenuPanel extends JPanel {
 			reports.add(getBestResearchersMenu());
 			reports.add(getTrendingMattersMenu());
 			reports.add(getMostPaperMenu());
-			reports.add(getTotalCoursesMenu());
+			reports.add(getBestMasteryPlansMenu());
 			reports.add(getBestMarksMenu());
 			reports.add(getAprovalPendingMenu());
 		}
@@ -211,21 +214,58 @@ public class MenuPanel extends JPanel {
 		}
 		return trendingMattersMenu;
 	}
-	private JMenuItem getTotalCoursesMenu() {
-		if (totalCoursesMenu == null) {
-			totalCoursesMenu = new JMenuItem("Total de cursos");
+	private JMenuItem getBestMasteryPlansMenu() {
+		if (bestMasteryPlansMenu == null) {
+			bestMasteryPlansMenu = new JMenuItem("Maestr\u00EDas con mayor matr\u00EDcula");
+			bestMasteryPlansMenu.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					try {
+						TrendingMasteriesJDialog dialog = new TrendingMasteriesJDialog();
+						dialog.setLocationRelativeTo(null);
+						dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+						dialog.setVisible(true);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			});
 		}
-		return totalCoursesMenu;
+		return bestMasteryPlansMenu;
 	}
 	private JMenuItem getBestMarksMenu() {
 		if (bestMarksMenu == null) {
 			bestMarksMenu = new JMenuItem("Mejores notas");
+			bestMarksMenu.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					try {
+						BestMarksJDialog dialog = new BestMarksJDialog();
+						dialog.setLocationRelativeTo(null);
+						dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+						dialog.setVisible(true);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+
+				}
+			});
 		}
 		return bestMarksMenu;
 	}
 	private JMenuItem getAprovalPendingMenu() {
 		if (aprovalPendingMenu == null) {
 			aprovalPendingMenu = new JMenuItem("Maestr\u00EDas para aprobar");
+			aprovalPendingMenu.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					try {
+						ApprovalPendingsJDialog dialog = new ApprovalPendingsJDialog();
+						dialog.setLocationRelativeTo(null);
+						dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+						dialog.setVisible(true);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			});
 		}
 		return aprovalPendingMenu;
 	}
