@@ -52,7 +52,7 @@ public class MasteryPlan {
 		ArrayList<Profesor> profesors = new ArrayList<>();
 
 		for (Profesor profesor : getInvolvedPrfesors()) {
-			if (profesor.getCredits() >= minCredits) {
+			if (profesor.getCredits() == minCredits) {
 				profesors.add(profesor);
 			}
 		}

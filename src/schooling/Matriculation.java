@@ -21,7 +21,7 @@ public class Matriculation {
     		profesor.setCredits(profesor.getCredits() - course.getCredits());
     	}
     	
-    	if (mark >= 3 && this.mark >= 2) {
+    	if (mark >= 3 && this.mark <= 2) {
     		profesor.setCredits(profesor.getCredits() + course.getCredits());
     	}
     	

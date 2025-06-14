@@ -143,8 +143,8 @@ public class ApprovalPendingsJDialog extends JDialog {
 					}
 
 					table.setEnabled(false);
-					table.setBackground(new Color(102, 205, 170));
-					table.setGridColor(new Color(255, 228, 181));
+					table.setBackground(mainColor);
+					table.setGridColor(mainColor);
 					table.setRowHeight(24);
 					table.getColumnModel().getColumn(0).setPreferredWidth(150);
 					table.getColumnModel().getColumn(1).setPreferredWidth(80);
