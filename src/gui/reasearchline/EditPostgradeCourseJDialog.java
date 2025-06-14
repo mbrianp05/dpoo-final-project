@@ -26,7 +26,7 @@ import schooling.Faculty;
 import schooling.PostgraduateCourse;
 import schooling.ResearchLine;
 
-public class EditPostgradeCourse extends JDialog {
+public class EditPostgradeCourseJDialog extends JDialog {
 
 	private static final long serialVersionUID = 2529539427327666554L;
 	private final JPanel contentPanel = new JPanel();
@@ -45,7 +45,7 @@ public class EditPostgradeCourse extends JDialog {
 	private ButtonGroup buttonGroup;
 	private MaskAssignmentForm maskAssignmentForm;
 
-	public EditPostgradeCourse(PostgraduateCourse course) {
+	public EditPostgradeCourseJDialog(PostgraduateCourse course) {
 		setTitle("Editar datos del curso");
 		setResizable(false);
 		this.faculty = Faculty.newInstance();
@@ -59,7 +59,7 @@ public class EditPostgradeCourse extends JDialog {
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 
 
-		setBounds(100, 100, 975, 746);
+		setBounds(100, 100, 800, 650);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);

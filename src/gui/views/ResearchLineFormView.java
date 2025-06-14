@@ -25,9 +25,7 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JSpinner;
 import javax.swing.JTextField;
-import javax.swing.SpinnerNumberModel;
 
 import schooling.Faculty;
 import schooling.Profesor;
@@ -48,9 +46,6 @@ public class ResearchLineFormView extends JPanel {
 	private TitleLabel lblAgregarLneaDe;
 	private JLabel lblNombre;
 	private JTextField textFieldName;
-	private JLabel lblMaestra;
-	private JLabel lblCrditoNecesario;
-	private JSpinner minCreditsSpinner;
 	private JButton btnNewButton;
 
 	private ErrorLabel errorMatters;
@@ -66,7 +61,6 @@ public class ResearchLineFormView extends JPanel {
 	private JLabel lblChiefDegree;
 	private JLabel lblChiefMatter;
 	private JLabel lblChiefCat;
-	private ErrorLabel errorCredits;
 	private JLabel lblChiefData;
 	private JButton btnEditChief;
 	private JLabel lblNombre_1;
@@ -85,9 +79,9 @@ public class ResearchLineFormView extends JPanel {
 		chief = null;
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{100, 0, 75, 288, 50, 100, 0};
-		gridBagLayout.rowHeights = new int[]{70, 45, 60, 0, 35, 35, 0, 35, 0, 0, 35, 35, 0, 35, 50, 40, 0, 0};
+		gridBagLayout.rowHeights = new int[]{70, 45, 60, 0, 35, 35, 0, 35, 0, 0, 35, 35, 50, 40, 0, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		GridBagConstraints gbc_lblAgregarLneaDe = new GridBagConstraints();
 		gbc_lblAgregarLneaDe.gridwidth = 4;
@@ -154,40 +148,13 @@ public class ResearchLineFormView extends JPanel {
 		gbc_btnEditChief.gridx = 3;
 		gbc_btnEditChief.gridy = 11;
 		add(getBtnEditChief(), gbc_btnEditChief);
-		GridBagConstraints gbc_lblMaestra = new GridBagConstraints();
-		gbc_lblMaestra.fill = GridBagConstraints.HORIZONTAL;
-		gbc_lblMaestra.anchor = GridBagConstraints.SOUTH;
-		gbc_lblMaestra.gridwidth = 2;
-		gbc_lblMaestra.insets = new Insets(0, 0, 5, 5);
-		gbc_lblMaestra.gridx = 1;
-		gbc_lblMaestra.gridy = 12;
-		add(getLblMaestra(), gbc_lblMaestra);
-		GridBagConstraints gbc_lblCrditoNecesario = new GridBagConstraints();
-		gbc_lblCrditoNecesario.fill = GridBagConstraints.BOTH;
-		gbc_lblCrditoNecesario.insets = new Insets(0, 0, 5, 5);
-		gbc_lblCrditoNecesario.gridx = 1;
-		gbc_lblCrditoNecesario.gridy = 13;
-		add(getLblCrditoNecesario(), gbc_lblCrditoNecesario);
-		GridBagConstraints gbc_minCreditsSpinner = new GridBagConstraints();
-		gbc_minCreditsSpinner.fill = GridBagConstraints.BOTH;
-		gbc_minCreditsSpinner.insets = new Insets(0, 0, 5, 5);
-		gbc_minCreditsSpinner.gridx = 2;
-		gbc_minCreditsSpinner.gridy = 13;
-		add(getMinCreditsSpinner(), gbc_minCreditsSpinner);
-		GridBagConstraints gbc_errorCredits = new GridBagConstraints();
-		gbc_errorCredits.fill = GridBagConstraints.HORIZONTAL;
-		gbc_errorCredits.gridwidth = 2;
-		gbc_errorCredits.insets = new Insets(0, 0, 5, 5);
-		gbc_errorCredits.gridx = 3;
-		gbc_errorCredits.gridy = 13;
-		add(getErrorCredits(), gbc_errorCredits);
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
 		gbc_btnNewButton.fill = GridBagConstraints.VERTICAL;
 		gbc_btnNewButton.gridwidth = 2;
 		gbc_btnNewButton.anchor = GridBagConstraints.EAST;
 		gbc_btnNewButton.insets = new Insets(0, 0, 5, 5);
 		gbc_btnNewButton.gridx = 3;
-		gbc_btnNewButton.gridy = 15;
+		gbc_btnNewButton.gridy = 13;
 		add(getBtnNewButton(), gbc_btnNewButton);
 		
 		initForm();
@@ -196,7 +163,6 @@ public class ResearchLineFormView extends JPanel {
 	private void hideErrors() {
 		errorName.setVisible(false);
 		errorChief.setVisible(false);
-		errorCredits.setVisible(false);
 		errorMatters.setVisible(false);
 	}
 	
@@ -205,7 +171,6 @@ public class ResearchLineFormView extends JPanel {
 		
 		if (line != null) {
 			textFieldName.setText(line.getName());
-			minCreditsSpinner.setValue(line.getMasteryPlan().getMinCredits());
 			
 			ArrayList<ResearchMatter> m = line.getMatters();
 			String matters[] = new String[m.size()];
@@ -251,30 +216,6 @@ public class ResearchLineFormView extends JPanel {
 		return textFieldName;
 	}
 
-	private JLabel getLblMaestra() {
-		if (lblMaestra == null) {
-			lblMaestra = new JLabel("Maestr\u00EDa");
-			lblMaestra.setFont(new Font("Segoe UI", Font.PLAIN, 15));
-		}
-		return lblMaestra;
-	}
-
-	private JLabel getLblCrditoNecesario() {
-		if (lblCrditoNecesario == null) {
-			lblCrditoNecesario = new JLabel("Cr\u00E9dito necesario");
-			lblCrditoNecesario.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		}
-		return lblCrditoNecesario;
-	}
-	private JSpinner getMinCreditsSpinner() {
-		if (minCreditsSpinner == null) {
-			minCreditsSpinner = new JSpinner();
-			minCreditsSpinner.setFont(new Font("Segoe UI", Font.PLAIN, 15));
-			minCreditsSpinner.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
-		}
-		return minCreditsSpinner;
-	}
-
 	public Profesor registerChief() {
 		int id = faculty.addProfesor(chief.getName(), chief.getDegree(), chief.getCategory(), null);
 		
@@ -295,9 +236,8 @@ public class ResearchLineFormView extends JPanel {
 							if (chief != null) {
 								errorChief.setVisible(false);
 
-								if ((int)minCreditsSpinner.getValue() > 0) {		
 									Profesor chiefProfesor = registerChief();
-									String name = faculty.addResearchLine(textFieldName.getText(), chiefProfesor, (int)minCreditsSpinner.getValue());
+									String name = faculty.addResearchLine(textFieldName.getText(), chiefProfesor);
 									ResearchLine line = faculty.findResearchLine(name);
 
 									for (String matter : multipleInput.getValues()) {
@@ -313,9 +253,6 @@ public class ResearchLineFormView extends JPanel {
 									
 									sendFeedback();
 									resetForm();
-								} else {
-									errorCredits.setVisible(true);
-								}
 							} else {
 								errorChief.setVisible(true);
 							}
@@ -346,7 +283,6 @@ public class ResearchLineFormView extends JPanel {
 
 	private void resetForm() {
 		textFieldName.setText("");
-		minCreditsSpinner.setValue(1);
 		multipleInput.reset();
 		chief = null;
 
@@ -562,14 +498,6 @@ public class ResearchLineFormView extends JPanel {
 			lblChiefCat.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 		}
 		return lblChiefCat;
-	}
-	
-	private ErrorLabel getErrorCredits() {
-		if (errorCredits == null) {
-			errorCredits = new ErrorLabel();
-			errorCredits.setText("Los cr\u00E9ditos deben ser mayor que 0");
-		}
-		return errorCredits;
 	}
 	
 	private JLabel getLblChiefData() {

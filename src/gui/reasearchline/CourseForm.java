@@ -65,8 +65,6 @@ public class CourseForm extends JPanel {
 		profIDs = new int[profs.size()];
 
 		for(int i = 0; i < profs.size(); i++){
-			System.out.println(profs.get(i).getName());
-			
 			names[i] = profs.get(i).getName();
 			profIDs[i] = profs.get(i).getID();
 		}

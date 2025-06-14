@@ -41,8 +41,8 @@ public class Faculty {
 		return student.getID();
 	}
 
-	public String addResearchLine(String name, Profesor chief, int credits) {
-		researchLines.add(new ResearchLine(name, chief, credits));
+	public String addResearchLine(String name, Profesor chief) {
+		researchLines.add(new ResearchLine(name, chief));
 
 		return name;
 	}
@@ -310,13 +310,17 @@ public class Faculty {
 		}
 
 		int total = 0;
+		int counter = 0;
 		ArrayList<Matriculation> matriculations = getMatriculationsOf(r.getID());
 
 		for (Matriculation m: matriculations) {
-			total += m.getMark();
+			if (m.hasMark()) {
+				total += m.getMark();
+				counter++;
+			}
 		}
 
-		return total / (double)Math.max(1, matriculations.size());
+		return (double)total / Math.max(1, counter);
 	}
 
 	public ArrayList<PostgraduateCourse> getCoursesList () {
@@ -466,6 +470,7 @@ public class Faculty {
 		boolean removible = true;
 
 		if(line.getMasteryPlan().getCourses().contains(course)) {
+			line.getMasteryPlan().substractNecessaryCredits(course.getCredits());
 			line.getMasteryPlan().getCourses().remove(course);
 		} else {
 			removible = false;
@@ -478,8 +483,6 @@ public class Faculty {
 		ArrayList<Matriculation> matriculations = new ArrayList<>();
 
 		ResearchLine r = findLineByCourse(course);
-
-		System.out.println();
 
 		MasteryPlan plan = r.getMasteryPlan();
 

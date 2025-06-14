@@ -16,20 +16,21 @@ public class Mock {
 		int profesorID3 = faculty.addProfesor("Ernesto", null, ProfesorCategory.Assistant, null);
 		
 		//------------Añadir una línea-----------
-		faculty.addResearchLine("Inteligencia artificial", faculty.getProfesors().get(0), 10);
+		faculty.addResearchLine("Seguridad de softwares", faculty.getProfesors().get(0));
 		ResearchLine line = faculty.getResearchLines().get(0);
 		
 		//------------Añadir dos temas de investigación en la línea-------------
-		line.addMatter("IAs Generativas");
-		line.addMatter("Transformers");
+		line.addMatter("Antivirus");
+		line.addMatter("Filtros y capas de seguridad");
 		
 		
 		//------------Añadir dos cursos al plan de maestría------------------
-		line.getMasteryPlan().addCourse("Curso 1", "test", (Profesor)faculty.findResearcher(profesorID), 2);
-		line.getMasteryPlan().addCourse("Curso 2", "test2", (Profesor)faculty.findResearcher(profesorID2), 3);
+		line.getMasteryPlan().addCourse("Encriptación", "test", (Profesor)faculty.findResearcher(profesorID), 2);
+		line.getMasteryPlan().addCourse("Detección del malware", "test2", (Profesor)faculty.findResearcher(profesorID2), 3);
 		
 		//----------------Matricular a un profesor-----------------
 		line.getMasteryPlan().addMatriculation((Profesor)faculty.findResearcher(profesorID3), line.getMasteryPlan().getCourses().get(0));
+		line.getMasteryPlan().addMatriculation((Profesor)faculty.findResearcher(profesorID3), line.getMasteryPlan().getCourses().get(1));
 
 		//------------Añadir un estudiante-----------
 		faculty.addStudent("Brian", "IAs Generativas");

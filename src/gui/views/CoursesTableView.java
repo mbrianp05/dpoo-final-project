@@ -3,7 +3,7 @@ package gui.views;
 import gui.component.TitleLabel;
 import gui.event.OnAddedCourse;
 import gui.model.CoursesTableModel;
-import gui.reasearchline.EditPostgradeCourse;
+import gui.reasearchline.EditPostgradeCourseJDialog;
 
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -50,7 +50,7 @@ public class CoursesTableView extends JPanel {
 	private JLabel lblInstructor;
 	private JSpinner filterCreds;
 
-	private EditPostgradeCourse select;
+	private EditPostgradeCourseJDialog select;
 
 	private Faculty faculty;
 	private JLabel lblLblinstruct;
@@ -170,7 +170,7 @@ public class CoursesTableView extends JPanel {
 						
 						if(select == null || !select.isVisible()) {
 							try {
-								select = new EditPostgradeCourse(course);
+								select = new EditPostgradeCourseJDialog(course);
 								select.listenTo(new OnAddedCourse() {								
 									@Override
 									public void added(String name, Profesor instruct) {

@@ -8,9 +8,7 @@ public class MasteryPlan {
 	private ArrayList<Matriculation> matriculations;
 	private ArrayList<PostgraduateCourse> courses;
 
-	public MasteryPlan(int minCredits) {
-		setMinCredit(minCredits);
-
+	public MasteryPlan() {
 		matriculations = new ArrayList<>();
 		courses = new ArrayList<>();
 	}
@@ -25,6 +23,7 @@ public class MasteryPlan {
 
 	public void addCourse(String name, String description, Profesor instructor, int credits) {
 		courses.add(new PostgraduateCourse(name, description, instructor, credits));
+		minCredits += credits;
 	}
 
 	public ArrayList<PostgraduateCourse> getCourses() {
@@ -33,13 +32,6 @@ public class MasteryPlan {
 
 	public int getMinCredits() {
 		return minCredits;
-	}
-
-	public void setMinCredit(int minCredits) {
-		if (minCredits < 1)
-			throw new IllegalArgumentException("El cr�dito necesario tiene que ser mayor que 0");
-
-		this.minCredits = minCredits;
 	}
 
 	public ArrayList<Profesor> getInvolvedPrfesors() {
@@ -66,5 +58,11 @@ public class MasteryPlan {
 		}
 
 		return profesors;
+	}
+
+	public void substractNecessaryCredits(int credits) {
+		if (credits > minCredits) throw new IllegalArgumentException("Cannot substract a higher amount of credits than there is now");
+		
+		minCredits -= credits;
 	}
 }
