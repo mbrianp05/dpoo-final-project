@@ -64,16 +64,16 @@ public class CoursesTableView extends JPanel {
 		this.faculty = Faculty.newInstance();
 
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{100, 0, 30, 0, 150, 30, 0, 150, 0, 62, 0, 70, 100, 0};
+		gridBagLayout.columnWidths = new int[]{100, 0, 30, 0, 150, 30, 0, 150, 30, 62, 0, 0, 70, 100, 0};
 		gridBagLayout.rowHeights = new int[]{70, 45, 60, 40, 90, 0, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		GridBagConstraints gbc_lblCursosDePostgrado = new GridBagConstraints();
 		gbc_lblCursosDePostgrado.fill = GridBagConstraints.BOTH;
 		gbc_lblCursosDePostgrado.anchor = GridBagConstraints.NORTHWEST;
 		gbc_lblCursosDePostgrado.insets = new Insets(0, 0, 5, 5);
-		gbc_lblCursosDePostgrado.gridwidth = 11;
+		gbc_lblCursosDePostgrado.gridwidth = 12;
 		gbc_lblCursosDePostgrado.gridx = 1;
 		gbc_lblCursosDePostgrado.gridy = 1;
 		add(getLblCursosDePostgrado(), gbc_lblCursosDePostgrado);
@@ -117,19 +117,19 @@ public class CoursesTableView extends JPanel {
 		gbc_lblInstructor.anchor = GridBagConstraints.EAST;
 		gbc_lblInstructor.fill = GridBagConstraints.VERTICAL;
 		gbc_lblInstructor.insets = new Insets(0, 0, 5, 5);
-		gbc_lblInstructor.gridx = 10;
+		gbc_lblInstructor.gridx = 11;
 		gbc_lblInstructor.gridy = 3;
 		add(getLblInstructor(), gbc_lblInstructor);
 		GridBagConstraints gbc_filterCreds = new GridBagConstraints();
 		gbc_filterCreds.fill = GridBagConstraints.BOTH;
 		gbc_filterCreds.insets = new Insets(0, 0, 5, 5);
-		gbc_filterCreds.gridx = 11;
+		gbc_filterCreds.gridx = 12;
 		gbc_filterCreds.gridy = 3;
 		add(getFilterCreds(), gbc_filterCreds);
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
 		gbc_scrollPane.insets = new Insets(0, 0, 5, 5);
 		gbc_scrollPane.fill = GridBagConstraints.BOTH;
-		gbc_scrollPane.gridwidth = 11;
+		gbc_scrollPane.gridwidth = 12;
 		gbc_scrollPane.gridx = 1;
 		gbc_scrollPane.gridy = 4;
 		add(getScrollPane(), gbc_scrollPane);
@@ -239,6 +239,7 @@ public class CoursesTableView extends JPanel {
 
 	public void updateTable() {
 		((CoursesTableModel)table.getModel()).fill();
+		btnRemove.setVisible(false);
 	}
 	private JSpinner getFilterCreds() {
 		if (filterCreds == null) {
