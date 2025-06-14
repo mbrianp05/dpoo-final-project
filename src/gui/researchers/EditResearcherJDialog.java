@@ -119,11 +119,17 @@ public class EditResearcherJDialog extends JDialog {
 		
 		if (researcher instanceof Profesor) {
 			Profesor p = (Profesor)researcher;
+			ResearchLine line = null;
 			
 			if (faculty.isChief(p)) {
-				System.out.println(p.getName());
-				
-				ResearchLine line = faculty.findReseachLineByChief(p);
+				line = faculty.findResearchLineByChief(p);
+			} else if (faculty.isInstructor(p)) {
+				ResearchMatter m = faculty.findMatterOf(p.getID());
+				line = faculty.findResearchLineByMatter(m);
+			}
+
+			
+			if (line != null) {
 				matters = new String[line.getMatters().size()];
 				
 				for (int i = 0; i < line.getMatters().size(); i++) {
