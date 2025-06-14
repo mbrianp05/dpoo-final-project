@@ -455,8 +455,8 @@ public class Faculty {
 
 		if (canBeRemoved) {
 			ResearchMatter matter = findMatterOf(id);
-
 			matter.getResearchers().remove(researcher);
+
 			researchers.remove(researcher);
 		}
 

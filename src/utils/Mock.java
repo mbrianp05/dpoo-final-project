@@ -33,12 +33,13 @@ public class Mock {
 		line.getMasteryPlan().addMatriculation((Profesor)faculty.findResearcher(profesorID3), line.getMasteryPlan().getCourses().get(1));
 
 		//------------Añadir un estudiante-----------
-		faculty.addStudent("Brian", "IAs Generativas");
+		int ID4 = faculty.addStudent("Brian", "IAs Generativas");
 		
 		//----------------Asignar los temas de investigacion a los investigadores------------
 		line.getMatters().get(0).addResearcher(faculty.findResearcher(profesorID));
 		line.getMatters().get(1).addResearcher(faculty.findResearcher(profesorID2));
 		line.getMatters().get(1).addResearcher(faculty.findResearcher(profesorID3));
+		line.getMatters().get(1).addResearcher(faculty.findResearcher(ID4));
 		
 		// ---------------Añadir aportes investigativos-------------------------
 		faculty.getResearchers().get(0).addBookChapter("Chapter 1", new String[]{"@a"}, new String[] {"@a"}, "FESX", "ISSN 1233-032X", "Name", 1);
