@@ -81,7 +81,7 @@ public class StudentForm extends JPanel {
 
 	private void resetForm() {
 		errorLabel.setVisible(false);
-		textFieldName.setVisible(false);
+		textFieldName.setText("");
 
 		if (researchMatterComboBox.getModel().getSize() >= 0) {
 			researchMatterComboBox.setSelectedIndex(0);

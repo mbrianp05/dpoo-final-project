@@ -8,6 +8,7 @@ import gui.researchers.activity.EditBreakthroughJDialog;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,10 +18,12 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -32,6 +35,8 @@ import schooling.Breakthrough;
 import schooling.Faculty;
 import schooling.Researcher;
 import utils.Constants;
+
+import javax.swing.JButton;
 
 public class ResearchersActivityTableView extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -53,19 +58,20 @@ public class ResearchersActivityTableView extends JPanel {
 	private JCheckBox filterChapter;
 	private JCheckBox filterPaper;
 	private JCheckBox filterPresentation;
+	private JButton btnRemove;
 	
 	public ResearchersActivityTableView() {
 		this.faculty = Faculty.newInstance();
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{100, 70, 0, 0, 0, 30, 0, 100, 30, 0, 100, 30, 0, 70, 100, 0};
-		gridBagLayout.rowHeights = new int[]{70, 45, 60, 35, 207, 0, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.columnWidths = new int[]{100, 70, 0, 0, 0, 30, 0, 100, 30, 0, 100, 30, 60, 0, 0, 70, 100, 0};
+		gridBagLayout.rowHeights = new int[]{70, 45, 60, 40, 207, 0, 0};
+		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		GridBagConstraints gbc_lblDatosDeInvestigadores = new GridBagConstraints();
 		gbc_lblDatosDeInvestigadores.fill = GridBagConstraints.BOTH;
-		gbc_lblDatosDeInvestigadores.gridwidth = 13;
+		gbc_lblDatosDeInvestigadores.gridwidth = 15;
 		gbc_lblDatosDeInvestigadores.insets = new Insets(0, 0, 5, 5);
 		gbc_lblDatosDeInvestigadores.gridx = 1;
 		gbc_lblDatosDeInvestigadores.gridy = 1;
@@ -96,7 +102,6 @@ public class ResearchersActivityTableView extends JPanel {
 		add(getFilterPresentation(), gbc_filterPresentation);
 		GridBagConstraints gbc_lblNombre = new GridBagConstraints();
 		gbc_lblNombre.fill = GridBagConstraints.BOTH;
-		gbc_lblNombre.anchor = GridBagConstraints.EAST;
 		gbc_lblNombre.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNombre.gridx = 6;
 		gbc_lblNombre.gridy = 3;
@@ -120,23 +125,29 @@ public class ResearchersActivityTableView extends JPanel {
 		gbc_textField_1.gridx = 10;
 		gbc_textField_1.gridy = 3;
 		add(getTextField_1(), gbc_textField_1);
+		GridBagConstraints gbc_btnRemove = new GridBagConstraints();
+		gbc_btnRemove.fill = GridBagConstraints.BOTH;
+		gbc_btnRemove.insets = new Insets(0, 0, 5, 5);
+		gbc_btnRemove.gridx = 12;
+		gbc_btnRemove.gridy = 3;
+		add(getBtnRemove(), gbc_btnRemove);
 		GridBagConstraints gbc_lblPuntuacin = new GridBagConstraints();
 		gbc_lblPuntuacin.anchor = GridBagConstraints.EAST;
 		gbc_lblPuntuacin.fill = GridBagConstraints.VERTICAL;
 		gbc_lblPuntuacin.insets = new Insets(0, 0, 5, 5);
-		gbc_lblPuntuacin.gridx = 12;
+		gbc_lblPuntuacin.gridx = 14;
 		gbc_lblPuntuacin.gridy = 3;
 		add(getLblPuntuacin(), gbc_lblPuntuacin);
 		GridBagConstraints gbc_comboBox = new GridBagConstraints();
 		gbc_comboBox.insets = new Insets(0, 0, 5, 5);
 		gbc_comboBox.fill = GridBagConstraints.BOTH;
-		gbc_comboBox.gridx = 13;
+		gbc_comboBox.gridx = 15;
 		gbc_comboBox.gridy = 3;
 		add(getComboBox(), gbc_comboBox);
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
 		gbc_scrollPane.insets = new Insets(0, 0, 5, 5);
 		gbc_scrollPane.fill = GridBagConstraints.BOTH;
-		gbc_scrollPane.gridwidth = 13;
+		gbc_scrollPane.gridwidth = 15;
 		gbc_scrollPane.gridx = 1;
 		gbc_scrollPane.gridy = 4;
 		add(getScrollPane(), gbc_scrollPane);
@@ -195,6 +206,10 @@ public class ResearchersActivityTableView extends JPanel {
 			table.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent event) {
+					if (table.getSelectedRow() >= 0) {
+						btnRemove.setVisible(true);
+					}
+					
 					if (event.getClickCount() > 1) {
 						openEditBreakthroughDialog();
 					}
@@ -213,6 +228,7 @@ public class ResearchersActivityTableView extends JPanel {
 
 	public void updateTable() {
 		getTableModel().fill();
+		btnRemove.setVisible(false);
 	}
 	
 	private TitleLabel getLblDatosDeInvestigadores() {
@@ -238,9 +254,8 @@ public class ResearchersActivityTableView extends JPanel {
 			textField.addKeyListener(new KeyAdapter() {
 				@Override
 				public void keyReleased(KeyEvent arg0) {
-					System.out.println(textField.getText());
-					
 					getTableModel().setFilterName(textField.getText());
+					btnRemove.setVisible(false);
 				}
 			});
 			textField.setColumns(10);
@@ -262,6 +277,7 @@ public class ResearchersActivityTableView extends JPanel {
 				@Override
 				public void keyReleased(KeyEvent arg0) {
 					getTableModel().setFilterResearcher(textField_1.getText());
+					btnRemove.setVisible(false);
 				}
 			});
 			textField_1.setColumns(10);
@@ -283,8 +299,10 @@ public class ResearchersActivityTableView extends JPanel {
 				public void actionPerformed(ActionEvent arg0) {
 					if (comboBox.getSelectedItem() == null) {
 						getTableModel().setFilterScore(0);
+						btnRemove.setVisible(false);
 					} else {
 						getTableModel().setFilterScore((Integer)comboBox.getSelectedItem());
+						btnRemove.setVisible(false);
 					}
 				}
 			});
@@ -299,6 +317,7 @@ public class ResearchersActivityTableView extends JPanel {
 			filterChapter.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					getTableModel().includeChapters(filterChapter.isSelected());
+					btnRemove.setVisible(false);
 				}
 			});
 			filterChapter.setSelected(true);
@@ -312,6 +331,7 @@ public class ResearchersActivityTableView extends JPanel {
 			filterPaper.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					getTableModel().includePapers(filterPaper.isSelected());
+					btnRemove.setVisible(false);
 				}
 			});
 			filterPaper.setSelected(true);
@@ -325,11 +345,42 @@ public class ResearchersActivityTableView extends JPanel {
 			filterPresentation.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					getTableModel().includePresentations(filterPresentation.isSelected());
+					btnRemove.setVisible(false);
 				}
 			});
 			filterPresentation.setSelected(true);
 			filterPresentation.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 		}
 		return filterPresentation;
+	}
+	private JButton getBtnRemove() {
+		if (btnRemove == null) {
+			btnRemove = new JButton("");
+			btnRemove.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					int input = JOptionPane.showConfirmDialog(null, "Confirme que desea eliminar el aporte investigativo seleccionado");
+				
+					if (input == JOptionPane.OK_OPTION) {
+						Breakthrough breakthrough = getTableModel().getShownBreakthroughs().get(table.getSelectedRow());
+						try {
+							Researcher researcher = faculty.findResearcherByBreakthrough(breakthrough);
+							researcher.removeBreakthrough(breakthrough);
+							
+							updateTable();
+							JOptionPane.showMessageDialog(null, "¡Actividad investigativa eliminada con éxito!");
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				}
+			});
+			
+			ImageIcon icon = new ImageIcon(ResearchersTableView.class.getResource("/resources/images/trash.png"));
+			icon = new ImageIcon(icon.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
+			
+			btnRemove.setIcon(icon);
+			btnRemove.setVisible(false);
+		}
+		return btnRemove;
 	}
 }

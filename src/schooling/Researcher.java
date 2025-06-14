@@ -40,6 +40,11 @@ public abstract class Researcher {
 	public String getName() {
 		return name;
 	}
+	
+	public void removeBreakthrough(Breakthrough breakthrough) {
+		score -= breakthrough.getScore();
+		breakthroughs.remove(breakthrough);
+	}
 
 	public void addPaper(String title, int no, int volume, int year, TargetedGroup group) {
 		Paper paper = new Paper(title, no, volume, year, group);

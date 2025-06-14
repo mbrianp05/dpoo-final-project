@@ -31,6 +31,7 @@ import schooling.Profesor;
 import schooling.ResearchLine;
 import utils.Constants;
 import utils.Validation;
+import gui.component.ErrorLabel;
 
 public class CoursesFormView extends JPanel {
 	private static final long serialVersionUID = -1419886921835562157L;
@@ -48,11 +49,11 @@ public class CoursesFormView extends JPanel {
 	private JPanel courseForm;
 	private JTextArea txtDescrip;
 	private JButton btnAgregar;
-	private JLabel errorName;
-	private JLabel errorMast;
-	private JLabel errorInstruct;
-	private JLabel errorCreds;
-	private JLabel errorDesc;
+	private ErrorLabel errorName;
+	private ErrorLabel errorMast;
+	private ErrorLabel errorInstruct;
+	private ErrorLabel errorCreds;
+	private ErrorLabel errorDesc;
 	private JSpinner spinnerCreds;
 
 	private OnAddedCourse listener;
@@ -61,8 +62,8 @@ public class CoursesFormView extends JPanel {
 	private JPanel panel_1;
 
 	public CoursesFormView(Faculty faculty) {
-
 		this.faculty = faculty;
+		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{100, 0, 100, 0};
 		gridBagLayout.rowHeights = new int[]{70, 45, 60, 310, 0};
@@ -82,6 +83,7 @@ public class CoursesFormView extends JPanel {
 		gbc_panel.gridy = 3;
 		add(getPanel(), gbc_panel);
 
+		resetForm();
 	}
 	
 	public void listenTo(OnAddedCourse listener) {
@@ -117,7 +119,6 @@ public class CoursesFormView extends JPanel {
 	
 	private void fetchInstructors() {
 		String lineName = masteryPlans.getSelectedItem().toString();
-
 		ResearchLine line = faculty.findResearchLine(lineName);
 		
 		ArrayList<Profesor> profs = faculty.getDoctorsSelectedLine(line);
@@ -270,10 +271,10 @@ public class CoursesFormView extends JPanel {
 			gbc_selectInstructor.gridy = 7;
 			courseForm.add(getSelectInstructor(), gbc_selectInstructor);
 			GridBagConstraints gbc_errorInstruct = new GridBagConstraints();
-			gbc_errorInstruct.gridwidth = 2;
+			gbc_errorInstruct.gridwidth = 3;
 			gbc_errorInstruct.fill = GridBagConstraints.BOTH;
 			gbc_errorInstruct.insets = new Insets(0, 0, 5, 0);
-			gbc_errorInstruct.gridx = 1;
+			gbc_errorInstruct.gridx = 0;
 			gbc_errorInstruct.gridy = 8;
 			courseForm.add(getErrorInstruct(), gbc_errorInstruct);
 			GridBagConstraints gbc_lblCrditosNecesarios = new GridBagConstraints();
@@ -312,8 +313,8 @@ public class CoursesFormView extends JPanel {
 			GridBagConstraints gbc_errorDesc = new GridBagConstraints();
 			gbc_errorDesc.fill = GridBagConstraints.BOTH;
 			gbc_errorDesc.insets = new Insets(0, 0, 5, 0);
-			gbc_errorDesc.gridwidth = 2;
-			gbc_errorDesc.gridx = 1;
+			gbc_errorDesc.gridwidth = 3;
+			gbc_errorDesc.gridx = 0;
 			gbc_errorDesc.gridy = 13;
 			courseForm.add(getErrorDesc(), gbc_errorDesc);
 			GridBagConstraints gbc_btnAgregar = new GridBagConstraints();
@@ -324,6 +325,7 @@ public class CoursesFormView extends JPanel {
 			gbc_btnAgregar.gridy = 14;
 			courseForm.add(getBtnAgregar(), gbc_btnAgregar);
 		}
+		
 		return courseForm;
 	}
 	private JTextArea getTxtDescrip() {
@@ -347,33 +349,28 @@ public class CoursesFormView extends JPanel {
 				public void actionPerformed(ActionEvent arg0) {
 					resetErrors();
 					if(masteryPlans != null){
-						errorMast.setText("");
+						errorMast.setVisible(false);
 						
 						if(Validation.notEmpty(txtCourseName.getText())) {
-							errorName.setText("");
+							errorName.setVisible(false);
 
 							if(selectInstructor!= null) {
-								errorInstruct.setText("");
+								errorInstruct.setVisible(false);
 
 								if((int)spinnerCreds.getValue() != 0) {
-									errorCreds.setText("");
+									errorCreds.setVisible(false);
 
 									if(Validation.notEmpty(txtDescrip.getText())) {
-										errorDesc.setText("");
+										errorDesc.setVisible(false);
+										int index = selectInstructor.getSelectedIndex();
 
 										String name = txtCourseName.getText();
-										
 										String descrip = txtDescrip.getText();
-										
-										int creds = (int)spinnerCreds.getValue();
-
-										int index = selectInstructor.getSelectedIndex();
-										Profesor instructor = (Profesor) faculty.findResearcher(profIDs[index]);
-
 										String lineName = masteryPlans.getSelectedItem().toString();
-
 										ResearchLine line = faculty.findResearchLine(lineName);
-
+										Profesor instructor = (Profesor) faculty.findResearcher(profIDs[index]);
+										int creds = (int)spinnerCreds.getValue();
+										
 										line.getMasteryPlan().addCourse(name, descrip, instructor, creds);
 
 										if(listener != null)
@@ -381,21 +378,20 @@ public class CoursesFormView extends JPanel {
 
 										sendFeedback();
 										resetForm();
-
 									} else {
-										errorDesc.setText("Agregue una descripción");
+										errorDesc.setVisible(true);
 									}
 								} else {
-									errorCreds.setText("Los créditos necesarios deben ser mayores que 0");
+									errorCreds.setVisible(true);
 								}
 							} else {
-								errorInstruct.setText("Seleccione un instructor");
+								errorInstruct.setVisible(true);
 							}
 						} else {
-							errorName.setText("Ingrese un nombre para el curso");
+							errorName.setVisible(true);
 						}
 					} else {
-						errorMast.setText("Seleccione una maestría vinculada al curso");
+						errorMast.setVisible(true);
 					}
 				}
 			});
@@ -407,41 +403,46 @@ public class CoursesFormView extends JPanel {
 		JOptionPane.showMessageDialog(null, "¡Se ha registrado el curso correctamente!", "Mensaje", JOptionPane.PLAIN_MESSAGE);
 	}
 	
-	private JLabel getErrorName() {
+	private ErrorLabel getErrorName() {
 		if (errorName == null) {
-			errorName = new JLabel("");
+			errorName = new ErrorLabel();
+			errorName.setText("El nombre es requerido");
 			errorName.setForeground(Color.RED);
 			errorName.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		}
 		return errorName;
 	}
-	private JLabel getErrorMast() {
+	private ErrorLabel getErrorMast() {
 		if (errorMast == null) {
-			errorMast = new JLabel("");
+			errorMast = new ErrorLabel();
+			errorMast.setText("Seleccione una maestr\u00EDa");
 			errorMast.setForeground(Color.RED);
 			errorMast.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		}
 		return errorMast;
 	}
-	private JLabel getErrorInstruct() {
+	private ErrorLabel getErrorInstruct() {
 		if (errorInstruct == null) {
-			errorInstruct = new JLabel("");
+			errorInstruct = new ErrorLabel();
+			errorInstruct.setText("Seleccione al instructor");
 			errorInstruct.setForeground(Color.RED);
 			errorInstruct.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		}
 		return errorInstruct;
 	}
-	private JLabel getErrorCreds() {
+	private ErrorLabel getErrorCreds() {
 		if (errorCreds == null) {
-			errorCreds = new JLabel("");
+			errorCreds = new ErrorLabel();
+			errorCreds.setText("Los cr\u00E9ditos tienen que ser mayores que 0");
 			errorCreds.setForeground(Color.RED);
 			errorCreds.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		}
 		return errorCreds;
 	}
-	private JLabel getErrorDesc() {
+	private ErrorLabel getErrorDesc() {
 		if (errorDesc == null) {
-			errorDesc = new JLabel("");
+			errorDesc = new ErrorLabel();
+			errorDesc.setText("Agregue una descripci\u00F3n");
 			errorDesc.setForeground(Color.RED);
 			errorDesc.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		}
@@ -457,8 +458,12 @@ public class CoursesFormView extends JPanel {
 	}
 
 	public void resetForm() {
+		resetErrors();
+		
 		txtCourseName.setText("");
 		txtDescrip.setText("");
+		masteryPlans.setSelectedIndex(0);
+		selectInstructor.setSelectedIndex(0);
 		spinnerCreds.setValue(0);
 
 	}
@@ -473,11 +478,11 @@ public class CoursesFormView extends JPanel {
 	}
 
 	public void resetErrors() {
-		errorName.setText("");
-		errorMast.setText("");
-		errorInstruct.setText("");
-		errorCreds.setText("");
-		errorDesc.setText("");
+		errorName.setVisible(false);
+		errorMast.setVisible(false);
+		errorInstruct.setVisible(false);
+		errorCreds.setVisible(false);
+		errorDesc.setVisible(false);
 	}
 
 	public void update() {

@@ -37,7 +37,7 @@ public class BestMarksJDialog extends JDialog {
 	final private Color borderColor;
 
 	public BestMarksJDialog() {
-		mainColor = new Color(255, 215, 215);
+		mainColor = new Color(175, 238, 238);
 		borderColor = new Color(0, 128, 128);
 
 		setUndecorated(true);
@@ -58,7 +58,7 @@ public class BestMarksJDialog extends JDialog {
 		{
 			TitleLabel tlblMejoresInvetigadores = new TitleLabel();
 
-			ImageIcon icon = new ImageIcon(BestMarksJDialog.class.getResource("/resources/images/research.png"));
+			ImageIcon icon = new ImageIcon(BestMarksJDialog.class.getResource("/resources/images/course.png"));
 			icon = new ImageIcon(icon.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
 
 			tlblMejoresInvetigadores.setIcon(icon);
@@ -142,7 +142,7 @@ public class BestMarksJDialog extends JDialog {
 					}
 
 					table.setEnabled(false);
-					table.setBackground(new Color(175, 238, 238));
+					table.setBackground(mainColor);
 					table.setGridColor(mainColor);
 					table.setRowHeight(24);
 					table.getColumnModel().getColumn(0).setPreferredWidth(150);

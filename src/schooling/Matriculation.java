@@ -16,6 +16,14 @@ public class Matriculation {
     
     public void setMark(int mark) {
     	if (mark > 5 || mark < 2) throw new IllegalArgumentException("La nota válida está entre 2 y 5");
+
+    	if (mark <= 2 && this.mark >= 3) {
+    		profesor.setCredits(profesor.getCredits() - course.getCredits());
+    	}
+    	
+    	if (mark >= 3 && this.mark <= 2) {
+    		profesor.setCredits(profesor.getCredits() + course.getCredits());
+    	}
     	
     	this.mark = mark;
     }

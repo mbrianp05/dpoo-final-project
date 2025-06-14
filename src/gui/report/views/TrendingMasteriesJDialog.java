@@ -39,7 +39,7 @@ public class TrendingMasteriesJDialog extends JDialog {
 	
 	public TrendingMasteriesJDialog() {
 		mainColor = new Color(225, 228, 181);
-		borderColor = new Color(220, 140, 140);
+		borderColor = new Color(210, 148, 118);
 
 		setUndecorated(true);
 		setModal(true);
@@ -47,7 +47,7 @@ public class TrendingMasteriesJDialog extends JDialog {
 		setResizable(false);
 		setBounds(100, 100, 552, 365);
 		getContentPane().setLayout(new BorderLayout());
-		contentPanel.setBackground(new Color(255, 228, 181));
+		contentPanel.setBackground(mainColor);
 		contentPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		GridBagLayout gbl_contentPanel = new GridBagLayout();
@@ -143,8 +143,8 @@ public class TrendingMasteriesJDialog extends JDialog {
 					}
 
 					table.setEnabled(false);
-					table.setBackground(new Color(255, 228, 181));
-					table.setGridColor(new Color(255, 228, 181));
+					table.setBackground(mainColor);
+					table.setGridColor(mainColor);
 					table.setRowHeight(24);
 					table.getColumnModel().getColumn(0).setPreferredWidth(150);
 					table.getColumnModel().getColumn(1).setPreferredWidth(80);

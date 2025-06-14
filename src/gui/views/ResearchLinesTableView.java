@@ -58,7 +58,7 @@ public class ResearchLinesTableView extends JPanel {
 
 	public ResearchLinesTableView() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{100, 70, 0, 0, 180, 30, 0, 180, 30, 0, 180, 30, 60, 0, 0, 70, 100, 0};
+		gridBagLayout.columnWidths = new int[]{100, 70, 0, 0, 180, 30, 0, 180, 30, 0, 180, 30, 65, 0, 0, 70, 100, 0};
 		gridBagLayout.rowHeights = new int[]{70, 45, 60, 40, 207, 0, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
@@ -218,7 +218,8 @@ public class ResearchLinesTableView extends JPanel {
 	}
 
 	public void updateTable() {
-		((ResearchLinesTableModel)table.getModel()).fill();
+		getTableModel().fill();
+		btnRemove.setVisible(false);
 	}
 	
 	private TitleLabel getLblDatosDeInvestigadores() {
