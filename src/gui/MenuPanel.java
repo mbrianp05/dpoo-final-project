@@ -113,9 +113,9 @@ public class MenuPanel extends JPanel {
 		if (management == null) {
 			management = new JMenu("Administraci\u00F3n");
 			management.setFont(new Font("Segoe UI", Font.PLAIN, 20));
+			management.add(getAddLineMenu());
 			management.add(getNewResearcherMenu());
 			management.add(getAddCourse());
-			management.add(getAddLineMenu());
 		}
 		return management;
 	}
@@ -314,7 +314,7 @@ public class MenuPanel extends JPanel {
 	}
 	private CoursesFormView getCoursesFormView() {
 		if (coursesFormView == null) {
-			coursesFormView = new CoursesFormView(faculty);
+			coursesFormView = new CoursesFormView();
 		}
 		return coursesFormView;
 	}
@@ -372,10 +372,10 @@ public class MenuPanel extends JPanel {
 		if (mnData == null) {
 			mnData = new JMenu("Datos");
 			mnData.setFont(new Font("Segoe UI", Font.PLAIN, 20));
-			mnData.add(getResearchersTableMenu());
 			mnData.add(getResearchLinesMenu());
-			mnData.add(getCoursesTableMenu());
+			mnData.add(getResearchersTableMenu());
 			mnData.add(getResearchActivityMenu());
+			mnData.add(getCoursesTableMenu());
 		}
 		return mnData;
 	}
