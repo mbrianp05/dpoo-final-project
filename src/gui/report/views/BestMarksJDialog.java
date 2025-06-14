@@ -37,7 +37,7 @@ public class BestMarksJDialog extends JDialog {
 	final private Color borderColor;
 
 	public BestMarksJDialog() {
-		mainColor = new Color(255, 215, 215);
+		mainColor = new Color(175, 238, 238);
 		borderColor = new Color(0, 128, 128);
 
 		setUndecorated(true);

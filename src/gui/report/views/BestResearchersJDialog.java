@@ -37,7 +37,7 @@ public class BestResearchersJDialog extends JDialog {
 	final private Color borderColor;
 
 	public BestResearchersJDialog() {
-		mainColor = new Color(175, 238, 238);
+		mainColor = new Color(255, 180, 180);
 		borderColor = new Color(220, 140, 140);
 
 		setUndecorated(true);
