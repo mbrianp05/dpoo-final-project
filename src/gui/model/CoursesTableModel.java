@@ -23,7 +23,7 @@ public class CoursesTableModel extends DefaultTableModel {
 		filterInstr = "";
 		filterMinCreds = 0;
 
-		String[] columns = {"Nombre", "Instructor", "Créditos", "Descripción"};
+		String[] columns = {"Nombre", "Instructor", "Línea vinculada", "Créditos", "Descripción"};
 		this.setColumnIdentifiers(columns);
 
 		fill();
@@ -47,7 +47,7 @@ public class CoursesTableModel extends DefaultTableModel {
 		filterInstr = name;
 		fill();
 	}
-
+	
 	public ArrayList<PostgraduateCourse> filterByName(ArrayList<PostgraduateCourse> courses) {
 		ArrayList<PostgraduateCourse> filtered = new ArrayList<>();
 
@@ -116,7 +116,7 @@ public class CoursesTableModel extends DefaultTableModel {
 	}
 
 	public void addNew(PostgraduateCourse c){
-		Object[] newRow = new Object[]{c.getName(), c.getInstructor().getName(), String.valueOf(c.getCredits()), c.getDescription()};
+		Object[] newRow = new Object[]{c.getName(), c.getInstructor().getName(), faculty.findLineByCourse(c).getName(), String.valueOf(c.getCredits()), c.getDescription()};
 
 		addRow(newRow);
 	}
