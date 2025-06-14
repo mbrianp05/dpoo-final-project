@@ -98,7 +98,9 @@ public class EditPostgradeCourse extends JDialog {
 			operationPanel = new JPanel();
 			operationPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 			operationPanel.add(getRBtnEditCourse());
-			operationPanel.add(getRBtnAssignMarks());
+			if(faculty.getMatriculationsAtCourse(course).size() > 0) {
+				operationPanel.add(getRBtnAssignMarks());
+			}
 		}
 		return operationPanel;
 	}
