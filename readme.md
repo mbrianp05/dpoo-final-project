@@ -1,8 +1,8 @@
 # Proyecto Final de Diseño y Programación Orientada a Objetos
 
 ## Autores
-*  ![Imagen de perfil de Alter001](https://github.com/Alter001c.png) [Aleksandr Castañeda](https://github.com/Alter001c)
-*  ![Imagen de perfil de Mbrianp05](https://github.com/mbrianp05.png) [Brian Monteagudo Pérez](https://github.com/mbrianp05/)
+*  <img width="50px" src="https://github.com/Alter001c.png"> [Aleksandr Castañeda](https://github.com/Alter001c)
+*  <img width="50px" src="https://github.com/mbrianp05.png"> [Brian Monteagudo Pérez](https://github.com/mbrianp05/)
 
 ## Descripción
 <p>El proyecto final consiste en crear un sistema de gestión de cursos de postgrado y de temas de investigación en la facultad.</p>
