@@ -9,23 +9,15 @@ import java.awt.Insets;
 
 import javax.swing.JPanel;
 
-import schooling.ResearchLine;
 import utils.Constants;
 
 public class ResearchLineFormView extends JPanel {
 	private static final long serialVersionUID = 3971105665570208468L;
 
-	private ResearchLine line;
 	private TitleLabel lblAgregarLneaDe;
 	private ResearchLineForm researchLineForm;
-	
-	public ResearchLineFormView() {
-		this(null);
-	}
 
-	public ResearchLineFormView(ResearchLine line) {
-		this.line = line;
-		
+	public ResearchLineFormView() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{100, 0, 100, 0};
 		gridBagLayout.rowHeights = new int[]{70, 45, 40, 0};
@@ -57,7 +49,7 @@ public class ResearchLineFormView extends JPanel {
 
 	private ResearchLineForm getResearchLineForm() {
 		if (researchLineForm == null) {
-			researchLineForm = new ResearchLineForm(line);
+			researchLineForm = new ResearchLineForm();
 		}
 		return researchLineForm;
 	}

@@ -2,7 +2,7 @@
 
 ## Autores
 *   [Aleksandr Castañeda](https://github.com/Alter001c)
-*   [Brian Monteagudo](https://github.com/mbrianp05/)
+*   [Brian Monteagudo Pérez](https://github.com/mbrianp05/)
 
 ## Descripción
 <p>El proyecto final consiste en crear un sistema de gestión de cursos de postgrado y de temas de investigación en la facultad.</p>
@@ -12,10 +12,10 @@
 ## Diagrama de clases
 <img width="100%" src="https://github.com/mbrianp05/dpoo-final-project/blob/main/dpoo_final_project_diagram.png?raw=true" alt="Diagrama de clases del projecto">
 
-## Reportes: (sujeto a modificación con el transcurso del proyecto)**
-*   (Aleksandr) Los profesores que tienen los créditos necesarios para aprobar su maestría
-*   (Aleksandr) Total de cursos de postgrados ofrecidos en la facultad
-*   (Aleksandr) Los profesores matriculados con mejor promedio de notas
+## Reportes
+*   (Aleksandr) Los profesores que tienen los créditos necesarios para defender su maestría
+*   (Aleksandr) Los planes de maestrías con más profesores matriculados
+*   (Aleksandr) Los profesores matriculados en algún plan de maestría con mejores notas 
 *   (Brian) Los investigadores con más puntos por investigaciones (artículos, ponencias y capítulos de libros)
 *   (Brian) Los temas de investigación más populares (con más investigadores)
 *   (Brian) La mayor cantidad de artículos publicados por un mismo investigador
