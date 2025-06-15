@@ -15,6 +15,7 @@ public class MainScreen extends JFrame {
 	private MenuPanel menuPanel;
 
 	public MainScreen() {
+		setTitle("Administraci\u00F3n de la facultad");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(MainScreen.class.getResource("/resources/images/app-icon.png")));
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setResizable(false);

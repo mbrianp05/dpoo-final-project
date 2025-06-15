@@ -135,17 +135,17 @@ public class ResearchersActivityTableModel extends DefaultTableModel {
 	}
 
 	private void filterByScore() {
-		ArrayList<Breakthrough> filter = breakthroughs;
+		ArrayList<Breakthrough> filter = new ArrayList<>();
 		
 		if (filterScore != 0) {
-			filter.clear();
-			
 			for (Breakthrough b: breakthroughs) {
 				if (b.getScore() == filterScore) filter.add(b);
 			}
+		} else {
+			filter = breakthroughs;
 		}
 		
-		this.breakthroughs = filter;
+		breakthroughs = filter;
 	}
 	
 	private void filterByInclusions() {
@@ -168,9 +168,9 @@ public class ResearchersActivityTableModel extends DefaultTableModel {
 		init();
 		emptyTable();
 		
+		filterByScore();
 		filterByName();
 		filterByResearcher();
-		filterByScore();
 		filterByInclusions();
 		
 		for (Breakthrough b: breakthroughs) {

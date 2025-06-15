@@ -22,6 +22,7 @@ public class Login extends JFrame {
 	private OnAuthenticate listener;
 	
 	public Login() {
+		setTitle("Login");
 		setSize(625, 500);
 		setUndecorated(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
