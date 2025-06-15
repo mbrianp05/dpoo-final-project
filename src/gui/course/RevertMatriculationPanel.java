@@ -25,8 +25,9 @@ import javax.swing.JOptionPane;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class MatriculationPanel extends JPanel {
-	private static final long serialVersionUID = -4088665550245884027L;
+public class RevertMatriculationPanel extends JPanel {
+	private static final long serialVersionUID = 2362388346234493838L;
+
 	private ResearchLine line;
 	private TitleLabel tlblMatricularProfesor;
 	private JLabel lblPlanDeMaestra;
@@ -34,10 +35,10 @@ public class MatriculationPanel extends JPanel {
 	private JLabel lblProfesoresDeLa;
 	private JButton btnRegistrarMatrcula;
 	private JLabel lblSeMatricular;
-	
+
 	private OnNoMatriculableProfesorLeft listener;
-	
-	public MatriculationPanel(ResearchLine line) {
+
+	public RevertMatriculationPanel(ResearchLine line) {
 		this.line = line;
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{50, 0, 50, 0};
@@ -83,7 +84,7 @@ public class MatriculationPanel extends JPanel {
 		gbc_btnRegistrarMatrcula.gridy = 8;
 		add(getBtnRegistrarMatrcula(), gbc_btnRegistrarMatrcula);
 	}
-	
+
 	public void listenTo(OnNoMatriculableProfesorLeft listener) {
 		this.listener = listener;
 	}
@@ -91,30 +92,30 @@ public class MatriculationPanel extends JPanel {
 	private TitleLabel getTlblMatricularProfesor() {
 		if (tlblMatricularProfesor == null) {
 			tlblMatricularProfesor = new TitleLabel();
-			tlblMatricularProfesor.setText("Matricular al plan de maestr\u00EDa");
+			tlblMatricularProfesor.setText("Eliminar matr\u00EDcula del plan de maestr\u00EDa");
 		}
 		return tlblMatricularProfesor;
 	}
-	
+
 	private JLabel getLblPlanDeMaestra() {
 		if (lblPlanDeMaestra == null) {
 			lblPlanDeMaestra = new JLabel("Plan de maestr\u00EDa de la l\u00EDnea " + line.getName());
 		}
 		return lblPlanDeMaestra;
 	}
-	
+
 	public void fillComboBox() {
-		ArrayList<Profesor> profesors = line.getMatriculableProfesors();
-		
+		ArrayList<Profesor> profesors = line.getMasteryPlan().getMatriculatedProfesors();
+
 		String[] names = new String[profesors.size()];
-		
+
 		for (int i = 0; i < profesors.size(); i++) {
 			names[i] = profesors.get(i).getName();
 		}
-		
+
 		comboBox.setModel(new DefaultComboBoxModel<>(names));
 	}
-	
+
 	private JComboBox<String> getComboBox() {
 		if (comboBox == null) {
 			comboBox = new JComboBox<>();
@@ -124,40 +125,41 @@ public class MatriculationPanel extends JPanel {
 	}
 	private JLabel getLblProfesoresDeLa() {
 		if (lblProfesoresDeLa == null) {
-			lblProfesoresDeLa = new JLabel("Profesores de la l\u00EDnea");
+			lblProfesoresDeLa = new JLabel("Profesores matriculados");
 		}
 		return lblProfesoresDeLa;
 	}
-	
+
 	private void resetForm() {
-		if (line.getMatriculableProfesors().size() > 0) {
-			comboBox.setSelectedIndex(0);
-		} else {
-			comboBox.setSelectedIndex(-1);
-		}
+		comboBox.setSelectedIndex(-1);
 	}
-	
+
 	private void sendFeedback() {
-		JOptionPane.showMessageDialog(null, "¡Se ha matriculado correctamente al profesor!");
+		JOptionPane.showMessageDialog(null, "¡Se ha quitado la matricula correctamente!");
 	}
-	
+
 	private JButton getBtnRegistrarMatrcula() {
 		if (btnRegistrarMatrcula == null) {
-			btnRegistrarMatrcula = new JButton("Registrar matr\u00EDcula");
+			btnRegistrarMatrcula = new JButton("Eliminar");
 			btnRegistrarMatrcula.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					int index = comboBox.getSelectedIndex();
-					
+
 					if (index != -1) {
-						line.getMasteryPlan().matriculate(line.getMatriculableProfesors().get(index));
-						
-						if (line.getMatriculableProfesors().size() == 0 && listener != null) {
-							listener.noProfesorLeft();
+						int input = JOptionPane.showConfirmDialog(null, "¿Estás seguro de desmatricular al profesor?");
+
+						if (input == JOptionPane.OK_OPTION) {
+							Profesor p = line.getMasteryPlan().getMatriculatedProfesors().get(index);
+							line.getMasteryPlan().revertMatriculation(p);
+
+							if (line.getMasteryPlan().getMatriculatedProfesors().size() == 0 && listener != null) {
+								listener.noProfesorLeft();
+							}
+
+							fillComboBox();
+							resetForm();
+							sendFeedback();
 						}
-						
-						fillComboBox();
-						resetForm();
-						sendFeedback();
 					}
 				}
 			});
@@ -166,7 +168,7 @@ public class MatriculationPanel extends JPanel {
 	}
 	private JLabel getLblSeMatricular() {
 		if (lblSeMatricular == null) {
-			lblSeMatricular = new JLabel("* Se matricular\u00E1 al profesor en todos los cursos del plan de maestr\u00EDa");
+			lblSeMatricular = new JLabel("* Se eliminar\u00E1n los cr\u00E9ditos acumulados");
 		}
 		return lblSeMatricular;
 	}

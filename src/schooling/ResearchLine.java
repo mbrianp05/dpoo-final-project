@@ -132,14 +132,6 @@ public class ResearchLine {
 		return profesors;
 	}
 
-	public void matriculate(Profesor profesor) {
-		if (profesor.getDegree() != null) throw new IllegalArgumentException("Only profesors with no degree can recieve mastery plan courses");
-	
-		for (PostgraduateCourse c: getMasteryPlan().getCourses()) {
-			masteryPlan.addMatriculation(profesor, c);
-		}
-	}
-
 	public boolean hasMatriculation(Profesor p) {
 		boolean result = false;
 		int i = 0;

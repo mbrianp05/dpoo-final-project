@@ -451,6 +451,11 @@ public class Faculty {
 			ResearchMatter matter = findMatterOf(id);
 			matter.getResearchers().remove(researcher);
 
+			if (researcher instanceof Profesor) {
+				ResearchLine line = findResearchLineByMatter(matter);
+				line.getMasteryPlan().revertMatriculation((Profesor)researcher);
+			}
+			
 			researchers.remove(researcher);
 		}
 
@@ -482,19 +487,9 @@ public class Faculty {
 	}
 
 	public ArrayList<Matriculation> getMatriculationsAtCourse(PostgraduateCourse course) {
-		ArrayList<Matriculation> matriculations = new ArrayList<>();
+		MasteryPlan plan = findResearchLineByCourse(course).getMasteryPlan();
 
-		ResearchLine r = findResearchLineByCourse(course);
-
-		MasteryPlan plan = r.getMasteryPlan();
-
-		for(Matriculation mat: plan.getMatriculations()) {
-			if(mat.getCourse() == course) {
-				matriculations.add(mat);
-			}
-		}
-
-		return matriculations;
+		return plan.findMatriculations(course);
 	}
 
 	public boolean isInstructor(Profesor profesor) {

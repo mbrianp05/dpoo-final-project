@@ -367,6 +367,7 @@ public class ResearchersTableView extends JPanel {
 
 		if (faculty.canRemoveResearcher(id)) {
 			faculty.removeResearcher(id);
+			
 			JOptionPane.showMessageDialog(null, "El investigador que desea eliminar imparte cursos o es jefe de alguna línea. Busca el sutituto e inténtalo después", "Error al eliminar el investigador", JOptionPane.ERROR_MESSAGE);
 		} else {
 			int input = JOptionPane.showConfirmDialog(null, "¿Estás seguro de eliminar al investigador?");

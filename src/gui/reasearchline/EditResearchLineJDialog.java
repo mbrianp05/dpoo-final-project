@@ -23,6 +23,7 @@ import gui.course.MatriculationPanel;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import gui.course.RevertMatriculationPanel;
 
 public class EditResearchLineJDialog extends JDialog {
 	private static final long serialVersionUID = 3372777757785359805L;
@@ -35,6 +36,8 @@ public class EditResearchLineJDialog extends JDialog {
 	private JRadioButton rBtnMatriculation;
 	private JPanel wrapper;
 	private MatriculationPanel matriculationPanel;
+	private JRadioButton rBtnRemoveMatriculation;
+	private RevertMatriculationPanel revertMatriculationPanel;
 
 	public EditResearchLineJDialog(ResearchLine line) {
 		this.line = line;
@@ -80,6 +83,7 @@ public class EditResearchLineJDialog extends JDialog {
 			buttonGroup = new ButtonGroup();
 			buttonGroup.add(rBtnEdit);
 			buttonGroup.add(rBtnMatriculation);
+			buttonGroup.add(rBtnRemoveMatriculation);
 		}
 		return buttonGroup;
 	}
@@ -91,9 +95,26 @@ public class EditResearchLineJDialog extends JDialog {
 	}
 	
 	private void manageVisibility() {
-		if (line.getMatriculableProfesors().size() == 0) {
-			panel.setVisible(false);
+		boolean oldVisiblity = rBtnMatriculation.isVisible();
+		
+		rBtnMatriculation.setVisible(line.getMatriculableProfesors().size() > 0);
+		
+		if (!rBtnMatriculation.isVisible() && oldVisiblity) {
+			rBtnEdit.setSelected(true);
 		}
+		
+		oldVisiblity = rBtnRemoveMatriculation.isVisible();
+		
+		rBtnRemoveMatriculation.setVisible(line.getMasteryPlan().getMatriculations().size() > 0);
+		
+		if (!rBtnRemoveMatriculation.isVisible() && oldVisiblity) {
+			rBtnEdit.setSelected(true);
+		}
+		
+		panel.setVisible(rBtnMatriculation.isVisible() || rBtnRemoveMatriculation.isVisible());
+		
+		matriculationPanel.fillComboBox();
+		revertMatriculationPanel.fillComboBox();
 		
 		switchPanel("Edit Line");
 	}
@@ -104,6 +125,7 @@ public class EditResearchLineJDialog extends JDialog {
 			panel = new JPanel();
 			panel.add(getRBtnEdit());
 			panel.add(getRBtnMatriculation());
+			panel.add(getRBtnRemoveMatriculation());
 		}
 		return panel;
 	}
@@ -136,6 +158,7 @@ public class EditResearchLineJDialog extends JDialog {
 			wrapper.setLayout(new CardLayout(0, 0));
 			wrapper.add(getResearchLineForm(), "Edit Line");
 			wrapper.add(getMatriculationPanel(), "Matriculation");
+			wrapper.add(getRevertMatriculationPanel(), "Remove Matriculation");
 		}
 		return wrapper;
 	}
@@ -155,5 +178,28 @@ public class EditResearchLineJDialog extends JDialog {
 	private void switchPanel(String panel) {
 		CardLayout cl = (CardLayout)wrapper.getLayout();
 		cl.show(wrapper, panel);
+	}
+	private JRadioButton getRBtnRemoveMatriculation() {
+		if (rBtnRemoveMatriculation == null) {
+			rBtnRemoveMatriculation = new JRadioButton("Eliminar matr\u00EDcula");
+			rBtnRemoveMatriculation.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					switchPanel("Remove Matriculation");
+				}
+			});
+		}
+		return rBtnRemoveMatriculation;
+	}
+	private RevertMatriculationPanel getRevertMatriculationPanel() {
+		if (revertMatriculationPanel == null) {
+			revertMatriculationPanel = new RevertMatriculationPanel(line);
+			revertMatriculationPanel.listenTo(new OnNoMatriculableProfesorLeft() {
+				@Override
+				public void noProfesorLeft() {
+					manageVisibility();
+				}
+			});
+		}
+		return revertMatriculationPanel;
 	}
 }

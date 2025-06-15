@@ -11,7 +11,51 @@ public class MasteryPlan {
 		courses = new ArrayList<>();
 	}
 
-	public void addMatriculation(Profesor profesor, PostgraduateCourse course) {
+	public ArrayList<Profesor> getMatriculatedProfesors() {
+		ArrayList<Profesor> profesors = new ArrayList<>();
+		
+		for (Matriculation m: matriculations) {
+			if (!profesors.contains(m.getProfesor())) {
+				profesors.add(m.getProfesor());
+			}
+		}
+		
+		return profesors;
+	}
+	
+	public void matriculate(Profesor profesor) {
+		if (profesor.getDegree() != null) throw new IllegalArgumentException("Only profesors with no degree can recieve mastery plan courses");
+	
+		for (PostgraduateCourse c: getCourses()) {
+			addMatriculation(profesor, c);
+		}
+	}
+	
+	public ArrayList<Matriculation> findMatriculations(Profesor profesor) {
+		ArrayList<Matriculation> ms = new ArrayList<>();
+		
+		for (Matriculation m: matriculations) {
+			if (m.getProfesor() == profesor) {
+				ms.add(m);
+			}
+		}
+		
+		return ms;
+	}
+	
+	public ArrayList<Matriculation> findMatriculations(PostgraduateCourse course) {
+		ArrayList<Matriculation> ms = new ArrayList<>();
+		
+		for (Matriculation m: matriculations) {
+			if (m.getCourse() == course) {
+				ms.add(m);
+			}
+		}
+		
+		return ms;
+	}
+	
+	private void addMatriculation(Profesor profesor, PostgraduateCourse course) {
 		matriculations.add(new Matriculation(profesor, course));
 	}
 
@@ -61,5 +105,10 @@ public class MasteryPlan {
 		}
 
 		return profesors;
+	}
+
+	public void revertMatriculation(Profesor p) {
+		p.setCredits(0);
+		matriculations.removeAll(findMatriculations(p));
 	}
 }
