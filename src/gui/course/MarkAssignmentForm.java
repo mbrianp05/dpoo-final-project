@@ -163,10 +163,13 @@ public class MarkAssignmentForm extends JPanel {
 		if (profesorIDs.length > 0) {
 			Matriculation m = getSelectedMatriculation();
 			
-			if (m.getMark() != -1)
+			if (m.getMark() != -1) {
 				spinnerNota.setValue(m.getMark());
-			else
+			} else {
+				chckbxHabilitarNota.setSelected(false);
+				spinnerNota.setEnabled(false);
 				spinnerNota.setValue(2);
+			}
 		}
 	}
 

@@ -51,9 +51,8 @@ public class Mock {
 		line3.getMasteryPlan().addCourse("Desarrollo de SO", "testSO", (Profesor)faculty.findResearcher(profesorID6), 5);
 
 		//----------------Matricular a profesores-----------------
-		line.getMasteryPlan().addMatriculation((Profesor)faculty.findResearcher(profesorID3), line.getMasteryPlan().getCourses().get(0));
-		line.getMasteryPlan().addMatriculation((Profesor)faculty.findResearcher(profesorID3), line.getMasteryPlan().getCourses().get(1));
-		line3.getMasteryPlan().addMatriculation((Profesor)faculty.findResearcher(profesorID7), line3.getMasteryPlan().getCourses().get(0));
+		line.matriculate((Profesor)faculty.findResearcher(profesorID3));
+		line3.matriculate((Profesor)faculty.findResearcher(profesorID7));
 
 		//------------Añadir estudiantes-----------
 		int ID1 = faculty.addStudent("Brian", "IAs Generativas");

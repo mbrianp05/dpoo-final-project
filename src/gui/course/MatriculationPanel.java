@@ -8,6 +8,7 @@ import schooling.ResearchLine;
 import java.awt.GridBagLayout;
 
 import gui.component.TitleLabel;
+import gui.event.OnNoMatriculableProfesorLeft;
 
 import java.awt.GridBagConstraints;
 
@@ -33,6 +34,8 @@ public class MatriculationPanel extends JPanel {
 	private JLabel lblProfesoresDeLa;
 	private JButton btnRegistrarMatrcula;
 	private JLabel lblSeMatricular;
+	
+	private OnNoMatriculableProfesorLeft listener;
 	
 	public MatriculationPanel(ResearchLine line) {
 		this.line = line;
@@ -80,6 +83,10 @@ public class MatriculationPanel extends JPanel {
 		gbc_btnRegistrarMatrcula.gridy = 8;
 		add(getBtnRegistrarMatrcula(), gbc_btnRegistrarMatrcula);
 	}
+	
+	public void listenTo(OnNoMatriculableProfesorLeft listener) {
+		this.listener = listener;
+	}
 
 	private TitleLabel getTlblMatricularProfesor() {
 		if (tlblMatricularProfesor == null) {
@@ -96,19 +103,25 @@ public class MatriculationPanel extends JPanel {
 		return lblPlanDeMaestra;
 	}
 	
+	private void fillComboBox() {
+		ArrayList<Profesor> profesors = line.getMatriculableProfesors();
+		if (profesors.size() == 0 && listener != null) {
+			listener.noProfesorLeft();
+		}
+
+		String[] names = new String[profesors.size()];
+		
+		for (int i = 0; i < profesors.size(); i++) {
+			names[i] = profesors.get(i).getName();
+		}
+		
+		comboBox.setModel(new DefaultComboBoxModel<>(names));
+	}
 	
 	private JComboBox<String> getComboBox() {
 		if (comboBox == null) {
 			comboBox = new JComboBox<>();
-			
-			ArrayList<Profesor> profesors = line.getMatriculableProfesors();
-			String[] names = new String[profesors.size()];
-			
-			for (int i = 0; i < profesors.size(); i++) {
-				names[i] = profesors.get(i).getName();
-			}
-			
-			comboBox.setModel(new DefaultComboBoxModel<>(names));
+			fillComboBox();
 		}
 		return comboBox;
 	}
@@ -136,6 +149,8 @@ public class MatriculationPanel extends JPanel {
 					
 					if (index != -1) {
 						line.matriculate(line.getMatriculableProfesors().get(index));
+						
+						fillComboBox();
 						resetForm();
 						sendFeedback();
 					}

@@ -1,6 +1,7 @@
 package gui.reasearchline;
 
 import gui.event.OnAddedResearchLine;
+import gui.event.OnNoMatriculableProfesorLeft;
 
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
@@ -15,8 +16,11 @@ import javax.swing.JRadioButton;
 import javax.swing.border.EmptyBorder;
 
 import schooling.ResearchLine;
+
 import java.awt.CardLayout;
+
 import gui.course.MatriculationPanel;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -32,9 +36,6 @@ public class EditResearchLineJDialog extends JDialog {
 	private JPanel wrapper;
 	private MatriculationPanel matriculationPanel;
 
-	/**
-	 * Create the dialog.
-	 */
 	public EditResearchLineJDialog(ResearchLine line) {
 		this.line = line;
 		
@@ -65,6 +66,7 @@ public class EditResearchLineJDialog extends JDialog {
 		contentPanel.add(getWrapper(), gbc_wrapper);
 		
 		getButtonGroup();
+		manageVisibility();
 	}
 	
 	public void listenTo(OnAddedResearchLine listener) {
@@ -87,15 +89,21 @@ public class EditResearchLineJDialog extends JDialog {
 		}
 		return researchLineForm;
 	}
+	
+	private void manageVisibility() {
+		if (line.getMatriculableProfesors().size() == 0) {
+			panel.setVisible(false);
+		}
+		
+		switchPanel("Edit Line");
+	}
+	
+	
 	private JPanel getPanel() {
 		if (panel == null) {
 			panel = new JPanel();
 			panel.add(getRBtnEdit());
 			panel.add(getRBtnMatriculation());
-			
-			if (line.getProfesorsWithoutDegree().size() == 0) {
-				panel.setVisible(false);
-			}
 		}
 		return panel;
 	}
@@ -134,6 +142,12 @@ public class EditResearchLineJDialog extends JDialog {
 	private MatriculationPanel getMatriculationPanel() {
 		if (matriculationPanel == null) {
 			matriculationPanel = new MatriculationPanel(line);
+			matriculationPanel.listenTo(new OnNoMatriculableProfesorLeft() {
+				@Override
+				public void noProfesorLeft() {
+					manageVisibility();
+				}
+			});
 		}
 		return matriculationPanel;
 	}
