@@ -71,6 +71,7 @@ public class MenuPanel extends JPanel {
 
 	private OnCloseApp listener;
 	private JMenuItem padding;
+	private JMenuItem testDataLoad;
 
 	public MenuPanel() {
 		this.faculty = Faculty.newInstance();
@@ -376,6 +377,7 @@ public class MenuPanel extends JPanel {
 			mnData.add(getResearchersTableMenu());
 			mnData.add(getResearchActivityMenu());
 			mnData.add(getCoursesTableMenu());
+			mnData.add(getTestDataLoad());
 		}
 		return mnData;
 	}
@@ -441,5 +443,18 @@ public class MenuPanel extends JPanel {
 			padding = new JMenuItem("");
 		}
 		return padding;
+	}
+	private JMenuItem getTestDataLoad() {
+		if (testDataLoad == null) {
+			testDataLoad = new JMenuItem("Cargar datos de prueba");
+			testDataLoad.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+//					if(Mock.mockFacultyData(faculty) == null) {
+//						Mock.mockFacultyData(faculty);
+//					}					
+				}
+			});
+		}
+		return testDataLoad;
 	}
 }
