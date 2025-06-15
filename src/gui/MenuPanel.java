@@ -37,7 +37,6 @@ import javax.swing.border.Border;
 
 import schooling.Degree;
 import schooling.Faculty;
-import schooling.MasteryPlan;
 
 public class MenuPanel extends JPanel {
 	private static final long serialVersionUID = 3762125698246597691L;

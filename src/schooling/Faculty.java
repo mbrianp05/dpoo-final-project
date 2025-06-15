@@ -464,6 +464,15 @@ public class Faculty {
 		boolean removible = true;
 
 		if(line.getMasteryPlan().getCourses().contains(course)) {
+			// Cuando se elimina el curso hay restarle los créditos
+			// que aportaba el curso a los que habían aprobado
+			for (Matriculation m: line.getMasteryPlan().getMatriculations()) {
+				if (m.getCourse() == course && m.hasMark() && m.getMark() >= 3) {
+					Profesor p = m.getProfesor();
+					p.setCredits(p.getCredits() - course.getCredits());
+				}
+			}
+			
 			line.getMasteryPlan().getCourses().remove(course);
 		} else {
 			removible = false;
