@@ -43,7 +43,7 @@ public class ConfirmationCodePanel extends JPanel {
 	private JTextLimited sixthDigit;
 	private JPanel panel;
 	private JButton btnBack;
-	private JButton btnSiguiente;
+	private JButton btnAccept;
 	private ErrorLabel errroCode;
 	private JLabel lblExpiration;
 	private Timer timer;
@@ -303,7 +303,7 @@ public class ConfirmationCodePanel extends JPanel {
 						fifthDigit.requestFocus();
 					}
 					
-					if (sixthDigit.getText().length() == sixthDigit.getLimite()) {
+					if (sixthDigit.getText().length() == sixthDigit.getLimite() && getCode().length() == 6) {
 						verify();
 					}
 				}
@@ -331,12 +331,12 @@ public class ConfirmationCodePanel extends JPanel {
 			gbc_btnBack.gridx = 1;
 			gbc_btnBack.gridy = 0;
 			panel.add(getBtnBack(), gbc_btnBack);
-			GridBagConstraints gbc_btnSiguiente = new GridBagConstraints();
-			gbc_btnSiguiente.fill = GridBagConstraints.BOTH;
-			gbc_btnSiguiente.anchor = GridBagConstraints.NORTHWEST;
-			gbc_btnSiguiente.gridx = 2;
-			gbc_btnSiguiente.gridy = 0;
-			panel.add(getBtnSiguiente(), gbc_btnSiguiente);
+			GridBagConstraints gbc_btnAccept = new GridBagConstraints();
+			gbc_btnAccept.fill = GridBagConstraints.BOTH;
+			gbc_btnAccept.anchor = GridBagConstraints.NORTHWEST;
+			gbc_btnAccept.gridx = 2;
+			gbc_btnAccept.gridy = 0;
+			panel.add(getBtnAccept(), gbc_btnAccept);
 		}
 		return panel;
 	}
@@ -375,17 +375,17 @@ public class ConfirmationCodePanel extends JPanel {
 		}
 	}
 	
-	private JButton getBtnSiguiente() {
-		if (btnSiguiente == null) {
-			btnSiguiente = new JButton("Aceptar");
-			btnSiguiente.addActionListener(new ActionListener() {
+	private JButton getBtnAccept() {
+		if (btnAccept == null) {
+			btnAccept = new JButton("Aceptar");
+			btnAccept.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					verify();
 				}
 			});
-			btnSiguiente.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+			btnAccept.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 		}
-		return btnSiguiente;
+		return btnAccept;
 	}
 	private ErrorLabel getErrroCode() {
 		if (errroCode == null) {
@@ -450,6 +450,7 @@ public class ConfirmationCodePanel extends JPanel {
 						
 						timer.stop();
 						
+						btnAccept.setEnabled(false);
 						btnResend.setVisible(true);
 					}
 				}
@@ -503,6 +504,9 @@ public class ConfirmationCodePanel extends JPanel {
 							fourthDigit.setEnabled(true);
 							fifthDigit.setEnabled(true);
 							sixthDigit.setEnabled(true);
+							
+							btnAccept.setEnabled(true);
+							
 							setExpirationTime();
 							timer.start();
 							

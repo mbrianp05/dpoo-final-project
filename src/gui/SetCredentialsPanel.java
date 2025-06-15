@@ -28,28 +28,29 @@ import utils.Validation;
 
 public class SetCredentialsPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
-	
+
 	private TitleLabel lblAuthorization;
 	private JLabel lblIngresaElCdigo;
 	private ErrorLabel errorPassword;
 	private JPasswordField passcode;
 	private JLabel lblContrasea;
 	private JTextField textFieldUsername;
-	private JButton btnAcceder;
+	private JButton btnNext;
 	private JPanel panel;
 	private JButton btnExit;
 
 	private OnCloseApp onCloseListener;
 	private OnSetCredentials credentialsListener;
-	
+
 	private ErrorLabel errorUsername;
 	private JLabel lblConfirmaLaContrasea;
 	private JPasswordField textFieldRepeat;
 	private ErrorLabel errorConfirmation;
-	
+	private ErrorLabel errorConnection;
+
 	public SetCredentialsPanel() {
 		Email.removeCode();
-		
+
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{70, 0, 0, 70, 0};
 		gridBagLayout.rowHeights = new int[]{40, 0, 30, 30, 35, 40, 0, 35, 40, 0, 35, 40, 45, 40, 0};
@@ -127,6 +128,12 @@ public class SetCredentialsPanel extends JPanel {
 		gbc_errorConfirmation.gridx = 1;
 		gbc_errorConfirmation.gridy = 11;
 		add(getErrorConfirmation(), gbc_errorConfirmation);
+		GridBagConstraints gbc_errorConnection = new GridBagConstraints();
+		gbc_errorConnection.fill = GridBagConstraints.BOTH;
+		gbc_errorConnection.insets = new Insets(0, 0, 5, 5);
+		gbc_errorConnection.gridx = 1;
+		gbc_errorConnection.gridy = 12;
+		add(getErrorConnection(), gbc_errorConnection);
 		GridBagConstraints gbc_panel = new GridBagConstraints();
 		gbc_panel.fill = GridBagConstraints.BOTH;
 		gbc_panel.insets = new Insets(0, 0, 5, 5);
@@ -134,15 +141,15 @@ public class SetCredentialsPanel extends JPanel {
 		gbc_panel.gridy = 12;
 		add(getPanel(), gbc_panel);
 	}
-	
+
 	public void listenTo(OnCloseApp listener) {
 		onCloseListener = listener;
 	}
-	
+
 	public void listenTo(OnSetCredentials listener) {
 		credentialsListener = listener;
 	}
-	
+
 	private TitleLabel getLblAuthorization() {
 		if (lblAuthorization == null) {
 			lblAuthorization = new TitleLabel();
@@ -158,7 +165,7 @@ public class SetCredentialsPanel extends JPanel {
 		if (lblIngresaElCdigo == null) {
 			ImageIcon icon = new ImageIcon(SetCredentialsPanel.class.getResource("/resources/images/user-alt.png"));
 			icon = new ImageIcon(icon.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
-			
+
 			lblIngresaElCdigo = new JLabel("Nombre de usuario");
 			lblIngresaElCdigo.setIcon(icon);
 			lblIngresaElCdigo.setFont(new Font("Segoe UI", Font.PLAIN, 15));
@@ -177,7 +184,7 @@ public class SetCredentialsPanel extends JPanel {
 
 		return errorPassword;
 	}
-	
+
 	private JPasswordField getPasscode() {
 		if (passcode == null) {
 			passcode = new JPasswordField();
@@ -190,7 +197,7 @@ public class SetCredentialsPanel extends JPanel {
 			lblContrasea = new JLabel("Contraseña");
 			ImageIcon icon = new ImageIcon(SetCredentialsPanel.class.getResource("/resources/images/lock.png"));
 			icon = new ImageIcon(icon.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
-			
+
 			lblContrasea.setIcon(icon);
 			lblContrasea.setHorizontalAlignment(SwingConstants.LEFT);
 			lblContrasea.setFont(new Font("Segoe UI", Font.PLAIN, 15));
@@ -205,80 +212,91 @@ public class SetCredentialsPanel extends JPanel {
 		}
 		return textFieldUsername;
 	}
-	
+
 	private void resetErrors() {
 		errorUsername.setVisible(false);
 		errorPassword.setVisible(false);
 		errorConfirmation.setVisible(false);
 	}
-	
-	private JButton getBtnAcceder() {
-		if (btnAcceder == null) {
+
+	private JButton getBtnNext() {
+		if (btnNext == null) {
 			ImageIcon icon = new ImageIcon(SetCredentialsPanel.class.getResource("/resources/images/loader-spinner.gif"));
 			final ImageIcon scaled = new ImageIcon(icon.getImage().getScaledInstance(33, 33, Image.SCALE_FAST));
-			
-			btnAcceder = new JButton("Siguiente");
-			btnAcceder.setFont(new Font("Segoe UI", Font.PLAIN, 15));
-			btnAcceder.addActionListener(new ActionListener() {
+
+			btnNext = new JButton("Siguiente");
+			btnNext.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+			btnNext.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					boolean valid = true;
 					resetErrors();
-					
+
 					final String email = textFieldUsername.getText();
 					final String password = String.valueOf(passcode.getPassword());
 					String confirmation = String.valueOf(textFieldRepeat.getPassword());
-					
+
 					if (!Validation.validGmail(textFieldUsername.getText())) {
 						errorUsername.setVisible(true);
 						valid = false;
 					}
-					
+
 					if (!Validation.validPassword(password)) {
 						errorPassword.setVisible(true);
 						valid = false;
 					}
-					
+
 					if (!password.equals(confirmation)) {
 						errorConfirmation.setVisible(true);
 						valid = false;
 					}
 
 					if (valid && credentialsListener != null) {
-						btnAcceder.setIcon(scaled);
-						btnAcceder.setText("Enviando email");
-						
+						btnNext.setIcon(scaled);
+						btnNext.setText("Enviando email");
+
 						passcode.setText("");
 						textFieldRepeat.setText("");
 						textFieldUsername.setText("");
-						
+
 						textFieldUsername.setEnabled(false);
 						passcode.setEnabled(false);
 						textFieldRepeat.setEnabled(false);
 						btnExit.setEnabled(false);
-						btnAcceder.setEnabled(false);
-						
+						btnNext.setEnabled(false);
+
 						EmailSenderThread thread = new EmailSenderThread(email) {
 							protected void done() {
-								textFieldUsername.setEnabled(true);
-								passcode.setEnabled(true);
-								textFieldRepeat.setEnabled(true);
-								btnExit.setEnabled(true);
-								btnAcceder.setEnabled(true);
-								btnAcceder.setIcon(null);
-								btnAcceder.setText("Siguiente");
-								
-								credentialsListener.newCredentials(email, password);
+								try {
+									get();
+									reactivateForm();
+									// Ejecutar una vez que se haya mandado el email
+									credentialsListener.newCredentials(email, password);
+								} catch (Exception e) {
+									reactivateForm();
+									errorConnection.setVisible(true);
+								}
 							};
 						};
 						thread.execute();
 					}
 				}
 			});
-			btnAcceder.setBackground(Color.WHITE);
-			btnAcceder.setHorizontalAlignment(SwingConstants.LEFT);
+			btnNext.setBackground(Color.WHITE);
+			btnNext.setHorizontalAlignment(SwingConstants.LEFT);
 		}
-		return btnAcceder;
+		return btnNext;
 	}
+	
+	private void reactivateForm() {
+		textFieldUsername.setEnabled(true);
+		passcode.setEnabled(true);
+		textFieldRepeat.setEnabled(true);
+		btnExit.setEnabled(true);
+		btnNext.setEnabled(true);
+		btnNext.setIcon(null);
+		btnNext.setText("Siguiente");
+	}
+	
 	private JPanel getPanel() {
 		if (panel == null) {
 			panel = new JPanel();
@@ -296,12 +314,12 @@ public class SetCredentialsPanel extends JPanel {
 			gbc_btnExit.gridx = 0;
 			gbc_btnExit.gridy = 0;
 			panel.add(getBtnExit(), gbc_btnExit);
-			GridBagConstraints gbc_btnAcceder = new GridBagConstraints();
-			gbc_btnAcceder.fill = GridBagConstraints.BOTH;
-			gbc_btnAcceder.anchor = GridBagConstraints.NORTHWEST;
-			gbc_btnAcceder.gridx = 1;
-			gbc_btnAcceder.gridy = 0;
-			panel.add(getBtnAcceder(), gbc_btnAcceder);
+			GridBagConstraints gbc_btnNext = new GridBagConstraints();
+			gbc_btnNext.fill = GridBagConstraints.BOTH;
+			gbc_btnNext.anchor = GridBagConstraints.NORTHWEST;
+			gbc_btnNext.gridx = 1;
+			gbc_btnNext.gridy = 0;
+			panel.add(getBtnNext(), gbc_btnNext);
 		}
 		return panel;
 	}
@@ -330,10 +348,10 @@ public class SetCredentialsPanel extends JPanel {
 	private JLabel getLblConfirmaLaContrasea() {
 		if (lblConfirmaLaContrasea == null) {
 			lblConfirmaLaContrasea = new JLabel("Confirma la contrase\u00F1a");
-			
+
 			ImageIcon icon = new ImageIcon(SetCredentialsPanel.class.getResource("/resources/images/confirm.png"));
 			icon = new ImageIcon(icon.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
-			
+
 			lblConfirmaLaContrasea.setIcon(icon);
 			lblConfirmaLaContrasea.setHorizontalAlignment(SwingConstants.LEFT);
 			lblConfirmaLaContrasea.setFont(new Font("Segoe UI", Font.PLAIN, 15));
@@ -354,5 +372,13 @@ public class SetCredentialsPanel extends JPanel {
 			errorConfirmation.setVisible(false);
 		}
 		return errorConfirmation;
+	}
+	private ErrorLabel getErrorConnection() {
+		if (errorConnection == null) {
+			errorConnection = new ErrorLabel();
+			errorConnection.setVisible(false);
+			errorConnection.setText("Verifica tu conexi\u00F3n a Internet");
+		}
+		return errorConnection;
 	}
 }
