@@ -105,6 +105,7 @@ public class MatriculationPanel extends JPanel {
 	
 	private void fillComboBox() {
 		ArrayList<Profesor> profesors = line.getMatriculableProfesors();
+		
 		if (profesors.size() == 0 && listener != null) {
 			listener.noProfesorLeft();
 		}
@@ -133,7 +134,11 @@ public class MatriculationPanel extends JPanel {
 	}
 	
 	private void resetForm() {
-		comboBox.setSelectedIndex(-1);
+		if (line.getMatriculableProfesors().size() > 0) {
+			comboBox.setSelectedIndex(0);
+		} else {
+			comboBox.setSelectedIndex(-1);
+		}
 	}
 	
 	private void sendFeedback() {

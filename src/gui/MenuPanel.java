@@ -37,6 +37,7 @@ import javax.swing.border.Border;
 
 import schooling.Degree;
 import schooling.Faculty;
+import schooling.MasteryPlan;
 
 public class MenuPanel extends JPanel {
 	private static final long serialVersionUID = 3762125698246597691L;
@@ -128,6 +129,14 @@ public class MenuPanel extends JPanel {
 		
 		addCourseMenu.setVisible(faculty.getProfesorsWithDegree(Degree.Doctor).size() > 0);
 		newResearcherMenu.setVisible(faculty.getResearchLines().size() > 0);
+		
+		// Ocultar los reportes cuando no hay nada que mostrar
+		trendingMattersMenu.setVisible(faculty.trendingMatters().size() > 0);
+		bestMasteryPlansMenu.setVisible(faculty.trendingMasteryPlans().size() > 0);
+		bestResearchersMenu.setVisible(faculty.bestResearchers().size() > 0);
+		mostPaperMenu.setVisible(faculty.mostPaperPublished().size() > 0);
+		bestMarksMenu.setVisible(faculty.profesorsWithBestAverage().size() > 0);
+		aprovalPendingMenu.setVisible(faculty.pendingAprovals().size() > 0);
 	}
 	
 	// Actualizar todas las tablas y formularios que se vayan añadiendo
@@ -233,7 +242,7 @@ public class MenuPanel extends JPanel {
 	}
 	private JMenuItem getBestMarksMenu() {
 		if (bestMarksMenu == null) {
-			bestMarksMenu = new JMenuItem("Mejores notas");
+			bestMarksMenu = new JMenuItem("Profesores con mejor promedio");
 			bestMarksMenu.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					try {
