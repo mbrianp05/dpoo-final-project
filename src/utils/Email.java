@@ -14,11 +14,12 @@ public class Email {
 
 	private static ConfirmationCode confirmationCode;
 
+	public static void removeCode() {
+		confirmationCode = null;
+	}
+	
 	public static void sendConfirmationEmail(String recipientEmail) {
 		String code = CodeGenerator.generateRandomCode(6);
-		long expirationTime = System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(1) + TimeUnit.SECONDS.toMillis(30);
-
-		confirmationCode = new ConfirmationCode(code, expirationTime, recipientEmail);
 
 		try {
 			Properties props = new Properties();
@@ -30,29 +31,30 @@ public class Email {
             props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
             props.put("mail.smtp.ssl.protocols", "TLSv1.2");
 
-			// Crear sesión
 			Session session = Session.getInstance(props, new Authenticator() {
 				protected PasswordAuthentication getPasswordAuthentication() {
 					return new PasswordAuthentication(USERNAME, PASSWORD);
 				}
 			});
 
-			// Crear mensaje
 			Message message = new MimeMessage(session);
 
 			message.setFrom(new InternetAddress(FROM_EMAIL));
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipientEmail));
 			message.setSubject("Código de Confirmación");
 
-			// Cuerpo del mensaje con el código y tiempo de expiración
 			String emailText = "Tu código de confirmación es: " + code + "\n\n" +
-					"Este código expirará en 1 minuto y 30 segundos.\n" +
-					"Por favor, no compartas este código con nadie.";
+					"Este código expirará en 3 minutos.";
 			message.setText(emailText);
 
 			Transport.send(message);
+			
+			// Crear el código después de enviar el email
+			long expirationTime = System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(3);
+			confirmationCode = new ConfirmationCode(code, expirationTime, recipientEmail);
+			
 		} catch (MessagingException e) {
-			System.err.println("Error al enviar el email: " + e.getMessage());
+			System.err.println("Was not able to send the email" + e.getMessage());
 		}
 	}
 

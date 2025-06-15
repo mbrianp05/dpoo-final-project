@@ -1,6 +1,7 @@
 package gui;
 
 import gui.component.ErrorLabel;
+import gui.component.TitleLabel;
 import gui.event.OnCloseApp;
 import gui.event.OnSetCredentials;
 
@@ -21,8 +22,9 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import utils.Email;
+import utils.EmailSenderThread;
 import utils.Validation;
-import gui.component.TitleLabel;
 
 public class SetCredentialsPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -46,10 +48,12 @@ public class SetCredentialsPanel extends JPanel {
 	private ErrorLabel errorConfirmation;
 	
 	public SetCredentialsPanel() {
+		Email.removeCode();
+		
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{40, 0, 400, 40, 0};
-		gridBagLayout.rowHeights = new int[]{40, 0, 30, 30, 35, 40, 0, 35, 40, 0, 35, 40, 40, 40, 0};
-		gridBagLayout.columnWeights = new double[]{1.0, 1.0, 1.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.columnWidths = new int[]{70, 0, 0, 70, 0};
+		gridBagLayout.rowHeights = new int[]{40, 0, 30, 30, 35, 40, 0, 35, 40, 0, 35, 40, 45, 40, 0};
+		gridBagLayout.columnWeights = new double[]{0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		GridBagConstraints gbc_lblAuthorization = new GridBagConstraints();
@@ -124,10 +128,9 @@ public class SetCredentialsPanel extends JPanel {
 		gbc_errorConfirmation.gridy = 11;
 		add(getErrorConfirmation(), gbc_errorConfirmation);
 		GridBagConstraints gbc_panel = new GridBagConstraints();
-		gbc_panel.gridwidth = 2;
-		gbc_panel.anchor = GridBagConstraints.EAST;
+		gbc_panel.fill = GridBagConstraints.BOTH;
 		gbc_panel.insets = new Insets(0, 0, 5, 5);
-		gbc_panel.gridx = 1;
+		gbc_panel.gridx = 2;
 		gbc_panel.gridy = 12;
 		add(getPanel(), gbc_panel);
 	}
@@ -211,6 +214,9 @@ public class SetCredentialsPanel extends JPanel {
 	
 	private JButton getBtnAcceder() {
 		if (btnAcceder == null) {
+			ImageIcon icon = new ImageIcon(SetCredentialsPanel.class.getResource("/resources/images/loader-spinner.gif"));
+			final ImageIcon scaled = new ImageIcon(icon.getImage().getScaledInstance(33, 33, Image.SCALE_FAST));
+			
 			btnAcceder = new JButton("Siguiente");
 			btnAcceder.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 			btnAcceder.addActionListener(new ActionListener() {
@@ -218,7 +224,8 @@ public class SetCredentialsPanel extends JPanel {
 					boolean valid = true;
 					resetErrors();
 					
-					String password = String.valueOf(passcode.getPassword());
+					final String email = textFieldUsername.getText();
+					final String password = String.valueOf(passcode.getPassword());
 					String confirmation = String.valueOf(textFieldRepeat.getPassword());
 					
 					if (!Validation.validGmail(textFieldUsername.getText())) {
@@ -235,13 +242,35 @@ public class SetCredentialsPanel extends JPanel {
 						errorConfirmation.setVisible(true);
 						valid = false;
 					}
-					
+
 					if (valid && credentialsListener != null) {
-						credentialsListener.newCredentials(textFieldUsername.getText(), password);
+						btnAcceder.setIcon(scaled);
+						btnAcceder.setText("Enviando email");
 						
 						passcode.setText("");
 						textFieldRepeat.setText("");
 						textFieldUsername.setText("");
+						
+						textFieldUsername.setEnabled(false);
+						passcode.setEnabled(false);
+						textFieldRepeat.setEnabled(false);
+						btnExit.setEnabled(false);
+						btnAcceder.setEnabled(false);
+						
+						EmailSenderThread thread = new EmailSenderThread(email) {
+							protected void done() {
+								textFieldUsername.setEnabled(true);
+								passcode.setEnabled(true);
+								textFieldRepeat.setEnabled(true);
+								btnExit.setEnabled(true);
+								btnAcceder.setEnabled(true);
+								btnAcceder.setIcon(null);
+								btnAcceder.setText("Siguiente");
+								
+								credentialsListener.newCredentials(email, password);
+							};
+						};
+						thread.execute();
 					}
 				}
 			});
@@ -254,8 +283,25 @@ public class SetCredentialsPanel extends JPanel {
 		if (panel == null) {
 			panel = new JPanel();
 			panel.setBackground(new Color(0, 0, 0, 0));
-			panel.add(getBtnExit());
-			panel.add(getBtnAcceder());
+			GridBagLayout gbl_panel = new GridBagLayout();
+			gbl_panel.columnWidths = new int[]{61, 95, 0};
+			gbl_panel.rowHeights = new int[]{29, 0};
+			gbl_panel.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+			gbl_panel.rowWeights = new double[]{1.0, Double.MIN_VALUE};
+			panel.setLayout(gbl_panel);
+			GridBagConstraints gbc_btnExit = new GridBagConstraints();
+			gbc_btnExit.fill = GridBagConstraints.BOTH;
+			gbc_btnExit.anchor = GridBagConstraints.NORTHWEST;
+			gbc_btnExit.insets = new Insets(0, 0, 0, 5);
+			gbc_btnExit.gridx = 0;
+			gbc_btnExit.gridy = 0;
+			panel.add(getBtnExit(), gbc_btnExit);
+			GridBagConstraints gbc_btnAcceder = new GridBagConstraints();
+			gbc_btnAcceder.fill = GridBagConstraints.BOTH;
+			gbc_btnAcceder.anchor = GridBagConstraints.NORTHWEST;
+			gbc_btnAcceder.gridx = 1;
+			gbc_btnAcceder.gridy = 0;
+			panel.add(getBtnAcceder(), gbc_btnAcceder);
 		}
 		return panel;
 	}

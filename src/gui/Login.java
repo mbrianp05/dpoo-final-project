@@ -1,6 +1,7 @@
 package gui;
 
 import gui.event.OnAuthenticate;
+import gui.event.OnBackEvent;
 import gui.event.OnCloseApp;
 import gui.event.OnCodeConfirmed;
 import gui.event.OnSetCredentials;
@@ -10,7 +11,9 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import auth.Authentication;
+
 import javax.swing.BoxLayout;
+import java.awt.Toolkit;
 
 public class Login extends JFrame {
 	private static final long serialVersionUID = 3183133678992381435L;
@@ -22,6 +25,7 @@ public class Login extends JFrame {
 	private OnAuthenticate listener;
 	
 	public Login() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/resources/images/app-icon.png")));
 		setTitle("Login");
 		setSize(625, 500);
 		setUndecorated(true);
@@ -89,6 +93,13 @@ public class Login extends JFrame {
 				if (listener != null) {
 					listener.granted();
 				}
+			}
+		});
+		confirmationCodePanel.listenTo(new OnBackEvent() {
+			@Override
+			public void navigate() {
+				setCredentialsPanel.setVisible(true);
+				confirmationCodePanel.setVisible(false);
 			}
 		});
 		confirmationCodePanel.setBounds(0, 0, 625, 459);

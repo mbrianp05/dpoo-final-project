@@ -2,11 +2,13 @@ package gui;
 
 import gui.component.ErrorLabel;
 import gui.component.TitleLabel;
+import gui.event.OnBackEvent;
 import gui.event.OnCodeConfirmed;
 
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,9 +20,13 @@ import javax.swing.SwingConstants;
 import javax.swing.Timer;
 
 import utils.Email;
+import utils.EmailSenderThread;
 import gui.component.JTextLimited;
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+
+import javax.swing.ImageIcon;
 
 public class ConfirmationCodePanel extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -29,32 +35,33 @@ public class ConfirmationCodePanel extends JPanel {
 	private JLabel lblSeHaEnviado;
 	private String email;
 	private JLabel lblIntroduceElCdigo;
-	private JTextLimited textField;
-	private JTextLimited textField_1;
-	private JTextLimited textField_2;
-	private JTextLimited textField_3;
-	private JTextLimited textField_4;
-	private JTextLimited textField_5;
+	private JTextLimited firstDigit;
+	private JTextLimited secondDigit;
+	private JTextLimited thirdDigit;
+	private JTextLimited fourthDigit;
+	private JTextLimited fifthDigit;
+	private JTextLimited sixthDigit;
 	private JPanel panel;
-	private JButton btnAnterior;
+	private JButton btnBack;
 	private JButton btnSiguiente;
 	private ErrorLabel errroCode;
 	private JLabel lblExpiration;
 	private Timer timer;
 	
 	private OnCodeConfirmed listener;
+	private OnBackEvent goBackListener;
 	
 	private int expirationTime;
-	private ErrorLabel rlblNoTienesConexin;
+	private JPanel panel_1;
+	private JButton btnResend;
 	
 	public ConfirmationCodePanel(String email) {
 		this.email = email;
-		Email.sendConfirmationEmail(email);
-		expirationTime = 90;
+		setExpirationTime();
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{40, 0, 0, 0, 0, 0, 0, 40, 0};
-		gridBagLayout.rowHeights = new int[]{40, 0, 30, 0, 0, 30, 30, 35, 40, 0, 40, 40, 0};
+		gridBagLayout.rowHeights = new int[]{40, 0, 30, 0, 0, 30, 45, 35, 40, 0, 40, 40, 0};
 		gridBagLayout.columnWeights = new double[]{1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
@@ -79,56 +86,49 @@ public class ConfirmationCodePanel extends JPanel {
 		gbc_lblIntroduceElCdigo.gridx = 1;
 		gbc_lblIntroduceElCdigo.gridy = 4;
 		add(getLblIntroduceElCdigo(), gbc_lblIntroduceElCdigo);
-		GridBagConstraints gbc_rlblNoTienesConexin = new GridBagConstraints();
-		gbc_rlblNoTienesConexin.fill = GridBagConstraints.BOTH;
-		gbc_rlblNoTienesConexin.gridwidth = 6;
-		gbc_rlblNoTienesConexin.insets = new Insets(0, 0, 5, 5);
-		gbc_rlblNoTienesConexin.gridx = 1;
-		gbc_rlblNoTienesConexin.gridy = 5;
-		add(getRlblNoTienesConexin(), gbc_rlblNoTienesConexin);
-		GridBagConstraints gbc_lblExpiration = new GridBagConstraints();
-		gbc_lblExpiration.fill = GridBagConstraints.BOTH;
-		gbc_lblExpiration.gridwidth = 6;
-		gbc_lblExpiration.insets = new Insets(0, 0, 5, 5);
-		gbc_lblExpiration.gridx = 1;
-		gbc_lblExpiration.gridy = 6;
-		add(getLblExpiration(), gbc_lblExpiration);
-		GridBagConstraints gbc_textField = new GridBagConstraints();
-		gbc_textField.insets = new Insets(0, 0, 5, 5);
-		gbc_textField.fill = GridBagConstraints.BOTH;
-		gbc_textField.gridx = 1;
-		gbc_textField.gridy = 7;
-		add(getTextField(), gbc_textField);
-		GridBagConstraints gbc_textField_1 = new GridBagConstraints();
-		gbc_textField_1.insets = new Insets(0, 0, 5, 5);
-		gbc_textField_1.fill = GridBagConstraints.BOTH;
-		gbc_textField_1.gridx = 2;
-		gbc_textField_1.gridy = 7;
-		add(getTextField_1(), gbc_textField_1);
-		GridBagConstraints gbc_textField_2 = new GridBagConstraints();
-		gbc_textField_2.insets = new Insets(0, 0, 5, 5);
-		gbc_textField_2.fill = GridBagConstraints.BOTH;
-		gbc_textField_2.gridx = 3;
-		gbc_textField_2.gridy = 7;
-		add(getTextField_2(), gbc_textField_2);
-		GridBagConstraints gbc_textField_3 = new GridBagConstraints();
-		gbc_textField_3.insets = new Insets(0, 0, 5, 5);
-		gbc_textField_3.fill = GridBagConstraints.BOTH;
-		gbc_textField_3.gridx = 4;
-		gbc_textField_3.gridy = 7;
-		add(getTextField_3(), gbc_textField_3);
-		GridBagConstraints gbc_textField_4 = new GridBagConstraints();
-		gbc_textField_4.insets = new Insets(0, 0, 5, 5);
-		gbc_textField_4.fill = GridBagConstraints.BOTH;
-		gbc_textField_4.gridx = 5;
-		gbc_textField_4.gridy = 7;
-		add(getTextField_4(), gbc_textField_4);
-		GridBagConstraints gbc_textField_5 = new GridBagConstraints();
-		gbc_textField_5.insets = new Insets(0, 0, 5, 5);
-		gbc_textField_5.fill = GridBagConstraints.BOTH;
-		gbc_textField_5.gridx = 6;
-		gbc_textField_5.gridy = 7;
-		add(getTextField_5(), gbc_textField_5);
+		GridBagConstraints gbc_panel_1 = new GridBagConstraints();
+		gbc_panel_1.gridwidth = 6;
+		gbc_panel_1.insets = new Insets(0, 0, 5, 5);
+		gbc_panel_1.fill = GridBagConstraints.BOTH;
+		gbc_panel_1.gridx = 1;
+		gbc_panel_1.gridy = 6;
+		add(getPanel_1(), gbc_panel_1);
+		GridBagConstraints gbc_firstDigit = new GridBagConstraints();
+		gbc_firstDigit.insets = new Insets(0, 0, 5, 5);
+		gbc_firstDigit.fill = GridBagConstraints.BOTH;
+		gbc_firstDigit.gridx = 1;
+		gbc_firstDigit.gridy = 7;
+		add(getFirstDigit(), gbc_firstDigit);
+		GridBagConstraints gbc_secondDigit = new GridBagConstraints();
+		gbc_secondDigit.insets = new Insets(0, 0, 5, 5);
+		gbc_secondDigit.fill = GridBagConstraints.BOTH;
+		gbc_secondDigit.gridx = 2;
+		gbc_secondDigit.gridy = 7;
+		add(getSecondDigit(), gbc_secondDigit);
+		GridBagConstraints gbc_thirdDigit = new GridBagConstraints();
+		gbc_thirdDigit.insets = new Insets(0, 0, 5, 5);
+		gbc_thirdDigit.fill = GridBagConstraints.BOTH;
+		gbc_thirdDigit.gridx = 3;
+		gbc_thirdDigit.gridy = 7;
+		add(getThirdDigit(), gbc_thirdDigit);
+		GridBagConstraints gbc_fourthDigit = new GridBagConstraints();
+		gbc_fourthDigit.insets = new Insets(0, 0, 5, 5);
+		gbc_fourthDigit.fill = GridBagConstraints.BOTH;
+		gbc_fourthDigit.gridx = 4;
+		gbc_fourthDigit.gridy = 7;
+		add(getFourthDigit(), gbc_fourthDigit);
+		GridBagConstraints gbc_fifthDigit = new GridBagConstraints();
+		gbc_fifthDigit.insets = new Insets(0, 0, 5, 5);
+		gbc_fifthDigit.fill = GridBagConstraints.BOTH;
+		gbc_fifthDigit.gridx = 5;
+		gbc_fifthDigit.gridy = 7;
+		add(getFifthDigit(), gbc_fifthDigit);
+		GridBagConstraints gbc_sixthDigit = new GridBagConstraints();
+		gbc_sixthDigit.insets = new Insets(0, 0, 5, 5);
+		gbc_sixthDigit.fill = GridBagConstraints.BOTH;
+		gbc_sixthDigit.gridx = 6;
+		gbc_sixthDigit.gridy = 7;
+		add(getSixthDigit(), gbc_sixthDigit);
 		GridBagConstraints gbc_errroCode = new GridBagConstraints();
 		gbc_errroCode.fill = GridBagConstraints.BOTH;
 		gbc_errroCode.gridwidth = 6;
@@ -148,6 +148,14 @@ public class ConfirmationCodePanel extends JPanel {
 		timer.start();
 	}
 	
+	public void listenTo(OnBackEvent listener) {
+		goBackListener = listener;
+	}
+	
+	private void setExpirationTime() {
+		expirationTime = 180;
+	}
+
 	public void listenTo(OnCodeConfirmed listener) {
 		this.listener = listener;
 	}
@@ -177,134 +185,135 @@ public class ConfirmationCodePanel extends JPanel {
 		}
 		return lblIntroduceElCdigo;
 	}
-	private JTextLimited getTextField() {
-		if (textField == null) {
-			textField = new JTextLimited();
-			textField.addKeyListener(new KeyAdapter() {
+	private JTextLimited getFirstDigit() {
+		if (firstDigit == null) {
+			firstDigit = new JTextLimited();
+			firstDigit.requestFocus();
+			firstDigit.addKeyListener(new KeyAdapter() {
 				@Override
 				public void keyReleased(KeyEvent arg0) {
-					if (textField.getText().length() == textField.getLimite()) {
-						textField_1.requestFocus();
+					if (firstDigit.getText().length() == firstDigit.getLimite()) {
+						secondDigit.requestFocus();
 					}
 				}
 			});
-			textField.setLimite(1);
-			textField.setFont(new Font("Segoe UI", Font.PLAIN, 15));
-			textField.setHorizontalAlignment(SwingConstants.CENTER);
-			textField.setColumns(10);
+			firstDigit.setLimite(1);
+			firstDigit.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+			firstDigit.setHorizontalAlignment(SwingConstants.CENTER);
+			firstDigit.setColumns(10);
 		}
-		return textField;
+		return firstDigit;
 	}
-	private JTextLimited getTextField_1() {
-		if (textField_1 == null) {
-			textField_1 = new JTextLimited();
-			textField_1.requestFocus();
-			textField_1.addKeyListener(new KeyAdapter() {
+	private JTextLimited getSecondDigit() {
+		if (secondDigit == null) {
+			secondDigit = new JTextLimited();
+			secondDigit.requestFocus();
+			secondDigit.addKeyListener(new KeyAdapter() {
 				@Override
 				public void keyReleased(KeyEvent e) {
 					if (e.getKeyCode() == 8) {
-						textField.requestFocus();
+						firstDigit.requestFocus();
 					}
 					
-					if (textField_1.getText().length() == textField_2.getLimite()) {
-						textField_2.requestFocus();
+					if (secondDigit.getText().length() == thirdDigit.getLimite()) {
+						thirdDigit.requestFocus();
 					}
 				}
 			});
-			textField_1.setLimite(1);
-			textField_1.setFont(new Font("Segoe UI", Font.PLAIN, 15));
-			textField_1.setHorizontalAlignment(SwingConstants.CENTER);
-			textField_1.setColumns(10);
+			secondDigit.setLimite(1);
+			secondDigit.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+			secondDigit.setHorizontalAlignment(SwingConstants.CENTER);
+			secondDigit.setColumns(10);
 		}
-		return textField_1;
+		return secondDigit;
 	}
-	private JTextLimited getTextField_2() {
-		if (textField_2 == null) {
-			textField_2 = new JTextLimited();
-			textField_2.addKeyListener(new KeyAdapter() {
+	private JTextLimited getThirdDigit() {
+		if (thirdDigit == null) {
+			thirdDigit = new JTextLimited();
+			thirdDigit.addKeyListener(new KeyAdapter() {
 				@Override
 				public void keyReleased(KeyEvent e) {
 					if (e.getKeyCode() == 8) {
-						textField_1.requestFocus();
+						secondDigit.requestFocus();
 					}
 					
-					if (textField_2.getText().length() == textField_2.getLimite()) {
-						textField_3.requestFocus();
+					if (thirdDigit.getText().length() == thirdDigit.getLimite()) {
+						fourthDigit.requestFocus();
 					}
 				}
 			});
-			textField_2.setLimite(1);
-			textField_2.setFont(new Font("Segoe UI", Font.PLAIN, 15));
-			textField_2.setHorizontalAlignment(SwingConstants.CENTER);
-			textField_2.setColumns(10);
+			thirdDigit.setLimite(1);
+			thirdDigit.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+			thirdDigit.setHorizontalAlignment(SwingConstants.CENTER);
+			thirdDigit.setColumns(10);
 		}
-		return textField_2;
+		return thirdDigit;
 	}
-	private JTextLimited getTextField_3() {
-		if (textField_3 == null) {
-			textField_3 = new JTextLimited();
-			textField_3.addKeyListener(new KeyAdapter() {
+	private JTextLimited getFourthDigit() {
+		if (fourthDigit == null) {
+			fourthDigit = new JTextLimited();
+			fourthDigit.addKeyListener(new KeyAdapter() {
 				@Override
 				public void keyReleased(KeyEvent e) {
 					if (e.getKeyCode() == 8) {
-						textField_2.requestFocus();
+						thirdDigit.requestFocus();
 					}
 					
-					if (textField_3.getText().length() == textField_3.getLimite()) {
-						textField_4.requestFocus();
+					if (fourthDigit.getText().length() == fourthDigit.getLimite()) {
+						fifthDigit.requestFocus();
 					}
 				}
 			});
-			textField_3.setLimite(1);
-			textField_3.setFont(new Font("Segoe UI", Font.PLAIN, 15));
-			textField_3.setHorizontalAlignment(SwingConstants.CENTER);
-			textField_3.setColumns(10);
+			fourthDigit.setLimite(1);
+			fourthDigit.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+			fourthDigit.setHorizontalAlignment(SwingConstants.CENTER);
+			fourthDigit.setColumns(10);
 		}
-		return textField_3;
+		return fourthDigit;
 	}
-	private JTextLimited getTextField_4() {
-		if (textField_4 == null) {
-			textField_4 = new JTextLimited();
-			textField_4.addKeyListener(new KeyAdapter() {
+	private JTextLimited getFifthDigit() {
+		if (fifthDigit == null) {
+			fifthDigit = new JTextLimited();
+			fifthDigit.addKeyListener(new KeyAdapter() {
 				@Override
 				public void keyReleased(KeyEvent e) {
 					if (e.getKeyCode() == 8) {
-						textField_3.requestFocus();
+						fourthDigit.requestFocus();
 					}
 					
-					if (textField_4.getText().length() == textField_4.getLimite()) {
-						textField_5.requestFocus();
+					if (fifthDigit.getText().length() == fifthDigit.getLimite()) {
+						sixthDigit.requestFocus();
 					}
 				}
 			});
-			textField_4.setLimite(1);
-			textField_4.setFont(new Font("Segoe UI", Font.PLAIN, 15));
-			textField_4.setHorizontalAlignment(SwingConstants.CENTER);
-			textField_4.setColumns(10);
+			fifthDigit.setLimite(1);
+			fifthDigit.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+			fifthDigit.setHorizontalAlignment(SwingConstants.CENTER);
+			fifthDigit.setColumns(10);
 		}
-		return textField_4;
+		return fifthDigit;
 	}
-	private JTextLimited getTextField_5() {
-		if (textField_5 == null) {
-			textField_5 = new JTextLimited();
-			textField_5.addKeyListener(new KeyAdapter() {
+	private JTextLimited getSixthDigit() {
+		if (sixthDigit == null) {
+			sixthDigit = new JTextLimited();
+			sixthDigit.addKeyListener(new KeyAdapter() {
 				@Override
 				public void keyReleased(KeyEvent e) {
 					if (e.getKeyCode() == 8) {
-						textField_4.requestFocus();
+						fifthDigit.requestFocus();
 					}
 					
-					if (textField_5.getText().length() == textField_5.getLimite()) {
+					if (sixthDigit.getText().length() == sixthDigit.getLimite()) {
 						verify();
 					}
 				}
 			});
-			textField_5.setLimite(1);
-			textField_5.setFont(new Font("Segoe UI", Font.PLAIN, 15));
-			textField_5.setHorizontalAlignment(SwingConstants.CENTER);
-			textField_5.setColumns(10);
+			sixthDigit.setLimite(1);
+			sixthDigit.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+			sixthDigit.setHorizontalAlignment(SwingConstants.CENTER);
+			sixthDigit.setColumns(10);
 		}
-		return textField_5;
+		return sixthDigit;
 	}
 	private JPanel getPanel() {
 		if (panel == null) {
@@ -315,13 +324,13 @@ public class ConfirmationCodePanel extends JPanel {
 			gbl_panel.columnWeights = new double[]{1.0, 0.0, 0.0, Double.MIN_VALUE};
 			gbl_panel.rowWeights = new double[]{1.0, Double.MIN_VALUE};
 			panel.setLayout(gbl_panel);
-			GridBagConstraints gbc_btnAnterior = new GridBagConstraints();
-			gbc_btnAnterior.fill = GridBagConstraints.BOTH;
-			gbc_btnAnterior.anchor = GridBagConstraints.NORTHWEST;
-			gbc_btnAnterior.insets = new Insets(0, 0, 0, 5);
-			gbc_btnAnterior.gridx = 1;
-			gbc_btnAnterior.gridy = 0;
-			panel.add(getBtnAnterior(), gbc_btnAnterior);
+			GridBagConstraints gbc_btnBack = new GridBagConstraints();
+			gbc_btnBack.fill = GridBagConstraints.BOTH;
+			gbc_btnBack.anchor = GridBagConstraints.NORTHWEST;
+			gbc_btnBack.insets = new Insets(0, 0, 0, 5);
+			gbc_btnBack.gridx = 1;
+			gbc_btnBack.gridy = 0;
+			panel.add(getBtnBack(), gbc_btnBack);
 			GridBagConstraints gbc_btnSiguiente = new GridBagConstraints();
 			gbc_btnSiguiente.fill = GridBagConstraints.BOTH;
 			gbc_btnSiguiente.anchor = GridBagConstraints.NORTHWEST;
@@ -331,23 +340,28 @@ public class ConfirmationCodePanel extends JPanel {
 		}
 		return panel;
 	}
-	private JButton getBtnAnterior() {
-		if (btnAnterior == null) {
-			btnAnterior = new JButton("Atr\u00E1s");
-			btnAnterior.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+	private JButton getBtnBack() {
+		if (btnBack == null) {
+			btnBack = new JButton("Atr\u00E1s");
+			btnBack.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					goBackListener.navigate();
+				}
+			});
+			btnBack.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 		}
-		return btnAnterior;
+		return btnBack;
 	}
 	
 	public String getCode() {
 		String code = "";
 		
-		code += textField.getText();
-		code += textField_1.getText();
-		code += textField_2.getText();
-		code += textField_3.getText();
-		code += textField_4.getText();
-		code += textField_5.getText();
+		code += firstDigit.getText();
+		code += secondDigit.getText();
+		code += thirdDigit.getText();
+		code += fourthDigit.getText();
+		code += fifthDigit.getText();
+		code += sixthDigit.getText();
 		
 		return code;
 	}
@@ -416,14 +430,27 @@ public class ConfirmationCodePanel extends JPanel {
 					if (expirationTime == 0) {
 						lblExpiration.setText("El c\u00F3digo ya expiró");
 						
-						textField.setEnabled(false);
-						textField_1.setEnabled(false);
-						textField_2.setEnabled(false);
-						textField_3.setEnabled(false);
-						textField_4.setEnabled(false);
-						textField_5.setEnabled(false);
+						firstDigit.setText("");
+						firstDigit.setEnabled(false);
+						
+						secondDigit.setText("");
+						secondDigit.setEnabled(false);
+						
+						thirdDigit.setText("");
+						thirdDigit.setEnabled(false);
+						
+						fourthDigit.setText("");
+						fourthDigit.setEnabled(false);
+						
+						fifthDigit.setText("");
+						fifthDigit.setEnabled(false);
+						
+						sixthDigit.setText("");
+						sixthDigit.setEnabled(false);
 						
 						timer.stop();
+						
+						btnResend.setVisible(true);
 					}
 				}
 			});
@@ -431,12 +458,74 @@ public class ConfirmationCodePanel extends JPanel {
 		}
 		return timer;
 	}
-	private ErrorLabel getRlblNoTienesConexin() {
-		if (rlblNoTienesConexin == null) {
-			rlblNoTienesConexin = new ErrorLabel();
-			rlblNoTienesConexin.setText("No tienes conexi\u00F3n en estos momentos");
-			rlblNoTienesConexin.setVisible(false);
+	private JPanel getPanel_1() {
+		if (panel_1 == null) {
+			panel_1 = new JPanel();
+			GridBagLayout gbl_panel_1 = new GridBagLayout();
+			gbl_panel_1.columnWidths = new int[]{128, 150, 0};
+			gbl_panel_1.rowHeights = new int[]{45, 0};
+			gbl_panel_1.columnWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
+			gbl_panel_1.rowWeights = new double[]{1.0, Double.MIN_VALUE};
+			panel_1.setLayout(gbl_panel_1);
+			GridBagConstraints gbc_lblExpiration = new GridBagConstraints();
+			gbc_lblExpiration.insets = new Insets(0, 0, 0, 5);
+			gbc_lblExpiration.fill = GridBagConstraints.BOTH;
+			gbc_lblExpiration.gridx = 0;
+			gbc_lblExpiration.gridy = 0;
+			panel_1.add(getLblExpiration(), gbc_lblExpiration);
+			GridBagConstraints gbc_btnResend = new GridBagConstraints();
+			gbc_btnResend.fill = GridBagConstraints.VERTICAL;
+			gbc_btnResend.gridx = 1;
+			gbc_btnResend.gridy = 0;
+			panel_1.add(getBtnResend(), gbc_btnResend);
 		}
-		return rlblNoTienesConexin;
+		return panel_1;
+	}
+	private JButton getBtnResend() {
+		if (btnResend == null) {
+
+			btnResend = new JButton("Reenviar c\u00F3digo");
+			btnResend.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					ImageIcon icon = new ImageIcon(SetCredentialsPanel.class.getResource("/resources/images/loader-spinner.gif"));
+					final ImageIcon scaled = new ImageIcon(icon.getImage().getScaledInstance(33, 33, Image.SCALE_FAST));
+
+					btnResend.setText("Enviando email");
+					btnResend.setIcon(scaled);
+					btnResend.setEnabled(false);
+					
+					EmailSenderThread sender = new EmailSenderThread(email) {
+						@Override
+						protected void done() {
+							firstDigit.setEnabled(true);
+							secondDigit.setEnabled(true);
+							thirdDigit.setEnabled(true);
+							fourthDigit.setEnabled(true);
+							fifthDigit.setEnabled(true);
+							sixthDigit.setEnabled(true);
+							setExpirationTime();
+							timer.start();
+							
+							ImageIcon icon = new ImageIcon(ConfirmationCodePanel.class.getResource("/resources/images/resend-email.png"));
+							icon = new ImageIcon(icon.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
+							
+							btnResend.setEnabled(true);
+							btnResend.setText("Reenviar c\u00F3digo");
+							btnResend.setIcon(icon);
+							btnResend.setVisible(false);
+						}
+					};
+					
+					sender.execute();
+				}
+			});
+			
+			ImageIcon icon = new ImageIcon(ConfirmationCodePanel.class.getResource("/resources/images/resend-email.png"));
+			icon = new ImageIcon(icon.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
+			
+			btnResend.setIcon(icon);
+			btnResend.setVisible(false);
+		}
+		return btnResend;
 	}
 }
