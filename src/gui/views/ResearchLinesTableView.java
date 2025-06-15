@@ -359,6 +359,7 @@ public class ResearchLinesTableView extends JPanel {
 			btnRemove.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					Faculty faculty = Faculty.newInstance();
+					
 					String researchLineName = (String)table.getValueAt(table.getSelectedRow(), 0);
 					ResearchLine line = faculty.findResearchLine(researchLineName);
 

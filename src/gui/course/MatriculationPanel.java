@@ -96,15 +96,12 @@ public class MatriculationPanel extends JPanel {
 		return lblPlanDeMaestra;
 	}
 	
-	private ArrayList<Profesor> getMatriculableProfesors() {
-		return line.getProfesorsWithoutDegree();
-	}
 	
 	private JComboBox<String> getComboBox() {
 		if (comboBox == null) {
 			comboBox = new JComboBox<>();
 			
-			ArrayList<Profesor> profesors = getMatriculableProfesors();
+			ArrayList<Profesor> profesors = line.getMatriculableProfesors();
 			String[] names = new String[profesors.size()];
 			
 			for (int i = 0; i < profesors.size(); i++) {
@@ -138,7 +135,7 @@ public class MatriculationPanel extends JPanel {
 					int index = comboBox.getSelectedIndex();
 					
 					if (index != -1) {
-						line.matriculate(getMatriculableProfesors().get(index));
+						line.matriculate(line.getMatriculableProfesors().get(index));
 						resetForm();
 						sendFeedback();
 					}

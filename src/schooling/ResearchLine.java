@@ -110,6 +110,18 @@ public class ResearchLine {
 		return profesors;
 	}
 
+	public ArrayList<Profesor> getMatriculableProfesors() {
+		ArrayList<Profesor> profesors = new ArrayList<>();
+	
+		for (Profesor p: getProfesorsWithoutDegree()) {
+			if (!hasMatriculation(p)) {
+				profesors.add(p);
+			}
+		}
+		
+		return profesors;
+	}
+	
 	public ArrayList<Profesor> getProfesorsWithoutDegree() {
 		ArrayList<Profesor> profesors = new ArrayList<>();
 		
@@ -126,5 +138,18 @@ public class ResearchLine {
 		for (PostgraduateCourse c: getMasteryPlan().getCourses()) {
 			masteryPlan.addMatriculation(profesor, c);
 		}
+	}
+
+	public boolean hasMatriculation(Profesor p) {
+		boolean result = false;
+		int i = 0;
+		
+		while (!result && i < masteryPlan.getMatriculations().size()) {
+			result = masteryPlan.getMatriculations().get(i).getProfesor() == p;
+			
+			i++;
+		}
+		
+		return result;
 	}
 }
