@@ -61,6 +61,8 @@ public class ResearchersTableView extends JPanel {
 	private JTextField textFieldMatterFilter;
 	private JButton btnRemove;
 
+	private OnAddedResearcher listener;
+	
 	public ResearchersTableView() {
 		this.faculty = Faculty.newInstance();
 
@@ -148,6 +150,10 @@ public class ResearchersTableView extends JPanel {
 		researcherModel = new ResearcherTableModel();
 		table.setModel(researcherModel);
 		table.getColumnModel().getColumn(0).setMaxWidth(30);
+	}
+	
+	public void listenTo(OnAddedResearcher listener) {
+		this.listener = listener;
 	}
 	
 	private void sendFeedback() {
@@ -290,6 +296,8 @@ public class ResearchersTableView extends JPanel {
 									@Override
 									public void newResearcher(int researcherID) {
 										updateTable();
+										listener.newResearcher(researcherID);
+										
 										sendFeedback();
 									}
 								});

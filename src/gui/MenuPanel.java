@@ -1,5 +1,6 @@
 package gui;
 
+import gui.event.OnAddedResearcher;
 import gui.event.OnCloseApp;
 import gui.report.views.ApprovalPendingsJDialog;
 import gui.report.views.BestMarksJDialog;
@@ -39,6 +40,8 @@ import schooling.Degree;
 import schooling.Faculty;
 import utils.Mock;
 
+import javax.swing.SwingConstants;
+
 public class MenuPanel extends JPanel {
 	private static final long serialVersionUID = 3762125698246597691L;
 
@@ -63,7 +66,7 @@ public class MenuPanel extends JPanel {
 	private JMenu mnData;
 	private JMenuItem researchLinesMenu;
 	private ResearchLinesTableView researchLinesTableView;
-	private JMenuItem addCourse;
+	private JMenuItem addCourseMenu;
 	private JMenuItem coursesTableMenu;
 	private CoursesTableView coursesTableView;
 	private ResearchersActivityTableView researchersActivityTableView;
@@ -71,7 +74,7 @@ public class MenuPanel extends JPanel {
 	private JButton btnCerrar;
 
 	private OnCloseApp listener;
-	private JMenu mockedData;
+	private JMenuItem mockedData;
 
 	public MenuPanel() {
 		this.faculty = Faculty.newInstance();
@@ -95,6 +98,8 @@ public class MenuPanel extends JPanel {
 		gbc_contentPanel.gridx = 0;
 		gbc_contentPanel.gridy = 1;
 		add(getContentPanel(), gbc_contentPanel);
+		
+		updateViews();
 	}
 	private JMenuBar getMenuBar() {
 		if (menuBar == null) {
@@ -113,7 +118,7 @@ public class MenuPanel extends JPanel {
 			management.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 			management.add(getAddLineMenu());
 			management.add(getNewResearcherMenu());
-			management.add(getAddCourse());
+			management.add(getAddCourseMenu());
 		}
 		return management;
 	}
@@ -126,6 +131,9 @@ public class MenuPanel extends JPanel {
 
 		coursesFormView.update();
 		researcherFormView.update();
+		
+		addCourseMenu.setVisible(faculty.getProfesorsWithDegree(Degree.Doctor).size() > 0);
+		newResearcherMenu.setVisible(faculty.getResearchLines().size() > 0);
 	}
 	
 	// Actualizar todas las tablas y formularios que se vayan añadiendo
@@ -149,22 +157,17 @@ public class MenuPanel extends JPanel {
 		return newResearcherMenu;
 	}
 
-	// boton de insertar curso
-	private JMenuItem getAddCourse() {
-		if (addCourse == null) {			
-			addCourse = new JMenuItem("Nuevo curso");
-			addCourse.addActionListener(new ActionListener() {
+	private JMenuItem getAddCourseMenu() {
+		if (addCourseMenu == null) {			
+			addCourseMenu = new JMenuItem("Nuevo curso");
+			addCourseMenu.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					switchView("Courses Form");
 				}
 			});
 		}
-		if(faculty.getResearchLines().size() > 0 && faculty.getProfesorsWithDegree(Degree.Doctor).size() > 0) {
-			addCourse.setVisible(true);
-		} else {
-			addCourse.setVisible(false);
-		}
-		return addCourse;
+		
+		return addCourseMenu;
 	}
 
 	private JMenu getReports() {
@@ -323,12 +326,24 @@ public class MenuPanel extends JPanel {
 	private ResearcherFormView getResearcherForm() {
 		if (researcherFormView == null) {
 			researcherFormView = new ResearcherFormView();
+			researcherFormView.listenTo(new OnAddedResearcher() {
+				@Override
+				public void newResearcher(int researcherID) {
+					updateViews();
+				}
+			});
 		}
 		return researcherFormView;
 	}
 	private ResearchersTableView getResearchersTableView() {
 		if (researchersTableView == null) {
 			researchersTableView = new ResearchersTableView();
+			researchersTableView.listenTo(new OnAddedResearcher() {
+				@Override
+				public void newResearcher(int researcherID) {
+					updateViews();
+				}
+			});
 		}
 		return researchersTableView;
 	}
@@ -438,19 +453,19 @@ public class MenuPanel extends JPanel {
 		}
 		return btnCerrar;
 	}
-	private JMenu getMockedData() {
+	private JMenuItem getMockedData() {
 		if (mockedData == null) {
-			mockedData = new JMenu("Datos de prueba");
+			mockedData = new JMenuItem("Datos de prueba");
 			mockedData.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					// Mock data
-					Mock.mockFacultyData(faculty);
+					Mock.mockFacultyData();
+					JOptionPane.showMessageDialog(null, "Los datos de prueba han sido agregados");
 					updateViews();
-
-					JOptionPane.showMessageDialog(null, "Se han cargado los datos de prueba exitosamente");
+					
 					mockedData.setVisible(false);
 				}
 			});
+			mockedData.setHorizontalAlignment(SwingConstants.LEFT);
 			mockedData.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 		}
 		return mockedData;

@@ -118,18 +118,22 @@ public class CoursesFormView extends JPanel {
 	}
 	
 	private void fetchInstructors() {
-		String lineName = masteryPlans.getSelectedItem().toString();
-		ResearchLine line = faculty.findResearchLine(lineName);
+		Object item = masteryPlans.getSelectedItem();
 		
-		ArrayList<Profesor> profs = faculty.getDoctorsSelectedLine(line);
-		String[] names = new String[profs.size()];
-
-		for(int i = 0; i < profs.size(); i++){
-			names[i] = profs.get(i).getName();
-			profIDs[i] = profs.get(i).getID();
+		if (item != null) {
+			String lineName = masteryPlans.getSelectedItem().toString();
+			ResearchLine line = faculty.findResearchLine(lineName);
+			
+			ArrayList<Profesor> profs = faculty.getDoctorsSelectedLine(line);
+			String[] names = new String[profs.size()];
+			
+			for(int i = 0; i < profs.size(); i++){
+				names[i] = profs.get(i).getName();
+				profIDs[i] = profs.get(i).getID();
+			}
+			
+			selectInstructor.setModel(new DefaultComboBoxModel<>(names));
 		}
-
-		selectInstructor.setModel(new DefaultComboBoxModel<>(names));
 	}
 	
 	private JComboBox<String> getMasteryPlans() {
@@ -462,8 +466,8 @@ public class CoursesFormView extends JPanel {
 		
 		txtCourseName.setText("");
 		txtDescrip.setText("");
-		masteryPlans.setSelectedIndex(0);
-		selectInstructor.setSelectedIndex(0);
+		masteryPlans.setSelectedIndex(-1);
+		selectInstructor.setSelectedIndex(-1);
 		spinnerCreds.setValue(0);
 
 	}

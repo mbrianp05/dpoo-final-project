@@ -8,8 +8,9 @@ import schooling.ResearchLine;
 import schooling.TargetedGroup;
 
 public class Mock {
-	public static void mockFacultyData(Faculty faculty) {
+	public static void mockFacultyData() {
 		/// Datos de prueba
+		Faculty faculty = Faculty.newInstance();
 
 		//-------------Crear investigadores------------
 		int profesorID = faculty.addProfesor("Juan", Degree.Doctor, ProfesorCategory.Permanent, null);
