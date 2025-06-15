@@ -43,7 +43,7 @@ public class EditPostgradeCourseJDialog extends JDialog {
 	private CourseForm courseForm;
 	private JPanel panelWrapper;
 	private ButtonGroup buttonGroup;
-	private MaskAssignmentForm maskAssignmentForm;
+	private MarkAssignmentForm markAssignmentForm;
 
 	public EditPostgradeCourseJDialog(PostgraduateCourse course) {
 		setTitle("Editar datos del curso");
@@ -151,11 +151,11 @@ public class EditPostgradeCourseJDialog extends JDialog {
 		return courseForm;
 	}
 
-	private MaskAssignmentForm getMatriculationMarkAssignment() {
-		if (maskAssignmentForm == null) {
-			maskAssignmentForm = new MaskAssignmentForm(course);
+	private MarkAssignmentForm getMatriculationMarkAssignment() {
+		if (markAssignmentForm == null) {
+			markAssignmentForm = new MarkAssignmentForm(course);
 		}
-		return maskAssignmentForm;
+		return markAssignmentForm;
 	}
 	private JPanel getPanelWrapper() {
 		if (panelWrapper == null) {

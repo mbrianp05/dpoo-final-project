@@ -24,7 +24,7 @@ import schooling.Matriculation;
 import schooling.PostgraduateCourse;
 import gui.component.TitleLabel;
 
-public class MaskAssignmentForm extends JPanel {
+public class MarkAssignmentForm extends JPanel {
 
 	private static final long serialVersionUID = -929110073445811391L;
 
@@ -43,7 +43,7 @@ public class MaskAssignmentForm extends JPanel {
 	private TitleLabel tlblJ;
 	private JLabel lblCurso;
 
-	public MaskAssignmentForm(PostgraduateCourse course) {
+	public MarkAssignmentForm(PostgraduateCourse course) {
 		faculty = Faculty.newInstance();
 		this.course = course;
 

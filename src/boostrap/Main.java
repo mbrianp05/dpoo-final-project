@@ -20,6 +20,7 @@ public class Main {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 			UIManager.put("Button.font", Constants.getLabelFont());
+			UIManager.put("Label.font", Constants.getLabelFont());
 			UIManager.put("Panel.background", new Color(255, 255, 255));
 			UIManager.put("CheckBox.background", new Color(255, 255, 255));
 			UIManager.put("RadioButton.background", new Color(255, 255, 255));
@@ -36,6 +37,8 @@ public class Main {
 			UIManager.put("PasswordField.margin", new Insets(0, 6, 0, 6));
 			UIManager.put("TextField.font", Constants.getLabelFont());
 			UIManager.put("ComboBox.font", Constants.getLabelFont());
+			UIManager.put("ComboBox.font", Constants.getLabelFont());
+			UIManager.put("RadioButton.font", Constants.getLabelFont());
 //			 UIManager.put("MenuItem.selectionBackground", new Color(100, 150, 200));
 		} catch (Exception e) {
 			e.printStackTrace();

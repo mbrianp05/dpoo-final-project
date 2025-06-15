@@ -430,15 +430,22 @@ public class Faculty {
 		return r;
 	}
 
-	public boolean removeResearcher(int id) {
-		Researcher researcher = findResearcher(id);
+	public boolean canRemoveResearcher(int id) {
 		boolean canBeRemoved = true;
-
-		if (researcher == null) throw new IllegalArgumentException("Researcher with ID " + id + " does not exist");
-
+		Researcher researcher = findResearcher(id);
+		
 		if (researcher instanceof Profesor) {
 			canBeRemoved = !isChief((Profesor)researcher) && !isInstructor((Profesor)researcher);
 		}
+		
+		return canBeRemoved;
+	}
+	
+	public boolean removeResearcher(int id) {
+		Researcher researcher = findResearcher(id);
+
+		if (researcher == null) throw new IllegalArgumentException("Researcher with ID " + id + " does not exist");
+		boolean canBeRemoved = canRemoveResearcher(id);
 
 		if (canBeRemoved) {
 			ResearchMatter matter = findMatterOf(id);

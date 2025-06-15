@@ -37,6 +37,8 @@ import schooling.Researcher;
 import utils.Constants;
 
 import javax.swing.JButton;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 public class ResearchersActivityTableView extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -203,13 +205,15 @@ public class ResearchersActivityTableView extends JPanel {
 	private JTable getTable_1() {
 		if (table == null) {
 			table = new JTable();
+			table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+				@Override
+				public void valueChanged(ListSelectionEvent arg0) {
+					btnRemove.setVisible(table.getSelectedRow() != -1);
+				}
+			});
 			table.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent event) {
-					if (table.getSelectedRow() >= 0) {
-						btnRemove.setVisible(true);
-					}
-					
 					if (event.getClickCount() > 1) {
 						openEditBreakthroughDialog();
 					}
@@ -255,7 +259,6 @@ public class ResearchersActivityTableView extends JPanel {
 				@Override
 				public void keyReleased(KeyEvent arg0) {
 					getTableModel().setFilterName(textField.getText());
-					btnRemove.setVisible(false);
 				}
 			});
 			textField.setColumns(10);
@@ -277,7 +280,6 @@ public class ResearchersActivityTableView extends JPanel {
 				@Override
 				public void keyReleased(KeyEvent arg0) {
 					getTableModel().setFilterResearcher(textField_1.getText());
-					btnRemove.setVisible(false);
 				}
 			});
 			textField_1.setColumns(10);
@@ -299,10 +301,8 @@ public class ResearchersActivityTableView extends JPanel {
 				public void actionPerformed(ActionEvent arg0) {
 					if (comboBox.getSelectedItem() == null) {
 						getTableModel().setFilterScore(0);
-						btnRemove.setVisible(false);
 					} else {
 						getTableModel().setFilterScore((Integer)comboBox.getSelectedItem());
-						btnRemove.setVisible(false);
 					}
 				}
 			});
@@ -317,7 +317,6 @@ public class ResearchersActivityTableView extends JPanel {
 			filterChapter.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					getTableModel().includeChapters(filterChapter.isSelected());
-					btnRemove.setVisible(false);
 				}
 			});
 			filterChapter.setSelected(true);
@@ -331,7 +330,6 @@ public class ResearchersActivityTableView extends JPanel {
 			filterPaper.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					getTableModel().includePapers(filterPaper.isSelected());
-					btnRemove.setVisible(false);
 				}
 			});
 			filterPaper.setSelected(true);
@@ -345,7 +343,6 @@ public class ResearchersActivityTableView extends JPanel {
 			filterPresentation.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					getTableModel().includePresentations(filterPresentation.isSelected());
-					btnRemove.setVisible(false);
 				}
 			});
 			filterPresentation.setSelected(true);

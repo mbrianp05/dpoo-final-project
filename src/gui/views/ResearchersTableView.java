@@ -34,6 +34,8 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import schooling.Faculty;
 import schooling.Researcher;
@@ -55,14 +57,14 @@ public class ResearchersTableView extends JPanel {
 
 	private Faculty faculty;
 	private TitleLabel lblDatosDeInvestigadores;
-	
+
 	private EditResearcherJDialog current;
 	private JLabel lblTema;
 	private JTextField textFieldMatterFilter;
 	private JButton btnRemove;
 
 	private OnAddedResearcher listener;
-	
+
 	public ResearchersTableView() {
 		this.faculty = Faculty.newInstance();
 
@@ -151,11 +153,11 @@ public class ResearchersTableView extends JPanel {
 		table.setModel(researcherModel);
 		table.getColumnModel().getColumn(0).setMaxWidth(30);
 	}
-	
+
 	public void listenTo(OnAddedResearcher listener) {
 		this.listener = listener;
 	}
-	
+
 	private void sendFeedback() {
 		JOptionPane.showMessageDialog(null, "¡Se ha actualizado el investigador correctamente!", "Mensaje", JOptionPane.PLAIN_MESSAGE);
 	}
@@ -168,7 +170,6 @@ public class ResearchersTableView extends JPanel {
 				public void actionPerformed(ActionEvent arg0) {
 					ResearcherTableModel tmodel = (ResearcherTableModel)table.getModel();
 					tmodel.includeStudents(filterStudents.isSelected());
-					btnRemove.setVisible(false);
 				}
 			});
 			filterStudents.setSelected(true);
@@ -186,7 +187,6 @@ public class ResearchersTableView extends JPanel {
 				public void actionPerformed(ActionEvent arg0) {
 					ResearcherTableModel tmodel = (ResearcherTableModel)table.getModel();
 					tmodel.includeProfesors(filterProfesors.isSelected());
-					btnRemove.setVisible(false);
 				}
 			});
 			filterProfesors.setSelected(true);
@@ -224,7 +224,6 @@ public class ResearchersTableView extends JPanel {
 				public void keyTyped(KeyEvent arg0) {
 					ResearcherTableModel tmodel = (ResearcherTableModel)table.getModel();
 					tmodel.setMinScore((int)spinner.getValue());
-					btnRemove.setVisible(false);
 				}
 			});
 			spinner.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
@@ -257,7 +256,6 @@ public class ResearchersTableView extends JPanel {
 					if (event.getKeyCode() != 16) {		
 						ResearcherTableModel tmodel = (ResearcherTableModel)table.getModel();
 						tmodel.setFilterName(filterByName.getText());
-						btnRemove.setVisible(false);
 					}
 				}
 			});
@@ -277,18 +275,20 @@ public class ResearchersTableView extends JPanel {
 			table = new JTable();
 			table.setRowHeight(24);
 			table.getTableHeader().setReorderingAllowed(false);
+			table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+				@Override
+				public void valueChanged(ListSelectionEvent arg0) {
+					btnRemove.setVisible(table.getSelectedRow() != -1);
+				}
+			});
 			table.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent event) {
-					if (table.getSelectedRow() >= 0) {
-						btnRemove.setVisible(true);
-					}
-					
 					if (event.getClickCount() > 1 && table.getSelectedRow() >= 0) {
 						int row = table.getSelectedRow();
 						int ID = Integer.valueOf((String)table.getModel().getValueAt(row, 0));
 						Researcher researcher = faculty.findResearcher(ID);
-						
+
 						if (current == null || !current.isVisible()) {
 							try {
 								current = new EditResearcherJDialog(researcher);
@@ -297,7 +297,7 @@ public class ResearchersTableView extends JPanel {
 									public void newResearcher(int researcherID) {
 										updateTable();
 										listener.newResearcher(researcherID);
-										
+
 										sendFeedback();
 									}
 								});
@@ -353,7 +353,6 @@ public class ResearchersTableView extends JPanel {
 					if (event.getKeyCode() != 16) {		
 						ResearcherTableModel tmodel = (ResearcherTableModel)table.getModel();
 						tmodel.setFilterMatter(textFieldMatterFilter.getText());
-						btnRemove.setVisible(false);
 					}
 				}
 			});
@@ -362,28 +361,29 @@ public class ResearchersTableView extends JPanel {
 		}
 		return textFieldMatterFilter;
 	}
-	
+
 	private void removeResearcher() {
-		int input = JOptionPane.showConfirmDialog(null, "¿Estás seguro de eliminar al investigador?");
-		
-		if (input == JOptionPane.OK_OPTION) {
-			int id = Integer.valueOf((String)table.getModel().getValueAt(table.getSelectedRow(), 0));
-			
-			if (!faculty.removeResearcher(id)) {
-				JOptionPane.showMessageDialog(null, "El investigador que desea eliminar imparte cursos o es jefe de alguna línea. Busca el sutituto e inténtalo después", "Error al eliminar el investigador", JOptionPane.ERROR_MESSAGE);
-			} else {
+		int id = Integer.valueOf((String)table.getModel().getValueAt(table.getSelectedRow(), 0));
+
+		if (faculty.canRemoveResearcher(id)) {
+			faculty.removeResearcher(id);
+			JOptionPane.showMessageDialog(null, "El investigador que desea eliminar imparte cursos o es jefe de alguna línea. Busca el sutituto e inténtalo después", "Error al eliminar el investigador", JOptionPane.ERROR_MESSAGE);
+		} else {
+			int input = JOptionPane.showConfirmDialog(null, "¿Estás seguro de eliminar al investigador?");
+
+			if (input == JOptionPane.OK_OPTION) {
 				updateTable();
 			}
 		}
 	}
-	
+
 	private JButton getBtnRemove() {
 		if (btnRemove == null) {
 			btnRemove = new JButton();
-			
+
 			ImageIcon icon = new ImageIcon(ResearchersTableView.class.getResource("/resources/images/trash.png"));
 			icon = new ImageIcon(icon.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
-			
+
 			btnRemove.setIcon(icon);
 			btnRemove.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 			btnRemove.addActionListener(new ActionListener() {

@@ -30,6 +30,8 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import schooling.Faculty;
 import schooling.PostgraduateCourse;
@@ -157,17 +159,22 @@ public class CoursesTableView extends JPanel {
 	private JTable getTable() {
 		if (table == null) {
 			table = new JTable();
+			table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+				@Override
+				public void valueChanged(ListSelectionEvent arg0) {
+					btnRemove.setVisible(table.getSelectedRow() != -1);
+				}
+			});
 			table.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent event) {
 					int row = table.getSelectedRow();
 
-					if (row >= 0) btnRemove.setVisible(true);
 					if (event.getClickCount() > 1 && table.getSelectedRow() >= 0) {
 						String courseName = String.valueOf((String)table.getModel().getValueAt(row, 0));
 						PostgraduateCourse course = faculty.findCourseByName(courseName);
 
-						
+
 						if(select == null || !select.isVisible()) {
 							try {
 								select = new EditPostgradeCourseJDialog(course);
@@ -220,8 +227,6 @@ public class CoursesTableView extends JPanel {
 					if(event.getKeyCode() != 16) {
 						CoursesTableModel ctmodel = (CoursesTableModel)table.getModel();
 						ctmodel.setFilterName(filterByName.getText());
-						
-						btnRemove.setVisible(false);
 					}
 				}
 			});
@@ -250,8 +255,6 @@ public class CoursesTableView extends JPanel {
 				public void keyTyped(KeyEvent arg0) {
 					CoursesTableModel ctmodel = (CoursesTableModel)table.getModel();
 					ctmodel.setFilterCreds((int)filterCreds.getValue());
-					
-					btnRemove.setVisible(false);
 				}
 			});
 			filterCreds.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
@@ -259,7 +262,7 @@ public class CoursesTableView extends JPanel {
 				public void stateChanged(ChangeEvent event) {
 					CoursesTableModel ctmodel = (CoursesTableModel)table.getModel();
 					ctmodel.setFilterCreds((int)filterCreds.getValue());
-				
+
 					btnRemove.setVisible(false);
 				}
 			});
@@ -281,8 +284,6 @@ public class CoursesTableView extends JPanel {
 				public void keyReleased(KeyEvent event) {
 					CoursesTableModel ctModel = (CoursesTableModel)table.getModel();
 					ctModel.setFilterByInstruc(filterByInstruct.getText());
-					
-					btnRemove.setVisible(false);
 				}
 			});
 			filterByInstruct.setFont(new Font("Segoe UI", Font.PLAIN, 15));
@@ -292,11 +293,10 @@ public class CoursesTableView extends JPanel {
 	}
 
 	public void removeCourse() {
+		String name = String.valueOf((String)table.getModel().getValueAt(table.getSelectedRow(), 0));										
 		int input = JOptionPane.showConfirmDialog(null, "¿Estás seguro de eliminar el curso?");
 
 		if (input == JOptionPane.OK_OPTION) {
-			String name = String.valueOf((String)table.getModel().getValueAt(table.getSelectedRow(), 0));										
-			
 			if(!faculty.removeCourseFromLine(name)) {
 				JOptionPane.showMessageDialog(null, "El curso que desea eliminar no existe", "Error al eliminar el curso", JOptionPane.ERROR_MESSAGE);
 			} else {

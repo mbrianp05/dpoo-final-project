@@ -39,15 +39,15 @@ public class MoveResearcherToOtherMatterJDialog extends JDialog {
 	public MoveResearcherToOtherMatterJDialog(Profesor profesor, String[] matters, final OnMovedChief listener) {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(MoveResearcherToOtherMatterJDialog.class.getResource("/com/sun/javafx/scene/web/skin/FontBackgroundColor_16x16_JFX.png")));
 		setTitle("Cambiar de materia a inevstigador");
-		setBounds(100, 100, 588, 363);
+		setBounds(100, 100, 588, 350);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		GridBagLayout gbl_contentPanel = new GridBagLayout();
 		gbl_contentPanel.columnWidths = new int[]{70, 0, 70, 0};
-		gbl_contentPanel.rowHeights = new int[]{70, 0, 0, 30, 35, 0};
+		gbl_contentPanel.rowHeights = new int[]{50, 0, 0, 30, 35, 30, 0, 50, 0};
 		gbl_contentPanel.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
-		gbl_contentPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_contentPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		contentPanel.setLayout(gbl_contentPanel);
 		{
 			JLabel lblCambiarAlInvestigador = new JLabel("Cambiar al investigador de materia de investigaci\u00F3n");
@@ -70,18 +70,24 @@ public class MoveResearcherToOtherMatterJDialog extends JDialog {
 			contentPanel.add(tlblCambiarAlInvestigador, gbc_tlblCambiarAlInvestigador);
 		}
 			final JComboBox<String> comboBox = new JComboBox<>();
+			comboBox.setMaximumRowCount(5);
 			comboBox.setModel(new DefaultComboBoxModel<>(matters));
 			comboBox.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 			GridBagConstraints gbc_comboBox = new GridBagConstraints();
-			gbc_comboBox.insets = new Insets(0, 0, 0, 5);
+			gbc_comboBox.insets = new Insets(0, 0, 5, 5);
 			gbc_comboBox.fill = GridBagConstraints.BOTH;
 			gbc_comboBox.gridx = 1;
 			gbc_comboBox.gridy = 4;
 			contentPanel.add(comboBox, gbc_comboBox);
 		{
 			JPanel buttonPane = new JPanel();
+			GridBagConstraints gbc_buttonPane = new GridBagConstraints();
+			gbc_buttonPane.anchor = GridBagConstraints.EAST;
+			gbc_buttonPane.insets = new Insets(0, 0, 5, 5);
+			gbc_buttonPane.gridx = 1;
+			gbc_buttonPane.gridy = 6;
+			contentPanel.add(buttonPane, gbc_buttonPane);
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
-			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton okButton = new JButton("Aceptar");
 				okButton.addActionListener(new ActionListener() {

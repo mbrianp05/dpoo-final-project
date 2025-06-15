@@ -109,4 +109,22 @@ public class ResearchLine {
 		
 		return profesors;
 	}
+
+	public ArrayList<Profesor> getProfesorsWithoutDegree() {
+		ArrayList<Profesor> profesors = new ArrayList<>();
+		
+		for (Profesor p: getProfesorsInvolved()) {
+			if (p.getDegree() == null) profesors.add(p);
+		}
+		
+		return profesors;
+	}
+
+	public void matriculate(Profesor profesor) {
+		if (profesor.getDegree() != null) throw new IllegalArgumentException("Only profesors with no degree can recieve mastery plan courses");
+	
+		for (PostgraduateCourse c: getMasteryPlan().getCourses()) {
+			masteryPlan.addMatriculation(profesor, c);
+		}
+	}
 }
