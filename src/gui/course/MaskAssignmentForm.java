@@ -1,4 +1,4 @@
-package gui.reasearchline;
+package gui.course;
 
 import java.awt.Font;
 import java.awt.GridBagConstraints;

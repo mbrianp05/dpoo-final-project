@@ -6,7 +6,6 @@ import gui.researchers.activity.PaperForm;
 import gui.researchers.activity.PresentationForm;
 
 import java.awt.Font;
-import java.awt.GridBagLayout;
 
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;

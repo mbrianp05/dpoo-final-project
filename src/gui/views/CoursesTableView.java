@@ -1,9 +1,9 @@
 package gui.views;
 
 import gui.component.TitleLabel;
+import gui.course.EditPostgradeCourseJDialog;
 import gui.event.OnAddedCourse;
 import gui.model.CoursesTableModel;
-import gui.reasearchline.EditPostgradeCourseJDialog;
 
 import java.awt.Font;
 import java.awt.GridBagConstraints;

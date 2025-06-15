@@ -1,4 +1,4 @@
-package gui.reasearchline;
+package gui.course;
 
 import schooling.PostgraduateCourse;
 import schooling.Profesor;

@@ -1,4 +1,4 @@
-package gui.reasearchline;
+package gui.course;
 
 import gui.event.OnAddedCourse;
 import gui.event.OnCoursesFormActionTriggered;

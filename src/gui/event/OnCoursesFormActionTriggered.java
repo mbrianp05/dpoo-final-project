@@ -1,6 +1,6 @@
 package gui.event;
 
-import gui.reasearchline.CourseFormData;
+import gui.course.CourseFormData;
 
 public interface OnCoursesFormActionTriggered {
 	void actionPerformed(CourseFormData data);
