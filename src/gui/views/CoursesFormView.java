@@ -63,7 +63,7 @@ public class CoursesFormView extends JPanel {
 
 	public CoursesFormView() {
 		this.faculty = Faculty.newInstance();
-		
+
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{100, 0, 100, 0};
 		gridBagLayout.rowHeights = new int[]{70, 45, 60, 310, 0};
@@ -85,11 +85,11 @@ public class CoursesFormView extends JPanel {
 
 		resetForm();
 	}
-	
+
 	public void listenTo(OnAddedCourse listener) {
 		this.listener = listener;
 	}
-	
+
 	private TitleLabel getLblInsertarDatosDe() {
 		if (lblInsertarDatosDe == null) {
 			lblInsertarDatosDe = new TitleLabel();
@@ -105,37 +105,41 @@ public class CoursesFormView extends JPanel {
 		}
 		return lblNewLabel;
 	}
-	
+
 	private void fetchMasteryPlans() {
 		ArrayList<ResearchLine> lines = faculty.getResearchLines();
 		String [] names = new String[lines.size()];
+		int pos = 0;
 
 		for(int i = 0; i < lines.size(); i++){
-			names[i] = lines.get(i).getName();
+			if(lines.get(i).getRelatedDoctors().size() > 0) {
+				names[pos] = lines.get(i).getName();
+				pos++;
+			}
 		}
 
 		masteryPlans.setModel(new DefaultComboBoxModel<>(names));
 	}
-	
+
 	private void fetchInstructors() {
 		Object item = masteryPlans.getSelectedItem();
-		
+
 		if (item != null) {
 			String lineName = masteryPlans.getSelectedItem().toString();
 			ResearchLine line = faculty.findResearchLine(lineName);
-			
+
 			ArrayList<Profesor> profs = faculty.getDoctorsSelectedLine(line);
 			String[] names = new String[profs.size()];
-			
+
 			for(int i = 0; i < profs.size(); i++){
 				names[i] = profs.get(i).getName();
 				profIDs[i] = profs.get(i).getID();
 			}
-			
+
 			selectInstructor.setModel(new DefaultComboBoxModel<>(names));
 		}
 	}
-	
+
 	private JComboBox<String> getMasteryPlans() {
 		if (masteryPlans == null) {
 			masteryPlans = new JComboBox<>();
@@ -329,7 +333,7 @@ public class CoursesFormView extends JPanel {
 			gbc_btnAgregar.gridy = 14;
 			courseForm.add(getBtnAgregar(), gbc_btnAgregar);
 		}
-		
+
 		return courseForm;
 	}
 	private JTextArea getTxtDescrip() {
@@ -354,7 +358,7 @@ public class CoursesFormView extends JPanel {
 					resetErrors();
 					if(masteryPlans != null){
 						errorMast.setVisible(false);
-						
+
 						if(Validation.notEmpty(txtCourseName.getText())) {
 							errorName.setVisible(false);
 
@@ -374,7 +378,7 @@ public class CoursesFormView extends JPanel {
 										ResearchLine line = faculty.findResearchLine(lineName);
 										Profesor instructor = (Profesor) faculty.findResearcher(profIDs[index]);
 										int creds = (int)spinnerCreds.getValue();
-										
+
 										line.getMasteryPlan().addCourse(name, descrip, instructor, creds);
 
 										if(listener != null)
@@ -402,11 +406,11 @@ public class CoursesFormView extends JPanel {
 		}
 		return btnAgregar;
 	}
-	
+
 	private void sendFeedback() {
 		JOptionPane.showMessageDialog(null, "¡Se ha registrado el curso correctamente!", "Mensaje", JOptionPane.PLAIN_MESSAGE);
 	}
-	
+
 	private ErrorLabel getErrorName() {
 		if (errorName == null) {
 			errorName = new ErrorLabel();
@@ -463,7 +467,7 @@ public class CoursesFormView extends JPanel {
 
 	public void resetForm() {
 		resetErrors();
-		
+
 		txtCourseName.setText("");
 		txtDescrip.setText("");
 		masteryPlans.setSelectedIndex(-1);
