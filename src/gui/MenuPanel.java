@@ -31,6 +31,7 @@ import javax.swing.JDialog;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
@@ -70,14 +71,10 @@ public class MenuPanel extends JPanel {
 	private JButton btnCerrar;
 
 	private OnCloseApp listener;
-	private JMenuItem padding;
-	private JMenuItem testDataLoad;
+	private JMenu mockedData;
 
 	public MenuPanel() {
 		this.faculty = Faculty.newInstance();
-
-		// Mock data
-		Mock.mockFacultyData(faculty);
 
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{1092, 1092, 0};
@@ -105,7 +102,7 @@ public class MenuPanel extends JPanel {
 			menuBar.add(getManagement());
 			menuBar.add(getMnData());
 			menuBar.add(getReports());
-			menuBar.add(getPadding());
+			menuBar.add(getMockedData());
 			menuBar.add(getBtnCerrar());
 		}
 		return menuBar;
@@ -121,11 +118,7 @@ public class MenuPanel extends JPanel {
 		return management;
 	}
 
-	// Actualizar todas las tablas y formularios que se vayan añadiendo
-	private void switchView(String view) {
-		CardLayout cl = (CardLayout)(contentPanel.getLayout());
-		cl.show(contentPanel, view);
-
+	private void updateViews() {
 		researchLinesTableView.updateTable();
 		coursesTableView.updateTable();
 		researchersTableView.updateTable();
@@ -133,6 +126,14 @@ public class MenuPanel extends JPanel {
 
 		coursesFormView.update();
 		researcherFormView.update();
+	}
+	
+	// Actualizar todas las tablas y formularios que se vayan añadiendo
+	private void switchView(String view) {
+		CardLayout cl = (CardLayout)(contentPanel.getLayout());
+		cl.show(contentPanel, view);
+
+		updateViews();
 	}
 
 	private JMenuItem getNewResearcherMenu() {
@@ -377,7 +378,6 @@ public class MenuPanel extends JPanel {
 			mnData.add(getResearchersTableMenu());
 			mnData.add(getResearchActivityMenu());
 			mnData.add(getCoursesTableMenu());
-			mnData.add(getTestDataLoad());
 		}
 		return mnData;
 	}
@@ -438,23 +438,21 @@ public class MenuPanel extends JPanel {
 		}
 		return btnCerrar;
 	}
-	private JMenuItem getPadding() {
-		if (padding == null) {
-			padding = new JMenuItem("");
-		}
-		return padding;
-	}
-	private JMenuItem getTestDataLoad() {
-		if (testDataLoad == null) {
-			testDataLoad = new JMenuItem("Cargar datos de prueba");
-			testDataLoad.addActionListener(new ActionListener() {
+	private JMenu getMockedData() {
+		if (mockedData == null) {
+			mockedData = new JMenu("Datos de prueba");
+			mockedData.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-//					if(Mock.mockFacultyData(faculty) == null) {
-//						Mock.mockFacultyData(faculty);
-//					}					
+					// Mock data
+					Mock.mockFacultyData(faculty);
+					updateViews();
+
+					JOptionPane.showMessageDialog(null, "Se han cargado los datos de prueba exitosamente");
+					mockedData.setVisible(false);
 				}
 			});
+			mockedData.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 		}
-		return testDataLoad;
+		return mockedData;
 	}
 }

@@ -45,6 +45,7 @@ public class ConfirmationCodePanel extends JPanel {
 	private OnCodeConfirmed listener;
 	
 	private int expirationTime;
+	private ErrorLabel rlblNoTienesConexin;
 	
 	public ConfirmationCodePanel(String email) {
 		this.email = email;
@@ -78,6 +79,13 @@ public class ConfirmationCodePanel extends JPanel {
 		gbc_lblIntroduceElCdigo.gridx = 1;
 		gbc_lblIntroduceElCdigo.gridy = 4;
 		add(getLblIntroduceElCdigo(), gbc_lblIntroduceElCdigo);
+		GridBagConstraints gbc_rlblNoTienesConexin = new GridBagConstraints();
+		gbc_rlblNoTienesConexin.fill = GridBagConstraints.BOTH;
+		gbc_rlblNoTienesConexin.gridwidth = 6;
+		gbc_rlblNoTienesConexin.insets = new Insets(0, 0, 5, 5);
+		gbc_rlblNoTienesConexin.gridx = 1;
+		gbc_rlblNoTienesConexin.gridy = 5;
+		add(getRlblNoTienesConexin(), gbc_rlblNoTienesConexin);
 		GridBagConstraints gbc_lblExpiration = new GridBagConstraints();
 		gbc_lblExpiration.fill = GridBagConstraints.BOTH;
 		gbc_lblExpiration.gridwidth = 6;
@@ -400,15 +408,35 @@ public class ConfirmationCodePanel extends JPanel {
 	
 	private Timer getTimer() {
 		if (timer == null) {
-			timer = new Timer(0, (ActionListener) null);
-			timer.addActionListener(new ActionListener() {
+			timer = new Timer(0, new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					expirationTime -= 1;
 					lblExpiration.setText("El c\u00F3digo expira en " + formatTime());
+
+					if (expirationTime == 0) {
+						lblExpiration.setText("El c\u00F3digo ya expiró");
+						
+						textField.setEnabled(false);
+						textField_1.setEnabled(false);
+						textField_2.setEnabled(false);
+						textField_3.setEnabled(false);
+						textField_4.setEnabled(false);
+						textField_5.setEnabled(false);
+						
+						timer.stop();
+					}
 				}
 			});
 			timer.setDelay(1000);
 		}
 		return timer;
+	}
+	private ErrorLabel getRlblNoTienesConexin() {
+		if (rlblNoTienesConexin == null) {
+			rlblNoTienesConexin = new ErrorLabel();
+			rlblNoTienesConexin.setText("No tienes conexi\u00F3n en estos momentos");
+			rlblNoTienesConexin.setVisible(false);
+		}
+		return rlblNoTienesConexin;
 	}
 }

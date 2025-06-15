@@ -17,7 +17,7 @@ public class JTextLimited extends JTextField{
 				JTextField text = (JTextField) e.getSource();
 				
 				if (e.getKeyCode() != 8) {
-					if (text.getText().length() == limite || !Character.isDigit(e.getKeyChar())) {
+					if (text.getText().length() == limite) {
 						e.consume();
 					}
 				}
