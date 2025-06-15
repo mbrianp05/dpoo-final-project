@@ -34,7 +34,6 @@ public class Validation {
 		String cleanInput = str.replaceAll("-", "").replaceAll(" ", "").replaceAll("_", "");
 		boolean valid = false;
 
-
 		if (cleanInput.length() == 10 || cleanInput.length() == 13) {
 			Pattern pattern = Pattern.compile("^(?:ISBN(?:-1[03])?:? )?(?=[0-9X]{10}$|(?=(?:[0-9]+[- ]){3})[- 0-9X]{13}$|97[89][0-9]{10}$|(?=(?:[0-9]+[- ]){4})[- 0-9]{17}$)(?:97[89][- ]?)?[0-9]{1,5}[- ]?[0-9]+[- ]?[0-9]+[- ]?[0-9X]$");
 			Matcher matcher = pattern.matcher(str.trim());
@@ -61,6 +60,17 @@ public class Validation {
 
 		return valid;
 	}
+	
+	public static boolean validGmail(String str) {
+		boolean isValid = false;
+		
+		 if (str != null) {
+			 Pattern pattern = Pattern.compile("^(?!\\.)(?!.*\\.\\.)([a-zA-Z0-9._%+-]{1,64})@gmail\\.com$");
+			 isValid = pattern.matcher(str).matches();
+		 }
+	        
+	     return isValid;
+	}
 
 	public static void removeValue(String entity, String issn) {
 		ArrayList<String> values = storage.get(entity);
@@ -68,5 +78,9 @@ public class Validation {
 		if (values != null) {
 			values.remove(issn);
 		}
+	}
+
+	public static boolean validPassword(String password) {
+		return password.length() > 8;
 	}
 }

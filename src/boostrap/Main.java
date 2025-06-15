@@ -45,7 +45,7 @@ public class Main {
 	public static void main(String[] args) {
 		setDefaults();
 		
-		if (!Authentication.hasAccess()) {
+		if (!Authentication.hasAccess() || !Authentication.hasSource()) {
 			EventQueue.invokeLater(new Runnable() {
 				public void run() {
 					try {
