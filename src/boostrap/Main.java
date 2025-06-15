@@ -13,6 +13,7 @@ import javax.swing.BorderFactory;
 import javax.swing.UIManager;
 
 import utils.Constants;
+import utils.Mock;
 import auth.Authentication;
 
 public class Main {
@@ -75,6 +76,8 @@ public class Main {
 	}
 	
 	private static void openMainScreen() {
+		Mock.mockFacultyData();
+		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {

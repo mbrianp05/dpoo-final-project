@@ -4,9 +4,9 @@ import gui.event.OnAddedResearcher;
 import gui.event.OnCloseApp;
 import gui.report.views.ApprovalPendingsJDialog;
 import gui.report.views.BestMarksJDialog;
-import gui.report.views.TrendingMasteriesJDialog;
 import gui.report.views.BestResearchersJDialog;
 import gui.report.views.MostPapersPlublishedByOneResearcherJDialog;
+import gui.report.views.TrendingMasteriesJDialog;
 import gui.report.views.TrendingMattersJDialog;
 import gui.views.CoursesFormView;
 import gui.views.CoursesTableView;
@@ -32,15 +32,11 @@ import javax.swing.JDialog;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
 import schooling.Degree;
 import schooling.Faculty;
-import utils.Mock;
-
-import javax.swing.SwingConstants;
 
 public class MenuPanel extends JPanel {
 	private static final long serialVersionUID = 3762125698246597691L;
@@ -74,7 +70,6 @@ public class MenuPanel extends JPanel {
 	private JButton btnCerrar;
 
 	private OnCloseApp listener;
-	private JMenuItem mockedData;
 
 	public MenuPanel() {
 		this.faculty = Faculty.newInstance();
@@ -107,7 +102,6 @@ public class MenuPanel extends JPanel {
 			menuBar.add(getManagement());
 			menuBar.add(getMnData());
 			menuBar.add(getReports());
-			menuBar.add(getMockedData());
 			menuBar.add(getBtnCerrar());
 		}
 		return menuBar;
@@ -452,22 +446,5 @@ public class MenuPanel extends JPanel {
 			btnCerrar.setBorder(emptyBorder);
 		}
 		return btnCerrar;
-	}
-	private JMenuItem getMockedData() {
-		if (mockedData == null) {
-			mockedData = new JMenuItem("Datos de prueba");
-			mockedData.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent arg0) {
-					Mock.mockFacultyData();
-					JOptionPane.showMessageDialog(null, "Los datos de prueba han sido agregados");
-					updateViews();
-					
-					mockedData.setVisible(false);
-				}
-			});
-			mockedData.setHorizontalAlignment(SwingConstants.LEFT);
-			mockedData.setFont(new Font("Segoe UI", Font.PLAIN, 20));
-		}
-		return mockedData;
 	}
 }

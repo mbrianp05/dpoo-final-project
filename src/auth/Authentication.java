@@ -95,7 +95,7 @@ public class Authentication {
 	}
 
 	public static boolean hasAccess() {
-		 return hasAccess;
-//		 return true;
+//		 return hasAccess;
+		 return true;
 	}
 }
