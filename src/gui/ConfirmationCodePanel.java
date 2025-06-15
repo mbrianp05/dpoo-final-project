@@ -14,11 +14,13 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
 
 import utils.Email;
+import gui.component.JTextLimited;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class ConfirmationCodePanel extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -27,12 +29,12 @@ public class ConfirmationCodePanel extends JPanel {
 	private JLabel lblSeHaEnviado;
 	private String email;
 	private JLabel lblIntroduceElCdigo;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
-	private JTextField textField_5;
+	private JTextLimited textField;
+	private JTextLimited textField_1;
+	private JTextLimited textField_2;
+	private JTextLimited textField_3;
+	private JTextLimited textField_4;
+	private JTextLimited textField_5;
 	private JPanel panel;
 	private JButton btnAnterior;
 	private JButton btnSiguiente;
@@ -167,44 +169,131 @@ public class ConfirmationCodePanel extends JPanel {
 		}
 		return lblIntroduceElCdigo;
 	}
-	private JTextField getTextField() {
+	private JTextLimited getTextField() {
 		if (textField == null) {
-			textField = new JTextField();
+			textField = new JTextLimited();
+			textField.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyReleased(KeyEvent arg0) {
+					if (textField.getText().length() == textField.getLimite()) {
+						textField_1.requestFocus();
+					}
+				}
+			});
+			textField.setLimite(1);
+			textField.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+			textField.setHorizontalAlignment(SwingConstants.CENTER);
 			textField.setColumns(10);
 		}
 		return textField;
 	}
-	private JTextField getTextField_1() {
+	private JTextLimited getTextField_1() {
 		if (textField_1 == null) {
-			textField_1 = new JTextField();
+			textField_1 = new JTextLimited();
+			textField_1.requestFocus();
+			textField_1.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyReleased(KeyEvent e) {
+					if (e.getKeyCode() == 8) {
+						textField.requestFocus();
+					}
+					
+					if (textField_1.getText().length() == textField_2.getLimite()) {
+						textField_2.requestFocus();
+					}
+				}
+			});
+			textField_1.setLimite(1);
+			textField_1.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+			textField_1.setHorizontalAlignment(SwingConstants.CENTER);
 			textField_1.setColumns(10);
 		}
 		return textField_1;
 	}
-	private JTextField getTextField_2() {
+	private JTextLimited getTextField_2() {
 		if (textField_2 == null) {
-			textField_2 = new JTextField();
+			textField_2 = new JTextLimited();
+			textField_2.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyReleased(KeyEvent e) {
+					if (e.getKeyCode() == 8) {
+						textField_1.requestFocus();
+					}
+					
+					if (textField_2.getText().length() == textField_2.getLimite()) {
+						textField_3.requestFocus();
+					}
+				}
+			});
+			textField_2.setLimite(1);
+			textField_2.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+			textField_2.setHorizontalAlignment(SwingConstants.CENTER);
 			textField_2.setColumns(10);
 		}
 		return textField_2;
 	}
-	private JTextField getTextField_3() {
+	private JTextLimited getTextField_3() {
 		if (textField_3 == null) {
-			textField_3 = new JTextField();
+			textField_3 = new JTextLimited();
+			textField_3.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyReleased(KeyEvent e) {
+					if (e.getKeyCode() == 8) {
+						textField_2.requestFocus();
+					}
+					
+					if (textField_3.getText().length() == textField_3.getLimite()) {
+						textField_4.requestFocus();
+					}
+				}
+			});
+			textField_3.setLimite(1);
+			textField_3.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+			textField_3.setHorizontalAlignment(SwingConstants.CENTER);
 			textField_3.setColumns(10);
 		}
 		return textField_3;
 	}
-	private JTextField getTextField_4() {
+	private JTextLimited getTextField_4() {
 		if (textField_4 == null) {
-			textField_4 = new JTextField();
+			textField_4 = new JTextLimited();
+			textField_4.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyReleased(KeyEvent e) {
+					if (e.getKeyCode() == 8) {
+						textField_3.requestFocus();
+					}
+					
+					if (textField_4.getText().length() == textField_4.getLimite()) {
+						textField_5.requestFocus();
+					}
+				}
+			});
+			textField_4.setLimite(1);
+			textField_4.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+			textField_4.setHorizontalAlignment(SwingConstants.CENTER);
 			textField_4.setColumns(10);
 		}
 		return textField_4;
 	}
-	private JTextField getTextField_5() {
+	private JTextLimited getTextField_5() {
 		if (textField_5 == null) {
-			textField_5 = new JTextField();
+			textField_5 = new JTextLimited();
+			textField_5.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyReleased(KeyEvent e) {
+					if (e.getKeyCode() == 8) {
+						textField_4.requestFocus();
+					}
+					
+					if (textField_5.getText().length() == textField_5.getLimite()) {
+						verify();
+					}
+				}
+			});
+			textField_5.setLimite(1);
+			textField_5.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+			textField_5.setHorizontalAlignment(SwingConstants.CENTER);
 			textField_5.setColumns(10);
 		}
 		return textField_5;
@@ -255,16 +344,21 @@ public class ConfirmationCodePanel extends JPanel {
 		return code;
 	}
 	
+	private void verify() {
+		if(Email.verifyCode(getCode())) {
+			errroCode.setVisible(false);
+			if (listener != null) listener.confirmed();
+		} else {
+			errroCode.setVisible(true);
+		}
+	}
+	
 	private JButton getBtnSiguiente() {
 		if (btnSiguiente == null) {
 			btnSiguiente = new JButton("Aceptar");
 			btnSiguiente.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					if(Email.verifyCode(getCode())) {
-						if (listener != null) listener.confirmed();
-					} else {
-						errroCode.setVisible(true);
-					}
+					verify();
 				}
 			});
 			btnSiguiente.setFont(new Font("Segoe UI", Font.PLAIN, 15));

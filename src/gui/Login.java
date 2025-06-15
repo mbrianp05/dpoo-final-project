@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import auth.Authentication;
+import javax.swing.BoxLayout;
 
 public class Login extends JFrame {
 	private static final long serialVersionUID = 3183133678992381435L;
@@ -21,13 +22,13 @@ public class Login extends JFrame {
 	private OnAuthenticate listener;
 	
 	public Login() {
-		setSize(625, 459);
+		setSize(625, 500);
 		setUndecorated(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.X_AXIS));
 
 		if (Authentication.hasSource()) {
 			contentPane.add(getAuthenticationPanel());

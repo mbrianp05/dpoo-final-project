@@ -15,8 +15,12 @@ public class JTextLimited extends JTextField{
 			@Override
 			public void keyTyped(KeyEvent e) {
 				JTextField text = (JTextField) e.getSource();
-				if (text.getText().length() == limite)
-					e.consume();
+				
+				if (e.getKeyCode() != 8) {
+					if (text.getText().length() == limite || !Character.isDigit(e.getKeyChar())) {
+						e.consume();
+					}
+				}
 			}
 		});
 	}

@@ -48,9 +48,9 @@ public class SetCredentialsPanel extends JPanel {
 	public SetCredentialsPanel() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{40, 0, 400, 40, 0};
-		gridBagLayout.rowHeights = new int[]{40, 0, 0, 30, 35, 40, 0, 35, 40, 0, 35, 40, 0, 0, 0};
+		gridBagLayout.rowHeights = new int[]{40, 0, 30, 30, 35, 40, 0, 35, 40, 0, 35, 40, 40, 40, 0};
 		gridBagLayout.columnWeights = new double[]{1.0, 1.0, 1.0, 1.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		GridBagConstraints gbc_lblAuthorization = new GridBagConstraints();
 		gbc_lblAuthorization.gridwidth = 2;
@@ -143,7 +143,7 @@ public class SetCredentialsPanel extends JPanel {
 	private TitleLabel getLblAuthorization() {
 		if (lblAuthorization == null) {
 			lblAuthorization = new TitleLabel();
-			lblAuthorization.setText("Establecer credenciales");
+			lblAuthorization.setText("Registrarse");
 			lblAuthorization.setHorizontalAlignment(SwingConstants.LEFT);
 			lblAuthorization.setFont(new Font("Segoe UI", Font.PLAIN, 25));
 		}
@@ -153,7 +153,7 @@ public class SetCredentialsPanel extends JPanel {
 
 	private JLabel getLblIngresaElCdigo() {
 		if (lblIngresaElCdigo == null) {
-			ImageIcon icon = new ImageIcon(AuthenticationPanel.class.getResource("/resources/images/user-alt.png"));
+			ImageIcon icon = new ImageIcon(SetCredentialsPanel.class.getResource("/resources/images/user-alt.png"));
 			icon = new ImageIcon(icon.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
 			
 			lblIngresaElCdigo = new JLabel("Nombre de usuario");
@@ -185,7 +185,7 @@ public class SetCredentialsPanel extends JPanel {
 	private JLabel getLblContrasea() {
 		if (lblContrasea == null) {
 			lblContrasea = new JLabel("Contraseña");
-			ImageIcon icon = new ImageIcon(AuthenticationPanel.class.getResource("/resources/images/lock.png"));
+			ImageIcon icon = new ImageIcon(SetCredentialsPanel.class.getResource("/resources/images/lock.png"));
 			icon = new ImageIcon(icon.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
 			
 			lblContrasea.setIcon(icon);
@@ -202,6 +202,13 @@ public class SetCredentialsPanel extends JPanel {
 		}
 		return textFieldUsername;
 	}
+	
+	private void resetErrors() {
+		errorUsername.setVisible(false);
+		errorPassword.setVisible(false);
+		errorConfirmation.setVisible(false);
+	}
+	
 	private JButton getBtnAcceder() {
 		if (btnAcceder == null) {
 			btnAcceder = new JButton("Siguiente");
@@ -209,10 +216,7 @@ public class SetCredentialsPanel extends JPanel {
 			btnAcceder.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					boolean valid = true;
-					
-					errorUsername.setVisible(false);
-					errorPassword.setVisible(false);
-					errorConfirmation.setVisible(false);
+					resetErrors();
 					
 					String password = String.valueOf(passcode.getPassword());
 					String confirmation = String.valueOf(textFieldRepeat.getPassword());
@@ -234,6 +238,10 @@ public class SetCredentialsPanel extends JPanel {
 					
 					if (valid && credentialsListener != null) {
 						credentialsListener.newCredentials(textFieldUsername.getText(), password);
+						
+						passcode.setText("");
+						textFieldRepeat.setText("");
+						textFieldUsername.setText("");
 					}
 				}
 			});
@@ -246,8 +254,8 @@ public class SetCredentialsPanel extends JPanel {
 		if (panel == null) {
 			panel = new JPanel();
 			panel.setBackground(new Color(0, 0, 0, 0));
-			panel.add(getBtnAcceder());
 			panel.add(getBtnExit());
+			panel.add(getBtnAcceder());
 		}
 		return panel;
 	}
@@ -276,6 +284,11 @@ public class SetCredentialsPanel extends JPanel {
 	private JLabel getLblConfirmaLaContrasea() {
 		if (lblConfirmaLaContrasea == null) {
 			lblConfirmaLaContrasea = new JLabel("Confirma la contrase\u00F1a");
+			
+			ImageIcon icon = new ImageIcon(SetCredentialsPanel.class.getResource("/resources/images/confirm.png"));
+			icon = new ImageIcon(icon.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
+			
+			lblConfirmaLaContrasea.setIcon(icon);
 			lblConfirmaLaContrasea.setHorizontalAlignment(SwingConstants.LEFT);
 			lblConfirmaLaContrasea.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 		}
