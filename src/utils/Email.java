@@ -2,6 +2,7 @@ package utils;
 
 import javax.mail.*;
 import javax.mail.internet.*;
+
 import java.util.*;
 import java.util.concurrent.*;
 
@@ -17,45 +18,44 @@ public class Email {
 	public static void removeCode() {
 		confirmationCode = null;
 	}
-	
-	public static void sendConfirmationEmail(String recipientEmail) {
+
+	public static void sendConfirmationEmail(String recipientEmail) throws AddressException, MessagingException {
 		String code = CodeGenerator.generateRandomCode(6);
 
+		Properties props = new Properties();
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.starttls.enable", "true");
+		props.put("mail.smtp.host", SMTP_HOST);
+		props.put("mail.smtp.port", SMTP_PORT);
+
+		props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+		props.put("mail.smtp.ssl.protocols", "TLSv1.2");
+
+		Session session = Session.getInstance(props, new Authenticator() {
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(USERNAME, PASSWORD);
+			}
+		});
+
+		Message message = new MimeMessage(session);
+
 		try {
-			Properties props = new Properties();
-			props.put("mail.smtp.auth", "true");
-			props.put("mail.smtp.starttls.enable", "true");
-			props.put("mail.smtp.host", SMTP_HOST);
-			props.put("mail.smtp.port", SMTP_PORT);
-			
-            props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
-            props.put("mail.smtp.ssl.protocols", "TLSv1.2");
-
-			Session session = Session.getInstance(props, new Authenticator() {
-				protected PasswordAuthentication getPasswordAuthentication() {
-					return new PasswordAuthentication(USERNAME, PASSWORD);
-				}
-			});
-
-			Message message = new MimeMessage(session);
-
 			message.setFrom(new InternetAddress(FROM_EMAIL));
-			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipientEmail));
-			message.setSubject("Código de Confirmación");
-
-			String emailText = "Tu código de confirmación es: " + code + "\n\n" +
-					"Este código expirará en 3 minutos.";
-			message.setText(emailText);
-
-			Transport.send(message);
-			
-			// Crear el código después de enviar el email
-			long expirationTime = System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(3);
-			confirmationCode = new ConfirmationCode(code, expirationTime, recipientEmail);
-			
 		} catch (MessagingException e) {
-			System.err.println("Was not able to send the email" + e.getMessage());
+			e.printStackTrace();
 		}
+		message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipientEmail));
+		message.setSubject("Código de Confirmación");
+
+		String emailText = "Tu código de confirmación es: " + code + "\n\n" +
+				"Este código expirará en 3 minutos.";
+		message.setText(emailText);
+
+		Transport.send(message);
+
+		// Crear el código después de enviar el email
+		long expirationTime = System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(3);
+		confirmationCode = new ConfirmationCode(code, expirationTime, recipientEmail);
 	}
 
 	public static boolean verifyCode(String code) {
@@ -65,7 +65,7 @@ public class Email {
 
 		if (System.currentTimeMillis() > confirmationCode.getExpirationTime()) {
 			confirmationCode = null;
-			
+
 			return false;
 		}
 
