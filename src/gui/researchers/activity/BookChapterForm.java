@@ -64,9 +64,9 @@ public class BookChapterForm extends JPanel {
 
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{100, 0, 0, 0, 30, 0, 100};
-		gridBagLayout.rowHeights = new int[]{50, 0, 35, 30, 0, 35, 30, 0, 10, 0, 35, 30, 0, 35, 30, 35, 30, 40, 0};
+		gridBagLayout.rowHeights = new int[]{50, 0, 35, 30, 0, 35, 30, 0, 10, 0, 35, 30, 0, 35, 30, 35, 30, 40, 50, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		GridBagConstraints gbc_lblBookName = new GridBagConstraints();
 		gbc_lblBookName.gridwidth = 5;
@@ -185,8 +185,8 @@ public class BookChapterForm extends JPanel {
 		gbc_errorVol.gridy = 15;
 		add(getErrorVol(), gbc_errorVol);
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
+		gbc_btnNewButton.insets = new Insets(0, 0, 5, 5);
 		gbc_btnNewButton.fill = GridBagConstraints.VERTICAL;
-		gbc_btnNewButton.insets = new Insets(0, 0, 0, 5);
 		gbc_btnNewButton.anchor = GridBagConstraints.EAST;
 		gbc_btnNewButton.gridx = 5;
 		gbc_btnNewButton.gridy = 17;

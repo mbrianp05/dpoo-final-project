@@ -49,8 +49,6 @@ public class ResearcherActivityForm extends JPanel {
 	private BookChapterForm getBookChapterForm() {
 		if (bookChapterForm == null) {
 			bookChapterForm = new BookChapterForm(researcher);
-			GridBagLayout gridBagLayout = (GridBagLayout) bookChapterForm.getLayout();
-			gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0};
 		}
 		return bookChapterForm;
 	}

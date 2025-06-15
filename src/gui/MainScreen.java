@@ -6,6 +6,7 @@ import java.awt.CardLayout;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import java.awt.Toolkit;
 
 public class MainScreen extends JFrame {
 	private static final long serialVersionUID = -5078546845004098026L;
@@ -14,6 +15,7 @@ public class MainScreen extends JFrame {
 	private MenuPanel menuPanel;
 
 	public MainScreen() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(MainScreen.class.getResource("/resources/images/app-icon.png")));
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
