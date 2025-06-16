@@ -1,5 +1,7 @@
 package utils;
 
+import java.time.LocalDate;
+
 import schooling.Degree;
 import schooling.Faculty;
 import schooling.Profesor;
@@ -20,6 +22,7 @@ public class Mock {
 		int profesorID5 = faculty.addProfesor("Carlos", Degree.Doctor, ProfesorCategory.Instructor, null);
 		int profesorID6 = faculty.addProfesor("Fernando", Degree.Doctor, ProfesorCategory.Auxiliar, null);
 		int profesorID7 = faculty.addProfesor("Oscar", null, ProfesorCategory.Auxiliar, null);
+		int profesorID8 = faculty.addProfesor("Manuel", Degree.Master, ProfesorCategory.Assistant, null);
 
 		//------------Añadir líneas-----------
 		faculty.addResearchLine("Seguridad de softwares", faculty.getProfesors().get(0));
@@ -65,16 +68,17 @@ public class Mock {
 		line1.getMatters().get(0).addResearcher(faculty.findResearcher(profesorID4));
 		line2.getMatters().get(1).addResearcher(faculty.findResearcher(profesorID5));
 		line4.getMatters().get(0).addResearcher(faculty.findResearcher(profesorID6));
+		line4.getMatters().get(0).addResearcher(faculty.findResearcher(profesorID8));
 		line3.getMatters().get(0).addResearcher(faculty.findResearcher(profesorID7));
 		line.getMatters().get(1).addResearcher(faculty.findResearcher(ID1));
 		line3.getMatters().get(0).addResearcher(faculty.findResearcher(ID2));
 
 		// ---------------Añadir aportes investigativos-------------------------
-		faculty.getResearchers().get(0).addBookChapter("Chapter 1", new String[]{"@a"}, new String[] {"@a"}, "FESX", "ISSN 1233-032X", "Name", 1);
-		faculty.getResearchers().get(0).addBookChapter("Chapter 2", new String[]{"@a"}, new String[] {"@a"}, "ABSH", "ISSN 1233-0321", "Name", 1);
-		faculty.getResearchers().get(6).addPaper("Paper 1", 1, 2, 2019, TargetedGroup.Wos);
-		faculty.getResearchers().get(4).addPaper("Titulo", 1, 1, 2010, TargetedGroup.Group2);
-		faculty.getResearchers().get(3).addBookChapter("Chapter 2", new String[]{"@a"}, new String[] {"@a"}, "AASS", "ISSN 1233-0322", "Name", 1);
+		faculty.getResearchers().get(0).addBookChapter("Networks", new String[]{"@D"}, new String[] {"@D"}, "FESX", "ISSN 1233-032X", "Internet", 1);
+		faculty.getResearchers().get(0).addBookChapter("Bank Accounts", new String[]{"@A"}, new String[] {"@A"}, "ABSH", "ISSN 1233-0321", "Bank System", 1);
+		faculty.getResearchers().get(6).addPaper("Paper 1", 12, 1, 2019, TargetedGroup.Wos);
+		faculty.getResearchers().get(4).addPaper("Titulo", 3, 1, 2010, TargetedGroup.Group2);
+		faculty.getResearchers().get(3).addPresentation("Thoery", LocalDate.now(), "0393202203", "La Habana");
 		//-----------------------------
 	}
 }
