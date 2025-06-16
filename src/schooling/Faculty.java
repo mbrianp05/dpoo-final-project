@@ -535,4 +535,17 @@ public class Faculty {
 		
 		return line;
 	}
+
+	public ResearchLine findResearchLineByResearcher(Researcher researcher) {
+		ResearchLine line = null;
+		int i = 0;
+		
+		while(line == null && i < researchLines.size()) {
+			if (researchLines.get(i).hasResearcher(researcher)) line = researchLines.get(i);
+			
+			i++;
+		}
+		
+		return line;
+	}
 }

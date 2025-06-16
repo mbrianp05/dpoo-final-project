@@ -144,4 +144,16 @@ public class ResearchLine {
 		
 		return result;
 	}
+
+	public boolean hasResearcher(Researcher researcher) {
+		boolean result = false;
+		int i = 0;
+		
+		while (!result && i < matters.size()) {
+			result = matters.get(i).getResearchers().contains(researcher);
+			i++;
+		}
+		
+		return result;
+	}
 }
