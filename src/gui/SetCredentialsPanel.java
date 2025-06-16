@@ -5,8 +5,10 @@ import gui.component.TitleLabel;
 import gui.event.OnCloseApp;
 import gui.event.OnSetCredentials;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
@@ -17,6 +19,7 @@ import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -26,7 +29,7 @@ import utils.Email;
 import utils.EmailSenderThread;
 import utils.Validation;
 
-public class SetCredentialsPanel extends JPanel {
+public class SetCredentialsPanel extends JLayeredPane {
 	private static final long serialVersionUID = 1L;
 
 	private TitleLabel lblAuthorization;
@@ -47,58 +50,72 @@ public class SetCredentialsPanel extends JPanel {
 	private JPasswordField textFieldRepeat;
 	private ErrorLabel errorConfirmation;
 	private ErrorLabel errorConnection;
+	private JLabel lblNewLabel;
+	private JLabel gif;
+	private JPanel overlayPanel;
 
 	public SetCredentialsPanel() {
 		Email.removeCode();
+		setSize(600, 500);
+
+		JPanel wrapper = new JPanel();
+		wrapper.setBounds(0, 0, 600, 500);
 
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{70, 0, 0, 70, 0};
 		gridBagLayout.rowHeights = new int[]{40, 0, 30, 30, 35, 40, 0, 35, 40, 0, 35, 40, 45, 40, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		setLayout(gridBagLayout);
+		wrapper.setLayout(gridBagLayout);
+
 		GridBagConstraints gbc_lblAuthorization = new GridBagConstraints();
 		gbc_lblAuthorization.gridwidth = 2;
 		gbc_lblAuthorization.fill = GridBagConstraints.BOTH;
 		gbc_lblAuthorization.insets = new Insets(0, 0, 5, 5);
 		gbc_lblAuthorization.gridx = 1;
 		gbc_lblAuthorization.gridy = 1;
-		add(getLblAuthorization(), gbc_lblAuthorization);
+		wrapper.add(getLblAuthorization(), gbc_lblAuthorization);
+
 		GridBagConstraints gbc_lblIngresaElCdigo = new GridBagConstraints();
 		gbc_lblIngresaElCdigo.gridwidth = 2;
 		gbc_lblIngresaElCdigo.fill = GridBagConstraints.BOTH;
 		gbc_lblIngresaElCdigo.insets = new Insets(0, 0, 5, 5);
 		gbc_lblIngresaElCdigo.gridx = 1;
 		gbc_lblIngresaElCdigo.gridy = 3;
-		add(getLblIngresaElCdigo(), gbc_lblIngresaElCdigo);
+		wrapper.add(getLblIngresaElCdigo(), gbc_lblIngresaElCdigo);
+
 		GridBagConstraints gbc_textFieldUsername = new GridBagConstraints();
 		gbc_textFieldUsername.gridwidth = 2;
 		gbc_textFieldUsername.insets = new Insets(0, 0, 5, 5);
 		gbc_textFieldUsername.fill = GridBagConstraints.BOTH;
 		gbc_textFieldUsername.gridx = 1;
 		gbc_textFieldUsername.gridy = 4;
-		add(getTextFieldUsername(), gbc_textFieldUsername);
+		wrapper.add(getTextFieldUsername(), gbc_textFieldUsername);
+
 		GridBagConstraints gbc_errorUsername = new GridBagConstraints();
 		gbc_errorUsername.fill = GridBagConstraints.HORIZONTAL;
 		gbc_errorUsername.gridwidth = 2;
 		gbc_errorUsername.insets = new Insets(0, 0, 5, 5);
 		gbc_errorUsername.gridx = 1;
 		gbc_errorUsername.gridy = 5;
-		add(getErrorUsername(), gbc_errorUsername);
+		wrapper.add(getErrorUsername(), gbc_errorUsername);
+
 		GridBagConstraints gbc_lblContrasea = new GridBagConstraints();
 		gbc_lblContrasea.gridwidth = 2;
 		gbc_lblContrasea.fill = GridBagConstraints.BOTH;
 		gbc_lblContrasea.insets = new Insets(0, 0, 5, 5);
 		gbc_lblContrasea.gridx = 1;
 		gbc_lblContrasea.gridy = 6;
-		add(getLblContrasea(), gbc_lblContrasea);
+		wrapper.add(getLblContrasea(), gbc_lblContrasea);
+
 		GridBagConstraints gbc_passcode = new GridBagConstraints();
 		gbc_passcode.gridwidth = 2;
 		gbc_passcode.insets = new Insets(0, 0, 5, 5);
 		gbc_passcode.fill = GridBagConstraints.BOTH;
 		gbc_passcode.gridx = 1;
 		gbc_passcode.gridy = 7;
-		add(getPasscode(), gbc_passcode);
+		wrapper.add(getPasscode(), gbc_passcode);
+
 		GridBagConstraints gbc_errorPassword = new GridBagConstraints();
 		gbc_errorPassword.fill = GridBagConstraints.HORIZONTAL;
 		gbc_errorPassword.gridwidth = 2;
@@ -106,40 +123,73 @@ public class SetCredentialsPanel extends JPanel {
 		gbc_errorPassword.insets = new Insets(0, 0, 5, 5);
 		gbc_errorPassword.gridx = 1;
 		gbc_errorPassword.gridy = 8;
-		add(getErrorPassword(), gbc_errorPassword);
+		wrapper.add(getErrorPassword(), gbc_errorPassword);
+
 		GridBagConstraints gbc_lblConfirmaLaContrasea = new GridBagConstraints();
 		gbc_lblConfirmaLaContrasea.fill = GridBagConstraints.BOTH;
 		gbc_lblConfirmaLaContrasea.gridwidth = 2;
 		gbc_lblConfirmaLaContrasea.insets = new Insets(0, 0, 5, 5);
 		gbc_lblConfirmaLaContrasea.gridx = 1;
 		gbc_lblConfirmaLaContrasea.gridy = 9;
-		add(getLblConfirmaLaContrasea(), gbc_lblConfirmaLaContrasea);
+		wrapper.add(getLblConfirmaLaContrasea(), gbc_lblConfirmaLaContrasea);
+
 		GridBagConstraints gbc_textFieldRepeat = new GridBagConstraints();
 		gbc_textFieldRepeat.gridwidth = 2;
 		gbc_textFieldRepeat.insets = new Insets(0, 0, 5, 5);
 		gbc_textFieldRepeat.fill = GridBagConstraints.BOTH;
 		gbc_textFieldRepeat.gridx = 1;
 		gbc_textFieldRepeat.gridy = 10;
-		add(getTextFieldRepeat(), gbc_textFieldRepeat);
+		wrapper.add(getTextFieldRepeat(), gbc_textFieldRepeat);
+
 		GridBagConstraints gbc_errorConfirmation = new GridBagConstraints();
 		gbc_errorConfirmation.fill = GridBagConstraints.HORIZONTAL;
 		gbc_errorConfirmation.gridwidth = 2;
 		gbc_errorConfirmation.insets = new Insets(0, 0, 5, 5);
 		gbc_errorConfirmation.gridx = 1;
 		gbc_errorConfirmation.gridy = 11;
-		add(getErrorConfirmation(), gbc_errorConfirmation);
+		wrapper.add(getErrorConfirmation(), gbc_errorConfirmation);
+
 		GridBagConstraints gbc_errorConnection = new GridBagConstraints();
 		gbc_errorConnection.fill = GridBagConstraints.BOTH;
 		gbc_errorConnection.insets = new Insets(0, 0, 5, 5);
 		gbc_errorConnection.gridx = 1;
 		gbc_errorConnection.gridy = 12;
-		add(getErrorConnection(), gbc_errorConnection);
+		wrapper.add(getErrorConnection(), gbc_errorConnection);
+
 		GridBagConstraints gbc_panel = new GridBagConstraints();
 		gbc_panel.fill = GridBagConstraints.BOTH;
 		gbc_panel.insets = new Insets(0, 0, 5, 5);
 		gbc_panel.gridx = 2;
 		gbc_panel.gridy = 12;
-		add(getPanel(), gbc_panel);
+
+		wrapper.add(getPanel(), gbc_panel);
+
+		overlayPanel = new JPanel();
+
+		overlayPanel.setBackground(new Color(50, 50, 50));
+		overlayPanel.setBounds(0, 0, 600, 500);
+
+		add(wrapper, JLayeredPane.DEFAULT_LAYER);
+		GridBagLayout gbl_overlayPanel = new GridBagLayout();
+		gbl_overlayPanel.columnWidths = new int[]{600, 0};
+		gbl_overlayPanel.rowHeights = new int[]{220, 60, 0};
+		gbl_overlayPanel.columnWeights = new double[]{0.0, Double.MIN_VALUE};
+		gbl_overlayPanel.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+		overlayPanel.setLayout(gbl_overlayPanel);
+		add(overlayPanel, JLayeredPane.PALETTE_LAYER);
+		GridBagConstraints gbc_gif = new GridBagConstraints();
+		gbc_gif.fill = GridBagConstraints.VERTICAL;
+		gbc_gif.insets = new Insets(0, 0, 5, 0);
+		gbc_gif.gridx = 0;
+		gbc_gif.gridy = 0;
+		overlayPanel.add(getGif(), gbc_gif);
+
+		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
+		gbc_lblNewLabel.gridx = 0;
+		gbc_lblNewLabel.gridy = 1;
+		overlayPanel.add(getLblNewLabel(), gbc_lblNewLabel);
+
+		overlayPanel.setVisible(false);
 	}
 
 	public void listenTo(OnCloseApp listener) {
@@ -221,9 +271,6 @@ public class SetCredentialsPanel extends JPanel {
 
 	private JButton getBtnNext() {
 		if (btnNext == null) {
-			ImageIcon icon = new ImageIcon(SetCredentialsPanel.class.getResource("/resources/images/loader-spinner.gif"));
-			final ImageIcon scaled = new ImageIcon(icon.getImage().getScaledInstance(33, 33, Image.SCALE_FAST));
-
 			btnNext = new JButton("Siguiente");
 			btnNext.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 			btnNext.addActionListener(new ActionListener() {
@@ -251,9 +298,6 @@ public class SetCredentialsPanel extends JPanel {
 					}
 
 					if (valid && credentialsListener != null) {
-						btnNext.setIcon(scaled);
-						btnNext.setText("Enviando email");
-
 						passcode.setText("");
 						textFieldRepeat.setText("");
 						textFieldUsername.setText("");
@@ -263,6 +307,7 @@ public class SetCredentialsPanel extends JPanel {
 						textFieldRepeat.setEnabled(false);
 						btnExit.setEnabled(false);
 						btnNext.setEnabled(false);
+						overlayPanel.setVisible(true);
 
 						EmailSenderThread thread = new EmailSenderThread(email) {
 							protected void done() {
@@ -286,17 +331,16 @@ public class SetCredentialsPanel extends JPanel {
 		}
 		return btnNext;
 	}
-	
+
 	private void reactivateForm() {
+		overlayPanel.setVisible(false);
 		textFieldUsername.setEnabled(true);
 		passcode.setEnabled(true);
 		textFieldRepeat.setEnabled(true);
 		btnExit.setEnabled(true);
 		btnNext.setEnabled(true);
-		btnNext.setIcon(null);
-		btnNext.setText("Siguiente");
 	}
-	
+
 	private JPanel getPanel() {
 		if (panel == null) {
 			panel = new JPanel();
@@ -380,5 +424,24 @@ public class SetCredentialsPanel extends JPanel {
 			errorConnection.setText("Verifica tu conexi\u00F3n a Internet");
 		}
 		return errorConnection;
+	}
+	private JLabel getLblNewLabel() {
+		if (lblNewLabel == null) {
+			lblNewLabel = new JLabel("Enviando email");
+			lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+			lblNewLabel.setFont(new Font("Segoe UI", Font.PLAIN, 42));
+			lblNewLabel.setForeground(Color.WHITE);
+		}
+		return lblNewLabel;
+	}
+	private JLabel getGif() {
+		if (gif == null) {
+			gif = new JLabel("");
+			ImageIcon icon = new ImageIcon(SetCredentialsPanel.class.getResource("/resources/images/loader-spinner.gif"));
+			final ImageIcon scaled = new ImageIcon(icon.getImage().getScaledInstance(100, 100, Image.SCALE_FAST));
+
+			gif.setIcon(scaled);
+		}
+		return gif;
 	}
 }
