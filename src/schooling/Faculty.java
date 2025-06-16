@@ -20,6 +20,18 @@ public class Faculty {
 		researchers = new ArrayList<>();
 		researchLines = new ArrayList<>();
 	}
+	
+	public int linesWithAtLeastOneInstructorCandidate() {
+		int count = 0;
+		
+		for (ResearchLine l: researchLines) {
+			if(l.getRelatedDoctors().size() > 0) {
+				count++;
+			}
+		}
+
+		return count;
+	}
 
 	public int addProfesor(String name, Degree degree, ProfesorCategory cat, String matterName) {
 		Profesor profesor = new Profesor(name, degree, cat);

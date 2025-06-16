@@ -108,14 +108,18 @@ public class CoursesFormView extends JPanel {
 
 	private void fetchMasteryPlans() {
 		ArrayList<ResearchLine> lines = faculty.getResearchLines();
-		String [] names = new String[lines.size()];
-		int pos = 0;
+		ArrayList<ResearchLine> elligibles = new ArrayList<>();
 
-		for(int i = 0; i < lines.size(); i++){
-			if(lines.get(i).getRelatedDoctors().size() > 0) {
-				names[pos] = lines.get(i).getName();
-				pos++;
+		for (ResearchLine l: lines) {
+			if(l.getRelatedDoctors().size() > 0) {
+				elligibles.add(l);
 			}
+		}
+
+		String[] names = new String[elligibles.size()];
+
+		for(int i = 0; i < elligibles.size(); i++) {
+			names[i] = elligibles.get(i).getName();
 		}
 
 		masteryPlans.setModel(new DefaultComboBoxModel<>(names));
@@ -129,6 +133,7 @@ public class CoursesFormView extends JPanel {
 			ResearchLine line = faculty.findResearchLine(lineName);
 
 			ArrayList<Profesor> profs = faculty.getDoctorsSelectedLine(line);
+
 			String[] names = new String[profs.size()];
 
 			for(int i = 0; i < profs.size(); i++){

@@ -131,7 +131,7 @@ public class ResearchLine {
 		
 		return profesors;
 	}
-
+	
 	public boolean hasMatriculation(Profesor p) {
 		boolean result = false;
 		int i = 0;

@@ -126,7 +126,7 @@ public class MenuPanel extends JPanel {
 		coursesFormView.update();
 		researcherFormView.update();
 		
-		addCourseMenu.setVisible(faculty.getProfesorsWithDegree(Degree.Doctor).size() > 0);
+		addCourseMenu.setVisible(faculty.linesWithAtLeastOneInstructorCandidate() > 0);
 		newResearcherMenu.setVisible(faculty.getResearchLines().size() > 0);
 		
 		// Ocultar los reportes cuando no hay nada que mostrar
