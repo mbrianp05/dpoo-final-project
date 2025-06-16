@@ -146,7 +146,7 @@ public class CourseForm extends JPanel {
 				errorDescription.setVisible(true);
 			}
 		} else {
-			errorDescription.setVisible(true);
+			errorName.setVisible(true);
 		}
 	}
 
