@@ -248,7 +248,7 @@ public class CourseForm extends JPanel {
 			panel = new JPanel();
 			panel.setBackground(Color.WHITE);
 			GridBagLayout gbl_panel = new GridBagLayout();
-			gbl_panel.columnWidths = new int[]{70, 0, 0, 0, 70, 0};
+			gbl_panel.columnWidths = new int[]{70, 0, 70, 0, 70, 0};
 			gbl_panel.rowHeights = new int[]{40, 21, 35, 35, 21, 35, 35, 35, 35, 16, 90, 45, 40, 0};
 			gbl_panel.columnWeights = new double[]{0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
 			gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
@@ -306,7 +306,7 @@ public class CourseForm extends JPanel {
 			panel.add(getLblCredits(), gbc_lblCredits);
 			GridBagConstraints gbc_spinner = new GridBagConstraints();
 			gbc_spinner.anchor = GridBagConstraints.WEST;
-			gbc_spinner.fill = GridBagConstraints.VERTICAL;
+			gbc_spinner.fill = GridBagConstraints.BOTH;
 			gbc_spinner.insets = new Insets(0, 0, 5, 5);
 			gbc_spinner.gridx = 2;
 			gbc_spinner.gridy = 7;

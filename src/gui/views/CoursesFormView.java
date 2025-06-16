@@ -216,7 +216,7 @@ public class CoursesFormView extends JPanel {
 		if (courseForm == null) {
 			courseForm = new JPanel();
 			GridBagLayout gbl_courseForm = new GridBagLayout();
-			gbl_courseForm.columnWidths = new int[]{0, 56, 83, 0};
+			gbl_courseForm.columnWidths = new int[]{0, 70, 83, 0};
 			gbl_courseForm.rowHeights = new int[]{-56, 35, 30, 0, 35, 30, 0, 35, 30, 35, 30, 0, 107, 32, 40, 0};
 			gbl_courseForm.columnWeights = new double[]{0.0, 0.0, 1.0, Double.MIN_VALUE};
 			gbl_courseForm.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
@@ -297,7 +297,6 @@ public class CoursesFormView extends JPanel {
 			gbc_lblCrditosNecesarios.gridy = 9;
 			courseForm.add(getLblCrditosNecesarios(), gbc_lblCrditosNecesarios);
 			GridBagConstraints gbc_spinnerCreds = new GridBagConstraints();
-			gbc_spinnerCreds.anchor = GridBagConstraints.NORTH;
 			gbc_spinnerCreds.fill = GridBagConstraints.BOTH;
 			gbc_spinnerCreds.insets = new Insets(0, 0, 5, 5);
 			gbc_spinnerCreds.gridx = 1;
