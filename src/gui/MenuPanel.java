@@ -35,7 +35,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
-import schooling.Degree;
 import schooling.Faculty;
 
 public class MenuPanel extends JPanel {

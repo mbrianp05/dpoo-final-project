@@ -226,7 +226,7 @@ public class SetCredentialsPanel extends JLayeredPane {
 	private ErrorLabel getErrorPassword() {
 		if (errorPassword == null) {
 			errorPassword = new ErrorLabel();
-			errorPassword.setText("La contrase\u00F1a debe tener al menos 8 caracteres");
+			errorPassword.setText("La contrase\u00F1a debe tener al menos 9 caracteres");
 			errorPassword.setVisible(false);
 		}
 
