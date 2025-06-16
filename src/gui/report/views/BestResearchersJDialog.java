@@ -40,6 +40,7 @@ public class BestResearchersJDialog extends JDialog {
 		mainColor = new Color(255, 180, 180);
 		borderColor = new Color(220, 140, 140);
 
+		setTitle("Los investigadores con mayor puntuación");
 		setUndecorated(true);
 		setModal(true);
 		setModalExclusionType(ModalExclusionType.APPLICATION_EXCLUDE);

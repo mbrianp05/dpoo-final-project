@@ -41,6 +41,7 @@ public class ApprovalPendingsJDialog extends JDialog {
 		mainColor = new Color(102, 205, 170);
 		borderColor = new Color(47, 79, 79);
 
+		setTitle("Profesores con suficientes créditos");
 		setUndecorated(true);
 		setModal(true);
 		setModalExclusionType(ModalExclusionType.APPLICATION_EXCLUDE);

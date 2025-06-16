@@ -40,6 +40,7 @@ public class TrendingMattersJDialog extends JDialog {
 		mainColor = new Color(136, 255, 255);
 		borderColor = new Color(25, 128, 128);
 		
+		setTitle("Los temas de investigación más populares");
 		setUndecorated(true);
 		setModal(true);
 		setModalExclusionType(ModalExclusionType.APPLICATION_EXCLUDE);

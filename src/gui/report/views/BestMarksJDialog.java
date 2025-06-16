@@ -40,6 +40,7 @@ public class BestMarksJDialog extends JDialog {
 		mainColor = new Color(175, 238, 238);
 		borderColor = new Color(0, 128, 128);
 
+		setTitle("Profesores con el promedio de notas más alto");
 		setUndecorated(true);
 		setModal(true);
 		setModalExclusionType(ModalExclusionType.APPLICATION_EXCLUDE);

@@ -41,6 +41,7 @@ public class TrendingMasteriesJDialog extends JDialog {
 		mainColor = new Color(225, 228, 181);
 		borderColor = new Color(210, 148, 118);
 
+		setTitle("Los planes de maestrías con mayor cantidad de matriculados");
 		setUndecorated(true);
 		setModal(true);
 		setModalExclusionType(ModalExclusionType.APPLICATION_EXCLUDE);

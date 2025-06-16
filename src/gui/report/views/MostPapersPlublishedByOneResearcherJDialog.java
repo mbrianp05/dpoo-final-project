@@ -40,6 +40,7 @@ public class MostPapersPlublishedByOneResearcherJDialog extends JDialog {
 		mainColor = new Color(255, 178, 238);
 		borderColor = new Color(126,55,110);
 		
+		setTitle("Investigadores con mayor cantidad de artículos");
 		setUndecorated(true);
 		setModal(true);
 		setModalExclusionType(ModalExclusionType.APPLICATION_EXCLUDE);
