@@ -151,13 +151,13 @@ public class MatriculationPanel extends JPanel {
 					if (index != -1) {
 						line.getMasteryPlan().matriculate(line.getMatriculableProfesors().get(index));
 						
-						if (line.getMatriculableProfesors().size() == 0 && listener != null) {
-							listener.noProfesorLeft();
-						}
-						
 						fillComboBox();
 						resetForm();
 						sendFeedback();
+
+						if (line.getMatriculableProfesors().size() == 0 && listener != null) {
+							listener.noProfesorLeft();
+						}
 					}
 				}
 			});

@@ -152,13 +152,13 @@ public class RevertMatriculationPanel extends JPanel {
 							Profesor p = line.getMasteryPlan().getMatriculatedProfesors().get(index);
 							line.getMasteryPlan().revertMatriculation(p);
 
-							if (line.getMasteryPlan().getMatriculatedProfesors().size() == 0 && listener != null) {
-								listener.noProfesorLeft();
-							}
-
 							fillComboBox();
 							resetForm();
 							sendFeedback();
+
+							if (line.getMasteryPlan().getMatriculatedProfesors().size() == 0 && listener != null) {
+								listener.noProfesorLeft();
+							}
 						}
 					}
 				}
