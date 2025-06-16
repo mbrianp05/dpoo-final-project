@@ -24,6 +24,7 @@ import javax.swing.JOptionPane;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Font;
 
 public class MatriculationPanel extends JPanel {
 	private static final long serialVersionUID = -4088665550245884027L;
@@ -144,6 +145,7 @@ public class MatriculationPanel extends JPanel {
 	private JButton getBtnRegistrarMatrcula() {
 		if (btnRegistrarMatrcula == null) {
 			btnRegistrarMatrcula = new JButton("Registrar matr\u00EDcula");
+			btnRegistrarMatrcula.setFont(new Font("Segoe UI", Font.BOLD, 15));
 			btnRegistrarMatrcula.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					int index = comboBox.getSelectedIndex();

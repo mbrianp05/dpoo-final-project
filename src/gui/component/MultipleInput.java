@@ -240,7 +240,7 @@ public class MultipleInput extends JPanel {
 
 	private JButton getBtnEdit() {
 		if (btnEdit == null) {
-			ImageIcon icon = new ImageIcon(BestResearchersJDialog.class.getResource("/resources/images/edit.png"));
+			ImageIcon icon = new ImageIcon(MultipleInput.class.getResource("/resources/images/edit.png"));
 			icon = new ImageIcon(icon.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
 			
 			btnEdit = new JButton(icon);
@@ -271,7 +271,7 @@ public class MultipleInput extends JPanel {
 
 	private JButton getBtnRemove() {
 		if (btnRemove == null) {
-			ImageIcon icon = new ImageIcon(BestResearchersJDialog.class.getResource("/resources/images/trash.png"));
+			ImageIcon icon = new ImageIcon(MultipleInput.class.getResource("/resources/images/trash.png"));
 			icon = new ImageIcon(icon.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
 			
 			btnRemove = new JButton(icon);

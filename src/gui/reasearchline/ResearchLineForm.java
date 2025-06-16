@@ -14,6 +14,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,6 +22,7 @@ import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -581,7 +583,10 @@ public class ResearchLineForm extends JPanel {
 
 	private JButton getBtnEditChief() {
 		if (btnEditChief == null) {
-			btnEditChief = new JButton("Editar");
+			ImageIcon icon = new ImageIcon(ResearchLineForm.class.getResource("/resources/images/edit.png"));
+			icon = new ImageIcon(icon.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
+			
+			btnEditChief = new JButton(icon);
 			btnEditChief.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					openChiefDialog();

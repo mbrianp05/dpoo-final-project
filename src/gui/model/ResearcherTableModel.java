@@ -29,7 +29,7 @@ public class ResearcherTableModel extends DefaultTableModel {
 		includeProfesorsFilter = true;
 		includeStudentsFilter = true;
 
-		String[] columns = {"ID", "Nombre", "Tema", "Puntuación"};
+		String[] columns = {"ID", "Nombre", "Línea", "Tema", "Puntuación"};
 		this.setColumnIdentifiers(columns);
 
 		fill();
@@ -47,7 +47,7 @@ public class ResearcherTableModel extends DefaultTableModel {
 			matterName = matter.getName();
 		}
 
-		Object[] newRow = new Object[]{String.valueOf(r.getID()), r.getName(), matterName, r.getScore()};
+		Object[] newRow = new Object[]{String.valueOf(r.getID()), r.getName(), faculty.findResearchLineByResearcher(r).getName(), matterName, r.getScore()};
 
 		addRow(newRow);
 	}
