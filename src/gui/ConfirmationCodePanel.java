@@ -106,6 +106,8 @@ public class ConfirmationCodePanel extends JPanel {
 			add(fields[i], gbc_firstDigit);
 		}
 
+		fields[0].requestFocus();
+
 		GridBagConstraints gbc_errroCode = new GridBagConstraints();
 		gbc_errroCode.fill = GridBagConstraints.BOTH;
 		gbc_errroCode.gridwidth = 6;

@@ -72,11 +72,11 @@ public class Validation {
 	     return isValid;
 	}
 
-	public static void removeValue(String entity, String issn) {
+	public static void removeValue(String entity, String value) {
 		ArrayList<String> values = storage.get(entity);
 		
 		if (values != null) {
-			values.remove(issn);
+			values.remove(value);
 		}
 	}
 

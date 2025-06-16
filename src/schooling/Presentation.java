@@ -25,7 +25,7 @@ public class Presentation extends Breakthrough implements HasUniqueIndentifier {
 
     public void setName(String name) {
         if (!Validation.notEmpty(name)) {
-            throw new IllegalArgumentException("El nombre de la presentaci�n no puede estar vac�o");
+            throw new IllegalArgumentException("Presentation name cannot be empty");
         }
 
         this.name = name;
@@ -35,22 +35,25 @@ public class Presentation extends Breakthrough implements HasUniqueIndentifier {
         this.date = date;
     }
 
-    // Hay que investigar si el ISBN tiene una validaci�n espec�fica
     public void setISBN(String ISBN) {
         if (!Validation.notEmpty(ISBN)) {
-            throw new IllegalArgumentException("El ISBN de la presentaci�n no puede estar vac�o");
+            throw new IllegalArgumentException("ISBN cannot be empty");
         }
         
         if (!Validation.validISBN(ISBN)) {
         	throw new IllegalArgumentException("ISBN code has to be 10 or 13 digits long");
         }
 
+        if (!Validation.unique("ISBN", ISBN)) {
+        	throw new IllegalArgumentException("ISBN code has to be unique");
+        }
+        
         this.ISBN = ISBN;
     }
 
     public void setLocation(String location) {
         if (location.trim().isEmpty()) {
-            throw new IllegalArgumentException("La ubicaci�n de la presentaci�n no puede estar vac�o");
+            throw new IllegalArgumentException("Location cannot be empty");
         }
 
         this.location = location;

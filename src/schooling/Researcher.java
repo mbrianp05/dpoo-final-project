@@ -44,6 +44,9 @@ public abstract class Researcher {
 	public void removeBreakthrough(Breakthrough breakthrough) {
 		score -= breakthrough.getScore();
 		breakthroughs.remove(breakthrough);
+		
+		if (breakthrough instanceof Chapter) Validation.removeValue("ISSN", ((Chapter)breakthrough).getISSN());
+		if (breakthrough instanceof Presentation) Validation.removeValue("ISBN", ((Presentation)breakthrough).getISBN());
 	}
 
 	public void addPaper(String title, int no, int volume, int year, TargetedGroup group) {

@@ -19,6 +19,7 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -30,15 +31,13 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import schooling.Breakthrough;
 import schooling.Faculty;
 import schooling.Researcher;
 import utils.Constants;
-
-import javax.swing.JButton;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
 public class ResearchersActivityTableView extends JPanel {
 	private static final long serialVersionUID = 1L;

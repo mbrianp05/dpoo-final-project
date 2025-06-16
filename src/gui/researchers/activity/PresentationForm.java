@@ -478,6 +478,11 @@ public class PresentationForm extends JPanel {
 			if (breakthrough == null) {
 				try {
 					researcher.addPresentation(name, date, ISBN, location);
+					
+					if (listener != null) listener.actionPerformed();
+					
+					reset();
+					sendFeedback();
 				} catch (IllegalArgumentException exception) {
 					errorISBN.setVisible(true);
 				}
@@ -488,12 +493,13 @@ public class PresentationForm extends JPanel {
 				breakthrough.setISBN(ISBN);
 				breakthrough.setLocation(location);
 				breakthrough.setDate(date);
+
+				if (listener != null) listener.actionPerformed();
+				
+				reset();
+				sendFeedback();
 			}
 			
-			if (listener != null) listener.actionPerformed();
-			
-			reset();
-			sendFeedback();
 		}
 	}
 	private ErrorLabel getErrorName() {
