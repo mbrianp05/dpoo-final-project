@@ -51,12 +51,14 @@ public class SetCredentialsPanel extends JLayeredPane {
 	private JLabel lblNewLabel;
 	private JLabel gif;
 	private JPanel overlayPanel;
+	private JLabel label;
+	private JPanel wrapper;
 
 	public SetCredentialsPanel() {
 		Email.removeCode();
 		setSize(600, 500);
 
-		JPanel wrapper = new JPanel();
+		wrapper = new JPanel();
 		wrapper.setBounds(0, 0, 600, 500);
 
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -65,6 +67,11 @@ public class SetCredentialsPanel extends JLayeredPane {
 		gridBagLayout.columnWeights = new double[]{0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		wrapper.setLayout(gridBagLayout);
+		GridBagConstraints gbc_label = new GridBagConstraints();
+		gbc_label.insets = new Insets(0, 0, 5, 0);
+		gbc_label.gridx = 3;
+		gbc_label.gridy = 0;
+		wrapper.add(getLabel(), gbc_label);
 
 		GridBagConstraints gbc_lblAuthorization = new GridBagConstraints();
 		gbc_lblAuthorization.gridwidth = 2;
@@ -174,7 +181,9 @@ public class SetCredentialsPanel extends JLayeredPane {
 		gbl_overlayPanel.columnWeights = new double[]{0.0, Double.MIN_VALUE};
 		gbl_overlayPanel.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
 		overlayPanel.setLayout(gbl_overlayPanel);
+
 		add(overlayPanel, JLayeredPane.PALETTE_LAYER);
+
 		GridBagConstraints gbc_gif = new GridBagConstraints();
 		gbc_gif.fill = GridBagConstraints.VERTICAL;
 		gbc_gif.insets = new Insets(0, 0, 5, 0);
@@ -441,5 +450,11 @@ public class SetCredentialsPanel extends JLayeredPane {
 			gif.setIcon(scaled);
 		}
 		return gif;
+	}
+	private JLabel getLabel() {
+		if (label == null) {
+			label = new JLabel("");
+		}
+		return label;
 	}
 }
