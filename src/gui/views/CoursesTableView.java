@@ -58,6 +58,7 @@ public class CoursesTableView extends JPanel {
 	private JLabel lblLblinstruct;
 	private JTextField filterByInstruct;
 	private JButton btnRemove;
+	private JLabel lblHagaDobleClick;
 
 	/**
 	 * Create the panel.
@@ -67,9 +68,9 @@ public class CoursesTableView extends JPanel {
 
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{100, 0, 30, 0, 150, 30, 0, 150, 30, 62, 0, 0, 70, 100, 0};
-		gridBagLayout.rowHeights = new int[]{70, 45, 60, 40, 90, 0, 0};
+		gridBagLayout.rowHeights = new int[]{70, 45, 0, 60, 40, 90, 0, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		GridBagConstraints gbc_lblCursosDePostgrado = new GridBagConstraints();
 		gbc_lblCursosDePostgrado.fill = GridBagConstraints.BOTH;
@@ -79,61 +80,68 @@ public class CoursesTableView extends JPanel {
 		gbc_lblCursosDePostgrado.gridx = 1;
 		gbc_lblCursosDePostgrado.gridy = 1;
 		add(getLblCursosDePostgrado(), gbc_lblCursosDePostgrado);
+		GridBagConstraints gbc_lblHagaDobleClick = new GridBagConstraints();
+		gbc_lblHagaDobleClick.fill = GridBagConstraints.BOTH;
+		gbc_lblHagaDobleClick.gridwidth = 4;
+		gbc_lblHagaDobleClick.insets = new Insets(0, 0, 5, 5);
+		gbc_lblHagaDobleClick.gridx = 1;
+		gbc_lblHagaDobleClick.gridy = 2;
+		add(getLblHagaDobleClick(), gbc_lblHagaDobleClick);
 		GridBagConstraints gbc_lblFiltrar = new GridBagConstraints();
 		gbc_lblFiltrar.fill = GridBagConstraints.BOTH;
 		gbc_lblFiltrar.insets = new Insets(0, 0, 5, 5);
 		gbc_lblFiltrar.gridx = 1;
-		gbc_lblFiltrar.gridy = 3;
+		gbc_lblFiltrar.gridy = 4;
 		add(getLblFiltrar(), gbc_lblFiltrar);
 		GridBagConstraints gbc_lblNombre = new GridBagConstraints();
 		gbc_lblNombre.fill = GridBagConstraints.BOTH;
 		gbc_lblNombre.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNombre.gridx = 3;
-		gbc_lblNombre.gridy = 3;
+		gbc_lblNombre.gridy = 4;
 		add(getLblNombre(), gbc_lblNombre);
 		GridBagConstraints gbc_filterByName = new GridBagConstraints();
 		gbc_filterByName.fill = GridBagConstraints.BOTH;
 		gbc_filterByName.insets = new Insets(0, 0, 5, 5);
 		gbc_filterByName.gridx = 4;
-		gbc_filterByName.gridy = 3;
+		gbc_filterByName.gridy = 4;
 		add(getFilterByName(), gbc_filterByName);
 		GridBagConstraints gbc_lblLblinstruct = new GridBagConstraints();
 		gbc_lblLblinstruct.fill = GridBagConstraints.BOTH;
 		gbc_lblLblinstruct.insets = new Insets(0, 0, 5, 5);
 		gbc_lblLblinstruct.gridx = 6;
-		gbc_lblLblinstruct.gridy = 3;
+		gbc_lblLblinstruct.gridy = 4;
 		add(getLblLblinstruct(), gbc_lblLblinstruct);
 		GridBagConstraints gbc_filterByInstruct = new GridBagConstraints();
 		gbc_filterByInstruct.insets = new Insets(0, 0, 5, 5);
 		gbc_filterByInstruct.fill = GridBagConstraints.BOTH;
 		gbc_filterByInstruct.gridx = 7;
-		gbc_filterByInstruct.gridy = 3;
+		gbc_filterByInstruct.gridy = 4;
 		add(getFilterByInstruct(), gbc_filterByInstruct);
 		GridBagConstraints gbc_btnBorrar = new GridBagConstraints();
 		gbc_btnBorrar.fill = GridBagConstraints.BOTH;
 		gbc_btnBorrar.insets = new Insets(0, 0, 5, 5);
 		gbc_btnBorrar.gridx = 9;
-		gbc_btnBorrar.gridy = 3;
+		gbc_btnBorrar.gridy = 4;
 		add(getBtnRemove(), gbc_btnBorrar);
 		GridBagConstraints gbc_lblInstructor = new GridBagConstraints();
 		gbc_lblInstructor.anchor = GridBagConstraints.EAST;
 		gbc_lblInstructor.fill = GridBagConstraints.VERTICAL;
 		gbc_lblInstructor.insets = new Insets(0, 0, 5, 5);
 		gbc_lblInstructor.gridx = 11;
-		gbc_lblInstructor.gridy = 3;
+		gbc_lblInstructor.gridy = 4;
 		add(getLblInstructor(), gbc_lblInstructor);
 		GridBagConstraints gbc_filterCreds = new GridBagConstraints();
 		gbc_filterCreds.fill = GridBagConstraints.BOTH;
 		gbc_filterCreds.insets = new Insets(0, 0, 5, 5);
 		gbc_filterCreds.gridx = 12;
-		gbc_filterCreds.gridy = 3;
+		gbc_filterCreds.gridy = 4;
 		add(getFilterCreds(), gbc_filterCreds);
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
-		gbc_scrollPane.insets = new Insets(0, 0, 5, 5);
+		gbc_scrollPane.insets = new Insets(5, 0, 5, 5);
 		gbc_scrollPane.fill = GridBagConstraints.BOTH;
 		gbc_scrollPane.gridwidth = 12;
 		gbc_scrollPane.gridx = 1;
-		gbc_scrollPane.gridy = 4;
+		gbc_scrollPane.gridy = 5;
 		add(getScrollPane(), gbc_scrollPane);
 
 		coursesTableModel = new CoursesTableModel(this.faculty);
@@ -321,5 +329,12 @@ public class CoursesTableView extends JPanel {
 			btnRemove.setVisible(false);
 		}
 		return btnRemove;
+	}
+	private JLabel getLblHagaDobleClick() {
+		if (lblHagaDobleClick == null) {
+			lblHagaDobleClick = new JLabel("Haga doble click en alguna fila para editar");
+			lblHagaDobleClick.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		}
+		return lblHagaDobleClick;
 	}
 }

@@ -25,8 +25,10 @@ public class Main {
 			UIManager.put("Panel.background", new Color(255, 255, 255));
 			UIManager.put("CheckBox.background", new Color(255, 255, 255));
 			UIManager.put("RadioButton.background", new Color(255, 255, 255));
+			UIManager.put("RadioButton.foreground", new Color(14, 44, 90));
 			UIManager.put("ScrollPane.border",
 					BorderFactory.createEmptyBorder());
+			UIManager.put("ScrollPanel.border", BorderFactory.createEmptyBorder());
 			UIManager.put("Table.gridColor", new Color(50, 50, 50));
 			UIManager.put("TableHeader.showGrid", false);
 			UIManager.put("TableHeader.border",
@@ -41,7 +43,8 @@ public class Main {
 			UIManager.put("ComboBox.font", Constants.getLabelFont());
 			UIManager.put("RadioButton.font", Constants.getLabelFont());
 			UIManager.put("Table.gridColor", new Color(220, 220, 220));
-//			 UIManager.put("MenuItem.selectionBackground", new Color(100, 150, 200));
+			UIManager.put("Menu.foreground", Constants.getFormBtnForeground());
+			UIManager.put("MenuItem.foreground", Constants.getFormBtnForeground());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -49,19 +52,19 @@ public class Main {
 
 	public static void main(String[] args) {
 		setDefaults();
-		
+
 		if (!Authentication.hasAccess() || !Authentication.hasSource()) {
 			EventQueue.invokeLater(new Runnable() {
 				public void run() {
 					try {
 						final Login frame = new Login();
-						
+
 						frame.setLocationRelativeTo(null);
 						frame.listenTo(new OnAuthenticate() {
 							@Override
 							public void granted() {
 								openMainScreen();
-								
+
 								frame.setVisible(false);
 							}
 						});
@@ -75,10 +78,10 @@ public class Main {
 			openMainScreen();
 		}
 	}
-	
+
 	private static void openMainScreen() {
 		Mock.mockFacultyData();
-		
+
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {

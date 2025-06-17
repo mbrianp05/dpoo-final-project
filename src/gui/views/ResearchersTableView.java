@@ -64,15 +64,16 @@ public class ResearchersTableView extends JPanel {
 	private JButton btnRemove;
 
 	private OnAddedResearcher listener;
+	private JLabel label;
 
 	public ResearchersTableView() {
 		this.faculty = Faculty.newInstance();
 
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{100, 70, 100, 100, 0, 0, 180, 30, 0, 180, 30, 60, 0, 70, 70, 100, 0};
-		gridBagLayout.rowHeights = new int[]{70, 45, 60, 40, 207, 0, 0};
+		gridBagLayout.rowHeights = new int[]{70, 45, 0, 60, 40, 207, 0, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		GridBagConstraints gbc_lblDatosDeInvestigadores = new GridBagConstraints();
 		gbc_lblDatosDeInvestigadores.fill = GridBagConstraints.BOTH;
@@ -81,72 +82,79 @@ public class ResearchersTableView extends JPanel {
 		gbc_lblDatosDeInvestigadores.gridx = 1;
 		gbc_lblDatosDeInvestigadores.gridy = 1;
 		add(getLblDatosDeInvestigadores(), gbc_lblDatosDeInvestigadores);
+		GridBagConstraints gbc_label = new GridBagConstraints();
+		gbc_label.fill = GridBagConstraints.BOTH;
+		gbc_label.gridwidth = 6;
+		gbc_label.insets = new Insets(0, 0, 5, 5);
+		gbc_label.gridx = 1;
+		gbc_label.gridy = 2;
+		add(getLabel(), gbc_label);
 		GridBagConstraints gbc_lblFiltrar = new GridBagConstraints();
 		gbc_lblFiltrar.fill = GridBagConstraints.BOTH;
 		gbc_lblFiltrar.insets = new Insets(0, 0, 5, 5);
 		gbc_lblFiltrar.gridx = 1;
-		gbc_lblFiltrar.gridy = 3;
+		gbc_lblFiltrar.gridy = 4;
 		add(getLblFiltrar(), gbc_lblFiltrar);
 		GridBagConstraints gbc_filterProfesors = new GridBagConstraints();
 		gbc_filterProfesors.fill = GridBagConstraints.BOTH;
 		gbc_filterProfesors.insets = new Insets(0, 0, 5, 5);
 		gbc_filterProfesors.gridx = 2;
-		gbc_filterProfesors.gridy = 3;
+		gbc_filterProfesors.gridy = 4;
 		add(getFilterProfesors(), gbc_filterProfesors);
 		GridBagConstraints gbc_filterStudents = new GridBagConstraints();
 		gbc_filterStudents.fill = GridBagConstraints.BOTH;
 		gbc_filterStudents.insets = new Insets(0, 0, 5, 5);
 		gbc_filterStudents.gridx = 3;
-		gbc_filterStudents.gridy = 3;
+		gbc_filterStudents.gridy = 4;
 		add(getFilterStudents(), gbc_filterStudents);
 		GridBagConstraints gbc_lblNombre = new GridBagConstraints();
 		gbc_lblNombre.fill = GridBagConstraints.BOTH;
 		gbc_lblNombre.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNombre.gridx = 5;
-		gbc_lblNombre.gridy = 3;
+		gbc_lblNombre.gridy = 4;
 		add(getLblNombre(), gbc_lblNombre);
 		GridBagConstraints gbc_filterByName = new GridBagConstraints();
 		gbc_filterByName.fill = GridBagConstraints.BOTH;
 		gbc_filterByName.insets = new Insets(0, 0, 5, 5);
 		gbc_filterByName.gridx = 6;
-		gbc_filterByName.gridy = 3;
+		gbc_filterByName.gridy = 4;
 		add(getFilterByName(), gbc_filterByName);
 		GridBagConstraints gbc_lblTema = new GridBagConstraints();
 		gbc_lblTema.anchor = GridBagConstraints.EAST;
 		gbc_lblTema.insets = new Insets(0, 0, 5, 5);
 		gbc_lblTema.gridx = 8;
-		gbc_lblTema.gridy = 3;
+		gbc_lblTema.gridy = 4;
 		add(getLblTema(), gbc_lblTema);
 		GridBagConstraints gbc_textFieldMatterFilter = new GridBagConstraints();
 		gbc_textFieldMatterFilter.insets = new Insets(0, 0, 5, 5);
 		gbc_textFieldMatterFilter.fill = GridBagConstraints.BOTH;
 		gbc_textFieldMatterFilter.gridx = 9;
-		gbc_textFieldMatterFilter.gridy = 3;
+		gbc_textFieldMatterFilter.gridy = 4;
 		add(getTextFieldMatterFilter(), gbc_textFieldMatterFilter);
 		GridBagConstraints gbc_btnRemove = new GridBagConstraints();
 		gbc_btnRemove.fill = GridBagConstraints.VERTICAL;
 		gbc_btnRemove.insets = new Insets(0, 0, 5, 5);
 		gbc_btnRemove.gridx = 11;
-		gbc_btnRemove.gridy = 3;
+		gbc_btnRemove.gridy = 4;
 		add(getBtnRemove(), gbc_btnRemove);
 		GridBagConstraints gbc_lblPuntuacin = new GridBagConstraints();
 		gbc_lblPuntuacin.fill = GridBagConstraints.BOTH;
 		gbc_lblPuntuacin.insets = new Insets(0, 0, 5, 5);
 		gbc_lblPuntuacin.gridx = 13;
-		gbc_lblPuntuacin.gridy = 3;
+		gbc_lblPuntuacin.gridy = 4;
 		add(getLblPuntuacin(), gbc_lblPuntuacin);
 		GridBagConstraints gbc_spinner = new GridBagConstraints();
 		gbc_spinner.fill = GridBagConstraints.BOTH;
 		gbc_spinner.insets = new Insets(0, 0, 5, 5);
 		gbc_spinner.gridx = 14;
-		gbc_spinner.gridy = 3;
+		gbc_spinner.gridy = 4;
 		add(getSpinner(), gbc_spinner);
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
-		gbc_scrollPane.insets = new Insets(0, 0, 5, 5);
+		gbc_scrollPane.insets = new Insets(5, 0, 5, 5);
 		gbc_scrollPane.fill = GridBagConstraints.BOTH;
 		gbc_scrollPane.gridwidth = 14;
 		gbc_scrollPane.gridx = 1;
-		gbc_scrollPane.gridy = 4;
+		gbc_scrollPane.gridy = 5;
 		add(getScrollPane(), gbc_scrollPane);
 
 		researcherModel = new ResearcherTableModel();
@@ -395,5 +403,12 @@ public class ResearchersTableView extends JPanel {
 			btnRemove.setVisible(false);
 		}
 		return btnRemove;
+	}
+	private JLabel getLabel() {
+		if (label == null) {
+			label = new JLabel("Haga doble click en alguna fila para editar");
+			label.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		}
+		return label;
 	}
 }
