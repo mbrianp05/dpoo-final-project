@@ -16,13 +16,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.ButtonGroup;
-import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 
 import schooling.Faculty;
@@ -32,12 +29,13 @@ import schooling.ResearchMatter;
 import schooling.Researcher;
 import schooling.Student;
 import utils.ArrayLib;
-import utils.Constants;
 
 public class EditResearcherJDialog extends JDialog {
 	private static final long serialVersionUID = -8039865322179654975L;
 	private final JPanel contentPanel = new JPanel();
 
+	private boolean isMatriculated = false;
+	
 	private Researcher researcher;
 	private Faculty faculty;
 	private ResearchLine line;
@@ -51,15 +49,14 @@ public class EditResearcherJDialog extends JDialog {
 	private ProfesorForm profesorForm_1;
 	private ResearcherActivityForm researcherActivityForm;
 	private JPanel formPannelWrapper;
-	private JPanel panel;
-	private JLabel lblEsteInvestigadorEst;
-	private JLabel lblCrditos;
-	private JButton btnVerNotas;
+	private JRadioButton rBtnResults;
+	private ResearcherResultsPanel researcherResultsPanel;
 
 	public EditResearcherJDialog(Researcher researcher) {
 		this.faculty = Faculty.newInstance();
 		this.researcher = researcher;
 		line = faculty.findResearchLineByResearcher(researcher);
+		isMatriculated = researcher instanceof Profesor && line.hasMatriculation((Profesor)researcher);
 
 		setLocationRelativeTo(null);
 		setModal(true);
@@ -76,38 +73,27 @@ public class EditResearcherJDialog extends JDialog {
 
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 
-		boolean hasMatriculation = researcher instanceof Profesor && line.hasMatriculation((Profesor)researcher);
 
 		GridBagLayout gbl_contentPanel = new GridBagLayout();
 		gbl_contentPanel.columnWidths = new int[]{40, 0, 40, 0};
-		gbl_contentPanel.rowHeights = new int[]{30, hasMatriculation ? 40 : 0, 0, 0};
+		gbl_contentPanel.rowHeights = new int[]{30, 0, 0};
 		gbl_contentPanel.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
-		gbl_contentPanel.rowWeights = new double[]{0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gbl_contentPanel.rowWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
 		contentPanel.setLayout(gbl_contentPanel);
 
 		GridBagConstraints gbc_radiosWrapper = new GridBagConstraints();
 		gbc_radiosWrapper.gridwidth = 3;
-		gbc_radiosWrapper.insets = new Insets(0, 0, 5, 5);
+		gbc_radiosWrapper.insets = new Insets(0, 0, 5, 0);
 		gbc_radiosWrapper.fill = GridBagConstraints.HORIZONTAL;
 		gbc_radiosWrapper.gridx = 0;
 		gbc_radiosWrapper.gridy = 0;
 		contentPanel.add(getRadiosWrapper(), gbc_radiosWrapper);
 
-		if (hasMatriculation) {
-			GridBagConstraints gbc_panel = new GridBagConstraints();
-			gbc_panel.gridwidth = 3;
-			gbc_panel.fill = GridBagConstraints.BOTH;
-			gbc_panel.insets = new Insets(0, 0, 5, 5);
-			gbc_panel.gridx = 0;
-			gbc_panel.gridy = 1;
-			contentPanel.add(getPanel(), gbc_panel);
-		}
-
 		GridBagConstraints gbc_panelsWrapper = new GridBagConstraints();
 		gbc_panelsWrapper.gridwidth = 3;
 		gbc_panelsWrapper.fill = GridBagConstraints.BOTH;
 		gbc_panelsWrapper.gridx = 0;
-		gbc_panelsWrapper.gridy = 2;
+		gbc_panelsWrapper.gridy = 1;
 		contentPanel.add(getPanelsWrapper(), gbc_panelsWrapper);
 		getButtonGroup();
 	}
@@ -130,6 +116,10 @@ public class EditResearcherJDialog extends JDialog {
 					faculty.moveToOtherMatter(p.getID(), data.getMatter());
 
 					listener.newResearcher(researcher.getID());
+					
+					if (researcherResultsPanel != null) {
+						researcherResultsPanel.update();
+					}
 				}
 			});
 		} else {
@@ -169,6 +159,8 @@ public class EditResearcherJDialog extends JDialog {
 			radiosWrapper.setBorder(null);
 			radiosWrapper.add(getRadioButton_2());
 			radiosWrapper.add(getRadioButton_1());
+			
+			if (isMatriculated) radiosWrapper.add(getRBtnResults());
 		}
 		return radiosWrapper;
 	}
@@ -210,6 +202,7 @@ public class EditResearcherJDialog extends JDialog {
 			buttonGroup = new ButtonGroup();
 			buttonGroup.add(rbtnResearcherActivity);
 			buttonGroup.add(rbtnResearcherInfo);
+			buttonGroup.add(rBtnResults);
 		}
 		return buttonGroup;
 	}
@@ -218,9 +211,13 @@ public class EditResearcherJDialog extends JDialog {
 			panelsWrapper = new JPanel();
 			panelsWrapper.setBorder(new MatteBorder(1, 0, 0, 0, (Color) Color.LIGHT_GRAY));
 			panelsWrapper.setLayout(new CardLayout(0, 0));
-
+			
 			panelsWrapper.add(getFormPannelWrapper(), "Researcher Form");
 			panelsWrapper.add(getResearcherActivityForm(), "Researcher Activity Form");
+			
+			if (isMatriculated) {
+				panelsWrapper.add(getResearcherResultsPanel(), "Researcher Results");
+			}
 		}
 		return panelsWrapper;
 	}
@@ -272,74 +269,22 @@ public class EditResearcherJDialog extends JDialog {
 		}
 		return formPannelWrapper;
 	}
-	private JPanel getPanel() {
-		if (panel == null) {
-			panel = new JPanel();
-			panel.setBorder(new LineBorder(new Color(0, 51, 255)));
-			panel.setBackground(new Color(0, 153, 255));
-			GridBagLayout gbl_panel = new GridBagLayout();
-			gbl_panel.columnWidths = new int[]{391, 0, 50, 0};
-			gbl_panel.rowHeights = new int[]{16, 0};
-			gbl_panel.columnWeights = new double[]{1.0, 0.0, 0.0, Double.MIN_VALUE};
-			gbl_panel.rowWeights = new double[]{1.0, Double.MIN_VALUE};
-			panel.setLayout(gbl_panel);
-
-			GridBagConstraints gbc_lblEsteInvestigadorEst = new GridBagConstraints();
-			gbc_lblEsteInvestigadorEst.insets = new Insets(10, 10, 10, 10);
-			gbc_lblEsteInvestigadorEst.fill = GridBagConstraints.BOTH;
-			gbc_lblEsteInvestigadorEst.anchor = GridBagConstraints.NORTHWEST;
-			gbc_lblEsteInvestigadorEst.gridx = 0;
-			gbc_lblEsteInvestigadorEst.gridy = 0;
-			panel.add(getLblEsteInvestigadorEst(), gbc_lblEsteInvestigadorEst);
-			GridBagConstraints gbc_lblCrditos = new GridBagConstraints();
-			gbc_lblCrditos.insets = new Insets(10, 10, 10, 30);
-			gbc_lblCrditos.gridx = 1;
-			gbc_lblCrditos.gridy = 0;
-			panel.add(getLblCrditos(), gbc_lblCrditos);
-			GridBagConstraints gbc_btnVerNotas = new GridBagConstraints();
-			gbc_btnVerNotas.fill = GridBagConstraints.BOTH;
-			gbc_btnVerNotas.gridx = 2;
-			gbc_btnVerNotas.gridy = 0;
-			panel.add(getBtnVerNotas(), gbc_btnVerNotas);
-
-		}
-		return panel;
-	}
-	private JLabel getLblEsteInvestigadorEst() {
-		if (lblEsteInvestigadorEst == null) {
-			String lineName = line.getName();
-
-			lblEsteInvestigadorEst = new JLabel("Este investigador est\u00E1 matriculado en el plan de maestr\u00EDa de la l\u00EDnea " + lineName);
-			lblEsteInvestigadorEst.setFont(new Font("Segoe UI", Font.PLAIN, 15));
-			lblEsteInvestigadorEst.setForeground(Color.WHITE);
-		}
-		return lblEsteInvestigadorEst;
-	}
-	private JLabel getLblCrditos() {
-		if (lblCrditos == null) {
-			lblCrditos = new JLabel("Cr\u00E9ditos: " + ((Profesor)researcher).getCredits());
-			lblCrditos.setForeground(Color.WHITE);
-			lblCrditos.setFont(new Font("Segoe UI", Font.ITALIC, 15));
-		}
-		return lblCrditos;
-	}
-	private JButton getBtnVerNotas() {
-		if (btnVerNotas == null) {
-			btnVerNotas = new JButton("Ver notas");
-			btnVerNotas.setForeground(Constants.getFormBtnForeground());
-			btnVerNotas.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent event) {
-					try {
-						SeeMarksJDialog dialog = new SeeMarksJDialog((Profesor)researcher);
-						dialog.setLocationRelativeTo(null);
-						dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-						dialog.setVisible(true);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
+	private JRadioButton getRBtnResults() {
+		if (rBtnResults == null) {
+			rBtnResults = new JRadioButton("Resutlados acad\u00E9micos");
+			rBtnResults.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					switchPanel("Researcher Results");
 				}
 			});
+			rBtnResults.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 		}
-		return btnVerNotas;
+		return rBtnResults;
+	}
+	private ResearcherResultsPanel getResearcherResultsPanel() {
+		if (researcherResultsPanel == null) {
+			researcherResultsPanel = new ResearcherResultsPanel((Profesor)researcher);
+		}
+		return researcherResultsPanel;
 	}
 }
