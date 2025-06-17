@@ -43,7 +43,7 @@ public class RevertMatriculationPanel extends JPanel {
 	public RevertMatriculationPanel(ResearchLine line) {
 		this.line = line;
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{50, 0, 50, 0};
+		gridBagLayout.columnWidths = new int[]{100, 0, 100, 0};
 		gridBagLayout.rowHeights = new int[]{50, 0, 0, 30, 0, 35, 0, 30, 35, 50, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};

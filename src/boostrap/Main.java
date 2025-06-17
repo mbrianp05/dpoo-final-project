@@ -43,8 +43,6 @@ public class Main {
 			UIManager.put("ComboBox.font", Constants.getLabelFont());
 			UIManager.put("RadioButton.font", Constants.getLabelFont());
 			UIManager.put("Table.gridColor", new Color(220, 220, 220));
-			UIManager.put("Menu.foreground", Constants.getFormBtnForeground());
-			UIManager.put("MenuItem.foreground", Constants.getFormBtnForeground());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
