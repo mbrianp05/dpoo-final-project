@@ -44,6 +44,8 @@ public class EditPostgradeCourseJDialog extends JDialog {
 	private JPanel panelWrapper;
 	private ButtonGroup buttonGroup;
 	private MarkAssignmentForm markAssignmentForm;
+	private JRadioButton rBtnNuevaMatrcula;
+	private MatriculationPanel matriculationPanel;
 
 	public EditPostgradeCourseJDialog(PostgraduateCourse course) {
 		setTitle("Editar datos del curso");
@@ -99,7 +101,12 @@ public class EditPostgradeCourseJDialog extends JDialog {
 			operationPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 			if(faculty.getMatriculationsAtCourse(course).size() > 0) {
 				operationPanel.add(getRBtnEditCourse());
-				operationPanel.add(getRBtnAssignMarks());			
+				operationPanel.add(getRBtnAssignMarks());
+				operationPanel.add(getRBtnNuevaMatrcula());				
+			}
+			if(faculty.getMatriculationsAtCourse(course).size() == 0) {
+				operationPanel.add(getRBtnEditCourse());
+				operationPanel.add(getRBtnNuevaMatrcula());	
 			}
 		}
 		return operationPanel;
@@ -108,7 +115,7 @@ public class EditPostgradeCourseJDialog extends JDialog {
 
 	private JRadioButton getRBtnEditCourse() {
 		if (rBtnEditCourse == null) {
-			rBtnEditCourse = new JRadioButton("Editar curso");
+			rBtnEditCourse = new JRadioButton("Editar Curso");
 			rBtnEditCourse.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					switchPanel("Course Form");
@@ -119,6 +126,20 @@ public class EditPostgradeCourseJDialog extends JDialog {
 		}
 		return rBtnEditCourse;
 	}
+
+	private JRadioButton getRBtnNuevaMatrcula() {
+		if (rBtnNuevaMatrcula == null) {
+			rBtnNuevaMatrcula = new JRadioButton("Nueva Matr\u00EDcula");
+			rBtnNuevaMatrcula.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					switchPanel("New Matriculation");
+				}
+			});
+			rBtnNuevaMatrcula.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 15));
+		}
+		return rBtnNuevaMatrcula;
+	}
+
 	private JRadioButton getRBtnAssignMarks() {
 		if (rBtnAssignMarks == null) {
 			rBtnAssignMarks = new JRadioButton("Asignar Notas");
@@ -157,6 +178,14 @@ public class EditPostgradeCourseJDialog extends JDialog {
 		}
 		return markAssignmentForm;
 	}
+
+	private MatriculationPanel getMatriculationPanel() {
+		if (matriculationPanel == null) {
+			matriculationPanel = new MatriculationPanel((ResearchLine)faculty.findResearchLineByCourse(course));
+		}
+		return matriculationPanel;
+	}
+
 	private JPanel getPanelWrapper() {
 		if (panelWrapper == null) {
 			panelWrapper = new JPanel();
@@ -166,9 +195,9 @@ public class EditPostgradeCourseJDialog extends JDialog {
 			gbc_courseForm.gridy = 0;
 			panelWrapper.setLayout(new CardLayout(0, 0));
 
-
 			panelWrapper.add(getCourseForm(), "Course Form");
 			panelWrapper.add(getMatriculationMarkAssignment(), "Matriculations Form");
+			panelWrapper.add(getMatriculationPanel(), "New Matriculation");
 		}
 		return panelWrapper;
 	}
@@ -180,7 +209,9 @@ public class EditPostgradeCourseJDialog extends JDialog {
 			buttonGroup = new ButtonGroup();
 			buttonGroup.add(rBtnAssignMarks);
 			buttonGroup.add(rBtnEditCourse);
+			buttonGroup.add(rBtnNuevaMatrcula);
 		}
 		return buttonGroup;
-	}
+	}	
+
 }
