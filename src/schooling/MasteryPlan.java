@@ -107,6 +107,16 @@ public class MasteryPlan {
 		return profesors;
 	}
 
+	public double progressMade(ArrayList<Matriculation> matriculations) {
+		double coursesCompleted = 0;
+		
+		for (Matriculation m: matriculations) {
+			if (m.getMark() >= 3) coursesCompleted++;
+		}
+		
+		return coursesCompleted / Math.max(matriculations.size(), 1);
+	}
+	
 	public void revertMatriculation(Profesor p) {
 		p.setCredits(0);
 		matriculations.removeAll(findMatriculations(p));

@@ -4,6 +4,7 @@ import javax.swing.JPanel;
 
 import schooling.Profesor;
 import schooling.ResearchLine;
+import utils.Constants;
 
 import java.awt.GridBagLayout;
 
@@ -145,6 +146,7 @@ public class MatriculationPanel extends JPanel {
 	private JButton getBtnRegistrarMatrcula() {
 		if (btnRegistrarMatrcula == null) {
 			btnRegistrarMatrcula = new JButton("Registrar matr\u00EDcula");
+			btnRegistrarMatrcula.setForeground(Constants.getFormBtnForeground());
 			btnRegistrarMatrcula.setFont(new Font("Segoe UI", Font.BOLD, 15));
 			btnRegistrarMatrcula.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {

@@ -233,6 +233,7 @@ public class PaperForm extends JPanel {
 	private JButton getBtnRegistrar() {
 		if (btnRegistrar == null) {
 			btnRegistrar = new JButton(breakthrough == null ? "Registrar" : "Editar");
+			btnRegistrar.setForeground(Constants.getFormBtnForeground());
 			btnRegistrar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					submit();

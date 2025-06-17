@@ -17,6 +17,7 @@ import gui.views.ResearchersActivityTableView;
 import gui.views.ResearchersTableView;
 
 import java.awt.CardLayout;
+import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -24,11 +25,13 @@ import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -66,28 +69,27 @@ public class MenuPanel extends JPanel {
 	private CoursesTableView coursesTableView;
 	private ResearchersActivityTableView researchersActivityTableView;
 	private JMenuItem researchActivityMenu;
-	private JButton btnCerrar;
+	private JLabel btnCerrar;
 
 	private OnCloseApp listener;
+	private JPanel panel;
 
 	public MenuPanel() {
 		this.faculty = Faculty.newInstance();
 
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{1092, 1092, 0};
+		gridBagLayout.columnWidths = new int[]{1092, 0};
 		gridBagLayout.rowHeights = new int[]{74, 421, 0};
-		gridBagLayout.columnWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.columnWeights = new double[]{1.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		GridBagConstraints gbc_menuBar = new GridBagConstraints();
-		gbc_menuBar.gridwidth = 2;
 		gbc_menuBar.fill = GridBagConstraints.BOTH;
-		gbc_menuBar.insets = new Insets(0, 0, 5, 0);
+		gbc_menuBar.insets = new Insets(0, 20, 5, 20);
 		gbc_menuBar.gridx = 0;
 		gbc_menuBar.gridy = 0;
 		add(getMenuBar(), gbc_menuBar);
 		GridBagConstraints gbc_contentPanel = new GridBagConstraints();
-		gbc_contentPanel.gridwidth = 2;
 		gbc_contentPanel.fill = GridBagConstraints.BOTH;
 		gbc_contentPanel.gridx = 0;
 		gbc_contentPanel.gridy = 1;
@@ -101,7 +103,7 @@ public class MenuPanel extends JPanel {
 			menuBar.add(getManagement());
 			menuBar.add(getMnData());
 			menuBar.add(getReports());
-			menuBar.add(getBtnCerrar());
+			menuBar.add(getPanel());
 		}
 		return menuBar;
 	}
@@ -436,14 +438,16 @@ public class MenuPanel extends JPanel {
 		this.listener = listener;
 	}
 
-	private JButton getBtnCerrar() {
+	private JLabel getBtnCerrar() {
 		if (btnCerrar == null) {
 			ImageIcon icon = new ImageIcon(BestResearchersJDialog.class.getResource("/resources/images/close-x.png"));
 			icon = new ImageIcon(icon.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
 
-			btnCerrar = new JButton(icon);
-			btnCerrar.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent arg0) {
+			btnCerrar = new JLabel(icon);
+			btnCerrar.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			btnCerrar.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent event) {
 					if (listener != null) listener.actionPerformed();
 				}
 			});
@@ -453,5 +457,22 @@ public class MenuPanel extends JPanel {
 			btnCerrar.setBorder(emptyBorder);
 		}
 		return btnCerrar;
+	}
+	private JPanel getPanel() {
+		if (panel == null) {
+			panel = new JPanel();
+			GridBagLayout gbl_panel = new GridBagLayout();
+			gbl_panel.columnWidths = new int[]{0, 0, 0};
+			gbl_panel.rowHeights = new int[]{67, 0};
+			gbl_panel.columnWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
+			gbl_panel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+			panel.setLayout(gbl_panel);
+			GridBagConstraints gbc_btnCerrar = new GridBagConstraints();
+			gbc_btnCerrar.insets = new Insets(5, 5, 5, 5);
+			gbc_btnCerrar.gridx = 1;
+			gbc_btnCerrar.gridy = 0;
+			panel.add(getBtnCerrar(), gbc_btnCerrar);
+		}
+		return panel;
 	}
 }

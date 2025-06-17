@@ -27,6 +27,9 @@ import javax.swing.table.TableCellRenderer;
 import schooling.Faculty;
 import schooling.Researcher;
 import utils.Constants;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.border.EmptyBorder;
 
 public class BestResearchersJDialog extends JDialog {
 	private static final long serialVersionUID = 1L;
@@ -48,7 +51,7 @@ public class BestResearchersJDialog extends JDialog {
 		setBounds(100, 100, 552, 365);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBackground(mainColor);
-		contentPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		contentPanel.setBorder(new CompoundBorder(new LineBorder(borderColor), new EmptyBorder(10, 10, 10, 10)));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		GridBagLayout gbl_contentPanel = new GridBagLayout();
 		gbl_contentPanel.columnWidths = new int[]{0, 0};

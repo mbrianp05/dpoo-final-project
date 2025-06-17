@@ -22,6 +22,7 @@ import javax.swing.SpinnerNumberModel;
 import schooling.Faculty;
 import schooling.Matriculation;
 import schooling.PostgraduateCourse;
+import utils.Constants;
 import gui.component.TitleLabel;
 
 public class MarkAssignmentForm extends JPanel {
@@ -35,7 +36,7 @@ public class MarkAssignmentForm extends JPanel {
 	private JComboBox<String> comboBox;
 	private JLabel lblProfesor;
 	private JLabel lblNota;
-	private JSpinner spinnerNota;
+	private JSpinner mark;
 	private JButton btnNewButton;
 	private JCheckBox chckbxHabilitarNota;
 
@@ -120,12 +121,12 @@ public class MarkAssignmentForm extends JPanel {
 			gbc_chckbxHabilitarNota.gridx = 2;
 			gbc_chckbxHabilitarNota.gridy = 8;
 			panel.add(getChckbxHabilitarNota(), gbc_chckbxHabilitarNota);
-			GridBagConstraints gbc_spinnerNota = new GridBagConstraints();
-			gbc_spinnerNota.fill = GridBagConstraints.BOTH;
-			gbc_spinnerNota.insets = new Insets(0, 0, 5, 5);
-			gbc_spinnerNota.gridx = 1;
-			gbc_spinnerNota.gridy = 8;
-			panel.add(getSpinnerNota(), gbc_spinnerNota);
+			GridBagConstraints gbc_mark = new GridBagConstraints();
+			gbc_mark.fill = GridBagConstraints.BOTH;
+			gbc_mark.insets = new Insets(0, 0, 5, 5);
+			gbc_mark.gridx = 1;
+			gbc_mark.gridy = 8;
+			panel.add(getMark(), gbc_mark);
 			GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
 			gbc_btnNewButton.insets = new Insets(0, 0, 0, 5);
 			gbc_btnNewButton.anchor = GridBagConstraints.EAST;
@@ -164,11 +165,11 @@ public class MarkAssignmentForm extends JPanel {
 			Matriculation m = getSelectedMatriculation();
 			
 			if (m.getMark() != -1) {
-				spinnerNota.setValue(m.getMark());
+				mark.setValue(m.getMark());
 			} else {
 				chckbxHabilitarNota.setSelected(false);
-				spinnerNota.setEnabled(false);
-				spinnerNota.setValue(2);
+				mark.setEnabled(false);
+				mark.setValue(2);
 			}
 		}
 	}
@@ -201,27 +202,28 @@ public class MarkAssignmentForm extends JPanel {
 		}
 		return lblNota;
 	}
-	private JSpinner getSpinnerNota() {
-		if (spinnerNota == null) {
-			spinnerNota = new JSpinner();
-			spinnerNota.setFont(new Font("Segoe UI", Font.PLAIN, 15));
-			spinnerNota.setModel(new SpinnerNumberModel(2, 2, 5, 1));
-			spinnerNota.setEnabled(chckbxHabilitarNota.isSelected());
+	private JSpinner getMark() {
+		if (mark == null) {
+			mark = new JSpinner();
+			mark.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+			mark.setModel(new SpinnerNumberModel(2, 2, 5, 1));
+			mark.setEnabled(chckbxHabilitarNota.isSelected());
 
 			setMarkValue();
 		}
-		return spinnerNota;
+		return mark;
 	}
 	private JButton getBtnNewButton() {
 		if (btnNewButton == null) {
 			btnNewButton = new JButton("Actualizar");
+			btnNewButton.setForeground(Constants.getFormBtnForeground());
 			btnNewButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					if (comboBox.getSelectedIndex() != -1) {
 						Matriculation m = getSelectedMatriculation();
 						
 						if (chckbxHabilitarNota.isSelected()) {
-							int newMark = (Integer)spinnerNota.getValue();
+							int newMark = (Integer)mark.getValue();
 							m.setMark(newMark);
 						} else {
 							m.noMarkYet();
@@ -241,8 +243,8 @@ public class MarkAssignmentForm extends JPanel {
 			chckbxHabilitarNota = new JCheckBox("Otorgar Nota");
 			chckbxHabilitarNota.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					spinnerNota.setEnabled(chckbxHabilitarNota.isSelected());
-					spinnerNota.setValue(2);
+					mark.setEnabled(chckbxHabilitarNota.isSelected());
+					mark.setValue(2);
 				}
 			});
 

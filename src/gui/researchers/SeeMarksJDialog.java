@@ -13,6 +13,7 @@ import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -21,6 +22,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
@@ -34,6 +38,7 @@ public class SeeMarksJDialog extends JDialog {
 	private static final long serialVersionUID = 1L;
 
 	private ResearchLine line;
+	private ArrayList<Matriculation> matriculations;
 
 	private final JPanel contentPanel = new JPanel();
 	final private Color mainColor;
@@ -42,8 +47,9 @@ public class SeeMarksJDialog extends JDialog {
 
 	public SeeMarksJDialog(Profesor profesor) {
 		line = Faculty.newInstance().findResearchLineByResearcher(profesor);
-
-		mainColor = new Color(102, 205, 170);
+		matriculations = line.getMasteryPlan().findMatriculations(profesor);
+		
+		mainColor = new Color(102, 225, 190);
 		borderColor = new Color(47, 79, 79);
 
 		setTitle("Resultados académicos");
@@ -53,23 +59,32 @@ public class SeeMarksJDialog extends JDialog {
 		setResizable(false);
 		setBounds(100, 100, 552, 365);
 		getContentPane().setLayout(new BorderLayout());
-		contentPanel.setBackground(new Color(102, 205, 170));
-		contentPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		contentPanel.setBackground(mainColor);
+		contentPanel.setBorder(new CompoundBorder(new LineBorder(borderColor), new EmptyBorder(10, 10, 10, 10)));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		GridBagLayout gbl_contentPanel = new GridBagLayout();
 		gbl_contentPanel.columnWidths = new int[]{0, 0};
-		gbl_contentPanel.rowHeights = new int[]{34, 10, 0, 0};
+		gbl_contentPanel.rowHeights = new int[]{34, 10, 0, 0, 0};
 		gbl_contentPanel.columnWeights = new double[]{1.0, 0.0};
-		gbl_contentPanel.rowWeights = new double[]{0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gbl_contentPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		contentPanel.setLayout(gbl_contentPanel);
 		{
+			JLabel lblResultadosAcadmicos = new JLabel("Resultados acad\u00E9micos");
+			GridBagConstraints gbc_lblResultadosAcadmicos = new GridBagConstraints();
+			gbc_lblResultadosAcadmicos.fill = GridBagConstraints.BOTH;
+			gbc_lblResultadosAcadmicos.insets = new Insets(0, 0, 5, 5);
+			gbc_lblResultadosAcadmicos.gridx = 0;
+			gbc_lblResultadosAcadmicos.gridy = 0;
+			contentPanel.add(lblResultadosAcadmicos, gbc_lblResultadosAcadmicos);
+		}
+		{
 			TitleLabel tlblMaestriasListas = new TitleLabel();
-			tlblMaestriasListas.setText("Resultados académicos de " + profesor.getName());
+			tlblMaestriasListas.setText(profesor.getName());
 			GridBagConstraints gbc_tlblMaestriasListas = new GridBagConstraints();
 			gbc_tlblMaestriasListas.insets = new Insets(0, 0, 5, 5);
 			gbc_tlblMaestriasListas.anchor = GridBagConstraints.NORTHWEST;
 			gbc_tlblMaestriasListas.gridx = 0;
-			gbc_tlblMaestriasListas.gridy = 0;
+			gbc_tlblMaestriasListas.gridy = 1;
 			contentPanel.add(tlblMaestriasListas, gbc_tlblMaestriasListas);
 		}
 		{
@@ -99,12 +114,26 @@ public class SeeMarksJDialog extends JDialog {
 			gbc_btnCloseButton.gridy = 0;
 			contentPanel.add(btnCloseButton, gbc_btnCloseButton);
 			{
+				double percentage = line.getMasteryPlan().progressMade(matriculations) * 100;
+				JLabel lblNewLabel = new JLabel("Ha completado el " + percentage + "% del curso");
+				
+				
+				lblNewLabel.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+				GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
+				gbc_lblNewLabel.fill = GridBagConstraints.BOTH;
+				gbc_lblNewLabel.gridwidth = 2;
+				gbc_lblNewLabel.insets = new Insets(0, 0, 15, 5);
+				gbc_lblNewLabel.gridx = 0;
+				gbc_lblNewLabel.gridy = 2;
+				contentPanel.add(lblNewLabel, gbc_lblNewLabel);
+			}
+			{
 				JScrollPane scrollPane = new JScrollPane();
 				GridBagConstraints gbc_scrollPane = new GridBagConstraints();
 				gbc_scrollPane.gridwidth = 2;
 				gbc_scrollPane.fill = GridBagConstraints.BOTH;
 				gbc_scrollPane.gridx = 0;
-				gbc_scrollPane.gridy = 2;
+				gbc_scrollPane.gridy = 3;
 				contentPanel.add(scrollPane, gbc_scrollPane);
 				{
 					table = new JTable();
@@ -155,7 +184,6 @@ public class SeeMarksJDialog extends JDialog {
 			}
 		}
 	}
-
 
 	private void closeDialog() {
 		dispose();

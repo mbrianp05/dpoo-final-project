@@ -355,6 +355,7 @@ public class CoursesFormView extends JPanel {
 	private JButton getBtnAgregar() {
 		if (btnAgregar == null) {
 			btnAgregar = new JButton("Agregar");
+			btnAgregar.setForeground(Constants.getFormBtnForeground());
 			btnAgregar.setFont(new Font("Segoe UI", Font.BOLD, 15));
 			btnAgregar.setBackground(Constants.getInsertionBtnColor());
 			btnAgregar.addActionListener(new ActionListener() {

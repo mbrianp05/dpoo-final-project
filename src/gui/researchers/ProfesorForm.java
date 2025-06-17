@@ -243,6 +243,7 @@ public class ProfesorForm extends JPanel {
 	private JButton getBtnSubmit() {
 		if (btnSubmit == null) {
 			btnSubmit = new JButton(profesor != null ? "Actualizar" : "Registrar  profesor");
+			btnSubmit.setForeground(Constants.getFormBtnForeground());
 			btnSubmit.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					submit();

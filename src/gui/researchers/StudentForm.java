@@ -123,6 +123,7 @@ public class StudentForm extends JPanel {
 	private JButton getBtnSubmit() {
 		if (btnSubmit == null) {
 			btnSubmit = new JButton(editing ? "Actualizar" : "Registrar estudiante");
+			btnSubmit.setForeground(Constants.getFormBtnForeground());
 			btnSubmit.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					if (!editing) insert();
@@ -206,7 +207,7 @@ public class StudentForm extends JPanel {
 			panel.add(getResearchMatterComboBox(), gbc_researchMatterComboBox);
 			GridBagConstraints gbc_btnSubmit = new GridBagConstraints();
 			gbc_btnSubmit.fill = GridBagConstraints.VERTICAL;
-			gbc_btnSubmit.anchor = GridBagConstraints.NORTHEAST;
+			gbc_btnSubmit.anchor = GridBagConstraints.EAST;
 			gbc_btnSubmit.gridx = 0;
 			gbc_btnSubmit.gridy = 6;
 			panel.add(getBtnSubmit(), gbc_btnSubmit);

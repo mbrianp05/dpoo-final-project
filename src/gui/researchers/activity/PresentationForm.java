@@ -29,6 +29,7 @@ import javax.swing.event.ChangeListener;
 
 import schooling.Presentation;
 import schooling.Researcher;
+import utils.Constants;
 import utils.DateHelper;
 import utils.Month;
 import utils.Validation;
@@ -337,6 +338,7 @@ public class PresentationForm extends JPanel {
 	private JButton getBtnAgregar() {
 		if (btnAgregar == null) {
 			btnAgregar = new JButton(breakthrough == null ? "Agregar" : "Editar");
+			btnAgregar.setForeground(Constants.getFormBtnForeground());
 			btnAgregar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					submit();

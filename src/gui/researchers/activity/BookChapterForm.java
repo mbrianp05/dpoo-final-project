@@ -277,6 +277,7 @@ public class BookChapterForm extends JPanel {
 	private JButton getBtnNewButton() {
 		if (btnNewButton == null) {
 			btnNewButton = new JButton(breakthrough == null ? "Agregar" : "Editar");
+			btnNewButton.setForeground(Constants.getFormBtnForeground());
 			btnNewButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					submit();

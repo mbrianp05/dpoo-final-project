@@ -332,6 +332,7 @@ public class ResearchLineForm extends JPanel {
 	private JButton getBtnNewButton() {
 		if (btnNewButton == null) {
 			btnNewButton = new JButton(line == null ? "Agregar" : "Guardar cambios");
+			btnNewButton.setForeground(Constants.getFormBtnForeground());
 			btnNewButton.setFont(new Font("Segoe UI", Font.BOLD, 15));
 			btnNewButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {

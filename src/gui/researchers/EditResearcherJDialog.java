@@ -32,6 +32,7 @@ import schooling.ResearchMatter;
 import schooling.Researcher;
 import schooling.Student;
 import utils.ArrayLib;
+import utils.Constants;
 
 public class EditResearcherJDialog extends JDialog {
 	private static final long serialVersionUID = -8039865322179654975L;
@@ -318,13 +319,14 @@ public class EditResearcherJDialog extends JDialog {
 		if (lblCrditos == null) {
 			lblCrditos = new JLabel("Cr\u00E9ditos: " + ((Profesor)researcher).getCredits());
 			lblCrditos.setForeground(Color.WHITE);
-			lblCrditos.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+			lblCrditos.setFont(new Font("Segoe UI", Font.ITALIC, 15));
 		}
 		return lblCrditos;
 	}
 	private JButton getBtnVerNotas() {
 		if (btnVerNotas == null) {
 			btnVerNotas = new JButton("Ver notas");
+			btnVerNotas.setForeground(Constants.getFormBtnForeground());
 			btnVerNotas.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent event) {
 					try {

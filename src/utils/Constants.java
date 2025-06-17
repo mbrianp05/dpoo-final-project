@@ -8,6 +8,10 @@ public class Constants {
 		return null;
 	}
 
+	public static Color getFormBtnForeground() {
+		return new Color(106, 54, 173);
+	}
+	
 	public static Font getLabelFont() {
 		return new Font("Segoe UI", Font.PLAIN, 15);
 	}

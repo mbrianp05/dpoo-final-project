@@ -22,6 +22,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JLabel;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
@@ -38,8 +41,8 @@ public class TrendingMasteriesJDialog extends JDialog {
 	private JTable table;
 	
 	public TrendingMasteriesJDialog() {
-		mainColor = new Color(225, 228, 181);
-		borderColor = new Color(210, 148, 118);
+		mainColor = new Color(238, 255, 157);
+		borderColor = new Color(119, 128, 72);
 
 		setTitle("Los planes de maestrías con mayor cantidad de matriculados");
 		setUndecorated(true);
@@ -49,7 +52,7 @@ public class TrendingMasteriesJDialog extends JDialog {
 		setBounds(100, 100, 552, 365);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBackground(mainColor);
-		contentPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		contentPanel.setBorder(new CompoundBorder(new LineBorder(borderColor), new EmptyBorder(10, 10, 10, 10)));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		GridBagLayout gbl_contentPanel = new GridBagLayout();
 		gbl_contentPanel.columnWidths = new int[]{0, 0};

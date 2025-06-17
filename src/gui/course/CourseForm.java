@@ -234,6 +234,7 @@ public class CourseForm extends JPanel {
 	private JButton getBtnSave() {
 		if (btnSave == null) {
 			btnSave = new JButton("Guardar");
+			btnSave.setForeground(Constants.getFormBtnForeground());
 			btnSave.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					updateCourse();
