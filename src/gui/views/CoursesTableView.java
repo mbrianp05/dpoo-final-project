@@ -67,10 +67,11 @@ public class CoursesTableView extends JPanel {
 		this.faculty = Faculty.newInstance();
 
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{100, 0, 30, 0, 150, 30, 0, 150, 30, 62, 0, 0, 70, 100, 0};
-		gridBagLayout.rowHeights = new int[]{70, 45, 0, 60, 40, 90, 0, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.columnWidths = new int[] { 100, 0, 30, 0, 150, 30, 0, 150, 30, 62, 0, 0, 70, 100, 0 };
+		gridBagLayout.rowHeights = new int[] { 70, 45, 0, 60, 40, 90, 0, 0 };
+		gridBagLayout.columnWeights = new double[] { 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0,
+				0.0, Double.MIN_VALUE };
+		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE };
 		setLayout(gridBagLayout);
 		GridBagConstraints gbc_lblCursosDePostgrado = new GridBagConstraints();
 		gbc_lblCursosDePostgrado.fill = GridBagConstraints.BOTH;
@@ -157,6 +158,7 @@ public class CoursesTableView extends JPanel {
 		}
 		return lblCursosDePostgrado;
 	}
+
 	private JScrollPane getScrollPane() {
 		if (scrollPane == null) {
 			scrollPane = new JScrollPane();
@@ -164,9 +166,11 @@ public class CoursesTableView extends JPanel {
 		}
 		return scrollPane;
 	}
+
 	private JTable getTable() {
 		if (table == null) {
 			table = new JTable();
+			table.setRowHeight(27);
 			table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 				@Override
 				public void valueChanged(ListSelectionEvent arg0) {
@@ -179,19 +183,18 @@ public class CoursesTableView extends JPanel {
 					int row = table.getSelectedRow();
 
 					if (event.getClickCount() > 1 && table.getSelectedRow() >= 0) {
-						String courseName = String.valueOf((String)table.getModel().getValueAt(row, 0));
+						String courseName = String.valueOf((String) table.getModel().getValueAt(row, 0));
 						PostgraduateCourse course = faculty.findCourseByName(courseName);
 
-
-						if(select == null || !select.isVisible()) {
+						if (select == null || !select.isVisible()) {
 							try {
 								select = new EditPostgradeCourseJDialog(course);
-								select.listenTo(new OnAddedCourse() {								
+								select.listenTo(new OnAddedCourse() {
 									@Override
 									public void added(String name, Profesor instruct) {
 										updateTable();
 									}
-								});								
+								});
 								select.setVisible(true);
 							} catch (Exception e) {
 								e.printStackTrace();
@@ -210,6 +213,7 @@ public class CoursesTableView extends JPanel {
 		}
 		return table;
 	}
+
 	private JLabel getLblFiltrar() {
 		if (lblFiltrar == null) {
 			lblFiltrar = new JLabel("Filtrar");
@@ -218,6 +222,7 @@ public class CoursesTableView extends JPanel {
 		}
 		return lblFiltrar;
 	}
+
 	private JLabel getLblNombre() {
 		if (lblNombre == null) {
 			lblNombre = new JLabel("Nombre");
@@ -225,6 +230,7 @@ public class CoursesTableView extends JPanel {
 		}
 		return lblNombre;
 	}
+
 	private JTextField getFilterByName() {
 		if (filterByName == null) {
 			filterByName = new JTextField();
@@ -232,8 +238,8 @@ public class CoursesTableView extends JPanel {
 			filterByName.addKeyListener(new KeyAdapter() {
 				@Override
 				public void keyReleased(KeyEvent event) {
-					if(event.getKeyCode() != 16) {
-						CoursesTableModel ctmodel = (CoursesTableModel)table.getModel();
+					if (event.getKeyCode() != 16) {
+						CoursesTableModel ctmodel = (CoursesTableModel) table.getModel();
 						ctmodel.setFilterName(filterByName.getText());
 					}
 				}
@@ -242,6 +248,7 @@ public class CoursesTableView extends JPanel {
 		}
 		return filterByName;
 	}
+
 	private JLabel getLblInstructor() {
 		if (lblInstructor == null) {
 			lblInstructor = new JLabel("Cr\u00E9ditos");
@@ -251,9 +258,10 @@ public class CoursesTableView extends JPanel {
 	}
 
 	public void updateTable() {
-		((CoursesTableModel)table.getModel()).fill();
+		((CoursesTableModel) table.getModel()).fill();
 		btnRemove.setVisible(false);
 	}
+
 	private JSpinner getFilterCreds() {
 		if (filterCreds == null) {
 			filterCreds = new JSpinner();
@@ -261,15 +269,15 @@ public class CoursesTableView extends JPanel {
 			filterCreds.addKeyListener(new KeyAdapter() {
 				@Override
 				public void keyTyped(KeyEvent arg0) {
-					CoursesTableModel ctmodel = (CoursesTableModel)table.getModel();
-					ctmodel.setFilterCreds((int)filterCreds.getValue());
+					CoursesTableModel ctmodel = (CoursesTableModel) table.getModel();
+					ctmodel.setFilterCreds((int) filterCreds.getValue());
 				}
 			});
 			filterCreds.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
 			filterCreds.addChangeListener(new ChangeListener() {
 				public void stateChanged(ChangeEvent event) {
-					CoursesTableModel ctmodel = (CoursesTableModel)table.getModel();
-					ctmodel.setFilterCreds((int)filterCreds.getValue());
+					CoursesTableModel ctmodel = (CoursesTableModel) table.getModel();
+					ctmodel.setFilterCreds((int) filterCreds.getValue());
 
 					btnRemove.setVisible(false);
 				}
@@ -277,6 +285,7 @@ public class CoursesTableView extends JPanel {
 		}
 		return filterCreds;
 	}
+
 	private JLabel getLblLblinstruct() {
 		if (lblLblinstruct == null) {
 			lblLblinstruct = new JLabel("Instructor");
@@ -284,13 +293,14 @@ public class CoursesTableView extends JPanel {
 		}
 		return lblLblinstruct;
 	}
+
 	private JTextField getFilterByInstruct() {
 		if (filterByInstruct == null) {
 			filterByInstruct = new JTextField();
 			filterByInstruct.addKeyListener(new KeyAdapter() {
 				@Override
 				public void keyReleased(KeyEvent event) {
-					CoursesTableModel ctModel = (CoursesTableModel)table.getModel();
+					CoursesTableModel ctModel = (CoursesTableModel) table.getModel();
 					ctModel.setFilterByInstruc(filterByInstruct.getText());
 				}
 			});
@@ -301,17 +311,19 @@ public class CoursesTableView extends JPanel {
 	}
 
 	public void removeCourse() {
-		String name = String.valueOf((String)table.getModel().getValueAt(table.getSelectedRow(), 0));										
-		int input = JOptionPane.showConfirmDialog(null, "¿Estás seguro de eliminar el curso?");
+		String name = String.valueOf((String) table.getModel().getValueAt(table.getSelectedRow(), 0));
+		int input = JOptionPane.showConfirmDialog(null, "ï¿½Estï¿½s seguro de eliminar el curso?");
 
 		if (input == JOptionPane.OK_OPTION) {
-			if(!faculty.removeCourseFromLine(name)) {
-				JOptionPane.showMessageDialog(null, "El curso que desea eliminar no existe", "Error al eliminar el curso", JOptionPane.ERROR_MESSAGE);
+			if (!faculty.removeCourseFromLine(name)) {
+				JOptionPane.showMessageDialog(null, "El curso que desea eliminar no existe",
+						"Error al eliminar el curso", JOptionPane.ERROR_MESSAGE);
 			} else {
 				updateTable();
 			}
 		}
 	}
+
 	private JButton getBtnRemove() {
 		if (btnRemove == null) {
 			btnRemove = new JButton();
@@ -330,6 +342,7 @@ public class CoursesTableView extends JPanel {
 		}
 		return btnRemove;
 	}
+
 	private JLabel getLblHagaDobleClick() {
 		if (lblHagaDobleClick == null) {
 			lblHagaDobleClick = new JLabel("Haga doble click en alguna fila para editar");

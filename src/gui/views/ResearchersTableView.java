@@ -281,7 +281,7 @@ public class ResearchersTableView extends JPanel {
 	private JTable getTable_1() {
 		if (table == null) {
 			table = new JTable();
-			table.setRowHeight(24);
+			table.setRowHeight(27);
 			table.getTableHeader().setReorderingAllowed(false);
 			table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 				@Override

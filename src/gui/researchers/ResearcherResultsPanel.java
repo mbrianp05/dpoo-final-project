@@ -24,6 +24,7 @@ import schooling.Matriculation;
 import schooling.Profesor;
 import schooling.ResearchLine;
 import utils.Constants;
+import javax.swing.JSeparator;
 
 public class ResearcherResultsPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -76,7 +77,7 @@ public class ResearcherResultsPanel extends JPanel {
 		{
 			{
 				JPanel panel = new JPanel();
-				panel.setBackground(Constants.getFormBtnForeground());
+				panel.setBorder(BorderFactory.createLineBorder(Constants.getFormBtnForeground(), 1));
 				GridBagConstraints gbc_panel = new GridBagConstraints();
 				gbc_panel.insets = new Insets(0, 0, 5, 5);
 				gbc_panel.fill = GridBagConstraints.BOTH;
@@ -85,13 +86,12 @@ public class ResearcherResultsPanel extends JPanel {
 				contentPanel.add(panel, gbc_panel);
 				GridBagLayout gbl_panel = new GridBagLayout();
 				gbl_panel.columnWidths = new int[]{0, 0};
-				gbl_panel.rowHeights = new int[]{30, 0, 30, 0};
+				gbl_panel.rowHeights = new int[]{30, 0, 0, 30, 0};
 				gbl_panel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-				gbl_panel.rowWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
+				gbl_panel.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
 				panel.setLayout(gbl_panel);
 				JLabel lblNewLabel = new JLabel("Progreso en la maestría");
-				lblNewLabel.setForeground(Color.WHITE);
-				lblNewLabel.setFont(new Font("Segoe UI", Font.BOLD, 14));
+				lblNewLabel.setFont(new Font("Segoe UI", Font.ITALIC, 14));
 
 				GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
 				gbc_lblNewLabel.insets = new Insets(0, 10, 0, 10);
@@ -101,19 +101,28 @@ public class ResearcherResultsPanel extends JPanel {
 				panel.add(lblNewLabel, gbc_lblNewLabel);
 				{
 					double percentage = line.getMasteryPlan().progressMade(matriculations) * 100;
+					{
+						JSeparator separator = new JSeparator();
+						separator.setForeground(Constants.getFormBtnForeground());
+						GridBagConstraints gbc_separator = new GridBagConstraints();
+						gbc_separator.fill = GridBagConstraints.BOTH;
+						gbc_separator.insets = new Insets(0, 0, 5, 0);
+						gbc_separator.gridx = 0;
+						gbc_separator.gridy = 1;
+						panel.add(separator, gbc_separator);
+					}
 					JLabel label = new JLabel(String.valueOf(percentage) + "%");
-					label.setForeground(Color.WHITE);
-					label.setFont(new Font("Segoe UI", Font.BOLD, 40));
+					label.setFont(new Font("Segoe UI", Font.PLAIN, 45));
 					GridBagConstraints gbc_label = new GridBagConstraints();
 					gbc_label.insets = new Insets(0, 0, 5, 0);
 					gbc_label.gridx = 0;
-					gbc_label.gridy = 1;
+					gbc_label.gridy = 2;
 					panel.add(label, gbc_label);
 				}
 			}
 			{
 				JPanel panel = new JPanel();
-				panel.setBackground(new Color(33, 107, 101));
+				panel.setBorder(BorderFactory.createLineBorder(new Color(33, 107, 101), 1));
 				GridBagConstraints gbc_panel = new GridBagConstraints();
 				gbc_panel.insets = new Insets(0, 0, 5, 5);
 				gbc_panel.fill = GridBagConstraints.BOTH;
@@ -122,14 +131,13 @@ public class ResearcherResultsPanel extends JPanel {
 				contentPanel.add(panel, gbc_panel);
 				GridBagLayout gbl_panel = new GridBagLayout();
 				gbl_panel.columnWidths = new int[]{0, 0};
-				gbl_panel.rowHeights = new int[]{30, 0, 30, 0};
+				gbl_panel.rowHeights = new int[]{30, 0, 0, 30, 0};
 				gbl_panel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-				gbl_panel.rowWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
+				gbl_panel.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
 				panel.setLayout(gbl_panel);
 				{
 					JLabel lblPromedioDeNotas = new JLabel("Promedio de notas");
-					lblPromedioDeNotas.setForeground(Color.WHITE);
-					lblPromedioDeNotas.setFont(new Font("Segoe UI", Font.BOLD, 14));
+					lblPromedioDeNotas.setFont(new Font("Segoe UI", Font.ITALIC, 14));
 					GridBagConstraints gbc_lblPromedioDeNotas = new GridBagConstraints();
 					gbc_lblPromedioDeNotas.fill = GridBagConstraints.BOTH;
 					gbc_lblPromedioDeNotas.insets = new Insets(0, 10, 0, 10);
@@ -138,19 +146,28 @@ public class ResearcherResultsPanel extends JPanel {
 					panel.add(lblPromedioDeNotas, gbc_lblPromedioDeNotas);
 				}
 				{
+					JSeparator separator = new JSeparator();
+					separator.setForeground(new Color(33, 107, 101));
+					GridBagConstraints gbc_separator = new GridBagConstraints();
+					gbc_separator.fill = GridBagConstraints.BOTH;
+					gbc_separator.insets = new Insets(0, 0, 5, 0);
+					gbc_separator.gridx = 0;
+					gbc_separator.gridy = 1;
+					panel.add(separator, gbc_separator);
+				}
+				{
 					JLabel label = new JLabel(String.valueOf(faculty.getAverageMarksOf(profesor.getID())));
-					label.setForeground(Color.WHITE);
-					label.setFont(new Font("Segoe UI", Font.BOLD, 40));
+					label.setFont(new Font("Segoe UI", Font.PLAIN, 45));
 					GridBagConstraints gbc_label = new GridBagConstraints();
 					gbc_label.insets = new Insets(0, 0, 5, 0);
 					gbc_label.gridx = 0;
-					gbc_label.gridy = 1;
+					gbc_label.gridy = 2;
 					panel.add(label, gbc_label);
 				}
 			}
 			{
 				JPanel panel = new JPanel();
-				panel.setBackground(new Color(68,38,24));
+				panel.setBorder(BorderFactory.createLineBorder(new Color(68,38,24), 1));
 				GridBagConstraints gbc_panel = new GridBagConstraints();
 				gbc_panel.insets = new Insets(0, 0, 5, 5);
 				gbc_panel.fill = GridBagConstraints.BOTH;
@@ -159,14 +176,13 @@ public class ResearcherResultsPanel extends JPanel {
 				contentPanel.add(panel, gbc_panel);
 				GridBagLayout gbl_panel = new GridBagLayout();
 				gbl_panel.columnWidths = new int[]{0, 0};
-				gbl_panel.rowHeights = new int[]{30, 0, 30, 0};
+				gbl_panel.rowHeights = new int[]{30, 0, 0, 30, 0};
 				gbl_panel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-				gbl_panel.rowWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
+				gbl_panel.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
 				panel.setLayout(gbl_panel);
 				{
-					JLabel lblAsignaturasAprobadas = new JLabel("Asignaturas aprobadas");
-					lblAsignaturasAprobadas.setForeground(Color.WHITE);
-					lblAsignaturasAprobadas.setFont(new Font("Segoe UI", Font.BOLD, 14));
+					JLabel lblAsignaturasAprobadas = new JLabel("Cursos aprobados");
+					lblAsignaturasAprobadas.setFont(new Font("Segoe UI", Font.ITALIC, 14));
 					GridBagConstraints gbc_lblAsignaturasAprobadas = new GridBagConstraints();
 					gbc_lblAsignaturasAprobadas.fill = GridBagConstraints.BOTH;
 					gbc_lblAsignaturasAprobadas.insets = new Insets(0, 10, 0, 10);
@@ -181,14 +197,23 @@ public class ResearcherResultsPanel extends JPanel {
 							aproved++;
 						}
 					}
+					{
+						JSeparator separator = new JSeparator();
+						separator.setForeground(new Color(68,38,24));
+						GridBagConstraints gbc_separator = new GridBagConstraints();
+						gbc_separator.fill = GridBagConstraints.BOTH;
+						gbc_separator.insets = new Insets(0, 0, 5, 0);
+						gbc_separator.gridx = 0;
+						gbc_separator.gridy = 1;
+						panel.add(separator, gbc_separator);
+					}
 					
 					JLabel label = new JLabel(String.valueOf(aproved));
-					label.setForeground(Color.WHITE);
-					label.setFont(new Font("Segoe UI", Font.BOLD, 40));
+					label.setFont(new Font("Segoe UI", Font.PLAIN, 45));
 					GridBagConstraints gbc_label = new GridBagConstraints();
 					gbc_label.insets = new Insets(0, 0, 5, 0);
 					gbc_label.gridx = 0;
-					gbc_label.gridy = 1;
+					gbc_label.gridy = 2;
 					panel.add(label, gbc_label);
 				}
 			}

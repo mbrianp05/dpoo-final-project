@@ -203,6 +203,7 @@ public class ResearchLinesTableView extends JPanel {
 	private JTable getTable_1() {
 		if (table == null) {
 			table = new JTable();
+			table.setRowHeight(27);
 			table.getTableHeader().setReorderingAllowed(false);
 			table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 				@Override
@@ -233,7 +234,6 @@ public class ResearchLinesTableView extends JPanel {
 				}
 			});
 			table.setFont(Constants.getLabelFont());
-			table.setRowHeight(24);
 			table.setFillsViewportHeight(true);
 			table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			table.setFont(new Font("Segoe UI", Font.PLAIN, 15));
