@@ -9,7 +9,7 @@ public class Faculty {
 	private static Faculty instance = null;
 
 	public static Faculty newInstance() {
-		if (instance == null){
+		if (instance == null) {
 			instance = new Faculty();
 		}
 
@@ -20,12 +20,12 @@ public class Faculty {
 		researchers = new ArrayList<>();
 		researchLines = new ArrayList<>();
 	}
-	
+
 	public int linesWithAtLeastOneInstructorCandidate() {
 		int count = 0;
-		
-		for (ResearchLine l: researchLines) {
-			if(l.getRelatedDoctors().size() > 0) {
+
+		for (ResearchLine l : researchLines) {
+			if (l.getRelatedDoctors().size() > 0) {
 				count++;
 			}
 		}
@@ -38,7 +38,8 @@ public class Faculty {
 		this.researchers.add(profesor);
 
 		ResearchMatter matter = findResearchMatter(matterName);
-		if (matter != null) matter.addResearcher(profesor);
+		if (matter != null)
+			matter.addResearcher(profesor);
 
 		return profesor.getID();
 	}
@@ -48,7 +49,8 @@ public class Faculty {
 		researchers.add(student);
 
 		ResearchMatter matter = findResearchMatter(matterName);
-		if (matter != null) matter.addResearcher(student);
+		if (matter != null)
+			matter.addResearcher(student);
 
 		return student.getID();
 	}
@@ -86,8 +88,8 @@ public class Faculty {
 	public ResearchLine findResearchLineByCourse(PostgraduateCourse course) {
 		ResearchLine line = null;
 
-		for(ResearchLine r: researchLines) {
-			if(r.getMasteryPlan().getCourses().contains(course)) {
+		for (ResearchLine r : researchLines) {
+			if (r.getMasteryPlan().getCourses().contains(course)) {
 				line = r;
 			}
 		}
@@ -98,7 +100,7 @@ public class Faculty {
 	public ArrayList<Profesor> getProfesorsWithDegree(Degree degree) {
 		ArrayList<Profesor> profs = new ArrayList<>();
 
-		for(Profesor p: getProfesors()){
+		for (Profesor p : getProfesors()) {
 			if (p.getDegree() != null && p.getDegree() == degree) {
 				profs.add(p);
 			}
@@ -110,8 +112,8 @@ public class Faculty {
 	public ArrayList<String> getResearchMattersNames() {
 		ArrayList<String> matters = new ArrayList<>();
 
-		for (ResearchLine line: researchLines) {
-			for (ResearchMatter matter: line.getMatters()) {
+		for (ResearchLine line : researchLines) {
+			for (ResearchMatter matter : line.getMatters()) {
 				matters.add(matter.getName());
 			}
 		}
@@ -122,9 +124,9 @@ public class Faculty {
 	public ResearchMatter findMatterOf(int ID) {
 		ResearchMatter matter = null;
 
-		for (ResearchLine line: researchLines) {
-			for (ResearchMatter m: line.getMatters()) {
-				for (Researcher researcher: m.getResearchers()) {
+		for (ResearchLine line : researchLines) {
+			for (ResearchMatter m : line.getMatters()) {
+				for (Researcher researcher : m.getResearchers()) {
 					if (researcher.getID() == ID) {
 						matter = m;
 					}
@@ -260,18 +262,18 @@ public class Faculty {
 		return aprovalPendings;
 	}
 
-	// REPORTE 5: (Aleksandr): Maestrias con la mayor matrícula
+	// REPORTE 5: (Aleksandr): Maestrias con la mayor matrï¿½cula
 	public ArrayList<ResearchLine> trendingMasteryPlans() {
 		ArrayList<ResearchLine> best = new ArrayList<>();
 		int mayorMatric = 0;
 
-		for(ResearchLine r: researchLines) {
-			if(r.getMasteryPlan().getMatriculations().size() > mayorMatric) {
+		for (ResearchLine r : researchLines) {
+			if (r.getMasteryPlan().getMatriculations().size() > mayorMatric) {
 				best.clear();
 				mayorMatric = r.getMasteryPlan().getMatriculations().size();
 				best.add(r);
 			} else {
-				if(r.getMasteryPlan().getMatriculations().size() == mayorMatric) {
+				if (r.getMasteryPlan().getMatriculations().size() == mayorMatric) {
 					best.add(r);
 				}
 			}
@@ -284,7 +286,7 @@ public class Faculty {
 		ArrayList<Profesor> profesors = new ArrayList<>();
 		double max = Double.MIN_VALUE;
 
-		for (Profesor p: getProfesors()) {
+		for (Profesor p : getProfesors()) {
 			double avg = getAverageMarksOf(p.getID());
 
 			if (avg > max) {
@@ -303,8 +305,8 @@ public class Faculty {
 	private ArrayList<Matriculation> getMatriculationsOf(int ID) {
 		ArrayList<Matriculation> matriculations = new ArrayList<>();
 
-		for (ResearchLine l: researchLines) {
-			for (Matriculation m: l.getMasteryPlan().getMatriculations()) {
+		for (ResearchLine l : researchLines) {
+			for (Matriculation m : l.getMasteryPlan().getMatriculations()) {
 				if (m.getProfesor().getID() == ID) {
 					matriculations.add(m);
 				}
@@ -318,41 +320,42 @@ public class Faculty {
 		Researcher r = findResearcher(ID);
 
 		if (r == null || !(r instanceof Profesor)) {
-			throw new IllegalArgumentException("Researcher with ID " + ID + " either doesn't exits or its not a profesor");
+			throw new IllegalArgumentException(
+					"Researcher with ID " + ID + " either doesn't exits or its not a profesor");
 		}
 
 		int total = 0;
 		int counter = 0;
 		ArrayList<Matriculation> matriculations = getMatriculationsOf(r.getID());
 
-		for (Matriculation m: matriculations) {
+		for (Matriculation m : matriculations) {
 			if (m.hasMark()) {
 				total += m.getMark();
 				counter++;
 			}
 		}
 
-		return (double)total / Math.max(1, counter);
+		return (double) total / Math.max(1, counter);
 	}
 
-	public ArrayList<PostgraduateCourse> getCoursesList () {
+	public ArrayList<PostgraduateCourse> getCoursesList() {
 		ArrayList<PostgraduateCourse> courses = new ArrayList<>();
 
-		for(ResearchLine r: getResearchLines()){
+		for (ResearchLine r : getResearchLines()) {
 			MasteryPlan p = r.getMasteryPlan();
-			for(PostgraduateCourse c: p.getCourses()){
+			for (PostgraduateCourse c : p.getCourses()) {
 				courses.add(c);
 			}
 		}
 		return courses;
 	}
 
-	public PostgraduateCourse findCourseByName (String name) {
+	public PostgraduateCourse findCourseByName(String name) {
 		PostgraduateCourse course = null;
 
-		for (MasteryPlan m: getMasteryPlans()) {
-			for(PostgraduateCourse p: m.getCourses()) {
-				if(name.equalsIgnoreCase(p.getName())) {
+		for (MasteryPlan m : getMasteryPlans()) {
+			for (PostgraduateCourse p : m.getCourses()) {
+				if (name.equalsIgnoreCase(p.getName())) {
 					course = p;
 				}
 			}
@@ -373,14 +376,14 @@ public class Faculty {
 
 		newMatter.addResearcher(r);
 
-		if (matter != null) 
+		if (matter != null)
 			matter.getResearchers().remove(r);
 	}
 
 	public ArrayList<MasteryPlan> getMasteryPlans() {
 		ArrayList<MasteryPlan> masteries = new ArrayList<>();
 
-		for(ResearchLine r: researchLines) {
+		for (ResearchLine r : researchLines) {
 			masteries.add(r.getMasteryPlan());
 		}
 
@@ -405,7 +408,8 @@ public class Faculty {
 		int i = 0;
 
 		while (line == null && i < researchLines.size()) {
-			if (researchLines.get(i).getChief() == researcher) line = researchLines.get(i);
+			if (researchLines.get(i).getChief() == researcher)
+				line = researchLines.get(i);
 
 			i++;
 		}
@@ -416,7 +420,7 @@ public class Faculty {
 	public ArrayList<Breakthrough> getBreakthroughs() {
 		ArrayList<Breakthrough> breakthroughs = new ArrayList<>();
 
-		for (Researcher r: researchers) {
+		for (Researcher r : researchers) {
 			breakthroughs.addAll(r.getBreakthroughs());
 		}
 
@@ -445,18 +449,19 @@ public class Faculty {
 	public boolean canRemoveResearcher(int id) {
 		boolean canBeRemoved = true;
 		Researcher researcher = findResearcher(id);
-		
+
 		if (researcher instanceof Profesor) {
-			canBeRemoved = !isChief((Profesor)researcher) && !isInstructor((Profesor)researcher);
+			canBeRemoved = !isChief((Profesor) researcher) && !isInstructor((Profesor) researcher);
 		}
-		
+
 		return canBeRemoved;
 	}
-	
+
 	public boolean removeResearcher(int id) {
 		Researcher researcher = findResearcher(id);
 
-		if (researcher == null) throw new IllegalArgumentException("Researcher with ID " + id + " does not exist");
+		if (researcher == null)
+			throw new IllegalArgumentException("Researcher with ID " + id + " does not exist");
 		boolean canBeRemoved = canRemoveResearcher(id);
 
 		if (canBeRemoved) {
@@ -465,9 +470,9 @@ public class Faculty {
 
 			if (researcher instanceof Profesor) {
 				ResearchLine line = findResearchLineByMatter(matter);
-				line.getMasteryPlan().revertMatriculation((Profesor)researcher);
+				line.getMasteryPlan().revertMatriculation((Profesor) researcher);
 			}
-			
+
 			researchers.remove(researcher);
 		}
 
@@ -480,16 +485,16 @@ public class Faculty {
 
 		boolean removible = true;
 
-		if(line.getMasteryPlan().getCourses().contains(course)) {
-			// Cuando se elimina el curso hay restarle los créditos
-			// que aportaba el curso a los que habían aprobado
-			for (Matriculation m: line.getMasteryPlan().getMatriculations()) {
-				if (m.getCourse() == course && m.hasMark() && m.getMark() >= 3) {
-					Profesor p = m.getProfesor();
-					p.setCredits(p.getCredits() - course.getCredits());
-				}
+		if (line != null) {
+			// Cuando se elimina el curso hay restarle los crï¿½ditos
+			// que aportaba el curso a los que habï¿½an aprobado
+			Matriculation m = line.getMasteryPlan().findMatriculations(course);
+
+			if (m.getMark() >= 3) {
+				Profesor p = m.getProfesor();
+				p.setCredits(p.getCredits() - course.getCredits());
 			}
-			
+
 			line.getMasteryPlan().getCourses().remove(course);
 		} else {
 			removible = false;
@@ -527,25 +532,27 @@ public class Faculty {
 	public ResearchLine findResearchLineByMatter(ResearchMatter m) {
 		ResearchLine line = null;
 		int i = 0;
-		
-		while (line == null && i < researchLines.size()){
-			if (researchLines.get(i).getMatters().contains(m)) line = researchLines.get(i);
+
+		while (line == null && i < researchLines.size()) {
+			if (researchLines.get(i).getMatters().contains(m))
+				line = researchLines.get(i);
 			i++;
 		}
-		
+
 		return line;
 	}
 
 	public ResearchLine findResearchLineByResearcher(Researcher researcher) {
 		ResearchLine line = null;
 		int i = 0;
-		
-		while(line == null && i < researchLines.size()) {
-			if (researchLines.get(i).hasResearcher(researcher)) line = researchLines.get(i);
-			
+
+		while (line == null && i < researchLines.size()) {
+			if (researchLines.get(i).hasResearcher(researcher))
+				line = researchLines.get(i);
+
 			i++;
 		}
-		
+
 		return line;
 	}
 }

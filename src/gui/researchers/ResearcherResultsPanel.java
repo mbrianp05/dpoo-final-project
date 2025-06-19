@@ -43,21 +43,20 @@ public class ResearcherResultsPanel extends JPanel {
 	private Profesor profesor;
 	private Faculty faculty;
 	private ArrayList<Matriculation> matriculations;
-	
 
 	private JButton btnEdit;
 	private JSlider sliderMark;
 	private JCheckBox checkBoxAssignMark;
 	private JLabel markLabel;
-	
+
 	private JLabel aprovedLbl;
 	private JLabel progressLbl;
 	private JLabel averageLbl;
-	
+
 	private final JPanel contentPanel = new JPanel();
 	private JTable table;
 	private TitleLabel lblResearcherName;
-	
+
 	public ResearcherResultsPanel(Profesor profesor) {
 		faculty = Faculty.newInstance();
 		line = faculty.findResearchLineByResearcher(profesor);
@@ -67,10 +66,10 @@ public class ResearcherResultsPanel extends JPanel {
 		setLayout(new BorderLayout());
 		add(contentPanel, BorderLayout.CENTER);
 		GridBagLayout gbl_contentPanel = new GridBagLayout();
-		gbl_contentPanel.columnWidths = new int[]{70, 0, 0, 0, 0, 0, 70};
-		gbl_contentPanel.rowHeights = new int[]{40, 34, 10, 0, 15, 40, 0, 40, 0};
-		gbl_contentPanel.columnWeights = new double[]{0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0};
-		gbl_contentPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
+		gbl_contentPanel.columnWidths = new int[] { 70, 0, 0, 0, 0, 0, 70 };
+		gbl_contentPanel.rowHeights = new int[] { 40, 34, 10, 0, 15, 40, 0, 40, 0 };
+		gbl_contentPanel.columnWeights = new double[] { 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0 };
+		gbl_contentPanel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE };
 		contentPanel.setLayout(gbl_contentPanel);
 		{
 			JLabel lblResultadosAcadmicos = new JLabel("Resultados acad\u00E9micos");
@@ -104,12 +103,12 @@ public class ResearcherResultsPanel extends JPanel {
 				gbc_panel.gridy = 3;
 				contentPanel.add(panel, gbc_panel);
 				GridBagLayout gbl_panel = new GridBagLayout();
-				gbl_panel.columnWidths = new int[]{0, 0};
-				gbl_panel.rowHeights = new int[]{30, 0, 0, 30, 0};
-				gbl_panel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-				gbl_panel.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
+				gbl_panel.columnWidths = new int[] { 0, 0 };
+				gbl_panel.rowHeights = new int[] { 30, 0, 0, 30, 0 };
+				gbl_panel.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
+				gbl_panel.rowWeights = new double[] { 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE };
 				panel.setLayout(gbl_panel);
-				JLabel lblNewLabel = new JLabel("Progreso en la maestría");
+				JLabel lblNewLabel = new JLabel("Progreso en la maestrï¿½a");
 				lblNewLabel.setFont(new Font("Segoe UI", Font.ITALIC, 14));
 
 				GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
@@ -149,10 +148,10 @@ public class ResearcherResultsPanel extends JPanel {
 				gbc_panel.gridy = 3;
 				contentPanel.add(panel, gbc_panel);
 				GridBagLayout gbl_panel = new GridBagLayout();
-				gbl_panel.columnWidths = new int[]{0, 0};
-				gbl_panel.rowHeights = new int[]{30, 0, 0, 30, 0};
-				gbl_panel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-				gbl_panel.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
+				gbl_panel.columnWidths = new int[] { 0, 0 };
+				gbl_panel.rowHeights = new int[] { 30, 0, 0, 30, 0 };
+				gbl_panel.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
+				gbl_panel.rowWeights = new double[] { 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE };
 				panel.setLayout(gbl_panel);
 				{
 					JLabel lblPromedioDeNotas = new JLabel("Promedio de notas");
@@ -186,7 +185,7 @@ public class ResearcherResultsPanel extends JPanel {
 			}
 			{
 				JPanel panel = new JPanel();
-				panel.setBorder(BorderFactory.createLineBorder(new Color(68,38,24), 1));
+				panel.setBorder(BorderFactory.createLineBorder(new Color(68, 38, 24), 1));
 				GridBagConstraints gbc_panel = new GridBagConstraints();
 				gbc_panel.gridwidth = 3;
 				gbc_panel.insets = new Insets(0, 0, 5, 5);
@@ -195,10 +194,10 @@ public class ResearcherResultsPanel extends JPanel {
 				gbc_panel.gridy = 3;
 				contentPanel.add(panel, gbc_panel);
 				GridBagLayout gbl_panel = new GridBagLayout();
-				gbl_panel.columnWidths = new int[]{0, 0};
-				gbl_panel.rowHeights = new int[]{30, 0, 0, 30, 0};
-				gbl_panel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-				gbl_panel.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
+				gbl_panel.columnWidths = new int[] { 0, 0 };
+				gbl_panel.rowHeights = new int[] { 30, 0, 0, 30, 0 };
+				gbl_panel.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
+				gbl_panel.rowWeights = new double[] { 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE };
 				panel.setLayout(gbl_panel);
 				{
 					JLabel lblAsignaturasAprobadas = new JLabel("Cursos aprobados");
@@ -212,14 +211,14 @@ public class ResearcherResultsPanel extends JPanel {
 				}
 				{
 					int aproved = 0;
-					for (Matriculation m: matriculations) {
+					for (Matriculation m : matriculations) {
 						if (m.getMark() >= 3) {
 							aproved++;
 						}
 					}
 					{
 						JSeparator separator = new JSeparator();
-						separator.setForeground(new Color(68,38,24));
+						separator.setForeground(new Color(68, 38, 24));
 						GridBagConstraints gbc_separator = new GridBagConstraints();
 						gbc_separator.fill = GridBagConstraints.BOTH;
 						gbc_separator.insets = new Insets(0, 0, 5, 0);
@@ -227,7 +226,7 @@ public class ResearcherResultsPanel extends JPanel {
 						gbc_separator.gridy = 1;
 						panel.add(separator, gbc_separator);
 					}
-					
+
 					aprovedLbl = new JLabel(String.valueOf(aproved));
 					aprovedLbl.setFont(new Font("Segoe UI", Font.PLAIN, 45));
 					GridBagConstraints gbc_aprovedLlbl = new GridBagConstraints();
@@ -240,17 +239,17 @@ public class ResearcherResultsPanel extends JPanel {
 			{
 				btnEdit = new JButton("Editar");
 				btnEdit.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent arg0) {						
+					public void actionPerformed(ActionEvent arg0) {
 						Matriculation m = matriculations.get(table.getSelectedRow());
-						
+
 						if (checkBoxAssignMark.isSelected()) {
 							m.setMark(sliderMark.getValue());
 						} else {
 							m.noMarkYet();
 						}
-						
-						JOptionPane.showMessageDialog(null, "¡Se ha actualizado la nota exitosamente!");
-						
+
+						JOptionPane.showMessageDialog(null, "ï¿½Se ha actualizado la nota exitosamente!");
+
 						loadData();
 						initTable();
 					}
@@ -264,24 +263,24 @@ public class ResearcherResultsPanel extends JPanel {
 				btnEdit.setVisible(false);
 				{
 					checkBoxAssignMark = new JCheckBox("Asignar nota");
-					
+
 					checkBoxAssignMark.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent arg0) {
-							if(!checkBoxAssignMark.isSelected()) {
+							if (!checkBoxAssignMark.isSelected()) {
 								sliderMark.setValue(2);
 							}
-							
+
 							sliderMark.setEnabled(checkBoxAssignMark.isSelected());
 						}
 					});
-					
+
 					GridBagConstraints gbc_checkBoxAssignMark = new GridBagConstraints();
 					gbc_checkBoxAssignMark.anchor = GridBagConstraints.EAST;
 					gbc_checkBoxAssignMark.fill = GridBagConstraints.VERTICAL;
 					gbc_checkBoxAssignMark.insets = new Insets(0, 0, 5, 5);
 					gbc_checkBoxAssignMark.gridx = 2;
 					gbc_checkBoxAssignMark.gridy = 5;
-					
+
 					contentPanel.add(checkBoxAssignMark, gbc_checkBoxAssignMark);
 				}
 				{
@@ -327,8 +326,7 @@ public class ResearcherResultsPanel extends JPanel {
 					table.setFont(Constants.getLabelFont());
 					table.setModel(new DefaultTableModel(
 							new Object[][] {},
-							new String[] {"Curso", "Nota"}
-							) {
+							new String[] { "Curso", "Nota" }) {
 						private static final long serialVersionUID = 6062319489520125102L;
 
 						public boolean isCellEditable(int row, int column) {
@@ -370,52 +368,53 @@ public class ResearcherResultsPanel extends JPanel {
 				}
 			}
 		}
-		
+
 		handleEditMarkVisibility();
 	}
-	
+
 	private void initTable() {
-		((DefaultTableModel)table.getModel()).setRowCount(0);
-		
-		for (Matriculation m: matriculations) {
+		((DefaultTableModel) table.getModel()).setRowCount(0);
+
+		for (Matriculation m : matriculations) {
 			String mark = "-";
-			if (m.hasMark()) mark = String.valueOf(m.getMark());
-			((DefaultTableModel)table.getModel()).addRow(new Object[] { m.getCourse().getName(), mark });
+			if (m.hasMark())
+				mark = String.valueOf(m.getMark());
+			((DefaultTableModel) table.getModel()).addRow(new Object[] { m.getCourse().getName(), mark });
 		}
 	}
-	
+
 	private void loadData() {
 		double percentage = line.getMasteryPlan().progressMade(matriculations) * 100;
-		
+
 		progressLbl.setText(String.valueOf(percentage));
 		averageLbl.setText(String.valueOf(faculty.getAverageMarksOf(profesor.getID())));
-		
+
 		int aproved = 0;
-		for (Matriculation m: matriculations) {
+		for (Matriculation m : matriculations) {
 			if (m.getMark() >= 3) {
 				aproved++;
 			}
 		}
 		aprovedLbl.setText(String.valueOf(aproved));
 	}
-	
+
 	private void handleEditMarkVisibility() {
 		boolean visible = table.getSelectedRow() >= 0;
-		
+
 		btnEdit.setVisible(visible);
 		sliderMark.setVisible(visible);
 		checkBoxAssignMark.setVisible(visible);
 		markLabel.setVisible(visible);
-		
+
 		if (visible) {
 			Matriculation m = matriculations.get(table.getSelectedRow());
-			
+
 			sliderMark.setValue(m.getMark());
 			checkBoxAssignMark.setSelected(m.hasMark());
 			sliderMark.setEnabled(checkBoxAssignMark.isSelected());
 		}
 	}
-	
+
 	public void update() {
 		lblResearcherName.setText(profesor.getName());
 	}
