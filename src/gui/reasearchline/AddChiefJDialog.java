@@ -37,7 +37,7 @@ public class AddChiefJDialog extends JDialog {
 		this.matters = matters;
 		this.listener = listener;
 		this.data = data;
-		setTitle("Insertar datos el jefe de la l\u00EDnea");
+		setTitle("Insertar datos del jefe de la l\u00EDnea");
 		setModal(true);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{70, 0, 70, 0};
