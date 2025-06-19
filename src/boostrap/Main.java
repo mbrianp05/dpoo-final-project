@@ -26,13 +26,11 @@ public class Main {
 			UIManager.put("CheckBox.background", new Color(255, 255, 255));
 			UIManager.put("RadioButton.background", new Color(255, 255, 255));
 			UIManager.put("RadioButton.foreground", new Color(14, 44, 90));
-			UIManager.put("ScrollPane.border",
-					BorderFactory.createEmptyBorder());
+			UIManager.put("ScrollPane.border", BorderFactory.createEmptyBorder());
 			UIManager.put("ScrollPanel.border", BorderFactory.createEmptyBorder());
 			UIManager.put("Table.gridColor", new Color(50, 50, 50));
 			UIManager.put("TableHeader.showGrid", false);
-			UIManager.put("TableHeader.border",
-					BorderFactory.createEmptyBorder(0, 0, 0, 0));
+			UIManager.put("TableHeader.border", BorderFactory.createEmptyBorder(0, 0, 0, 0));
 			UIManager.put("TableHeader.font", Constants.getLabelFont());
 			UIManager.put("OptionPane.background", new Color(255, 255, 255));
 			UIManager.put("OptionPane.messageFont", Constants.getLabelFont());

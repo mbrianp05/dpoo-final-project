@@ -34,17 +34,17 @@ import utils.Constants;
 
 public class ApprovalPendingsJDialog extends JDialog {
 	private static final long serialVersionUID = 1L;
-	
+
 	private final JPanel contentPanel = new JPanel();
 	final private Color mainColor;
 	final private Color borderColor;
 	private JTable table;
-	
+
 	public ApprovalPendingsJDialog() {
 		mainColor = new Color(102, 205, 170);
 		borderColor = new Color(47, 79, 79);
 
-		setTitle("Profesores con suficientes créditos");
+		setTitle("Profesores con suficientes crï¿½ditos");
 		setUndecorated(true);
 		setModal(true);
 		setModalExclusionType(ModalExclusionType.APPLICATION_EXCLUDE);
@@ -55,10 +55,10 @@ public class ApprovalPendingsJDialog extends JDialog {
 		contentPanel.setBorder(new CompoundBorder(new LineBorder(borderColor), new EmptyBorder(10, 10, 10, 10)));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		GridBagLayout gbl_contentPanel = new GridBagLayout();
-		gbl_contentPanel.columnWidths = new int[]{0, 0};
-		gbl_contentPanel.rowHeights = new int[]{34, 10, 0, 0};
-		gbl_contentPanel.columnWeights = new double[]{1.0, 0.0};
-		gbl_contentPanel.rowWeights = new double[]{0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gbl_contentPanel.columnWidths = new int[] { 0, 0 };
+		gbl_contentPanel.rowHeights = new int[] { 34, 10, 0, 0 };
+		gbl_contentPanel.columnWeights = new double[] { 1.0, 0.0 };
+		gbl_contentPanel.rowWeights = new double[] { 0.0, 0.0, 1.0, Double.MIN_VALUE };
 		contentPanel.setLayout(gbl_contentPanel);
 		{
 			TitleLabel tlblMaestriasListas = new TitleLabel();
@@ -80,21 +80,21 @@ public class ApprovalPendingsJDialog extends JDialog {
 			icon = new ImageIcon(icon.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
 
 			final JLabel btnCloseButton = new JLabel(icon);
-			
+
 			btnCloseButton.setOpaque(false);
 			btnCloseButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 			btnCloseButton.setBorder(BorderFactory.createEmptyBorder());
 			btnCloseButton.setBackground(new Color(0, 0, 0, 0f));
 			btnCloseButton.setBackground(Color.WHITE);
 			btnCloseButton.setFont(new Font("Segoe UI", Font.PLAIN, 15));
-			
+
 			btnCloseButton.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent arg0) {
 					closeDialog();
 				}
 			});
-			
+
 			GridBagConstraints gbc_btnCloseButton = new GridBagConstraints();
 			gbc_btnCloseButton.insets = new Insets(0, 0, 5, 0);
 			gbc_btnCloseButton.fill = GridBagConstraints.BOTH;
@@ -112,22 +112,18 @@ public class ApprovalPendingsJDialog extends JDialog {
 				{
 					table = new JTable();
 					table.setFont(Constants.getLabelFont());
-					table.setModel(new DefaultTableModel(
-							new Object[][] {},
-							new String[] {
-									"Nombre", "Créditos acumulados"
-							}
-							) {
-						private static final long serialVersionUID = 6062319489520125102L;
+					table.setModel(
+							new DefaultTableModel(new Object[][] {}, new String[] { "Nombre", "Crï¿½ditos acumulados" }) {
+								private static final long serialVersionUID = 6062319489520125102L;
 
-						public boolean isCellEditable(int row, int column) {
-							return false;
-						}
-					});
+								public boolean isCellEditable(int row, int column) {
+									return false;
+								}
+							});
 					table.getTableHeader().setDefaultRenderer(new TableCellRenderer() {
 						@Override
-						public Component getTableCellRendererComponent(JTable table, Object value,
-								boolean isSelected, boolean hasFocus, int row, int column) {
+						public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+								boolean hasFocus, int row, int column) {
 							JLabel label = new JLabel(value.toString());
 							label.setFont(Constants.getLabelFont().deriveFont(Font.PLAIN, 17));
 							label.setBackground(mainColor);
@@ -142,8 +138,8 @@ public class ApprovalPendingsJDialog extends JDialog {
 
 					Faculty faculty = Faculty.newInstance();
 
-					for (Profesor p: faculty.pendingAprovals()) {
-						((DefaultTableModel)table.getModel()).addRow(new Object[] { p.getName(), p.getCredits() });
+					for (Profesor p : faculty.pendingAprovals()) {
+						((DefaultTableModel) table.getModel()).addRow(new Object[] { p.getName(), p.getCredits() });
 					}
 
 					table.setEnabled(false);
@@ -160,9 +156,8 @@ public class ApprovalPendingsJDialog extends JDialog {
 		}
 	}
 
-
 	private void closeDialog() {
 		dispose();
 	}
-	
+
 }
