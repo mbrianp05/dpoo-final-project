@@ -44,7 +44,7 @@ public class EditResearchLineJDialog extends JDialog {
 		
 		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(EditResearchLineJDialog.class.getResource("/com/sun/javafx/scene/web/skin/FontBackgroundColor_16x16_JFX.png")));
-		setTitle("Editar datos de la l\u00EDena");
+		setTitle("Editar datos de la l\u00EDnea");
 		setModal(true);
 		setBounds(100, 100, 891, 739);
 		getContentPane().setLayout(new BorderLayout());
