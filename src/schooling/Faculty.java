@@ -126,7 +126,7 @@ public class Faculty {
 		Researcher researcher = findResearcher(ID);
 
 		for (ResearchLine line : researchLines) {
-			if (line.hasResearcher(id)) {
+			if (line.hasResearcher(researcher)) {
 				for (ResearchMatter m : line.getMatters()) {
 					if (m.getResearchers().contains(researcher)) {
 						matter = m;
@@ -489,11 +489,12 @@ public class Faculty {
 		if (line != null) {
 			// Cuando se elimina el curso hay restarle los cr�ditos
 			// que aportaba el curso a los que hab�an aprobado
-			Matriculation m = line.getMasteryPlan().findMatriculations(course);
-
-			if (m.getMark() >= 3) {
-				Profesor p = m.getProfesor();
-				p.setCredits(p.getCredits() - course.getCredits());
+			ArrayList<Matriculation> matrs = line.getMasteryPlan().findMatriculations(course);
+			for(Matriculation m: matrs){
+				if (m.getMark() >= 3) {
+					Profesor p = m.getProfesor();
+					p.setCredits(p.getCredits() - course.getCredits());
+				}
 			}
 
 			line.getMasteryPlan().getCourses().remove(course);
