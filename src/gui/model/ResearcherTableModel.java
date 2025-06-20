@@ -29,7 +29,7 @@ public class ResearcherTableModel extends DefaultTableModel {
 		includeProfesorsFilter = true;
 		includeStudentsFilter = true;
 
-		String[] columns = {"ID", "Nombre", "Línea", "Tema", "Puntuación"};
+		String[] columns = { "ID", "Nombre", "Lï¿½nea", "Tema", "Puntuaciï¿½n" };
 		this.setColumnIdentifiers(columns);
 
 		fill();
@@ -47,15 +47,14 @@ public class ResearcherTableModel extends DefaultTableModel {
 			matterName = matter.getName();
 		}
 
-		Object[] newRow = new Object[]{String.valueOf(r.getID()), r.getName(), faculty.findResearchLineByResearcher(r).getName(), matterName, r.getScore()};
+		Object[] newRow = new Object[] { String.valueOf(r.getID()), r.getName(),
+				faculty.findResearchLineByResearcher(r).getName(), matterName, r.getScore() };
 
 		addRow(newRow);
 	}
 
-	public void emptyTable() {		
-		while (getRowCount() > 0) {
-			removeRow(0);
-		}
+	public void emptyTable() {
+		setRowCount(0);
 	}
 
 	public void setFilterMatter(String filter) {
@@ -89,9 +88,9 @@ public class ResearcherTableModel extends DefaultTableModel {
 		if (filterMatter.isEmpty()) {
 			filtered = researchers;
 		} else {
-			for (Researcher r: researchers) {
+			for (Researcher r : researchers) {
 				ResearchMatter matter = faculty.findMatterOf(r.getID());
-				
+
 				if (matter != null && matter.getName().startsWith(filterMatter)) {
 					filtered.add(r);
 				}
@@ -107,7 +106,7 @@ public class ResearcherTableModel extends DefaultTableModel {
 		if (filterName.isEmpty()) {
 			filtered = researchers;
 		} else {
-			for (Researcher r: researchers) {
+			for (Researcher r : researchers) {
 				if (r.getName().startsWith(filterName)) {
 					filtered.add(r);
 				}
@@ -123,7 +122,7 @@ public class ResearcherTableModel extends DefaultTableModel {
 		if (filterMinScore <= 0) {
 			filtered = researchers;
 		} else {
-			for (Researcher r: researchers) {
+			for (Researcher r : researchers) {
 				if (r.getScore() >= filterMinScore) {
 					filtered.add(r);
 				}
@@ -136,7 +135,7 @@ public class ResearcherTableModel extends DefaultTableModel {
 	private ArrayList<Researcher> filterByKind(ArrayList<Researcher> researchers) {
 		ArrayList<Researcher> filtered = new ArrayList<>();
 
-		for (Researcher r: researchers) {
+		for (Researcher r : researchers) {
 			if (includeProfesorsFilter && r instanceof Profesor) {
 				filtered.add(r);
 			}
@@ -159,7 +158,7 @@ public class ResearcherTableModel extends DefaultTableModel {
 		filter = filterByScore(filter);
 		filter = filterByKind(filter);
 
-		for (Researcher r: filter) {
+		for (Researcher r : filter) {
 			addNew(r);
 		}
 	}
