@@ -21,7 +21,7 @@ public abstract class Researcher {
 
 		score = 0;
 		breakthroughs = new ArrayList<>();
-		
+
 		setName(name);
 	}
 
@@ -31,7 +31,7 @@ public abstract class Researcher {
 
 	public void setName(String name) {
 		if (!Validation.notEmpty(name)) {
-			throw new IllegalArgumentException("El nombre del investigador no debe estar vacío");
+			throw new IllegalArgumentException("Researcher's name cannot be empty");
 		}
 
 		this.name = name;
@@ -40,13 +40,15 @@ public abstract class Researcher {
 	public String getName() {
 		return name;
 	}
-	
+
 	public void removeBreakthrough(Breakthrough breakthrough) {
 		score -= breakthrough.getScore();
 		breakthroughs.remove(breakthrough);
-		
-		if (breakthrough instanceof Chapter) Validation.removeValue("ISSN", ((Chapter)breakthrough).getISSN());
-		if (breakthrough instanceof Presentation) Validation.removeValue("ISBN", ((Presentation)breakthrough).getISBN());
+
+		if (breakthrough instanceof Chapter)
+			Validation.removeValue("ISSN", ((Chapter) breakthrough).getISSN());
+		if (breakthrough instanceof Presentation)
+			Validation.removeValue("ISBN", ((Presentation) breakthrough).getISBN());
 	}
 
 	public void addPaper(String title, int no, int volume, int year, TargetedGroup group) {

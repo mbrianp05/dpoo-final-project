@@ -24,7 +24,7 @@ public class ResearchLine {
 
 	public void setName(String name) {
 		if (!Validation.notEmpty(name))
-			throw new IllegalArgumentException("El nombre no puede estar vac�o");
+			throw new IllegalArgumentException("Line name cannot be empty");
 
 		this.name = name;
 	}

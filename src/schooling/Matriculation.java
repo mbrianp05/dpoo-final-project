@@ -11,31 +11,32 @@ public class Matriculation {
     }
 
     public void noMarkYet() {
-    	mark = -1;
+        mark = -1;
     }
-    
-    public void setMark(int mark) {
-    	if (mark > 5 || mark < 2) throw new IllegalArgumentException("La nota válida está entre 2 y 5");
 
-    	if (mark <= 2 && this.mark >= 3) {
-    		profesor.setCredits(profesor.getCredits() - course.getCredits());
-    	}
-    	
-    	if (mark >= 3 && this.mark <= 2) {
-    		profesor.setCredits(profesor.getCredits() + course.getCredits());
-    	}
-    	
-    	this.mark = mark;
+    public void setMark(int mark) {
+        if (mark > 5 || mark < 2)
+            throw new IllegalArgumentException("Valid marks are between 2 and 5");
+
+        if (mark <= 2 && this.mark >= 3) {
+            profesor.setCredits(profesor.getCredits() - course.getCredits());
+        }
+
+        if (mark >= 3 && this.mark <= 2) {
+            profesor.setCredits(profesor.getCredits() + course.getCredits());
+        }
+
+        this.mark = mark;
     }
-    
+
     public int getMark() {
-    	return mark;
+        return mark;
     }
-    
+
     public boolean hasMark() {
-    	return mark != -1;
+        return mark != -1;
     }
-    
+
     public void setProfesor(Profesor profesor) {
         if (profesor.getDegree() != null)
             throw new IllegalArgumentException(

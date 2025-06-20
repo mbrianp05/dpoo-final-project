@@ -31,7 +31,7 @@ public class Profesor extends Researcher {
 
 	public void setCredits(int credits) {
 		if (credits < 0) {
-			throw new IllegalArgumentException("Los cr�ditos no pueden ser un n�mero negativo");
+			throw new IllegalArgumentException("Credits cannot be negative");
 		}
 
 		this.credits = credits;

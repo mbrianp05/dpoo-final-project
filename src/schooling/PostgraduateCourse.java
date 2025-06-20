@@ -12,17 +12,16 @@ public class PostgraduateCourse {
 		setName(name);
 		setDescription(description);
 		setInstructor(instructor);
-		setCredits(credits);		
+		setCredits(credits);
 	}
 
-	
 	public String getName() {
 		return name;
 	}
 
 	public void setName(String name) {
 		if (!Validation.notEmpty(name))
-			throw new IllegalArgumentException("El nombre del curso no puede estar vac�o");
+			throw new IllegalArgumentException("Course name cannot be empty");
 
 		this.name = name;
 	}
@@ -33,7 +32,7 @@ public class PostgraduateCourse {
 
 	public void setDescription(String description) {
 		if (!Validation.notEmpty(description))
-			throw new IllegalArgumentException("La descripci�n del curso no puede estar vac�o");
+			throw new IllegalArgumentException("Description cannot be empty");
 
 		this.description = description;
 	}
@@ -44,8 +43,7 @@ public class PostgraduateCourse {
 
 	public void setInstructor(Profesor instructor) {
 		if (instructor.getDegree() != null && instructor.getDegree() != Degree.Doctor)
-			throw new IllegalArgumentException(
-					"Solo los profesores con categor�a Doctor pueden impartir cursos de postgrado");
+			throw new IllegalArgumentException("Only profesors with doctor degree can be instructors of courses");
 
 		this.instructor = instructor;
 	}
@@ -56,7 +54,7 @@ public class PostgraduateCourse {
 
 	public void setCredits(int credits) {
 		if (credits < 1)
-			throw new IllegalArgumentException("El curso debe aportar al menos 1 cr�dito");
+			throw new IllegalArgumentException("Courses give at least one credit");
 
 		this.credits = credits;
 	}

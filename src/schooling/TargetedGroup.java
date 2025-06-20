@@ -1,9 +1,5 @@
 package schooling;
 
 public enum TargetedGroup {
-    Wos,
-    Group1,
-    Group2,
-    Group3,
-    Group4,
+    Wos, Group1, Group2, Group3, Group4,
 }
