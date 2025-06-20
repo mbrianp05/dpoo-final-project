@@ -4,14 +4,13 @@ import java.util.Random;
 
 public class CodeGenerator {
 	public static String generateRandomCode(int length) {
-		String numbers = "0123456789";
 		Random random = new Random();
-		StringBuilder sb = new StringBuilder(length);
+		String result = "";
 
 		for (int i = 0; i < length; i++) {
-			sb.append(numbers.charAt(random.nextInt(numbers.length())));
+			result += random.nextInt(10);
 		}
 
-		return sb.toString();
+		return result;
 	}
 }
