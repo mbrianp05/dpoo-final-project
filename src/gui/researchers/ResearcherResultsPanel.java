@@ -23,6 +23,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JSlider;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
@@ -324,9 +325,7 @@ public class ResearcherResultsPanel extends JPanel {
 				{
 					table = new JTable();
 					table.setFont(Constants.getLabelFont());
-					table.setModel(new DefaultTableModel(
-							new Object[][] {},
-							new String[] { "Curso", "Nota" }) {
+					table.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Curso", "Nota" }) {
 						private static final long serialVersionUID = 6062319489520125102L;
 
 						public boolean isCellEditable(int row, int column) {
@@ -341,8 +340,8 @@ public class ResearcherResultsPanel extends JPanel {
 					});
 					table.getTableHeader().setDefaultRenderer(new TableCellRenderer() {
 						@Override
-						public Component getTableCellRendererComponent(JTable table, Object value,
-								boolean isSelected, boolean hasFocus, int row, int column) {
+						public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+								boolean hasFocus, int row, int column) {
 							JLabel label = new JLabel(value.toString());
 							label.setFont(Constants.getLabelFont().deriveFont(Font.PLAIN, 17));
 							label.setBorder(BorderFactory.createMatteBorder(1, 0, 1, 0, new Color(200, 200, 200)));
@@ -357,6 +356,7 @@ public class ResearcherResultsPanel extends JPanel {
 
 					initTable();
 
+					table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 					table.setBackground(new Color(255, 255, 255));
 					table.setGridColor(new Color(255, 255, 255, 255));
 					table.setRowHeight(24);
