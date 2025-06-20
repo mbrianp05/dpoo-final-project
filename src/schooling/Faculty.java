@@ -123,11 +123,12 @@ public class Faculty {
 
 	public ResearchMatter findMatterOf(int ID) {
 		ResearchMatter matter = null;
+		Researcher researcher = findResearcher(ID);
 
 		for (ResearchLine line : researchLines) {
-			for (ResearchMatter m : line.getMatters()) {
-				for (Researcher researcher : m.getResearchers()) {
-					if (researcher.getID() == ID) {
+			if (line.hasResearcher(id)) {
+				for (ResearchMatter m : line.getMatters()) {
+					if (m.getResearchers().contains(researcher)) {
 						matter = m;
 					}
 				}

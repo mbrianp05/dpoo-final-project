@@ -48,32 +48,32 @@ public class ResearchLine {
 	public ArrayList<ResearchMatter> getMatters() {
 		return matters;
 	}
-	
+
 	public ArrayList<Profesor> getRelatedDoctors() {
 		ArrayList<Profesor> doctors = new ArrayList<>();
-		
-		for(ResearchMatter r: matters) {
-			for(Researcher res: r.getResearchers()) {
-				if(res instanceof Profesor) {
-					Profesor prof = (Profesor)res;
-					
-					if(prof.getDegree() == Degree.Doctor) {
+
+		for (ResearchMatter r : matters) {
+			for (Researcher res : r.getResearchers()) {
+				if (res instanceof Profesor) {
+					Profesor prof = (Profesor) res;
+
+					if (prof.getDegree() == Degree.Doctor) {
 						doctors.add(prof);
 					}
 				}
 			}
 		}
-		
+
 		return doctors;
 	}
-	
+
 	public int getResearchersInvolvedCount() {
 		int count = 0;
-		
-		for (ResearchMatter m: matters) {
+
+		for (ResearchMatter m : matters) {
 			count += m.getResearchers().size();
 		}
-		
+
 		return count;
 	}
 
@@ -84,76 +84,77 @@ public class ResearchLine {
 	public ResearchMatter findMatter(String name) {
 		ResearchMatter m = null;
 		int i = 0;
-		
-		while(m == null && i < matters.size()) {
+
+		while (m == null && i < matters.size()) {
 			if (matters.get(i).getName().equals(name)) {
 				m = matters.get(i);
 			}
-			
+
 			i++;
 		}
-		
+
 		return m;
 	}
 
 	public ArrayList<Profesor> getProfesorsInvolved() {
 		ArrayList<Profesor> profesors = new ArrayList<>();
-		
-		for (ResearchMatter m: matters) {
-			for (Researcher r: m.getResearchers()) {
+
+		for (ResearchMatter m : matters) {
+			for (Researcher r : m.getResearchers()) {
 				if (r instanceof Profesor) {
-					profesors.add((Profesor)r);
+					profesors.add((Profesor) r);
 				}
 			}
 		}
-		
+
 		return profesors;
 	}
 
 	public ArrayList<Profesor> getMatriculableProfesors() {
 		ArrayList<Profesor> profesors = new ArrayList<>();
-	
-		for (Profesor p: getProfesorsWithoutDegree()) {
+
+		for (Profesor p : getProfesorsWithoutDegree()) {
 			if (!hasMatriculation(p)) {
 				profesors.add(p);
 			}
 		}
-		
+
 		return profesors;
 	}
-	
+
 	public ArrayList<Profesor> getProfesorsWithoutDegree() {
 		ArrayList<Profesor> profesors = new ArrayList<>();
-		
-		for (Profesor p: getProfesorsInvolved()) {
-			if (p.getDegree() == null) profesors.add(p);
+
+		for (Profesor p : getProfesorsInvolved()) {
+			if (p.getDegree() == null)
+				profesors.add(p);
 		}
-		
+
 		return profesors;
 	}
-	
+
 	public boolean hasMatriculation(Profesor p) {
 		boolean result = false;
 		int i = 0;
-		
+
 		while (!result && i < masteryPlan.getMatriculations().size()) {
 			result = masteryPlan.getMatriculations().get(i).getProfesor() == p;
-			
+
 			i++;
 		}
-		
+
 		return result;
 	}
 
 	public boolean hasResearcher(Researcher researcher) {
 		boolean result = false;
 		int i = 0;
-		
+
 		while (!result && i < matters.size()) {
 			result = matters.get(i).getResearchers().contains(researcher);
 			i++;
 		}
-		
+
 		return result;
 	}
 }
