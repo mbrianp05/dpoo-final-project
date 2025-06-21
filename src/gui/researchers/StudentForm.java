@@ -95,7 +95,7 @@ public class StudentForm extends JPanel {
 
 	private void insert() {
 		if (Validation.notEmpty(textFieldName.getText())) {
-			int id = faculty.addStudent(textFieldName.getText(), getMatter());
+			int id = faculty.addStudent(textFieldName.getText().trim(), getMatter());
 
 			if (listener != null) {
 				listener.newResearcher(id);
@@ -109,7 +109,7 @@ public class StudentForm extends JPanel {
 
 	private void update() {
 		if (Validation.notEmpty(textFieldName.getText())) {
-			student.setName(textFieldName.getText());
+			student.setName(textFieldName.getText().trim());
 
 			faculty.moveToOtherMatter(student.getID(), getMatter());
 
@@ -118,6 +118,7 @@ public class StudentForm extends JPanel {
 			}
 
 			errorLabel.setVisible(false);
+			btnSubmit.setEnabled(false);
 		} else {
 			errorLabel.setVisible(true);
 		}
@@ -137,10 +138,15 @@ public class StudentForm extends JPanel {
 			});
 			btnSubmit.setBackground(Constants.getInsertionBtnColor());
 			btnSubmit.setFont(new Font("Segoe UI", Font.BOLD, 15));
+<<<<<<< HEAD
 
 			if(student != null)
 				btnSubmit.setEnabled(false);
 
+=======
+			
+			if (student != null) btnSubmit.setEnabled(false);
+>>>>>>> 15f1757f33c4e914d0662881f2c83fa84b1f57cb
 		}
 		return btnSubmit;
 	}
@@ -151,7 +157,11 @@ public class StudentForm extends JPanel {
 
 	private ResearchMatterComboBox getResearchMatterComboBox() {
 		if (researchMatterComboBox == null) {
+<<<<<<< HEAD
 			researchMatterComboBox = new ResearchMatterComboBox(faculty);			
+=======
+			researchMatterComboBox = new ResearchMatterComboBox(faculty);
+>>>>>>> 15f1757f33c4e914d0662881f2c83fa84b1f57cb
 			researchMatterComboBox.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 
 			if (editing) {
@@ -172,6 +182,13 @@ public class StudentForm extends JPanel {
 
 					researchMatterComboBox.setSelectedIndex(index);
 				}
+				
+				researchMatterComboBox.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent arg0) {
+						hasChanges();
+					}
+				});
 			}
 			if(student != null) {
 				researchMatterComboBox.addActionListener(new ActionListener() {
@@ -228,7 +245,11 @@ public class StudentForm extends JPanel {
 			gbc_btnSubmit.anchor = GridBagConstraints.EAST;
 			gbc_btnSubmit.gridx = 0;
 			gbc_btnSubmit.gridy = 6;
+<<<<<<< HEAD
 			panel.add(getBtnSubmit(), gbc_btnSubmit);			
+=======
+			panel.add(getBtnSubmit(), gbc_btnSubmit);
+>>>>>>> 15f1757f33c4e914d0662881f2c83fa84b1f57cb
 		}
 		return panel;
 	}
@@ -236,6 +257,7 @@ public class StudentForm extends JPanel {
 	private JTextField getTextFieldName() {
 		if (textFieldName == null) {
 			textFieldName = new JTextField();
+<<<<<<< HEAD
 			if(student != null) {
 				textFieldName.addKeyListener(new KeyAdapter() {
 					@Override
@@ -244,16 +266,26 @@ public class StudentForm extends JPanel {
 					}
 				});
 			}
+=======
+>>>>>>> 15f1757f33c4e914d0662881f2c83fa84b1f57cb
 			textFieldName.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 			textFieldName.setColumns(10);
 
 			if (editing) {
 				textFieldName.setText(student.getName());
+				
+				textFieldName.addKeyListener(new KeyAdapter() {
+					@Override
+					public void keyReleased(KeyEvent arg0) {
+						hasChanges();
+					}
+				});
 			}
 		}
 		return textFieldName;
 	}
 
+<<<<<<< HEAD
 	public void hasChanges() {
 
 		String name = textFieldName.getText();
@@ -262,6 +294,14 @@ public class StudentForm extends JPanel {
 
 		btnSubmit.setEnabled(differ);
 
+=======
+	private void hasChanges() {
+		String name = textFieldName.getName().trim();
+		String matter = getMatter();
+		
+		boolean hasChanges = !student.getName().equals(name) || !faculty.findMatterOf(student.getID()).getName().equals(matter);
+		btnSubmit.setEnabled(hasChanges);
+>>>>>>> 15f1757f33c4e914d0662881f2c83fa84b1f57cb
 	}
 
 	private ErrorLabel getErrorLabel() {

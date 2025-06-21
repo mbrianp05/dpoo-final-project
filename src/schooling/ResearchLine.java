@@ -157,4 +157,17 @@ public class ResearchLine {
 
 		return result;
 	}
+
+	public boolean hasMatter(String name) {
+		boolean found = false;
+		int i = 0;
+		
+		while (!found && i < matters.size()) {
+			found = matters.get(i).getName().equals(name);
+			
+			i++;
+		}
+		
+		return found;
+	}
 }
