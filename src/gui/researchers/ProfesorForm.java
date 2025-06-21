@@ -261,9 +261,7 @@ public class ProfesorForm extends JPanel {
 		Degree degree = getDegree();
 		ProfesorCategory category = getCategory();
 
-		String currentMatter = Faculty.newInstance().findMatterOf(profesor.getID());
-
-		boolean differs = !profesor.getName().equals(name) || currentMatter != matter
+		boolean differs = !profesor.getName().equals(name) || profesor.getMatter() != matter
 				|| profesor.getCategory() != category || profesor.getDegree() != degree;
 
 		btnSubmit.setEnabled(differs);
