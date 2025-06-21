@@ -7,6 +7,7 @@ import gui.event.OnAddedInput;
 import gui.event.OnAddedResearchLine;
 import gui.event.OnDeletedInput;
 import gui.event.OnSetChief;
+import gui.event.OnUpdatedInput;
 import gui.researchers.ProfesorFormData;
 
 import java.awt.CardLayout;
@@ -38,6 +39,7 @@ import schooling.ResearchMatter;
 import utils.Constants;
 import utils.EnumsDictionary;
 import utils.Validation;
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -152,7 +154,6 @@ public class ResearchLineForm extends JPanel {
 		gbc_btnNewButton.gridx = 2;
 		gbc_btnNewButton.gridy = 10;
 		add(getBtnNewButton(), gbc_btnNewButton);
-		btnNewButton.setEnabled(false);
 
 		initForm();
 	}
@@ -209,15 +210,17 @@ public class ResearchLineForm extends JPanel {
 	private JTextField getTextFieldName() {
 		if (textFieldName == null) {
 			textFieldName = new JTextField();
-			textFieldName.addKeyListener(new KeyAdapter() {
-				@Override
-				public void keyReleased(KeyEvent arg0) {
-					hasChanges();
-				}
-			});
 			textFieldName.requestFocus();
 			textFieldName.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 			textFieldName.setColumns(10);
+			if (line != null) {				
+				textFieldName.addKeyListener(new KeyAdapter() {
+					@Override
+					public void keyReleased(KeyEvent arg0) {
+						hasChanges();
+					}
+				});
+			}
 		}
 		return textFieldName;
 	}
@@ -230,9 +233,7 @@ public class ResearchLineForm extends JPanel {
 			profesor = (Profesor)faculty.findResearcher(id);
 		} else {
 			int i = getChiefCandidatesComboBox().getSelectedIndex();
-			Profesor p = getCandidates().get(i);
-			
-			line.setChief(p);
+			profesor = getCandidates().get(i);
 		}
 
 		return profesor;
@@ -295,6 +296,8 @@ public class ResearchLineForm extends JPanel {
 				}
 			}
 
+			line.setChief(chiefProfesor);
+			
 			for (String matter : insertedMatters()) {
 				line.addMatter(matter);
 			}
@@ -306,6 +309,8 @@ public class ResearchLineForm extends JPanel {
 			if (this.line == null) {
 				ResearchMatter chiefResearchMatter = faculty.findResearchMatter(chief.getMatter());
 				chiefResearchMatter.addResearcher(chiefProfesor);
+			} else {
+				btnNewButton.setEnabled(false);
 			}
 
 			resetForm();
@@ -349,6 +354,8 @@ public class ResearchLineForm extends JPanel {
 				}
 			});
 			btnNewButton.setBackground(Constants.getInsertionBtnColor());
+			
+			if (line != null) btnNewButton.setEnabled(false);
 		}
 		return btnNewButton;
 	}
@@ -663,14 +670,34 @@ public class ResearchLineForm extends JPanel {
 
 	private MultipleInput getMultipleInput() {
 		if (multipleInput == null) {
-			multipleInput = new MultipleInput("Temas", "Añadir un tema");
+			multipleInput = new MultipleInput("Temas", "Añadir un tema", false);
 
 			if (line != null) {
 				multipleInput.setNotPermittedDeletionMsg("No se puede eliminar un tema con investigadores");
 				multipleInput.canRemove(new CanBeRemoved() {
 					@Override
 					public boolean granted(String item) {
-						return line.findMatter(item).getResearchers().size() == 0;
+						ResearchMatter m = line.findMatter(item);
+						
+						return m == null || m.getResearchers().size() == 0;
+					}
+				});
+				multipleInput.listenTo(new OnDeletedInput() {
+					@Override
+					public void deletedItem(String item) {
+						hasChanges();
+					}
+				});
+				multipleInput.listenTo(new OnUpdatedInput() {
+					@Override
+					public void updated(String newName) {
+						hasChanges();
+					}
+				});
+				multipleInput.listenTo(new OnAddedInput() {
+					@Override
+					public void newItem(String item) {
+						hasChanges();
 					}
 				});
 			} else {
@@ -749,9 +776,25 @@ public class ResearchLineForm extends JPanel {
 	}
 	
 	private void hasChanges() {
+		String name = textFieldName.getText().trim();
+		Profesor chief = getChief();
+		String[] matters = multipleInput.getValues();
 		
-		btnNewButton.setEnabled(true);
+		System.out.println(chief.getName());
+		System.out.println(line.getChief().getName());
 		
+		boolean hasSameMatters = matters.length == line.getMatters().size();
+		int i = 0;
+		
+		while (hasSameMatters && i < matters.length) {
+			hasSameMatters = line.hasMatter(matters[i]);
+			
+			i++;
+		}
+		
+		boolean hasChanges = !line.getName().equals(name) || !hasSameMatters || line.getChief() != chief;
+		
+		btnNewButton.setEnabled(hasChanges);
 	}
 	
 	private JComboBox<String> getChiefCandidatesComboBox() {
@@ -766,6 +809,12 @@ public class ResearchLineForm extends JPanel {
 			}
 			
 			chiefCandidatesComboBox.setModel(new DefaultComboBoxModel<>(names));
+			chiefCandidatesComboBox.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					hasChanges();
+				}
+			});
 		}
 		
 		return chiefCandidatesComboBox;

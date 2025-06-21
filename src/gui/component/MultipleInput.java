@@ -2,6 +2,7 @@ package gui.component;
 
 import gui.event.OnAddedInput;
 import gui.event.OnDeletedInput;
+import gui.event.OnUpdatedInput;
 import gui.report.views.BestResearchersJDialog;
 
 import java.awt.Font;
@@ -36,13 +37,24 @@ public class MultipleInput extends JPanel {
 	
 	private OnDeletedInput removedListener;
 	private OnAddedInput newListener;
+	private OnUpdatedInput updateListener;
 	private CanBeRemoved removePermission;
 	
 	private String notPermittedDeletionMsg;
-
+	
+	private boolean canRepeat;
+	
+	/**
+	 * @wbp.parser.constructor
+	 */
 	public MultipleInput(String mainLabelText, String secondaryLabelText) {
+		this(mainLabelText, secondaryLabelText, true);
+	}
+
+	public MultipleInput(String mainLabelText, String secondaryLabelText, boolean repeat) {
 		this.mainLabelText = mainLabelText;
 		this.secondaryLabelText = secondaryLabelText;
+		canRepeat = repeat;
 		notPermittedDeletionMsg = null;
 		identifiers = new ArrayList<>();
 		values = new ArrayList<>();
@@ -111,6 +123,10 @@ public class MultipleInput extends JPanel {
 	
 	public void canRemove(CanBeRemoved voter) {
 		removePermission = voter;
+	}
+	
+	public void listenTo(OnUpdatedInput listener) {
+		updateListener = listener;
 	}
 	
 	public void listenTo(OnDeletedInput listener) {
@@ -200,23 +216,38 @@ public class MultipleInput extends JPanel {
 	}
 	
 	private void addValue() {
-		if (Validation.notEmpty(textField.getText())) {
-			comboBox.setEnabled(true);
-			String newValue = textField.getText();
+		String newValue = textField.getText().trim();
 
+		if (Validation.notEmpty(newValue)) {
 			errorMessage.setVisible(false);
-			values.add(newValue);
-			textField.setText("");
-
-			updateCombobox();
-
-			comboBox.setSelectedIndex(comboBox.getModel().getSize() - 1);
-			identifiers.add(null);
+			errorMessage.setText("El campo es requerido");
 			
-			if (newListener != null) {
-				newListener.newItem(newValue);
+			boolean valid = true;
+			
+			if (!canRepeat && values.contains(newValue)) {
+				errorMessage.setVisible(true);
+				errorMessage.setText("No se pueden repetir valores");
+				valid = false;
+			}
+			
+			if (valid) {
+				comboBox.setEnabled(true);
+				
+				errorMessage.setVisible(false);
+				values.add(newValue);
+				textField.setText("");
+				
+				updateCombobox();
+				
+				comboBox.setSelectedIndex(comboBox.getModel().getSize() - 1);
+				identifiers.add(null);
+				
+				if (newListener != null) {
+					newListener.newItem(newValue);
+				}
 			}
 		} else {
+			errorMessage.setText("El campo es requerido");
 			errorMessage.setVisible(true);
 		}
 	}
@@ -254,10 +285,12 @@ public class MultipleInput extends JPanel {
 						if (Validation.notEmpty(newInput)) {
 							int index = comboBox.getSelectedIndex();
 
-							values.set(index, newInput);
+							values.set(index, newInput.trim());
 							updateCombobox();
 
 							comboBox.setSelectedIndex(index);
+							
+							if (updateListener != null) updateListener.updated(newInput);
 						} else {
 							JOptionPane.showMessageDialog(null, "El nuevo nombre no puede estar vacío", "Error", JOptionPane.ERROR_MESSAGE);
 						}

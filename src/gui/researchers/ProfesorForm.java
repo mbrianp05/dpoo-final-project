@@ -111,19 +111,19 @@ public class ProfesorForm extends JPanel {
 				int index;
 
 				switch (profesor.getCategory()) {
-					case Instructor:
-						index = 0;
-						break;
-					case Assistant:
-						index = 1;
-						break;
-					case Auxiliar:
-						index = 2;
-						break;
-					case Permanent:
-					default:
-						index = 3;
-						break;
+				case Instructor:
+					index = 0;
+					break;
+				case Assistant:
+					index = 1;
+					break;
+				case Auxiliar:
+					index = 2;
+					break;
+				case Permanent:
+				default:
+					index = 3;
+					break;
 				}
 
 				comboBoxProfesorCategory.setSelectedIndex(index);
@@ -133,7 +133,7 @@ public class ProfesorForm extends JPanel {
 					}
 				});
 			}
-
+			
 		}
 		return comboBoxProfesorCategory;
 	}
@@ -152,13 +152,13 @@ public class ProfesorForm extends JPanel {
 					index = 0;
 				} else {
 					switch (profesor.getDegree()) {
-						case Master:
-							index = 1;
-							break;
-						case Doctor:
-						default:
-							index = 2;
-							break;
+					case Master:
+						index = 1;
+						break;
+					case Doctor:
+					default:
+						index = 2;
+						break;
 					}
 				}
 
@@ -179,15 +179,15 @@ public class ProfesorForm extends JPanel {
 		Degree degree;
 
 		switch (comboBoxDegree.getSelectedIndex()) {
-			case 1:
-				degree = Degree.Master;
-				break;
-			case 2:
-				degree = Degree.Doctor;
-				break;
-			case 0:
-			default:
-				degree = null;
+		case 1:
+			degree = Degree.Master;
+			break;
+		case 2:
+			degree = Degree.Doctor;
+			break;
+		case 0:
+		default:
+			degree = null;
 		}
 
 		return degree;
@@ -197,18 +197,18 @@ public class ProfesorForm extends JPanel {
 		ProfesorCategory category;
 
 		switch (comboBoxProfesorCategory.getSelectedIndex()) {
-			case 0:
-				category = ProfesorCategory.Instructor;
-				break;
-			case 1:
-				category = ProfesorCategory.Assistant;
-				break;
-			case 2:
-				category = ProfesorCategory.Auxiliar;
-				break;
-			case 3:
-			default:
-				category = ProfesorCategory.Permanent;
+		case 0:
+			category = ProfesorCategory.Instructor;
+			break;
+		case 1:
+			category = ProfesorCategory.Assistant;
+			break;
+		case 2:
+			category = ProfesorCategory.Auxiliar;
+			break;
+		case 3:
+		default:
+			category = ProfesorCategory.Permanent;
 		}
 
 		return category;
@@ -236,32 +236,31 @@ public class ProfesorForm extends JPanel {
 
 	private void submit() {
 		if (Validation.notEmpty(textFieldName.getText())) {
-			String name = textFieldName.getText();
+			String name = textFieldName.getText().trim();
 			Degree degree = getDegree();
 			ProfesorCategory category = getCategory();
 			String matter = getMatter();
 
 			if (profesor == null) {
 				resetForm();
-			} else {
-				hasChanges();
 			}
 
 			if (listener != null) {
 				ProfesorFormData newData = new ProfesorFormData(name, matter, degree, category);
 				profesor = newData;
-
+				
 				listener.actionPerformed(newData);
 			}
-
+			
+			hasChanges();
 			errorLabel.setVisible(false);
 		} else {
 			errorLabel.setVisible(true);
 		}
 	}
 
-	public void hasChanges() {
-		String name = textFieldName.getText();
+	private void hasChanges() {
+		String name = textFieldName.getText().trim();
 		String matter = getMatter();
 		Degree degree = getDegree();
 		ProfesorCategory category = getCategory();
@@ -283,9 +282,8 @@ public class ProfesorForm extends JPanel {
 			});
 			btnSubmit.setBackground(Constants.getInsertionBtnColor());
 			btnSubmit.setFont(new Font("Segoe UI", Font.BOLD, 15));
-
-			if (profesor != null)
-				btnSubmit.setEnabled(false);
+		
+			if (profesor != null) btnSubmit.setEnabled(false);
 		}
 
 		return btnSubmit;
@@ -306,7 +304,7 @@ public class ProfesorForm extends JPanel {
 			researchMatterComboBox.setFont(Constants.getLabelFont());
 			setResearchMatters(researchMatters);
 
-			if (profesor != null) {
+			if (profesor != null ) {				
 				researchMatterComboBox.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						hasChanges();

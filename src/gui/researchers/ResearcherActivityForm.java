@@ -39,8 +39,8 @@ public class ResearcherActivityForm extends JPanel {
 		if (tabbedPane == null) {
 			tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 			tabbedPane.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-			tabbedPane.addTab("Cap\\u00EDtulo", null, getBookChapterForm(), null);
-			tabbedPane.addTab("Artï¿½culo", null, getPaperForm(), null);
+			tabbedPane.addTab("Capítulo", null, getBookChapterForm(), null);
+			tabbedPane.addTab("Artículo", null, getPaperForm(), null);
 			tabbedPane.addTab("Ponencia", null, getPresentationForm(), null);
 		}
 		return tabbedPane;

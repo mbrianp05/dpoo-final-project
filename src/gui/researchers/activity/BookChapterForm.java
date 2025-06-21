@@ -398,12 +398,12 @@ public class BookChapterForm extends JPanel {
 
 	private void submit() {
 		if (checkValidity()) {
-			String bookName = textFieldBookName.getText();
-			String chapter = textFieldChapter.getText();
-			String editorial = textFieldEditorial.getText();
+			String bookName = textFieldBookName.getText().trim();
+			String chapter = textFieldChapter.getText().trim();
+			String editorial = textFieldEditorial.getText().trim();
 			String[] authors = authorsInput.getValues();
 			String[] editors = editorsInput.getValues();
-			String ISSN = textFieldISSN.getText();
+			String ISSN = textFieldISSN.getText().trim();
 			int vol = (Integer)spinnerVol.getValue();
 
 			
