@@ -255,7 +255,7 @@ public class ProfesorForm extends JPanel {
 		}
 	}
 
-	private void hasChanges() {
+	public void hasChanges() {
 		String name = textFieldName.getText();
 		String matter = getMatter();
 		Degree degree = getDegree();

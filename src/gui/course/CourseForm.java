@@ -1,8 +1,6 @@
 package gui.course;
 
 import gui.event.OnCoursesFormActionTriggered;
-import gui.model.ResearcherTableModel;
-
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -140,7 +138,7 @@ public class CourseForm extends JPanel {
 			valid = false;
 		}
 
-		if (!cmboxInstruct.getSelectedIndex() != -1) {
+		if (cmboxInstruct.getSelectedIndex() != -1) {
 			errorInstructor.setVisible(true);
 			valid = false;
 		}
@@ -424,7 +422,7 @@ public class CourseForm extends JPanel {
 		int credits = (Integer) spinner.getValue();
 
 		boolean differs = !course.getName().equals(name) || !course.getDescription().equals(description)
-				|| !course.getInstructor() != instructor || !course.getCredits() != credits;
+				|| course.getInstructor() != instructor || course.getCredits() != credits;
 
 		btnSave.setEnabled(differs);
 	}

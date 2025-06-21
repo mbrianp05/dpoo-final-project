@@ -244,7 +244,11 @@ public class StudentForm extends JPanel {
 
 	private void hasChanges() {
 
-		btnSubmit.setEnabled(true);
+		String name = textFieldName.getText();
+		
+		boolean differ = !student.getName().equals(name) || researchMatterComboBox.getSelectedIndex() != -1;
+		
+		btnSubmit.setEnabled(differ);
 
 	}
 
