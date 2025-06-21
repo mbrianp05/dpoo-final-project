@@ -30,6 +30,8 @@ import schooling.ResearchLine;
 import utils.Constants;
 import utils.Validation;
 import gui.component.ErrorLabel;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class CourseForm extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -160,6 +162,12 @@ public class CourseForm extends JPanel {
 	private JTextField getTxtName() {
 		if (txtName == null) {
 			txtName = new JTextField();
+			txtName.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyReleased(KeyEvent arg0) {
+					hasChanges();
+				}
+			});
 			txtName.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 15));
 			txtName.setColumns(10);
 
@@ -218,6 +226,12 @@ public class CourseForm extends JPanel {
 	private JTextArea getTxtDescr() {
 		if (txtDescr == null) {
 			txtDescr = new JTextArea();
+			txtDescr.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyReleased(KeyEvent arg0) {
+					hasChanges();
+				}
+			});
 			txtDescr.setLineWrap(true);
 			txtDescr.setWrapStyleWord(true);
 			txtDescr.setRows(5);
@@ -348,9 +362,17 @@ public class CourseForm extends JPanel {
 			gbc_btnSave.gridx = 1;
 			gbc_btnSave.gridy = 12;
 			panel.add(getBtnSave(), gbc_btnSave);
+			btnSave.setEnabled(false);
 		}
 		return panel;
 	}
+	
+	private void hasChanges() {
+		
+		btnSave.setEnabled(true);
+		
+	}
+	
 	private ErrorLabel getErrorDescription() {
 		if (errorDescription == null) {
 			errorDescription = new ErrorLabel();

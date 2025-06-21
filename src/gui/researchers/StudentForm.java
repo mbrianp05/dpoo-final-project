@@ -24,6 +24,8 @@ import schooling.ResearchMatter;
 import schooling.Student;
 import utils.Constants;
 import utils.Validation;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class StudentForm extends JPanel {
 	private static final long serialVersionUID = 5814578189776579606L;
@@ -211,12 +213,19 @@ public class StudentForm extends JPanel {
 			gbc_btnSubmit.gridx = 0;
 			gbc_btnSubmit.gridy = 6;
 			panel.add(getBtnSubmit(), gbc_btnSubmit);
+			btnSubmit.setEnabled(false);
 		}
 		return panel;
 	}
 	private JTextField getTextFieldName() {
 		if (textFieldName == null) {
 			textFieldName = new JTextField();
+			textFieldName.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyReleased(KeyEvent arg0) {
+					hasChanges();
+				}
+			});
 			textFieldName.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 			textFieldName.setColumns(10);
 
@@ -226,6 +235,13 @@ public class StudentForm extends JPanel {
 		}
 		return textFieldName;
 	}
+	
+	private void hasChanges() {
+		
+		btnSubmit.setEnabled(true);
+		
+	}
+	
 	private ErrorLabel getErrorLabel() {
 		if (errorLabel == null) {
 			errorLabel = new ErrorLabel();

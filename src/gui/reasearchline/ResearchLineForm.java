@@ -38,6 +38,8 @@ import schooling.ResearchMatter;
 import utils.Constants;
 import utils.EnumsDictionary;
 import utils.Validation;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class ResearchLineForm extends JPanel {
 	private static final long serialVersionUID = 3971105665570208468L;
@@ -150,6 +152,7 @@ public class ResearchLineForm extends JPanel {
 		gbc_btnNewButton.gridx = 2;
 		gbc_btnNewButton.gridy = 10;
 		add(getBtnNewButton(), gbc_btnNewButton);
+		btnNewButton.setEnabled(false);
 
 		initForm();
 	}
@@ -206,6 +209,12 @@ public class ResearchLineForm extends JPanel {
 	private JTextField getTextFieldName() {
 		if (textFieldName == null) {
 			textFieldName = new JTextField();
+			textFieldName.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyReleased(KeyEvent arg0) {
+					hasChanges();
+				}
+			});
 			textFieldName.requestFocus();
 			textFieldName.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 			textFieldName.setColumns(10);
@@ -737,6 +746,12 @@ public class ResearchLineForm extends JPanel {
 		}
 		
 		return chiefCandidates;
+	}
+	
+	private void hasChanges() {
+		
+		btnNewButton.setEnabled(true);
+		
 	}
 	
 	private JComboBox<String> getChiefCandidatesComboBox() {
