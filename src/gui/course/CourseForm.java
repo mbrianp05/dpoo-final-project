@@ -161,13 +161,14 @@ public class CourseForm extends JPanel {
 
 			if (course == null) {
 				resetForm();
+			} else {
+				hasChanges();
 			}
 
 			if (listener != null) {
 				listener.actionPerformed(new CourseFormData(name, description, instructor, creds));
 			}
 
-			hasChanges();
 			sendFeedback();
 		}
 	}
