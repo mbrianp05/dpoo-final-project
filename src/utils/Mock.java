@@ -69,6 +69,7 @@ public class Mock {
 		line2.getMatters().get(1).addResearcher(faculty.findResearcher(profesorID5));
 		line4.getMatters().get(0).addResearcher(faculty.findResearcher(profesorID6));
 		line4.getMatters().get(0).addResearcher(faculty.findResearcher(profesorID8));
+		line3.getMatters().get(0).addResearcher(faculty.findResearcher(profesorID6));
 		line3.getMatters().get(0).addResearcher(faculty.findResearcher(profesorID7));
 		line.getMatters().get(1).addResearcher(faculty.findResearcher(ID1));
 		line3.getMatters().get(0).addResearcher(faculty.findResearcher(ID2));

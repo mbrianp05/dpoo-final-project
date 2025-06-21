@@ -2,7 +2,6 @@ package gui.course;
 
 import gui.component.ErrorLabel;
 import gui.event.OnCoursesFormActionTriggered;
-
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -120,7 +119,7 @@ public class CourseForm extends JPanel {
 	}
 
 	private void sendFeedback() {
-		JOptionPane.showMessageDialog(null, "¿Se ha actualizado el curso correctamente!", "Mensaje",
+		JOptionPane.showMessageDialog(null, "ï¿½Se ha actualizado el curso correctamente!", "Mensaje",
 				JOptionPane.PLAIN_MESSAGE);
 	}
 
@@ -137,7 +136,7 @@ public class CourseForm extends JPanel {
 			errorDescription.setVisible(true);
 			valid = false;
 		}
-		
+
 		if (cmboxInstruct.getSelectedIndex() == -1) {
 			errorInstructor.setVisible(true);
 			valid = false;
@@ -240,7 +239,6 @@ public class CourseForm extends JPanel {
 			spinner.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
 			spinner.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 15));
 
-
 			if (course != null) {
 				spinner.setValue(course.getCredits());
 				spinner.addKeyListener(new KeyAdapter() {
@@ -300,8 +298,9 @@ public class CourseForm extends JPanel {
 				}
 			});
 			btnSave.setFont(new Font("Segoe UI", Font.BOLD, 15));
-			
-			if (course != null) btnSave.setEnabled(false);
+
+			if (course != null)
+				btnSave.setEnabled(false);
 		}
 		return btnSave;
 	}

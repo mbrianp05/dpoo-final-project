@@ -148,6 +148,11 @@ public class StudentForm extends JPanel {
 	private ResearchMatterComboBox getResearchMatterComboBox() {
 		if (researchMatterComboBox == null) {
 			researchMatterComboBox = new ResearchMatterComboBox(faculty);
+			researchMatterComboBox.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					hasChanges();
+				}
+			});
 			researchMatterComboBox.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 
 			if (editing) {
@@ -242,9 +247,13 @@ public class StudentForm extends JPanel {
 		return textFieldName;
 	}
 
-	private void hasChanges() {
+	public void hasChanges() {
 
-		btnSubmit.setEnabled(true);
+		String name = textFieldName.getText();
+		
+		boolean differ = !student.getName().equals(name) || researchMatterComboBox.getSelectedItem().toString() != faculty.findMatterOf(student.getID()).toString();
+		
+		btnSubmit.setEnabled(differ);
 
 	}
 
