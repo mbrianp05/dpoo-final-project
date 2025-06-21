@@ -55,7 +55,7 @@ public class StudentForm extends JPanel {
 		setLayout(new BorderLayout(0, 0));
 		add(getPanel());
 	}
-	
+
 	public void listenTo(OnAddedResearcher listener) {
 		this.listener = listener;
 	}
@@ -67,6 +67,7 @@ public class StudentForm extends JPanel {
 		}
 		return lblName;
 	}
+
 	private JLabel getLblTemaDeInvestigacin() {
 		if (lblTemaDeInvestigacin == null) {
 			lblTemaDeInvestigacin = new JLabel("Tema de investigaci\u00F3n");
@@ -78,7 +79,7 @@ public class StudentForm extends JPanel {
 	private String getMatter() {
 		int index = researchMatterComboBox.getSelectedIndex();
 
-		return (String)researchMatterComboBox.getModel().getElementAt(index);
+		return (String) researchMatterComboBox.getModel().getElementAt(index);
 	}
 
 	private void resetForm() {
@@ -115,7 +116,7 @@ public class StudentForm extends JPanel {
 			if (listener != null) {
 				listener.newResearcher(student.getID());
 			}
-			
+
 			errorLabel.setVisible(false);
 		} else {
 			errorLabel.setVisible(true);
@@ -128,8 +129,10 @@ public class StudentForm extends JPanel {
 			btnSubmit.setForeground(Constants.getFormBtnForeground());
 			btnSubmit.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					if (!editing) insert();
-					else update();
+					if (!editing)
+						insert();
+					else
+						update();
 				}
 			});
 			btnSubmit.setBackground(Constants.getInsertionBtnColor());
@@ -156,8 +159,9 @@ public class StudentForm extends JPanel {
 					int i = 0;
 
 					while (i < researchMatterComboBox.getModel().getSize() && index == -1) {
-						String current = (String)model.getElementAt(i);
-						if (current.equals(matter.getName())) index = i;
+						String current = (String) model.getElementAt(i);
+						if (current.equals(matter.getName()))
+							index = i;
 
 						i++;
 					}
@@ -168,14 +172,15 @@ public class StudentForm extends JPanel {
 		}
 		return researchMatterComboBox;
 	}
+
 	private JPanel getPanel() {
 		if (panel == null) {
 			panel = new JPanel();
 			GridBagLayout gbl_panel = new GridBagLayout();
-			gbl_panel.columnWidths = new int[]{383, 0};
-			gbl_panel.rowHeights = new int[]{29, 35, 50, 0, 35, 50, 35, 0};
-			gbl_panel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-			gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+			gbl_panel.columnWidths = new int[] { 383, 0 };
+			gbl_panel.rowHeights = new int[] { 29, 35, 50, 0, 35, 50, 35, 0 };
+			gbl_panel.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
+			gbl_panel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 			panel.setLayout(gbl_panel);
 			GridBagConstraints gbc_lblName = new GridBagConstraints();
 			gbc_lblName.anchor = GridBagConstraints.WEST;
@@ -217,6 +222,7 @@ public class StudentForm extends JPanel {
 		}
 		return panel;
 	}
+
 	private JTextField getTextFieldName() {
 		if (textFieldName == null) {
 			textFieldName = new JTextField();
@@ -235,13 +241,13 @@ public class StudentForm extends JPanel {
 		}
 		return textFieldName;
 	}
-	
+
 	private void hasChanges() {
-		
+
 		btnSubmit.setEnabled(true);
-		
+
 	}
-	
+
 	private ErrorLabel getErrorLabel() {
 		if (errorLabel == null) {
 			errorLabel = new ErrorLabel();

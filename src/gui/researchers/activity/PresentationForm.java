@@ -36,11 +36,11 @@ import utils.Validation;
 
 public class PresentationForm extends JPanel {
 	private static final long serialVersionUID = 1218122467482657932L;
-	
+
 	private Researcher researcher;
 	private Presentation breakthrough;
 	private OnResearchActivityActionTriggered listener;
-	
+
 	private JLabel lblNombre;
 	private JTextField textFieldName;
 	private JLabel lblCdigoIsbn;
@@ -58,23 +58,24 @@ public class PresentationForm extends JPanel {
 	private ErrorLabel errorName;
 	private ErrorLabel errorISBN;
 	private ErrorLabel errorLocation;
-	
+
 	/**
 	 * @wbp.parser.constructor
 	 */
 	public PresentationForm(Researcher researcher) {
 		this(researcher, null);
 	}
-	
+
 	public PresentationForm(Researcher researcher, Presentation breakthrough) {
 		this.researcher = researcher;
 		this.breakthrough = breakthrough;
-		
+
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{100, 0, 0, 100, 0};
-		gridBagLayout.rowHeights = new int[]{50, 0, 35, 40, 0, 35, 40, 0, 35, 40, 0, 40, 0, 40, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.columnWidths = new int[] { 100, 0, 0, 100, 0 };
+		gridBagLayout.rowHeights = new int[] { 50, 0, 35, 40, 0, 35, 40, 0, 35, 40, 0, 40, 0, 40, 0 };
+		gridBagLayout.columnWeights = new double[] { 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE };
+		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+				Double.MIN_VALUE };
 		setLayout(gridBagLayout);
 		GridBagConstraints gbc_lblNombre = new GridBagConstraints();
 		gbc_lblNombre.fill = GridBagConstraints.BOTH;
@@ -153,14 +154,14 @@ public class PresentationForm extends JPanel {
 		gbc_btnAgregar.gridx = 2;
 		gbc_btnAgregar.gridy = 13;
 		add(getBtnAgregar(), gbc_btnAgregar);
-		
+
 		reset();
 	}
-	
+
 	public void listenTo(OnResearchActivityActionTriggered listener) {
 		this.listener = listener;
 	}
-	
+
 	private JLabel getLblNombre() {
 		if (lblNombre == null) {
 			lblNombre = new JLabel("Nombre");
@@ -169,6 +170,7 @@ public class PresentationForm extends JPanel {
 		}
 		return lblNombre;
 	}
+
 	private JTextField getTextFieldName() {
 		if (textFieldName == null) {
 			textFieldName = new JTextField();
@@ -177,6 +179,7 @@ public class PresentationForm extends JPanel {
 		}
 		return textFieldName;
 	}
+
 	private JLabel getLblCdigoIsbn() {
 		if (lblCdigoIsbn == null) {
 			lblCdigoIsbn = new JLabel("C\u00F3digo ISBN");
@@ -185,6 +188,7 @@ public class PresentationForm extends JPanel {
 		}
 		return lblCdigoIsbn;
 	}
+
 	private JTextField getTextFieldISBN() {
 		if (textFieldISBN == null) {
 			textFieldISBN = new JTextField();
@@ -193,6 +197,7 @@ public class PresentationForm extends JPanel {
 		}
 		return textFieldISBN;
 	}
+
 	private JLabel getLblLocalizacin() {
 		if (lblLocalizacin == null) {
 			lblLocalizacin = new JLabel("Localizaci\u00F3n");
@@ -201,6 +206,7 @@ public class PresentationForm extends JPanel {
 		}
 		return lblLocalizacin;
 	}
+
 	private JTextField getTextFieldLocation() {
 		if (textFieldLocation == null) {
 			textFieldLocation = new JTextField();
@@ -209,6 +215,7 @@ public class PresentationForm extends JPanel {
 		}
 		return textFieldLocation;
 	}
+
 	private JLabel getLblDa() {
 		if (lblDa == null) {
 			lblDa = new JLabel("D\u00EDa");
@@ -217,6 +224,7 @@ public class PresentationForm extends JPanel {
 		}
 		return lblDa;
 	}
+
 	private JLabel getLblMes() {
 		if (lblMes == null) {
 			lblMes = new JLabel("Mes");
@@ -225,6 +233,7 @@ public class PresentationForm extends JPanel {
 		}
 		return lblMes;
 	}
+
 	private JLabel getLblAo() {
 		if (lblAo == null) {
 			lblAo = new JLabel("A\u00F1o");
@@ -233,10 +242,10 @@ public class PresentationForm extends JPanel {
 		}
 		return lblAo;
 	}
-	
+
 	private Month getMonth() {
 		Month month = Month.January;
-		
+
 		switch (comboBoxMonths.getSelectedIndex()) {
 		case 0:
 			month = Month.January;
@@ -275,38 +284,40 @@ public class PresentationForm extends JPanel {
 			month = Month.December;
 			break;
 		}
-		
+
 		return month;
 	}
-	
+
 	private void setDays() {
-		if (comboBoxDays == null) getComboBoxDays();
-		
-		int daysCount = DateHelper.getDaysFor(getMonth(), (Integer)spinnerYear.getValue());
+		if (comboBoxDays == null)
+			getComboBoxDays();
+
+		int daysCount = DateHelper.getDaysFor(getMonth(), (Integer) spinnerYear.getValue());
 		String[] days = new String[daysCount];
-		
+
 		for (int i = 0; i < daysCount; i++) {
 			days[i] = String.valueOf(i + 1);
 		}
-		
-		String selectedItem = (String)comboBoxDays.getSelectedItem();
-		
+
+		String selectedItem = (String) comboBoxDays.getSelectedItem();
+
 		comboBoxDays.setModel(new DefaultComboBoxModel<>(days));
-		
+
 		if (selectedItem != null)
 			comboBoxDays.setSelectedItem(selectedItem);
 	}
-	
+
 	private JComboBox<String> getComboBoxDays() {
 		if (comboBoxDays == null) {
 			comboBoxDays = new JComboBox<>();
 			comboBoxDays.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 			comboBoxDays.setBackground(Color.WHITE);
-			
+
 			setDays();
 		}
 		return comboBoxDays;
 	}
+
 	private JComboBox<String> getComboBoxMonths() {
 		if (comboBoxMonths == null) {
 			comboBoxMonths = new JComboBox<>();
@@ -315,12 +326,14 @@ public class PresentationForm extends JPanel {
 					setDays();
 				}
 			});
-			comboBoxMonths.setModel(new DefaultComboBoxModel<>(new String[] {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"}));
+			comboBoxMonths.setModel(new DefaultComboBoxModel<>(new String[] { "Enero", "Febrero", "Marzo", "Abril",
+					"Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" }));
 			comboBoxMonths.setBackground(Color.WHITE);
 			comboBoxMonths.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 		}
 		return comboBoxMonths;
 	}
+
 	private JSpinner getSpinnerYear() {
 		if (spinnerYear == null) {
 			spinnerYear = new JSpinner();
@@ -335,6 +348,7 @@ public class PresentationForm extends JPanel {
 		}
 		return spinnerYear;
 	}
+
 	private JButton getBtnAgregar() {
 		if (btnAgregar == null) {
 			btnAgregar = new JButton(breakthrough == null ? "Agregar" : "Editar");
@@ -348,16 +362,18 @@ public class PresentationForm extends JPanel {
 		}
 		return btnAgregar;
 	}
+
 	private JPanel getPanel() {
 		if (panel == null) {
 			panel = new JPanel();
-			panel.setBorder(new TitledBorder(new LineBorder(new Color(0, 51, 153), 2, true), "Fecha", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 51, 255)));
+			panel.setBorder(new TitledBorder(new LineBorder(new Color(0, 51, 153), 2, true), "Fecha",
+					TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 51, 255)));
 			panel.setBackground(Color.WHITE);
 			GridBagLayout gbl_panel = new GridBagLayout();
-			gbl_panel.columnWidths = new int[]{0, 100, 35, 100, 35, 100, 0, 0};
-			gbl_panel.rowHeights = new int[]{21, 35, 21, 0};
-			gbl_panel.columnWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
-			gbl_panel.rowWeights = new double[]{1.0, 0.0, 1.0, Double.MIN_VALUE};
+			gbl_panel.columnWidths = new int[] { 0, 100, 35, 100, 35, 100, 0, 0 };
+			gbl_panel.rowHeights = new int[] { 21, 35, 21, 0 };
+			gbl_panel.columnWeights = new double[] { 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
+			gbl_panel.rowWeights = new double[] { 1.0, 0.0, 1.0, Double.MIN_VALUE };
 			panel.setLayout(gbl_panel);
 			GridBagConstraints gbc_lblDa = new GridBagConstraints();
 			gbc_lblDa.insets = new Insets(0, 0, 5, 5);
@@ -395,16 +411,16 @@ public class PresentationForm extends JPanel {
 		}
 		return panel;
 	}
-	
+
 	private boolean checkValidity() {
 		resetErrorLabels();
-		
+
 		boolean validity = true;
-		
+
 		String name = textFieldName.getText();
 		String ISBN = textFieldISBN.getText();
 		String location = textFieldLocation.getText();
-		
+
 		if (!Validation.notEmpty(name)) {
 			errorName.setVisible(true);
 			validity = false;
@@ -414,35 +430,35 @@ public class PresentationForm extends JPanel {
 			errorLocation.setVisible(true);
 			validity = false;
 		}
-		
+
 		if (!Validation.validISBN(ISBN)) {
 			errorISBN.setVisible(true);
 			validity = false;
 		}
-		
+
 		return validity;
 	}
-	
+
 	private void initForm() {
 		textFieldName.setText(breakthrough.getName());
 		textFieldISBN.setText(breakthrough.getISBN());
 		textFieldLocation.setText(breakthrough.getLocation());
-		
+
 		LocalDate date = breakthrough.getDate();
-		
+
 		comboBoxDays.setSelectedItem(String.valueOf(date.getDayOfMonth()));
 		comboBoxMonths.setSelectedItem(String.valueOf(date.getMonthValue()));
 		spinnerYear.setValue(date.getYear());
 	}
-	
+
 	private void reset() {
 		resetErrorLabels();
-		
+
 		if (breakthrough == null) {
 			textFieldName.setText("");
 			textFieldISBN.setText("");
 			textFieldLocation.setText("");
-			
+
 			comboBoxDays.setSelectedIndex(0);
 			comboBoxMonths.setSelectedIndex(0);
 			spinnerYear.setValue(Year.now().getValue());
@@ -450,39 +466,41 @@ public class PresentationForm extends JPanel {
 			initForm();
 		}
 	}
-	
+
 	private void resetErrorLabels() {
 		errorName.setVisible(false);
 		errorLocation.setVisible(false);
 		errorISBN.setVisible(false);
 	}
-	
+
 	private LocalDate getDate() {
-		int day = Integer.valueOf((String)comboBoxDays.getSelectedItem());
+		int day = Integer.valueOf((String) comboBoxDays.getSelectedItem());
 		int month = comboBoxMonths.getSelectedIndex() + 1;
-		int year = (Integer)spinnerYear.getValue();
-		
+		int year = (Integer) spinnerYear.getValue();
+
 		return LocalDate.of(year, month, day);
 	}
-	
+
 	private void sendFeedback() {
-		JOptionPane.showMessageDialog(null, "¡Se ha registrado la ponencia correctamente!", "Mensaje", JOptionPane.PLAIN_MESSAGE);
+		JOptionPane.showMessageDialog(null, "ï¿½Se ha registrado la ponencia correctamente!", "Mensaje",
+				JOptionPane.PLAIN_MESSAGE);
 	}
-	
+
 	private void submit() {
 		if (checkValidity()) {
 			String name = textFieldName.getText();
 			String ISBN = textFieldISBN.getText();
 			String location = textFieldLocation.getText();
-			
+
 			LocalDate date = getDate();
-			
+
 			if (breakthrough == null) {
 				try {
 					researcher.addPresentation(name, date, ISBN, location);
-					
-					if (listener != null) listener.actionPerformed();
-					
+
+					if (listener != null)
+						listener.actionPerformed();
+
 					reset();
 					sendFeedback();
 				} catch (IllegalArgumentException exception) {
@@ -490,20 +508,22 @@ public class PresentationForm extends JPanel {
 				}
 			} else {
 				Validation.removeValue("ISBN", ISBN);
-				
+
 				breakthrough.setName(name);
 				breakthrough.setISBN(ISBN);
 				breakthrough.setLocation(location);
 				breakthrough.setDate(date);
 
-				if (listener != null) listener.actionPerformed();
-				
+				if (listener != null)
+					listener.actionPerformed();
+
 				reset();
 				sendFeedback();
 			}
-			
+
 		}
 	}
+
 	private ErrorLabel getErrorName() {
 		if (errorName == null) {
 			errorName = new ErrorLabel();
@@ -511,6 +531,7 @@ public class PresentationForm extends JPanel {
 		}
 		return errorName;
 	}
+
 	private ErrorLabel getErrorISBN() {
 		if (errorISBN == null) {
 			errorISBN = new ErrorLabel();
@@ -518,6 +539,7 @@ public class PresentationForm extends JPanel {
 		}
 		return errorISBN;
 	}
+
 	private ErrorLabel getErrorLocation() {
 		if (errorLocation == null) {
 			errorLocation = new ErrorLabel();

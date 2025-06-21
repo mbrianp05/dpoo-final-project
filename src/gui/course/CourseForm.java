@@ -1,6 +1,7 @@
 package gui.course;
 
 import gui.event.OnCoursesFormActionTriggered;
+import gui.model.ResearcherTableModel;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -23,6 +24,8 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.border.LineBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import schooling.Faculty;
 import schooling.Profesor;
@@ -60,24 +63,6 @@ public class CourseForm extends JPanel {
 	private ErrorLabel errorInstructor;
 	private ErrorLabel errorName;
 
-	public void listenTo(OnCoursesFormActionTriggered listener) {
-		this.listener = listener;
-	}
-
-	private void fetchInstructors() {
-
-		ArrayList<Profesor> profs = faculty.getDoctorsSelectedLine(line);
-		names = new String[profs.size()];
-		profIDs = new int[profs.size()];
-
-		for(int i = 0; i < profs.size(); i++){
-			names[i] = profs.get(i).getName();
-			profIDs[i] = profs.get(i).getID();
-		}
-
-		cmboxInstruct.setModel(new DefaultComboBoxModel<>(names));
-	}
-
 	public CourseForm(CourseFormData data, ResearchLine line) {
 		faculty = Faculty.newInstance();
 
@@ -89,6 +74,28 @@ public class CourseForm extends JPanel {
 		add(getPanel());
 
 		hideErrors();
+	}
+
+	public void listenTo(OnCoursesFormActionTriggered listener) {
+		this.listener = listener;
+	}
+
+	private ArrayList<Profesor> getPossibleInstructors() {
+		return faculty.getDoctorsSelectedLine(line);
+	}
+
+	private void fetchInstructors() {
+		ArrayList<Profesor> profs = getPossibleInstructors();
+
+		names = new String[profs.size()];
+		profIDs = new int[profs.size()];
+
+		for (int i = 0; i < profs.size(); i++) {
+			names[i] = profs.get(i).getName();
+			profIDs[i] = profs.get(i).getID();
+		}
+
+		cmboxInstruct.setModel(new DefaultComboBoxModel<>(names));
 	}
 
 	public void hideErrors() {
@@ -103,7 +110,7 @@ public class CourseForm extends JPanel {
 
 		txtName.setText("");
 
-		if(cmboxInstruct.getModel().getSize() >= 0) {
+		if (cmboxInstruct.getModel().getSize() >= 0) {
 			cmboxInstruct.setSelectedIndex(0);
 		} else {
 			cmboxInstruct.setSelectedIndex(-1);
@@ -114,41 +121,56 @@ public class CourseForm extends JPanel {
 	}
 
 	private void sendFeedback() {
-		JOptionPane.showMessageDialog(null, "¡Se ha actualizado el curso correctamente!", "Mensaje", JOptionPane.PLAIN_MESSAGE);
+		JOptionPane.showMessageDialog(null, "ï¿½Se ha actualizado el curso correctamente!", "Mensaje",
+				JOptionPane.PLAIN_MESSAGE);
+	}
+
+	private boolean checkValidity() {
+		hideErrors();
+
+		boolean valid = true;
+
+		if (!Validation.notEmpty(txtName.getText())) {
+			errorName.setVisible(true);
+			valid = false;
+		}
+
+		if (!Validation.notEmpty(txtDescr.getText())) {
+			errorDescription.setVisible(true);
+			valid = false;
+		}
+
+		if (!cmboxInstruct.getSelectedIndex() != -1) {
+			errorInstructor.setVisible(true);
+			valid = false;
+		}
+
+		if ((int) spinner.getValue() <= 0) {
+			errorCredits.setVisible(true);
+			valid = false;
+		}
+
+		return valid;
 	}
 
 	private void updateCourse() {
-		if(Validation.notEmpty(txtName.getText())) {
-			if(Validation.notEmpty(txtDescr.getText())) {
-				if (cmboxInstruct.getSelectedIndex() != -1) {
-					if((int)spinner.getValue() > 0) {
-						int index = cmboxInstruct.getSelectedIndex();
+		if (checkValidity()) {
+			int index = cmboxInstruct.getSelectedIndex();
 
-						String name = txtName.getText();
-						String description = txtDescr.getText();			
-						Profesor instructor = (Profesor)faculty.findResearcher(profIDs[index]);
-						int creds = (int)spinner.getValue();
+			String name = txtName.getText();
+			String description = txtDescr.getText();
+			Profesor instructor = (Profesor) faculty.findResearcher(profIDs[index]);
+			int creds = (int) spinner.getValue();
 
-						if(course == null) {
-							resetForm();
-						}
-
-						if(listener != null) {
-							listener.actionPerformed(new CourseFormData(name, description, instructor, creds));
-						}
-
-						sendFeedback();
-					} else {
-						errorCredits.setVisible(true);
-					}
-				} else {
-					errorInstructor.setVisible(true);
-				}
-			} else {
-				errorDescription.setVisible(true);
+			if (course == null) {
+				resetForm();
 			}
-		} else {
-			errorName.setVisible(true);
+
+			if (listener != null) {
+				listener.actionPerformed(new CourseFormData(name, description, instructor, creds));
+			}
+
+			sendFeedback();
 		}
 	}
 
@@ -159,6 +181,7 @@ public class CourseForm extends JPanel {
 		}
 		return lblName;
 	}
+
 	private JTextField getTxtName() {
 		if (txtName == null) {
 			txtName = new JTextField();
@@ -171,25 +194,33 @@ public class CourseForm extends JPanel {
 			txtName.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 15));
 			txtName.setColumns(10);
 
-			if(course != null) {
+			if (course != null) {
 				txtName.setText(course.getName());
 			}
 		}
 		return txtName;
 	}
+
 	private JLabel getLblInstructor() {
 		if (lblInstructor == null) {
 			lblInstructor = new JLabel("Instructor");
-			lblInstructor.setFont(new Font("Segoe UI", Font.PLAIN, 15));				
+			lblInstructor.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 		}
 		return lblInstructor;
 	}
+
 	private JComboBox<String> getCmboxInstruct() {
 		if (cmboxInstruct == null) {
 			cmboxInstruct = new JComboBox<String>();
 			cmboxInstruct.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 15));
 
-			if(course != null) {
+			cmboxInstruct.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					hasChanges();
+				}
+			});
+
+			if (course != null) {
 				cmboxInstruct.setSelectedItem(course.getInstructor());
 			}
 
@@ -197,6 +228,7 @@ public class CourseForm extends JPanel {
 		}
 		return cmboxInstruct;
 	}
+
 	private JLabel getLblCredits() {
 		if (lblCredits == null) {
 			lblCredits = new JLabel("Cr\u00E9ditos");
@@ -204,18 +236,32 @@ public class CourseForm extends JPanel {
 		}
 		return lblCredits;
 	}
+
 	private JSpinner getSpinner() {
 		if (spinner == null) {
 			spinner = new JSpinner();
 			spinner.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
 			spinner.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 15));
 
-			if(course != null) {
+			spinner.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyTyped(KeyEvent arg0) {
+					hasChanges();
+				}
+			});
+			spinner.addChangeListener(new ChangeListener() {
+				public void stateChanged(ChangeEvent event) {
+					hasChanges();
+				}
+			});
+
+			if (course != null) {
 				spinner.setValue(course.getCredits());
 			}
 		}
 		return spinner;
 	}
+
 	private JLabel getLblDescripcin() {
 		if (lblDescripcin == null) {
 			lblDescripcin = new JLabel("Descripci\u00F3n");
@@ -223,6 +269,7 @@ public class CourseForm extends JPanel {
 		}
 		return lblDescripcin;
 	}
+
 	private JTextArea getTxtDescr() {
 		if (txtDescr == null) {
 			txtDescr = new JTextArea();
@@ -239,12 +286,13 @@ public class CourseForm extends JPanel {
 			txtDescr.setColumns(10);
 			txtDescr.setFont(Constants.getLabelFont());
 
-			if(course != null) {
+			if (course != null) {
 				txtDescr.setText(course.getDescription());
 			}
 		}
 		return txtDescr;
 	}
+
 	private JButton getBtnSave() {
 		if (btnSave == null) {
 			btnSave = new JButton("Guardar");
@@ -258,15 +306,17 @@ public class CourseForm extends JPanel {
 		}
 		return btnSave;
 	}
+
 	private JPanel getPanel() {
 		if (panel == null) {
 			panel = new JPanel();
 			panel.setBackground(Color.WHITE);
 			GridBagLayout gbl_panel = new GridBagLayout();
-			gbl_panel.columnWidths = new int[]{70, 0, 70, 0, 70, 0};
-			gbl_panel.rowHeights = new int[]{40, 21, 35, 35, 21, 35, 35, 35, 35, 16, 90, 45, 40, 0};
-			gbl_panel.columnWeights = new double[]{0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
-			gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+			gbl_panel.columnWidths = new int[] { 70, 0, 70, 0, 70, 0 };
+			gbl_panel.rowHeights = new int[] { 40, 21, 35, 35, 21, 35, 35, 35, 35, 16, 90, 45, 40, 0 };
+			gbl_panel.columnWeights = new double[] { 0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE };
+			gbl_panel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+					Double.MIN_VALUE };
 			panel.setLayout(gbl_panel);
 			GridBagConstraints gbc_lblName = new GridBagConstraints();
 			gbc_lblName.gridwidth = 3;
@@ -366,13 +416,19 @@ public class CourseForm extends JPanel {
 		}
 		return panel;
 	}
-	
+
 	private void hasChanges() {
-		
-		btnSave.setEnabled(true);
-		
+		String name = txtName.getText();
+		String description = txtDescr.getText();
+		Profesor instructor = getPossibleInstructors().get(cmboxInstruct.getSelectedIndex());
+		int credits = (Integer) spinner.getValue();
+
+		boolean differs = !course.getName().equals(name) || !course.getDescription().equals(description)
+				|| !course.getInstructor() != instructor || !course.getCredits() != credits;
+
+		btnSave.setEnabled(differs);
 	}
-	
+
 	private ErrorLabel getErrorDescription() {
 		if (errorDescription == null) {
 			errorDescription = new ErrorLabel();
@@ -381,6 +437,7 @@ public class CourseForm extends JPanel {
 		}
 		return errorDescription;
 	}
+
 	private JPanel getPanel_1() {
 		if (panel_1 == null) {
 			panel_1 = new JPanel();
@@ -390,6 +447,7 @@ public class CourseForm extends JPanel {
 		}
 		return panel_1;
 	}
+
 	private ErrorLabel getErrorCredits() {
 		if (errorCredits == null) {
 			errorCredits = new ErrorLabel();
@@ -397,6 +455,7 @@ public class CourseForm extends JPanel {
 		}
 		return errorCredits;
 	}
+
 	private ErrorLabel getErrorLabel_1() {
 		if (errorInstructor == null) {
 			errorInstructor = new ErrorLabel();
@@ -404,6 +463,7 @@ public class CourseForm extends JPanel {
 		}
 		return errorInstructor;
 	}
+
 	private ErrorLabel getErrorLabel_2() {
 		if (errorName == null) {
 			errorName = new ErrorLabel();

@@ -46,7 +46,7 @@ public class ProfesorForm extends JPanel {
 	private OnProfesorFormActionTriggered listener;
 
 	private String[] researchMatters;
-	
+
 	/**
 	 * @wbp.parser.constructor
 	 */
@@ -103,8 +103,15 @@ public class ProfesorForm extends JPanel {
 		if (comboBoxProfesorCategory == null) {
 			comboBoxProfesorCategory = new JComboBox<>();
 			comboBoxProfesorCategory.setFont(Constants.getLabelFont());
-			comboBoxProfesorCategory.setModel(new DefaultComboBoxModel<>(new String[] {"Instructor", "Asistente", "Auxiliar", "Titular"}));
+			comboBoxProfesorCategory.setModel(
+					new DefaultComboBoxModel<>(new String[] { "Instructor", "Asistente", "Auxiliar", "Titular" }));
 			comboBoxProfesorCategory.setSelectedIndex(0);
+
+			comboBoxProfesorCategory.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					hasChanges();
+				}
+			});
 
 			if (profesor != null) {
 				int index;
@@ -135,8 +142,14 @@ public class ProfesorForm extends JPanel {
 		if (comboBoxDegree == null) {
 			comboBoxDegree = new JComboBox<>();
 			comboBoxDegree.setFont(Constants.getLabelFont());
-			comboBoxDegree.setModel(new DefaultComboBoxModel<>(new String[] {"Ninguna", "M\u00E1ster", "Doctor"}));
+			comboBoxDegree.setModel(new DefaultComboBoxModel<>(new String[] { "Ninguna", "M\u00E1ster", "Doctor" }));
 			comboBoxDegree.setSelectedIndex(0);
+
+			comboBoxDegree.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					hasChanges();
+				}
+			});
 
 			if (profesor != null) {
 				int index;
@@ -204,7 +217,7 @@ public class ProfesorForm extends JPanel {
 	private String getMatter() {
 		int index = researchMatterComboBox.getSelectedIndex();
 
-		return (String)researchMatterComboBox.getModel().getElementAt(index);
+		return (String) researchMatterComboBox.getModel().getElementAt(index);
 	}
 
 	private void resetForm() {
@@ -228,7 +241,7 @@ public class ProfesorForm extends JPanel {
 			ProfesorCategory category = getCategory();
 			String matter = getMatter();
 
-			if (profesor == null) {	
+			if (profesor == null) {
 				resetForm();
 			}
 
@@ -242,10 +255,18 @@ public class ProfesorForm extends JPanel {
 		}
 	}
 
-	private void hasChanges() {		
-		
-		btnSubmit.setEnabled(true);
-		
+	private void hasChanges() {
+		String name = textFieldName.getText();
+		String matter = getMatter();
+		Degree degree = getDegree();
+		ProfesorCategory category = getCategory();
+
+		String currentMatter = Faculty.newInstance().findMatterOf(profesor.getID());
+
+		boolean differs = !profesor.getName().equals(name) || currentMatter != matter
+				|| profesor.getCategory() != category || profesor.getDegree() != degree;
+
+		btnSubmit.setEnabled(differs);
 	}
 
 	private JButton getBtnSubmit() {
@@ -277,8 +298,13 @@ public class ProfesorForm extends JPanel {
 		if (researchMatterComboBox == null) {
 			researchMatterComboBox = new JComboBox<>();
 			researchMatterComboBox.setFont(Constants.getLabelFont());
-
 			setResearchMatters(researchMatters);
+
+			researchMatterComboBox.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					hasChanges();
+				}
+			});
 		}
 
 		return researchMatterComboBox;
@@ -288,10 +314,11 @@ public class ProfesorForm extends JPanel {
 		if (panel == null) {
 			panel = new JPanel();
 			GridBagLayout gbl_panel = new GridBagLayout();
-			gbl_panel.columnWidths = new int[]{400, 0};
-			gbl_panel.rowHeights = new int[]{29, 35, 50, 0, 35, 50, 0, 35, 50, 0, 35, 50, 35, 0};
-			gbl_panel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-			gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+			gbl_panel.columnWidths = new int[] { 400, 0 };
+			gbl_panel.rowHeights = new int[] { 29, 35, 50, 0, 35, 50, 0, 35, 50, 0, 35, 50, 35, 0 };
+			gbl_panel.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
+			gbl_panel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+					Double.MIN_VALUE };
 
 			panel.setLayout(gbl_panel);
 
@@ -374,7 +401,8 @@ public class ProfesorForm extends JPanel {
 			gbc_btnSubmit.gridy = 12;
 
 			panel.add(getBtnSubmit(), gbc_btnSubmit);
-			btnSubmit.setEnabled(false);;			
+			btnSubmit.setEnabled(false);
+			;
 		}
 
 		return panel;

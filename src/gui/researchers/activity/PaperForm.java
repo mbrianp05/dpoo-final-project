@@ -35,7 +35,7 @@ public class PaperForm extends JPanel {
 	private Researcher researcher;
 	private Paper breakthrough;
 	private OnResearchActivityActionTriggered listener;
-	
+
 	private JLabel lblTtulo;
 	private JTextField textFieldTitle;
 	private JLabel lblNmero;
@@ -48,23 +48,24 @@ public class PaperForm extends JPanel {
 	private JButton btnRegistrar;
 	private ErrorLabel errorTitle;
 	private JSpinner spinnerNo;
-	
+
 	/**
 	 * @wbp.parser.constructor
 	 */
 	public PaperForm(Researcher researcher) {
 		this(researcher, null);
 	}
-	
+
 	public PaperForm(Researcher researcher, Paper paper) {
 		this.researcher = researcher;
 		this.breakthrough = paper;
-		
+
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{100, 0, 0, 30, 0, 0, 30, 0, 0, 30, 0, 0, 100, 0};
-		gridBagLayout.rowHeights = new int[]{50, 0, 35, 40, 0, 40, 40, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.columnWidths = new int[] { 100, 0, 0, 30, 0, 0, 30, 0, 0, 30, 0, 0, 100, 0 };
+		gridBagLayout.rowHeights = new int[] { 50, 0, 35, 40, 0, 40, 40, 0 };
+		gridBagLayout.columnWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0,
+				Double.MIN_VALUE };
+		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		setLayout(gridBagLayout);
 		GridBagConstraints gbc_lblTtulo = new GridBagConstraints();
 		gbc_lblTtulo.gridwidth = 5;
@@ -139,15 +140,14 @@ public class PaperForm extends JPanel {
 		gbc_btnRegistrar.gridx = 11;
 		gbc_btnRegistrar.gridy = 6;
 		add(getBtnRegistrar(), gbc_btnRegistrar);
-		
+
 		reset();
 	}
-	
-	
+
 	public void listenTo(OnResearchActivityActionTriggered listener) {
 		this.listener = listener;
 	}
-	
+
 	private JLabel getLblTtulo() {
 		if (lblTtulo == null) {
 			lblTtulo = new JLabel("T\u00EDtulo");
@@ -155,7 +155,7 @@ public class PaperForm extends JPanel {
 		}
 		return lblTtulo;
 	}
-	
+
 	private JTextField getTextFieldTitle() {
 		if (textFieldTitle == null) {
 			textFieldTitle = new JTextField();
@@ -164,7 +164,7 @@ public class PaperForm extends JPanel {
 		}
 		return textFieldTitle;
 	}
-	
+
 	private JLabel getLblNmero() {
 		if (lblNmero == null) {
 			lblNmero = new JLabel("N\u00FAmero");
@@ -172,7 +172,7 @@ public class PaperForm extends JPanel {
 		}
 		return lblNmero;
 	}
-	
+
 	private JLabel getLblVolumen() {
 		if (lblVolumen == null) {
 			lblVolumen = new JLabel("Volumen");
@@ -180,7 +180,7 @@ public class PaperForm extends JPanel {
 		}
 		return lblVolumen;
 	}
-	
+
 	private JSpinner getSpinnerVol() {
 		if (spinnerVol == null) {
 			spinnerVol = new JSpinner();
@@ -190,7 +190,7 @@ public class PaperForm extends JPanel {
 		}
 		return spinnerVol;
 	}
-	
+
 	private JLabel getLblAo() {
 		if (lblAo == null) {
 			lblAo = new JLabel("A\u00F1o");
@@ -198,38 +198,39 @@ public class PaperForm extends JPanel {
 		}
 		return lblAo;
 	}
-	
+
 	private JSpinner getSpinnerYear() {
 		if (spinnerYear == null) {
 			spinnerYear = new JSpinner();
-			
+
 			spinnerYear.setModel(new SpinnerNumberModel(Year.now().getValue(), 1, Year.now().getValue(), 1));
 			spinnerYear.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 			spinnerYear.setForeground(Color.WHITE);
 		}
 		return spinnerYear;
 	}
-	
+
 	private JLabel getLblGrupoDeImpacto() {
 		if (lblGrupoDeImpacto == null) {
 			lblGrupoDeImpacto = new JLabel("Grupo de impacto");
 			lblGrupoDeImpacto.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 		}
-		
+
 		return lblGrupoDeImpacto;
 	}
-	
+
 	private JComboBox<String> getComboBoxTargetedGroup() {
 		if (comboBoxTargetedGroup == null) {
 			comboBoxTargetedGroup = new JComboBox<>();
 			comboBoxTargetedGroup.setBackground(Color.WHITE);
 			comboBoxTargetedGroup.setFont(new Font("Segoe UI", Font.PLAIN, 15));
-			comboBoxTargetedGroup.setModel(new DefaultComboBoxModel<>(new String[] {"Web de ciencia", "Grupo 1", "Grupo 2", "Grupo 3", "Grupo 4"}));
+			comboBoxTargetedGroup.setModel(new DefaultComboBoxModel<>(
+					new String[] { "Web de ciencia", "Grupo 1", "Grupo 2", "Grupo 3", "Grupo 4" }));
 			comboBoxTargetedGroup.setSelectedIndex(0);
 		}
 		return comboBoxTargetedGroup;
 	}
-	
+
 	private JButton getBtnRegistrar() {
 		if (btnRegistrar == null) {
 			btnRegistrar = new JButton(breakthrough == null ? "Registrar" : "Editar");
@@ -244,22 +245,22 @@ public class PaperForm extends JPanel {
 		}
 		return btnRegistrar;
 	}
-	
+
 	private boolean checkValidity() {
 		boolean validity = true;
 		String title = textFieldTitle.getText();
-		
+
 		if (!Validation.notEmpty(title)) {
 			errorTitle.setVisible(true);
 			validity = false;
 		}
-		
+
 		return validity;
 	}
-	
+
 	private TargetedGroup getGroup() {
 		TargetedGroup group;
-		
+
 		switch (comboBoxTargetedGroup.getSelectedIndex()) {
 		case 0:
 			group = TargetedGroup.Wos;
@@ -277,17 +278,17 @@ public class PaperForm extends JPanel {
 		case 4:
 			group = TargetedGroup.Group4;
 		}
-		
+
 		return group;
 	}
-	
+
 	private void initForm() {
 		textFieldTitle.setText(breakthrough.getTitle());
 		spinnerYear.setValue(breakthrough.getYear());
 		spinnerVol.setValue(breakthrough.getVolume());
 		comboBoxTargetedGroup.setSelectedItem(EnumsDictionary.group(breakthrough.getGroup()));
 	}
-	
+
 	private void reset() {
 		if (breakthrough == null) {
 			textFieldTitle.setText("");
@@ -297,22 +298,23 @@ public class PaperForm extends JPanel {
 		} else {
 			initForm();
 		}
-		
+
 		errorTitle.setVisible(false);
 	}
-	
+
 	private void sendFeedback() {
-		JOptionPane.showMessageDialog(null, "¡Se ha registrado el artículo correctamente!", "Mensaje", JOptionPane.PLAIN_MESSAGE);
+		JOptionPane.showMessageDialog(null, "ï¿½Se ha registrado el artï¿½culo correctamente!", "Mensaje",
+				JOptionPane.PLAIN_MESSAGE);
 	}
-	
+
 	private void submit() {
 		if (checkValidity()) {
 			String title = textFieldTitle.getText();
-			int no = (Integer)spinnerNo.getValue();
-			int year = (Integer)spinnerYear.getValue();
-			int vol = (Integer)spinnerVol.getValue();
+			int no = (Integer) spinnerNo.getValue();
+			int year = (Integer) spinnerYear.getValue();
+			int vol = (Integer) spinnerVol.getValue();
 			TargetedGroup group = getGroup();
-			
+
 			if (breakthrough == null) {
 				researcher.addPaper(title, no, vol, year, group);
 			} else {
@@ -322,7 +324,7 @@ public class PaperForm extends JPanel {
 				breakthrough.setGroup(group);
 				breakthrough.setVolume(vol);
 			}
-			
+
 			if (listener != null) {
 				listener.actionPerformed();
 			}
@@ -331,6 +333,7 @@ public class PaperForm extends JPanel {
 			sendFeedback();
 		}
 	}
+
 	private ErrorLabel getErrorTitle() {
 		if (errorTitle == null) {
 			errorTitle = new ErrorLabel();
@@ -338,6 +341,7 @@ public class PaperForm extends JPanel {
 		}
 		return errorTitle;
 	}
+
 	private JSpinner getSpinnerNo() {
 		if (spinnerNo == null) {
 			spinnerNo = new JSpinner();

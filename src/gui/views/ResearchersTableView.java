@@ -67,13 +67,14 @@ public class ResearchersTableView extends JPanel {
 	private JLabel label;
 
 	public ResearchersTableView() {
-		this.faculty = Faculty.newInstance();
+		faculty = Faculty.newInstance();
 
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{100, 70, 100, 100, 0, 0, 180, 30, 0, 180, 30, 60, 0, 70, 70, 100, 0};
-		gridBagLayout.rowHeights = new int[]{70, 45, 0, 60, 40, 207, 0, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.columnWidths = new int[] { 100, 70, 100, 100, 0, 0, 180, 30, 0, 180, 30, 60, 0, 70, 70, 100, 0 };
+		gridBagLayout.rowHeights = new int[] { 70, 45, 0, 60, 40, 207, 0, 0 };
+		gridBagLayout.columnWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0,
+				0.0, 0.0, 0.0, Double.MIN_VALUE };
+		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE };
 		setLayout(gridBagLayout);
 		GridBagConstraints gbc_lblDatosDeInvestigadores = new GridBagConstraints();
 		gbc_lblDatosDeInvestigadores.fill = GridBagConstraints.BOTH;
@@ -167,7 +168,8 @@ public class ResearchersTableView extends JPanel {
 	}
 
 	private void sendFeedback() {
-		JOptionPane.showMessageDialog(null, "¡Se ha actualizado el investigador correctamente!", "Mensaje", JOptionPane.PLAIN_MESSAGE);
+		JOptionPane.showMessageDialog(null, "ï¿½Se ha actualizado el investigador correctamente!", "Mensaje",
+				JOptionPane.PLAIN_MESSAGE);
 	}
 
 	private JCheckBox getFilterStudents() {
@@ -176,7 +178,7 @@ public class ResearchersTableView extends JPanel {
 			filterStudents.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 			filterStudents.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					ResearcherTableModel tmodel = (ResearcherTableModel)table.getModel();
+					ResearcherTableModel tmodel = (ResearcherTableModel) table.getModel();
 					tmodel.includeStudents(filterStudents.isSelected());
 				}
 			});
@@ -193,7 +195,7 @@ public class ResearchersTableView extends JPanel {
 			filterProfesors.setHorizontalAlignment(SwingConstants.CENTER);
 			filterProfesors.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					ResearcherTableModel tmodel = (ResearcherTableModel)table.getModel();
+					ResearcherTableModel tmodel = (ResearcherTableModel) table.getModel();
 					tmodel.includeProfesors(filterProfesors.isSelected());
 				}
 			});
@@ -227,18 +229,18 @@ public class ResearchersTableView extends JPanel {
 		if (spinner == null) {
 			spinner = new JSpinner();
 			spinner.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+			spinner.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
 			spinner.addKeyListener(new KeyAdapter() {
 				@Override
 				public void keyTyped(KeyEvent arg0) {
-					ResearcherTableModel tmodel = (ResearcherTableModel)table.getModel();
-					tmodel.setMinScore((int)spinner.getValue());
+					ResearcherTableModel tmodel = (ResearcherTableModel) table.getModel();
+					tmodel.setMinScore((int) spinner.getValue());
 				}
 			});
-			spinner.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
 			spinner.addChangeListener(new ChangeListener() {
 				public void stateChanged(ChangeEvent event) {
-					ResearcherTableModel tmodel = (ResearcherTableModel)table.getModel();
-					tmodel.setMinScore((int)spinner.getValue());
+					ResearcherTableModel tmodel = (ResearcherTableModel) table.getModel();
+					tmodel.setMinScore((int) spinner.getValue());
 					btnRemove.setVisible(false);
 				}
 			});
@@ -246,6 +248,7 @@ public class ResearchersTableView extends JPanel {
 
 		return spinner;
 	}
+
 	private JLabel getLblNombre() {
 		if (lblNombre == null) {
 			lblNombre = new JLabel("Nombre");
@@ -254,6 +257,7 @@ public class ResearchersTableView extends JPanel {
 		}
 		return lblNombre;
 	}
+
 	private JTextField getFilterByName() {
 		if (filterByName == null) {
 			filterByName = new JTextField("");
@@ -261,8 +265,8 @@ public class ResearchersTableView extends JPanel {
 			filterByName.addKeyListener(new KeyAdapter() {
 				@Override
 				public void keyReleased(KeyEvent event) {
-					if (event.getKeyCode() != 16) {		
-						ResearcherTableModel tmodel = (ResearcherTableModel)table.getModel();
+					if (event.getKeyCode() != 16) {
+						ResearcherTableModel tmodel = (ResearcherTableModel) table.getModel();
 						tmodel.setFilterName(filterByName.getText());
 					}
 				}
@@ -271,6 +275,7 @@ public class ResearchersTableView extends JPanel {
 		}
 		return filterByName;
 	}
+
 	private JScrollPane getScrollPane() {
 		if (scrollPane == null) {
 			scrollPane = new JScrollPane();
@@ -278,6 +283,7 @@ public class ResearchersTableView extends JPanel {
 		}
 		return scrollPane;
 	}
+
 	private JTable getTable_1() {
 		if (table == null) {
 			table = new JTable();
@@ -294,7 +300,7 @@ public class ResearchersTableView extends JPanel {
 				public void mouseClicked(MouseEvent event) {
 					if (event.getClickCount() > 1 && table.getSelectedRow() >= 0) {
 						int row = table.getSelectedRow();
-						int ID = Integer.valueOf((String)table.getModel().getValueAt(row, 0));
+						int ID = Integer.valueOf((String) table.getModel().getValueAt(row, 0));
 						Researcher researcher = faculty.findResearcher(ID);
 
 						if (current == null || !current.isVisible()) {
@@ -333,9 +339,10 @@ public class ResearchersTableView extends JPanel {
 	}
 
 	public void updateTable() {
-		((ResearcherTableModel)table.getModel()).fill();
+		((ResearcherTableModel) table.getModel()).fill();
 		btnRemove.setVisible(false);
 	}
+
 	private TitleLabel getLblDatosDeInvestigadores() {
 		if (lblDatosDeInvestigadores == null) {
 			lblDatosDeInvestigadores = new TitleLabel();
@@ -344,6 +351,7 @@ public class ResearchersTableView extends JPanel {
 		}
 		return lblDatosDeInvestigadores;
 	}
+
 	private JLabel getLblTema() {
 		if (lblTema == null) {
 			lblTema = new JLabel("Tema");
@@ -352,14 +360,15 @@ public class ResearchersTableView extends JPanel {
 		}
 		return lblTema;
 	}
+
 	private JTextField getTextFieldMatterFilter() {
 		if (textFieldMatterFilter == null) {
 			textFieldMatterFilter = new JTextField("");
 			textFieldMatterFilter.addKeyListener(new KeyAdapter() {
 				@Override
 				public void keyReleased(KeyEvent event) {
-					if (event.getKeyCode() != 16) {		
-						ResearcherTableModel tmodel = (ResearcherTableModel)table.getModel();
+					if (event.getKeyCode() != 16) {
+						ResearcherTableModel tmodel = (ResearcherTableModel) table.getModel();
 						tmodel.setFilterMatter(textFieldMatterFilter.getText());
 					}
 				}
@@ -371,14 +380,16 @@ public class ResearchersTableView extends JPanel {
 	}
 
 	private void removeResearcher() {
-		int id = Integer.valueOf((String)table.getModel().getValueAt(table.getSelectedRow(), 0));
+		int id = Integer.valueOf((String) table.getModel().getValueAt(table.getSelectedRow(), 0));
 
 		if (faculty.canRemoveResearcher(id)) {
 			faculty.removeResearcher(id);
-			
-			JOptionPane.showMessageDialog(null, "El investigador que desea eliminar imparte cursos o es jefe de alguna línea. Busca el sutituto e inténtalo después", "Error al eliminar el investigador", JOptionPane.ERROR_MESSAGE);
+
+			JOptionPane.showMessageDialog(null,
+					"El investigador que desea eliminar imparte cursos o es jefe de alguna lï¿½nea. Busca el sutituto e intï¿½ntalo despuï¿½s",
+					"Error al eliminar el investigador", JOptionPane.ERROR_MESSAGE);
 		} else {
-			int input = JOptionPane.showConfirmDialog(null, "¿Estás seguro de eliminar al investigador?");
+			int input = JOptionPane.showConfirmDialog(null, "ï¿½Estï¿½s seguro de eliminar al investigador?");
 
 			if (input == JOptionPane.OK_OPTION) {
 				updateTable();
@@ -404,6 +415,7 @@ public class ResearchersTableView extends JPanel {
 		}
 		return btnRemove;
 	}
+
 	private JLabel getLabel() {
 		if (label == null) {
 			label = new JLabel("Haga doble click en alguna fila para editar");
