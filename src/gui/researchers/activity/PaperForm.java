@@ -28,6 +28,10 @@ import schooling.TargetedGroup;
 import utils.Constants;
 import utils.EnumsDictionary;
 import utils.Validation;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
 
 public class PaperForm extends JPanel {
 	private static final long serialVersionUID = 8204693817348078346L;
@@ -159,8 +163,16 @@ public class PaperForm extends JPanel {
 	private JTextField getTextFieldTitle() {
 		if (textFieldTitle == null) {
 			textFieldTitle = new JTextField();
-			textFieldTitle.setFont(new Font("Segoe UI", Font.PLAIN, 15));
-			textFieldTitle.setColumns(10);
+			if(breakthrough != null) {
+				textFieldTitle.addKeyListener(new KeyAdapter() {
+					@Override
+					public void keyReleased(KeyEvent arg0) {
+						hasChanges(); 
+					}
+				});
+				textFieldTitle.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+				textFieldTitle.setColumns(10);
+			}
 		}
 		return textFieldTitle;
 	}
@@ -187,6 +199,20 @@ public class PaperForm extends JPanel {
 			spinnerVol.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
 			spinnerVol.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 			spinnerVol.setForeground(Color.WHITE);
+
+			if(breakthrough != null) {
+				spinnerVol.addKeyListener(new KeyAdapter() {
+					@Override
+					public void keyTyped(KeyEvent arg0) {
+						hasChanges();
+					}
+				});
+				spinnerVol.addChangeListener(new ChangeListener() {
+					public void stateChanged(ChangeEvent arg0) {
+						hasChanges();
+					}
+				});
+			}
 		}
 		return spinnerVol;
 	}
@@ -206,6 +232,20 @@ public class PaperForm extends JPanel {
 			spinnerYear.setModel(new SpinnerNumberModel(Year.now().getValue(), 1, Year.now().getValue(), 1));
 			spinnerYear.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 			spinnerYear.setForeground(Color.WHITE);
+
+			if(breakthrough != null) {
+				spinnerYear.addKeyListener(new KeyAdapter() {
+					@Override
+					public void keyTyped(KeyEvent arg0) {
+						hasChanges();
+					}
+				});
+				spinnerYear.addChangeListener(new ChangeListener() {
+					public void stateChanged(ChangeEvent arg0) {
+						hasChanges();
+					}
+				});
+			}
 		}
 		return spinnerYear;
 	}
@@ -227,6 +267,14 @@ public class PaperForm extends JPanel {
 			comboBoxTargetedGroup.setModel(new DefaultComboBoxModel<>(
 					new String[] { "Web de ciencia", "Grupo 1", "Grupo 2", "Grupo 3", "Grupo 4" }));
 			comboBoxTargetedGroup.setSelectedIndex(0);
+
+			if(breakthrough != null) {
+				comboBoxTargetedGroup.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						hasChanges();
+					}
+				});				
+			}
 		}
 		return comboBoxTargetedGroup;
 	}
@@ -242,6 +290,9 @@ public class PaperForm extends JPanel {
 			});
 			btnRegistrar.setBackground(Constants.getInsertionBtnColor());
 			btnRegistrar.setFont(new Font("Segoe UI", Font.BOLD, 15));
+
+			if(breakthrough != null)
+				btnRegistrar.setEnabled(false);
 		}
 		return btnRegistrar;
 	}
@@ -348,7 +399,35 @@ public class PaperForm extends JPanel {
 			spinnerNo.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
 			spinnerNo.setBackground(Color.WHITE);
 			spinnerNo.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+
+			if(breakthrough != null) {
+				spinnerNo.addKeyListener(new KeyAdapter() {
+					@Override
+					public void keyTyped(KeyEvent arg0) {
+						hasChanges();
+					}
+				});
+				spinnerNo.addChangeListener(new ChangeListener() {
+					public void stateChanged(ChangeEvent arg0) {
+						hasChanges();
+					}
+				});
+			}
 		}
 		return spinnerNo;
+	}
+
+	public void hasChanges() {
+
+		String title = textFieldTitle.getText();
+		int num = (int)spinnerNo.getValue();
+		int vol = (int)spinnerVol.getValue();
+		int year = (int)spinnerYear.getValue();
+		//		String group = comboBoxTargetedGroup.getSelectedItem().toString();
+
+		boolean differs = !breakthrough.getTitle().equals(title) || breakthrough.getNo() != num || breakthrough.getVolume() != vol 
+				|| breakthrough.getYear() != year /*|| !breakthrough.getGroup().toString().equals(group)*/;
+
+		btnRegistrar.setEnabled(differs);
 	}
 }

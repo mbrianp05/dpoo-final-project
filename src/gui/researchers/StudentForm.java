@@ -137,6 +137,10 @@ public class StudentForm extends JPanel {
 			});
 			btnSubmit.setBackground(Constants.getInsertionBtnColor());
 			btnSubmit.setFont(new Font("Segoe UI", Font.BOLD, 15));
+
+			if(student != null)
+				btnSubmit.setEnabled(false);
+
 		}
 		return btnSubmit;
 	}
@@ -147,12 +151,7 @@ public class StudentForm extends JPanel {
 
 	private ResearchMatterComboBox getResearchMatterComboBox() {
 		if (researchMatterComboBox == null) {
-			researchMatterComboBox = new ResearchMatterComboBox(faculty);
-			researchMatterComboBox.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent arg0) {
-					hasChanges();
-				}
-			});
+			researchMatterComboBox = new ResearchMatterComboBox(faculty);			
 			researchMatterComboBox.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 
 			if (editing) {
@@ -173,6 +172,13 @@ public class StudentForm extends JPanel {
 
 					researchMatterComboBox.setSelectedIndex(index);
 				}
+			}
+			if(student != null) {
+				researchMatterComboBox.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						hasChanges();
+					}
+				});
 			}
 		}
 		return researchMatterComboBox;
@@ -222,8 +228,7 @@ public class StudentForm extends JPanel {
 			gbc_btnSubmit.anchor = GridBagConstraints.EAST;
 			gbc_btnSubmit.gridx = 0;
 			gbc_btnSubmit.gridy = 6;
-			panel.add(getBtnSubmit(), gbc_btnSubmit);
-			btnSubmit.setEnabled(false);
+			panel.add(getBtnSubmit(), gbc_btnSubmit);			
 		}
 		return panel;
 	}
@@ -231,12 +236,14 @@ public class StudentForm extends JPanel {
 	private JTextField getTextFieldName() {
 		if (textFieldName == null) {
 			textFieldName = new JTextField();
-			textFieldName.addKeyListener(new KeyAdapter() {
-				@Override
-				public void keyReleased(KeyEvent arg0) {
-					hasChanges();
-				}
-			});
+			if(student != null) {
+				textFieldName.addKeyListener(new KeyAdapter() {
+					@Override
+					public void keyReleased(KeyEvent arg0) {
+						hasChanges();
+					}
+				});
+			}
 			textFieldName.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 			textFieldName.setColumns(10);
 
@@ -250,9 +257,9 @@ public class StudentForm extends JPanel {
 	public void hasChanges() {
 
 		String name = textFieldName.getText();
-		
+
 		boolean differ = !student.getName().equals(name) || researchMatterComboBox.getSelectedItem().toString() != faculty.findMatterOf(student.getID()).toString();
-		
+
 		btnSubmit.setEnabled(differ);
 
 	}

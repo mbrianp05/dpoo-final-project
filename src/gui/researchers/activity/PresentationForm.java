@@ -34,6 +34,9 @@ import utils.DateHelper;
 import utils.Month;
 import utils.Validation;
 
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+
 public class PresentationForm extends JPanel {
 	private static final long serialVersionUID = 1218122467482657932L;
 
@@ -174,6 +177,14 @@ public class PresentationForm extends JPanel {
 	private JTextField getTextFieldName() {
 		if (textFieldName == null) {
 			textFieldName = new JTextField();
+			if(breakthrough != null) {
+				textFieldName.addKeyListener(new KeyAdapter() {
+					@Override
+					public void keyReleased(KeyEvent arg0) {
+						hasChanges();
+					}
+				});
+			}
 			textFieldName.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 			textFieldName.setColumns(10);
 		}
@@ -192,6 +203,14 @@ public class PresentationForm extends JPanel {
 	private JTextField getTextFieldISBN() {
 		if (textFieldISBN == null) {
 			textFieldISBN = new JTextField();
+			if(breakthrough != null) {
+				textFieldISBN.addKeyListener(new KeyAdapter() {
+					@Override
+					public void keyReleased(KeyEvent arg0) {
+						hasChanges();
+					}
+				});
+			}
 			textFieldISBN.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 			textFieldISBN.setColumns(10);
 		}
@@ -210,6 +229,14 @@ public class PresentationForm extends JPanel {
 	private JTextField getTextFieldLocation() {
 		if (textFieldLocation == null) {
 			textFieldLocation = new JTextField();
+			if(breakthrough != null) {
+				textFieldLocation.addKeyListener(new KeyAdapter() {
+					@Override
+					public void keyReleased(KeyEvent arg0) {
+						hasChanges();
+					}
+				});
+			}
 			textFieldLocation.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 			textFieldLocation.setColumns(10);
 		}
@@ -314,6 +341,14 @@ public class PresentationForm extends JPanel {
 			comboBoxDays.setBackground(Color.WHITE);
 
 			setDays();
+
+			if(breakthrough != null) {
+				comboBoxDays.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						hasChanges();
+					}
+				});
+			}
 		}
 		return comboBoxDays;
 	}
@@ -330,6 +365,14 @@ public class PresentationForm extends JPanel {
 					"Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" }));
 			comboBoxMonths.setBackground(Color.WHITE);
 			comboBoxMonths.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+			
+			if(breakthrough != null) {
+				comboBoxMonths.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						hasChanges();
+					}
+				});
+			}
 		}
 		return comboBoxMonths;
 	}
@@ -345,6 +388,21 @@ public class PresentationForm extends JPanel {
 			spinnerYear.setBackground(Color.WHITE);
 			spinnerYear.setModel(new SpinnerNumberModel(Year.now().getValue(), 1, Year.now().getValue(), 1));
 			spinnerYear.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+			
+			if(breakthrough != null) {
+				spinnerYear.addKeyListener(new KeyAdapter() {					
+					@Override
+					public void keyTyped(KeyEvent arg0) {
+						hasChanges();
+					}					
+				});
+				spinnerYear.addChangeListener(new ChangeListener() {					
+					@Override
+					public void stateChanged(ChangeEvent arg0) {
+						hasChanges();
+					}
+				});
+			}
 		}
 		return spinnerYear;
 	}
@@ -359,6 +417,9 @@ public class PresentationForm extends JPanel {
 				}
 			});
 			btnAgregar.setFont(new Font("Segoe UI", Font.BOLD, 15));
+
+			if(breakthrough != null)
+				btnAgregar.setEnabled(false);
 		}
 		return btnAgregar;
 	}
@@ -546,5 +607,21 @@ public class PresentationForm extends JPanel {
 			errorLocation.setText("La localizaci\u00F3n es requerida");
 		}
 		return errorLocation;
+	}
+
+	public void hasChanges() {
+
+		String name = textFieldName.getText();
+		String code = textFieldISBN.getText();
+		String local = textFieldLocation.getText();
+		int day = Integer.valueOf((String)comboBoxDays.getSelectedItem());
+		int month = comboBoxMonths.getSelectedIndex() +1;
+		int year = (Integer) spinnerYear.getValue();
+		LocalDate date = LocalDate.of(year, month, day);
+
+		boolean differs = !breakthrough.getName().equals(name) || !breakthrough.getISBN().equals(code) 
+				|| !breakthrough.getLocation().equals(local) || breakthrough.getDate() != date;
+
+		btnAgregar.setEnabled(differs);
 	}
 }

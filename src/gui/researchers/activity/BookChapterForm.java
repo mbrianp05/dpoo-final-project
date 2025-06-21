@@ -18,11 +18,16 @@ import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import schooling.Chapter;
 import schooling.Researcher;
 import utils.Constants;
 import utils.Validation;
+
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class BookChapterForm extends JPanel {
 	private Researcher researcher;
@@ -209,6 +214,14 @@ public class BookChapterForm extends JPanel {
 	private JTextField getTextFieldBookName() {
 		if (textFieldBookName == null) {
 			textFieldBookName = new JTextField();
+			if(breakthrough != null) {
+				textFieldBookName.addKeyListener(new KeyAdapter() {
+					@Override
+					public void keyReleased(KeyEvent arg0) {
+						hasChanges();
+					}
+				});
+			}
 			textFieldBookName.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 			textFieldBookName.setColumns(10);
 		}
@@ -224,6 +237,14 @@ public class BookChapterForm extends JPanel {
 	private JTextField getTextFieldEditorial() {
 		if (textFieldEditorial == null) {
 			textFieldEditorial = new JTextField();
+			if(breakthrough != null) {
+				textFieldEditorial.addKeyListener(new KeyAdapter() {
+					@Override
+					public void keyReleased(KeyEvent arg0) {
+						hasChanges();
+					}
+				});
+			}
 			textFieldEditorial.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 			textFieldEditorial.setColumns(10);
 		}
@@ -239,6 +260,14 @@ public class BookChapterForm extends JPanel {
 	private JTextField getTextFieldISSN() {
 		if (textFieldISSN == null) {
 			textFieldISSN = new JTextField();
+			if(breakthrough != null) {
+				textFieldISSN.addKeyListener(new KeyAdapter() {
+					@Override
+					public void keyReleased(KeyEvent arg0) {
+						hasChanges();
+					}
+				});
+			}
 			textFieldISSN.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 			textFieldISSN.setColumns(10);
 		}
@@ -254,6 +283,14 @@ public class BookChapterForm extends JPanel {
 	private JTextField getTextFieldChapter() {
 		if (textFieldChapter == null) {
 			textFieldChapter = new JTextField();
+			if(breakthrough != null) {
+				textFieldChapter.addKeyListener(new KeyAdapter() {
+					@Override
+					public void keyReleased(KeyEvent arg0) {
+						hasChanges();
+					}
+				});
+			}
 			textFieldChapter.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 			textFieldChapter.setColumns(10);
 		}
@@ -268,9 +305,24 @@ public class BookChapterForm extends JPanel {
 	}
 	private JSpinner getSpinnerVol() {
 		if (spinnerVol == null) {
-			spinnerVol = new JSpinner();
+			spinnerVol = new JSpinner();			
 			spinnerVol.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 			spinnerVol.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
+			
+			if(breakthrough != null) {
+				spinnerVol.addKeyListener(new KeyAdapter() {
+					@Override
+					public void keyTyped(KeyEvent arg0) {
+						hasChanges();
+					}
+				});
+				spinnerVol.addChangeListener(new ChangeListener() {					
+					@Override
+					public void stateChanged(ChangeEvent event) {
+						hasChanges();						
+					}
+				});				
+			}
 		}
 		return spinnerVol;
 	}
@@ -285,6 +337,9 @@ public class BookChapterForm extends JPanel {
 			});
 			btnNewButton.setBackground(Constants.getInsertionBtnColor());
 			btnNewButton.setFont(new Font("Segoe UI", Font.BOLD, 15));
+			
+			if(breakthrough != null)
+				btnNewButton.setEnabled(false);
 		}
 		return btnNewButton;
 	}
@@ -406,13 +461,13 @@ public class BookChapterForm extends JPanel {
 			String ISSN = textFieldISSN.getText();
 			int vol = (Integer)spinnerVol.getValue();
 
-			
+
 			try {
 				if (breakthrough == null) {
 					researcher.addBookChapter(chapter, authors, editors, editorial, ISSN, bookName, vol);
 				} else {
 					Validation.removeValue("ISSN", breakthrough.getISSN());
-					
+
 					breakthrough.setTitle(chapter);
 					breakthrough.setBookName(bookName);
 					breakthrough.setEditorial(editorial);
@@ -467,5 +522,19 @@ public class BookChapterForm extends JPanel {
 			errorVol.setText("El volumen del libro debe ser mayor que 0");
 		}
 		return errorVol;
+	}
+
+	public void hasChanges() {
+		
+		String name = textFieldBookName.getText();
+		String title = textFieldChapter.getText();
+		String editor = textFieldEditorial.getText();
+		String code = textFieldISSN.getText();
+		int vol = (int)spinnerVol.getValue();
+
+		boolean differs = !breakthrough.getBookName().equals(name) || !breakthrough.getTitle().equals(title) || !breakthrough.getEditorial().equals(editor) ||
+				!breakthrough.getISSN().equals(code) || breakthrough.getVolume() != vol;
+
+		btnNewButton.setEnabled(differs);
 	}
 }
