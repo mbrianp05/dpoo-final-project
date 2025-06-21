@@ -229,7 +229,6 @@ public class ResearchersActivityTableView extends JPanel {
 			});
 			table.getTableHeader().setReorderingAllowed(false);
 			table.setFont(Constants.getLabelFont());
-			table.setRowHeight(24);
 			table.setFillsViewportHeight(true);
 			table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			table.setFont(new Font("Segoe UI", Font.PLAIN, 15));

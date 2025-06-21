@@ -107,12 +107,6 @@ public class ProfesorForm extends JPanel {
 					new DefaultComboBoxModel<>(new String[] { "Instructor", "Asistente", "Auxiliar", "Titular" }));
 			comboBoxProfesorCategory.setSelectedIndex(0);
 
-			comboBoxProfesorCategory.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent arg0) {
-					hasChanges();
-				}
-			});
-
 			if (profesor != null) {
 				int index;
 
@@ -133,7 +127,13 @@ public class ProfesorForm extends JPanel {
 				}
 
 				comboBoxProfesorCategory.setSelectedIndex(index);
+				comboBoxProfesorCategory.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						hasChanges();
+					}
+				});
 			}
+			
 		}
 		return comboBoxProfesorCategory;
 	}
@@ -144,12 +144,6 @@ public class ProfesorForm extends JPanel {
 			comboBoxDegree.setFont(Constants.getLabelFont());
 			comboBoxDegree.setModel(new DefaultComboBoxModel<>(new String[] { "Ninguna", "M\u00E1ster", "Doctor" }));
 			comboBoxDegree.setSelectedIndex(0);
-
-			comboBoxDegree.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent arg0) {
-					hasChanges();
-				}
-			});
 
 			if (profesor != null) {
 				int index;
@@ -169,6 +163,12 @@ public class ProfesorForm extends JPanel {
 				}
 
 				comboBoxDegree.setSelectedIndex(index);
+
+				comboBoxDegree.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						hasChanges();
+					}
+				});
 			}
 		}
 
@@ -246,9 +246,13 @@ public class ProfesorForm extends JPanel {
 			}
 
 			if (listener != null) {
-				listener.actionPerformed(new ProfesorFormData(name, matter, degree, category));
+				ProfesorFormData newData = new ProfesorFormData(name, matter, degree, category);
+				profesor = newData;
+				
+				listener.actionPerformed(newData);
 			}
-
+			
+			hasChanges();
 			errorLabel.setVisible(false);
 		} else {
 			errorLabel.setVisible(true);
@@ -278,6 +282,8 @@ public class ProfesorForm extends JPanel {
 			});
 			btnSubmit.setBackground(Constants.getInsertionBtnColor());
 			btnSubmit.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		
+			if (profesor != null) btnSubmit.setEnabled(false);
 		}
 
 		return btnSubmit;
@@ -298,11 +304,13 @@ public class ProfesorForm extends JPanel {
 			researchMatterComboBox.setFont(Constants.getLabelFont());
 			setResearchMatters(researchMatters);
 
-			researchMatterComboBox.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent arg0) {
-					hasChanges();
-				}
-			});
+			if (profesor != null ) {				
+				researchMatterComboBox.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						hasChanges();
+					}
+				});
+			}
 		}
 
 		return researchMatterComboBox;
@@ -399,7 +407,6 @@ public class ProfesorForm extends JPanel {
 			gbc_btnSubmit.gridy = 12;
 
 			panel.add(getBtnSubmit(), gbc_btnSubmit);
-			btnSubmit.setEnabled(false);
 			;
 		}
 
@@ -409,16 +416,16 @@ public class ProfesorForm extends JPanel {
 	private JTextField getTextFieldName() {
 		if (textFieldName == null) {
 			textFieldName = new JTextField();
-			textFieldName.addKeyListener(new KeyAdapter() {
-				@Override
-				public void keyReleased(KeyEvent arg0) {
-					hasChanges();
-				}
-			});
 			textFieldName.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 			textFieldName.setColumns(10);
 
 			if (profesor != null) {
+				textFieldName.addKeyListener(new KeyAdapter() {
+					@Override
+					public void keyReleased(KeyEvent arg0) {
+						hasChanges();
+					}
+				});
 				textFieldName.setText(profesor.getName());
 			}
 		}

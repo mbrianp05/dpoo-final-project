@@ -35,7 +35,7 @@ public class ResearchersActivityTableModel extends DefaultTableModel {
 
 		this.faculty = Faculty.newInstance();
 
-		String[] columns = { "Nombre", "Investigador", "Puntuaciï¿½n", "Identificador" };
+		String[] columns = { "Nombre", "Investigador", "Puntuación", "Identificador" };
 		this.setColumnIdentifiers(columns);
 
 		init();

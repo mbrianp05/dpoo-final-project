@@ -28,7 +28,7 @@ public class ResearchLinesTableModel extends DefaultTableModel {
 		filterMatter = "";
 		filterCredits = 0;
 
-		String[] columns = { "Nombre", "Responsable", "Materias", "Crï¿½dito mï¿½nimo del plan de maestrï¿½a" };
+		String[] columns = { "Nombre", "Responsable", "Materias", "Créditos necesarios para la maestría" };
 		this.setColumnIdentifiers(columns);
 
 		fill();

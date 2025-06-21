@@ -1,7 +1,7 @@
 package gui.course;
 
+import gui.component.ErrorLabel;
 import gui.event.OnCoursesFormActionTriggered;
-import gui.model.ResearcherTableModel;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -10,6 +10,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
@@ -32,9 +34,6 @@ import schooling.Profesor;
 import schooling.ResearchLine;
 import utils.Constants;
 import utils.Validation;
-import gui.component.ErrorLabel;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 public class CourseForm extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -121,13 +120,12 @@ public class CourseForm extends JPanel {
 	}
 
 	private void sendFeedback() {
-		JOptionPane.showMessageDialog(null, "ï¿½Se ha actualizado el curso correctamente!", "Mensaje",
+		JOptionPane.showMessageDialog(null, "¿Se ha actualizado el curso correctamente!", "Mensaje",
 				JOptionPane.PLAIN_MESSAGE);
 	}
 
 	private boolean checkValidity() {
 		hideErrors();
-
 		boolean valid = true;
 
 		if (!Validation.notEmpty(txtName.getText())) {
@@ -139,8 +137,8 @@ public class CourseForm extends JPanel {
 			errorDescription.setVisible(true);
 			valid = false;
 		}
-
-		if (!cmboxInstruct.getSelectedIndex() != -1) {
+		
+		if (cmboxInstruct.getSelectedIndex() == -1) {
 			errorInstructor.setVisible(true);
 			valid = false;
 		}
@@ -170,6 +168,7 @@ public class CourseForm extends JPanel {
 				listener.actionPerformed(new CourseFormData(name, description, instructor, creds));
 			}
 
+			hasChanges();
 			sendFeedback();
 		}
 	}
@@ -185,17 +184,17 @@ public class CourseForm extends JPanel {
 	private JTextField getTxtName() {
 		if (txtName == null) {
 			txtName = new JTextField();
-			txtName.addKeyListener(new KeyAdapter() {
-				@Override
-				public void keyReleased(KeyEvent arg0) {
-					hasChanges();
-				}
-			});
 			txtName.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 15));
 			txtName.setColumns(10);
 
 			if (course != null) {
 				txtName.setText(course.getName());
+				txtName.addKeyListener(new KeyAdapter() {
+					@Override
+					public void keyReleased(KeyEvent arg0) {
+						hasChanges();
+					}
+				});
 			}
 		}
 		return txtName;
@@ -213,18 +212,16 @@ public class CourseForm extends JPanel {
 		if (cmboxInstruct == null) {
 			cmboxInstruct = new JComboBox<String>();
 			cmboxInstruct.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 15));
-
-			cmboxInstruct.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent arg0) {
-					hasChanges();
-				}
-			});
+			fetchInstructors();
 
 			if (course != null) {
-				cmboxInstruct.setSelectedItem(course.getInstructor());
+				cmboxInstruct.setSelectedItem(course.getInstructor().getName());
+				cmboxInstruct.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						hasChanges();
+					}
+				});
 			}
-
-			fetchInstructors();
 		}
 		return cmboxInstruct;
 	}
@@ -243,20 +240,20 @@ public class CourseForm extends JPanel {
 			spinner.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
 			spinner.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 15));
 
-			spinner.addKeyListener(new KeyAdapter() {
-				@Override
-				public void keyTyped(KeyEvent arg0) {
-					hasChanges();
-				}
-			});
-			spinner.addChangeListener(new ChangeListener() {
-				public void stateChanged(ChangeEvent event) {
-					hasChanges();
-				}
-			});
 
 			if (course != null) {
 				spinner.setValue(course.getCredits());
+				spinner.addKeyListener(new KeyAdapter() {
+					@Override
+					public void keyTyped(KeyEvent arg0) {
+						hasChanges();
+					}
+				});
+				spinner.addChangeListener(new ChangeListener() {
+					public void stateChanged(ChangeEvent event) {
+						hasChanges();
+					}
+				});
 			}
 		}
 		return spinner;
@@ -273,12 +270,6 @@ public class CourseForm extends JPanel {
 	private JTextArea getTxtDescr() {
 		if (txtDescr == null) {
 			txtDescr = new JTextArea();
-			txtDescr.addKeyListener(new KeyAdapter() {
-				@Override
-				public void keyReleased(KeyEvent arg0) {
-					hasChanges();
-				}
-			});
 			txtDescr.setLineWrap(true);
 			txtDescr.setWrapStyleWord(true);
 			txtDescr.setRows(5);
@@ -288,6 +279,12 @@ public class CourseForm extends JPanel {
 
 			if (course != null) {
 				txtDescr.setText(course.getDescription());
+				txtDescr.addKeyListener(new KeyAdapter() {
+					@Override
+					public void keyReleased(KeyEvent arg0) {
+						hasChanges();
+					}
+				});
 			}
 		}
 		return txtDescr;
@@ -303,6 +300,8 @@ public class CourseForm extends JPanel {
 				}
 			});
 			btnSave.setFont(new Font("Segoe UI", Font.BOLD, 15));
+			
+			if (course != null) btnSave.setEnabled(false);
 		}
 		return btnSave;
 	}
@@ -412,7 +411,6 @@ public class CourseForm extends JPanel {
 			gbc_btnSave.gridx = 1;
 			gbc_btnSave.gridy = 12;
 			panel.add(getBtnSave(), gbc_btnSave);
-			btnSave.setEnabled(false);
 		}
 		return panel;
 	}
@@ -424,7 +422,7 @@ public class CourseForm extends JPanel {
 		int credits = (Integer) spinner.getValue();
 
 		boolean differs = !course.getName().equals(name) || !course.getDescription().equals(description)
-				|| !course.getInstructor() != instructor || !course.getCredits() != credits;
+				|| course.getInstructor() != instructor || course.getCredits() != credits;
 
 		btnSave.setEnabled(differs);
 	}

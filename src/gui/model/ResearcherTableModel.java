@@ -29,7 +29,7 @@ public class ResearcherTableModel extends DefaultTableModel {
 		includeProfesorsFilter = true;
 		includeStudentsFilter = true;
 
-		String[] columns = { "ID", "Nombre", "Lï¿½nea", "Tema", "Puntuaciï¿½n" };
+		String[] columns = { "ID", "Nombre", "Línea", "Tema", "Puntuación" };
 		this.setColumnIdentifiers(columns);
 
 		fill();

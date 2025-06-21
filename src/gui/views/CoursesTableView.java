@@ -206,7 +206,6 @@ public class CoursesTableView extends JPanel {
 			});
 			table.getTableHeader().setReorderingAllowed(false);
 			table.setFont(Constants.getLabelFont());
-			table.setRowHeight(24);
 			table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			table.setFillsViewportHeight(true);
 			table.setFont(Constants.getLabelFont());

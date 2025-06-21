@@ -22,7 +22,7 @@ public class CoursesTableModel extends DefaultTableModel {
 		filterInstr = "";
 		filterMinCreds = 0;
 
-		String[] columns = { "Nombre", "Instructor", "Lï¿½nea vinculada", "Crï¿½ditos", "Descripciï¿½n" };
+		String[] columns = { "Nombre", "Instructor", "Línea vinculada", "Créditos", "Descripción" };
 		this.setColumnIdentifiers(columns);
 
 		fill();
