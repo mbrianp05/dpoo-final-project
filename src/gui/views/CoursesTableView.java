@@ -311,7 +311,7 @@ public class CoursesTableView extends JPanel {
 
 	public void removeCourse() {
 		String name = String.valueOf((String) table.getModel().getValueAt(table.getSelectedRow(), 0));
-		int input = JOptionPane.showConfirmDialog(null, "ï¿½Estï¿½s seguro de eliminar el curso?");
+		int input = JOptionPane.showConfirmDialog(null, "¡Estás seguro de eliminar el curso?");
 
 		if (input == JOptionPane.OK_OPTION) {
 			if (!faculty.removeCourseFromLine(name)) {
