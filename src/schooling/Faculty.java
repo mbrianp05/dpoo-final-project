@@ -251,8 +251,8 @@ public class Faculty {
 		return result;
 	}
 
-	// REPORTE 4: (Aleksandr): Los profesores que tienen los crï¿½ditos necesarios
-	// para aprobar su maestrï¿½a
+	// REPORTE 4: (Aleksandr): Los profesores que tienen los créditos necesarios
+	// para aprobar su maestría
 	public ArrayList<Profesor> pendingAprovals() {
 		ArrayList<Profesor> aprovalPendings = new ArrayList<>();
 
@@ -263,7 +263,7 @@ public class Faculty {
 		return aprovalPendings;
 	}
 
-	// REPORTE 5: (Aleksandr): Maestrias con la mayor matrï¿½cula
+	// REPORTE 5: (Aleksandr): Maestrias con la mayor matrícula
 	public ArrayList<ResearchLine> trendingMasteryPlans() {
 		ArrayList<ResearchLine> best = new ArrayList<>();
 		int mayorMatric = 0;
@@ -488,7 +488,7 @@ public class Faculty {
 
 		if (line != null) {
 			// Cuando se elimina el curso hay restarle los crï¿½ditos
-			// que aportaba el curso a los que habï¿½an aprobado
+			// que aportaba el curso a los que habían aprobado
 			ArrayList<Matriculation> matrs = line.getMasteryPlan().findMatriculations(course);
 			for(Matriculation m: matrs){
 				if (m.getMark() >= 3) {

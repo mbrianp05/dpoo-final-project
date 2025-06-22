@@ -109,7 +109,7 @@ public class ResearcherResultsPanel extends JPanel {
 				gbl_panel.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
 				gbl_panel.rowWeights = new double[] { 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE };
 				panel.setLayout(gbl_panel);
-				JLabel lblNewLabel = new JLabel("Progreso en la maestrï¿½a");
+				JLabel lblNewLabel = new JLabel("Progreso en la maestría");
 				lblNewLabel.setFont(new Font("Segoe UI", Font.ITALIC, 14));
 
 				GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
@@ -249,7 +249,7 @@ public class ResearcherResultsPanel extends JPanel {
 							m.noMarkYet();
 						}
 
-						JOptionPane.showMessageDialog(null, "ï¿½Se ha actualizado la nota exitosamente!");
+						JOptionPane.showMessageDialog(null, "¡Se ha actualizado la nota exitosamente!");
 
 						loadData();
 						initTable();

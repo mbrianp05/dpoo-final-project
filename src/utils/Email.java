@@ -45,15 +45,15 @@ public class Email {
 			e.printStackTrace();
 		}
 		message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipientEmail));
-		message.setSubject("Cï¿½digo de Confirmaciï¿½n");
+		message.setSubject("Código de Confirmación");
 
-		String emailText = "Tu cï¿½digo de confirmaciï¿½n es: " + code + "\n\n" +
-				"Este cï¿½digo expirarï¿½ en 3 minutos.";
+		String emailText = "Tu código de confirmación es: " + code + "\n\n" +
+				"Este código expirará en 3 minutos.";
 		message.setText(emailText);
 
 		Transport.send(message);
 
-		// Crear el cï¿½digo despuï¿½s de enviar el email
+		// Crear el código después de enviar el email
 		long expirationTime = System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(3);
 		confirmationCode = new ConfirmationCode(code, expirationTime, recipientEmail);
 	}
