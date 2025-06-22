@@ -163,11 +163,11 @@ public class PaperForm extends JPanel {
 	private JTextField getTextFieldTitle() {
 		if (textFieldTitle == null) {
 			textFieldTitle = new JTextField();
-			if(breakthrough != null) {
+			if (breakthrough != null) {
 				textFieldTitle.addKeyListener(new KeyAdapter() {
 					@Override
 					public void keyReleased(KeyEvent arg0) {
-						hasChanges(); 
+						hasChanges();
 					}
 				});
 				textFieldTitle.setFont(new Font("Segoe UI", Font.PLAIN, 15));
@@ -200,7 +200,7 @@ public class PaperForm extends JPanel {
 			spinnerVol.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 			spinnerVol.setForeground(Color.WHITE);
 
-			if(breakthrough != null) {
+			if (breakthrough != null) {
 				spinnerVol.addKeyListener(new KeyAdapter() {
 					@Override
 					public void keyTyped(KeyEvent arg0) {
@@ -233,7 +233,7 @@ public class PaperForm extends JPanel {
 			spinnerYear.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 			spinnerYear.setForeground(Color.WHITE);
 
-			if(breakthrough != null) {
+			if (breakthrough != null) {
 				spinnerYear.addKeyListener(new KeyAdapter() {
 					@Override
 					public void keyTyped(KeyEvent arg0) {
@@ -268,12 +268,12 @@ public class PaperForm extends JPanel {
 					new String[] { "Web de ciencia", "Grupo 1", "Grupo 2", "Grupo 3", "Grupo 4" }));
 			comboBoxTargetedGroup.setSelectedIndex(0);
 
-			if(breakthrough != null) {
+			if (breakthrough != null) {
 				comboBoxTargetedGroup.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						hasChanges();
 					}
-				});				
+				});
 			}
 		}
 		return comboBoxTargetedGroup;
@@ -291,7 +291,7 @@ public class PaperForm extends JPanel {
 			btnRegistrar.setBackground(Constants.getInsertionBtnColor());
 			btnRegistrar.setFont(new Font("Segoe UI", Font.BOLD, 15));
 
-			if(breakthrough != null)
+			if (breakthrough != null)
 				btnRegistrar.setEnabled(false);
 		}
 		return btnRegistrar;
@@ -313,21 +313,21 @@ public class PaperForm extends JPanel {
 		TargetedGroup group;
 
 		switch (comboBoxTargetedGroup.getSelectedIndex()) {
-		case 0:
-			group = TargetedGroup.Wos;
-			break;
-		case 1:
-			group = TargetedGroup.Group1;
-			break;
-		case 2:
-			group = TargetedGroup.Group2;
-			break;
-		case 3:
-			group = TargetedGroup.Group3;
-			break;
-		default:
-		case 4:
-			group = TargetedGroup.Group4;
+			case 0:
+				group = TargetedGroup.Wos;
+				break;
+			case 1:
+				group = TargetedGroup.Group1;
+				break;
+			case 2:
+				group = TargetedGroup.Group2;
+				break;
+			case 3:
+				group = TargetedGroup.Group3;
+				break;
+			default:
+			case 4:
+				group = TargetedGroup.Group4;
 		}
 
 		return group;
@@ -400,7 +400,7 @@ public class PaperForm extends JPanel {
 			spinnerNo.setBackground(Color.WHITE);
 			spinnerNo.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 
-			if(breakthrough != null) {
+			if (breakthrough != null) {
 				spinnerNo.addKeyListener(new KeyAdapter() {
 					@Override
 					public void keyTyped(KeyEvent arg0) {
@@ -418,15 +418,15 @@ public class PaperForm extends JPanel {
 	}
 
 	public void hasChanges() {
+		String title = textFieldTitle.getText().trim();
+		int num = (int) spinnerNo.getValue();
+		int vol = (int) spinnerVol.getValue();
+		int year = (int) spinnerYear.getValue();
+		// String group = comboBoxTargetedGroup.getSelectedItem().toString();
 
-		String title = textFieldTitle.getText();
-		int num = (int)spinnerNo.getValue();
-		int vol = (int)spinnerVol.getValue();
-		int year = (int)spinnerYear.getValue();
-		//		String group = comboBoxTargetedGroup.getSelectedItem().toString();
-
-		boolean differs = !breakthrough.getTitle().equals(title) || breakthrough.getNo() != num || breakthrough.getVolume() != vol 
-				|| breakthrough.getYear() != year /*|| !breakthrough.getGroup().toString().equals(group)*/;
+		boolean differs = !breakthrough.getTitle().equals(title) || breakthrough.getNo() != num
+				|| breakthrough.getVolume() != vol
+				|| breakthrough.getYear() != year || breakthrough.getGroup() != getGroup();
 
 		btnRegistrar.setEnabled(differs);
 	}
