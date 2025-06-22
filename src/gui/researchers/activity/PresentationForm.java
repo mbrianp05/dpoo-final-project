@@ -544,7 +544,7 @@ public class PresentationForm extends JPanel {
 	}
 
 	private void sendFeedback() {
-		JOptionPane.showMessageDialog(null, "¿Se ha registrado la ponencia correctamente!", "Mensaje",
+		JOptionPane.showMessageDialog(null, "¡Se ha registrado la ponencia correctamente!", "Mensaje",
 				JOptionPane.PLAIN_MESSAGE);
 	}
 

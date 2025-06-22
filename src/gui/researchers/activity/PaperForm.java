@@ -357,7 +357,7 @@ public class PaperForm extends JPanel {
 	}
 
 	private void sendFeedback() {
-		JOptionPane.showMessageDialog(null, "¿Se ha registrado el artículo correctamente!", "Mensaje",
+		JOptionPane.showMessageDialog(null, "¡Se ha registrado el artículo correctamente!", "Mensaje",
 				JOptionPane.PLAIN_MESSAGE);
 	}
 
