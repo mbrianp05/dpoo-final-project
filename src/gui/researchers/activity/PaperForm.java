@@ -348,6 +348,7 @@ public class PaperForm extends JPanel {
 			comboBoxTargetedGroup.setSelectedIndex(0);
 		} else {
 			initForm();
+			btnRegistrar.setEnabled(false);
 		}
 
 		errorTitle.setVisible(false);
