@@ -113,7 +113,7 @@ public class ApprovalPendingsJDialog extends JDialog {
 					table = new JTable();
 					table.setFont(Constants.getLabelFont());
 					table.setModel(
-							new DefaultTableModel(new Object[][] {}, new String[] { "Nombre", "Crï¿½ditos acumulados" }) {
+							new DefaultTableModel(new Object[][] {}, new String[] { "Nombre", "Créditos acumulados" }) {
 								private static final long serialVersionUID = 6062319489520125102L;
 
 								public boolean isCellEditable(int row, int column) {

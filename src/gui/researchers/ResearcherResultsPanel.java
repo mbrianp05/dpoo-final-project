@@ -264,6 +264,7 @@ public class ResearcherResultsPanel extends JPanel {
 				btnEdit.setVisible(false);
 				{
 					checkBoxAssignMark = new JCheckBox("Asignar nota");
+					checkBoxAssignMark.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 
 					checkBoxAssignMark.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent arg0) {
@@ -287,7 +288,7 @@ public class ResearcherResultsPanel extends JPanel {
 				{
 					markLabel = new JLabel("2");
 					GridBagConstraints gbc_label = new GridBagConstraints();
-					gbc_label.insets = new Insets(0, 0, 5, 5);
+					gbc_label.insets = new Insets(0, 5, 5, 5);
 					gbc_label.gridx = 4;
 					gbc_label.gridy = 5;
 					contentPanel.add(markLabel, gbc_label);

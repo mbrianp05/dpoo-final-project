@@ -1,9 +1,11 @@
 package utils;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import schooling.Degree;
 import schooling.Faculty;
+import schooling.Matriculation;
 import schooling.Profesor;
 import schooling.ProfesorCategory;
 import schooling.ResearchLine;
@@ -23,6 +25,7 @@ public class Mock {
 		int profesorID6 = faculty.addProfesor("Fernando", Degree.Doctor, ProfesorCategory.Auxiliar, null);
 		int profesorID7 = faculty.addProfesor("Oscar", null, ProfesorCategory.Auxiliar, null);
 		int profesorID8 = faculty.addProfesor("Manuel", Degree.Master, ProfesorCategory.Assistant, null);
+		int profesorID9 = faculty.addProfesor("Amanda", null, ProfesorCategory.Instructor, null);
 
 		//------------Añadir líneas-----------
 		faculty.addResearchLine("Seguridad de softwares", faculty.getProfesors().get(0));
@@ -56,13 +59,22 @@ public class Mock {
 		//----------------Matricular a profesores-----------------
 		line.getMasteryPlan().matriculate((Profesor)faculty.findResearcher(profesorID3));
 		line3.getMasteryPlan().matriculate((Profesor)faculty.findResearcher(profesorID7));
+		line1.getMasteryPlan().matriculate((Profesor)faculty.findResearcher(profesorID9));
 
+		//----------------Asignar notas a un profesor-----------
+		ArrayList<Matriculation> matriculations = line1.getMasteryPlan().findMatriculations((Profesor)faculty.findResearcher(profesorID9));
+		
+		for (Matriculation m : matriculations) {
+			m.setMark(5);
+		}
+		
 		//------------Añadir estudiantes-----------
 		int ID1 = faculty.addStudent("Brian", "IAs Generativas");
 		int ID2 = faculty.addStudent("Aleksandr", "Seguridad de sistemas");
 
 		//----------------Asignar los temas de investigacion a los investigadores------------
 		line.getMatters().get(0).addResearcher(faculty.findResearcher(profesorID));
+		line.getMatters().get(0).addResearcher(faculty.findResearcher(profesorID9));
 		line.getMatters().get(1).addResearcher(faculty.findResearcher(profesorID2));
 		line.getMatters().get(1).addResearcher(faculty.findResearcher(profesorID3));
 		line1.getMatters().get(0).addResearcher(faculty.findResearcher(profesorID4));

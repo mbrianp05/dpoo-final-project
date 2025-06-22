@@ -490,6 +490,7 @@ public class Faculty {
 			// Cuando se elimina el curso hay restarle los crï¿½ditos
 			// que aportaba el curso a los que habían aprobado
 			ArrayList<Matriculation> matrs = line.getMasteryPlan().findMatriculations(course);
+			
 			for(Matriculation m: matrs){
 				if (m.getMark() >= 3) {
 					Profesor p = m.getProfesor();
@@ -497,6 +498,7 @@ public class Faculty {
 				}
 			}
 
+			line.getMasteryPlan().getMatriculations().removeAll(matrs);
 			line.getMasteryPlan().getCourses().remove(course);
 		} else {
 			removible = false;

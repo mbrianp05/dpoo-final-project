@@ -66,7 +66,7 @@ public class BestMarksJDialog extends JDialog {
 			icon = new ImageIcon(icon.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
 
 			tlblMejoresInvetigadores.setIcon(icon);
-			tlblMejoresInvetigadores.setText("Mejores notas de profesores");
+			tlblMejoresInvetigadores.setText("Profesores con mejor promedio de notas");
 			GridBagConstraints gbc_tlblMejoresInvetigadores = new GridBagConstraints();
 			gbc_tlblMejoresInvetigadores.insets = new Insets(0, 0, 5, 5);
 			gbc_tlblMejoresInvetigadores.anchor = GridBagConstraints.NORTHWEST;
