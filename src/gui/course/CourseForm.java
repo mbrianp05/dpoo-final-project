@@ -155,8 +155,8 @@ public class CourseForm extends JPanel {
 		if (checkValidity()) {
 			int index = cmboxInstruct.getSelectedIndex();
 
-			String name = txtName.getText();
-			String description = txtDescr.getText();
+			String name = txtName.getText().trim();
+			String description = txtDescr.getText().trim();
 			Profesor instructor = (Profesor) faculty.findResearcher(profIDs[index]);
 			int creds = (int) spinner.getValue();
 
@@ -168,7 +168,7 @@ public class CourseForm extends JPanel {
 				listener.actionPerformed(new CourseFormData(name, description, instructor, creds));
 			}
 
-			hasChanges();
+			btnSave.setEnabled(false);
 			sendFeedback();
 		}
 	}
@@ -416,8 +416,8 @@ public class CourseForm extends JPanel {
 	}
 
 	private void hasChanges() {
-		String name = txtName.getText();
-		String description = txtDescr.getText();
+		String name = txtName.getText().trim();
+		String description = txtDescr.getText().trim();
 		Profesor instructor = getPossibleInstructors().get(cmboxInstruct.getSelectedIndex());
 		int credits = (Integer) spinner.getValue();
 

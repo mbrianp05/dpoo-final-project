@@ -780,9 +780,6 @@ public class ResearchLineForm extends JPanel {
 		Profesor chief = getChief();
 		String[] matters = multipleInput.getValues();
 		
-		System.out.println(chief.getName());
-		System.out.println(line.getChief().getName());
-		
 		boolean hasSameMatters = matters.length == line.getMatters().size();
 		int i = 0;
 		

@@ -47,11 +47,11 @@ public class Mock {
 		line4.addMatter("Evolución de ordenadores");
 
 		//------------Añadir cursos a los planes de maestría------------------
-		line.getMasteryPlan().addCourse("Encriptación", "test", (Profesor)faculty.findResearcher(profesorID), 2);
-		line.getMasteryPlan().addCourse("Detección del malware", "test2", (Profesor)faculty.findResearcher(profesorID2), 3);
-		line1.getMasteryPlan().addCourse("Inteligencia artificial", "testIA", (Profesor)faculty.findResearcher(profesorID4), 7);
-		line2.getMasteryPlan().addCourse("Desarrollo de IDEs", "testIDEs", (Profesor)faculty.findResearcher(profesorID5), 4);
-		line3.getMasteryPlan().addCourse("Desarrollo de SO", "testSO", (Profesor)faculty.findResearcher(profesorID6), 5);
+		line.getMasteryPlan().addCourse("Encriptación", "SHA512", (Profesor)faculty.findResearcher(profesorID), 2);
+		line.getMasteryPlan().addCourse("Detección del malware", "Troyano XD", (Profesor)faculty.findResearcher(profesorID2), 3);
+		line1.getMasteryPlan().addCourse("Inteligencia artificial", "IA", (Profesor)faculty.findResearcher(profesorID4), 7);
+		line2.getMasteryPlan().addCourse("Desarrollo de IDEs", "Entornos de desarrollo", (Profesor)faculty.findResearcher(profesorID5), 4);
+		line3.getMasteryPlan().addCourse("Desarrollo de SO", "Sistemas Operativos", (Profesor)faculty.findResearcher(profesorID6), 5);
 
 		//----------------Matricular a profesores-----------------
 		line.getMasteryPlan().matriculate((Profesor)faculty.findResearcher(profesorID3));
@@ -67,7 +67,7 @@ public class Mock {
 		line.getMatters().get(1).addResearcher(faculty.findResearcher(profesorID3));
 		line1.getMatters().get(0).addResearcher(faculty.findResearcher(profesorID4));
 		line2.getMatters().get(1).addResearcher(faculty.findResearcher(profesorID5));
-		line4.getMatters().get(0).addResearcher(faculty.findResearcher(profesorID6));
+		line3.getMatters().get(0).addResearcher(faculty.findResearcher(profesorID6));
 		line4.getMatters().get(0).addResearcher(faculty.findResearcher(profesorID8));
 		line3.getMatters().get(0).addResearcher(faculty.findResearcher(profesorID7));
 		line.getMatters().get(1).addResearcher(faculty.findResearcher(ID1));

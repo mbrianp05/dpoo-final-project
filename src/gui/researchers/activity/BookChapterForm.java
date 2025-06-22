@@ -2,7 +2,10 @@ package gui.researchers.activity;
 
 import gui.component.ErrorLabel;
 import gui.component.MultipleInput;
+import gui.event.OnAddedInput;
+import gui.event.OnDeletedInput;
 import gui.event.OnResearchActivityActionTriggered;
+import gui.event.OnUpdatedInput;
 
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -347,6 +350,27 @@ public class BookChapterForm extends JPanel {
 		if (authorsInput == null) {
 			authorsInput = new MultipleInput("Autores", "A\u00F1adir");
 			authorsInput.getErrorLbl().setText("Introduzca al menos un autor");
+			
+			if (breakthrough != null) {
+				authorsInput.listenTo(new OnAddedInput() {
+					@Override
+					public void newItem(String item) {
+						hasChanges();
+					}
+				});
+				authorsInput.listenTo(new OnUpdatedInput() {
+					@Override
+					public void updated(String newName) {
+						hasChanges();
+					}
+				});
+				authorsInput.listenTo(new OnDeletedInput() {
+					@Override
+					public void deletedItem(String item) {
+						hasChanges();
+					}
+				});
+			}
 		}
 		return authorsInput;
 	}
@@ -354,6 +378,27 @@ public class BookChapterForm extends JPanel {
 		if (editorsInput == null) {
 			editorsInput = new MultipleInput("Editores", "A\u00F1adir");
 			editorsInput.getErrorLbl().setText("Introduzca al menos un editor");
+		
+			if (breakthrough != null) {
+				editorsInput.listenTo(new OnAddedInput() {
+					@Override
+					public void newItem(String item) {
+						hasChanges();
+					}
+				});
+				editorsInput.listenTo(new OnUpdatedInput() {
+					@Override
+					public void updated(String newName) {
+						hasChanges();
+					}
+				});
+				editorsInput.listenTo(new OnDeletedInput() {
+					@Override
+					public void deletedItem(String item) {
+						hasChanges();
+					}
+				});
+			}
 		}
 		return editorsInput;
 	}
@@ -380,6 +425,7 @@ public class BookChapterForm extends JPanel {
 			editorsInput.reset();
 			spinnerVol.setValue(1);
 		} else {
+			btnNewButton.setEnabled(false);
 			initForm();
 		}
 
@@ -525,15 +571,36 @@ public class BookChapterForm extends JPanel {
 	}
 
 	public void hasChanges() {
-		
-		String name = textFieldBookName.getText();
-		String title = textFieldChapter.getText();
-		String editor = textFieldEditorial.getText();
-		String code = textFieldISSN.getText();
+		String name = textFieldBookName.getText().trim();
+		String title = textFieldChapter.getText().trim();
+		String editor = textFieldEditorial.getText().trim();
+		String code = textFieldISSN.getText().trim();
+		String[] authors = authorsInput.getValues();
+		String[] editors = editorsInput.getValues();
 		int vol = (int)spinnerVol.getValue();
 
+		boolean hasSameAuthors = authors.length == breakthrough.getAuthors().length;
+		int i = 0;
+		
+		// Si tienen la misma cantidad de autores ver si alguno ha sido modificado
+		while (hasSameAuthors && i < authors.length) {
+			hasSameAuthors = breakthrough.isAuthor(authors[i]);
+			
+			i++;
+		}
+		
+		boolean hasSameEditors = editors.length == breakthrough.getEditors().length;
+		i = 0;
+		
+		// Si tienen la misma cantidad de autores ver si alguno ha sido modificado
+		while (hasSameEditors && i < editors.length) {
+			hasSameEditors = breakthrough.isEditor(editors[i]);
+			
+			i++;
+		}
+		
 		boolean differs = !breakthrough.getBookName().equals(name) || !breakthrough.getTitle().equals(title) || !breakthrough.getEditorial().equals(editor) ||
-				!breakthrough.getISSN().equals(code) || breakthrough.getVolume() != vol;
+				!breakthrough.getISSN().equals(code) || breakthrough.getVolume() != vol || !hasSameAuthors || !hasSameEditors;
 
 		btnNewButton.setEnabled(differs);
 	}

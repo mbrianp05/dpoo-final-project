@@ -137,4 +137,28 @@ public class Chapter extends Breakthrough implements HasUniqueIndentifier {
 	public String getName() {
 		return title;
 	}
+
+	public boolean isAuthor(String name) {
+		boolean found = false;
+		int i = 0;
+		
+		while (!found && i < authors.length) {
+			found = authors[i].equals(name);
+			i++;
+		}
+
+		return found;
+	}
+
+	public boolean isEditor(String name) {
+		boolean found = false;
+		int i = 0;
+		
+		while (!found && i < authors.length) {
+			found = editors[i].equals(name);
+			i++;
+		}
+
+		return found;
+	}
 }

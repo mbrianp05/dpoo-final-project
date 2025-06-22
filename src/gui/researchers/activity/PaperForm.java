@@ -336,6 +336,7 @@ public class PaperForm extends JPanel {
 	private void initForm() {
 		textFieldTitle.setText(breakthrough.getTitle());
 		spinnerYear.setValue(breakthrough.getYear());
+		spinnerNo.setValue(breakthrough.getNo());
 		spinnerVol.setValue(breakthrough.getVolume());
 		comboBoxTargetedGroup.setSelectedItem(EnumsDictionary.group(breakthrough.getGroup()));
 	}
@@ -345,6 +346,7 @@ public class PaperForm extends JPanel {
 			textFieldTitle.setText("");
 			spinnerYear.setValue(Year.now().getValue());
 			spinnerVol.setValue(1);
+			spinnerNo.setValue(1);
 			comboBoxTargetedGroup.setSelectedIndex(0);
 		} else {
 			initForm();
@@ -355,7 +357,7 @@ public class PaperForm extends JPanel {
 	}
 
 	private void sendFeedback() {
-		JOptionPane.showMessageDialog(null, "ï¿½Se ha registrado el artï¿½culo correctamente!", "Mensaje",
+		JOptionPane.showMessageDialog(null, "¿Se ha registrado el artículo correctamente!", "Mensaje",
 				JOptionPane.PLAIN_MESSAGE);
 	}
 
@@ -420,10 +422,9 @@ public class PaperForm extends JPanel {
 
 	public void hasChanges() {
 		String title = textFieldTitle.getText().trim();
-		int num = (int) spinnerNo.getValue();
-		int vol = (int) spinnerVol.getValue();
-		int year = (int) spinnerYear.getValue();
-		// String group = comboBoxTargetedGroup.getSelectedItem().toString();
+		int num = (Integer) spinnerNo.getValue();
+		int vol = (Integer) spinnerVol.getValue();
+		int year = (Integer) spinnerYear.getValue();
 
 		boolean differs = !breakthrough.getTitle().equals(title) || breakthrough.getNo() != num
 				|| breakthrough.getVolume() != vol

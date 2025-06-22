@@ -544,7 +544,7 @@ public class PresentationForm extends JPanel {
 	}
 
 	private void sendFeedback() {
-		JOptionPane.showMessageDialog(null, "ï¿½Se ha registrado la ponencia correctamente!", "Mensaje",
+		JOptionPane.showMessageDialog(null, "¿Se ha registrado la ponencia correctamente!", "Mensaje",
 				JOptionPane.PLAIN_MESSAGE);
 	}
 
@@ -617,11 +617,10 @@ public class PresentationForm extends JPanel {
 		int day = Integer.valueOf((String) comboBoxDays.getSelectedItem());
 		int month = comboBoxMonths.getSelectedIndex() + 1;
 		int year = (Integer) spinnerYear.getValue();
-
-		LocalDate date = LocalDate.of(year, month, day);
-
+		
 		boolean differs = !breakthrough.getName().equals(name) || !breakthrough.getISBN().equals(code)
-				|| !breakthrough.getLocation().equals(local) || breakthrough.getDate().equals(date);
+				|| !breakthrough.getLocation().equals(local) || breakthrough.getDate().getDayOfMonth() != day
+				|| breakthrough.getDate().getMonthValue() != month || breakthrough.getDate().getYear() != year;
 
 		btnAgregar.setEnabled(differs);
 	}
