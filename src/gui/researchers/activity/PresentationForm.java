@@ -177,7 +177,7 @@ public class PresentationForm extends JPanel {
 	private JTextField getTextFieldName() {
 		if (textFieldName == null) {
 			textFieldName = new JTextField();
-			if(breakthrough != null) {
+			if (breakthrough != null) {
 				textFieldName.addKeyListener(new KeyAdapter() {
 					@Override
 					public void keyReleased(KeyEvent arg0) {
@@ -203,7 +203,7 @@ public class PresentationForm extends JPanel {
 	private JTextField getTextFieldISBN() {
 		if (textFieldISBN == null) {
 			textFieldISBN = new JTextField();
-			if(breakthrough != null) {
+			if (breakthrough != null) {
 				textFieldISBN.addKeyListener(new KeyAdapter() {
 					@Override
 					public void keyReleased(KeyEvent arg0) {
@@ -229,7 +229,7 @@ public class PresentationForm extends JPanel {
 	private JTextField getTextFieldLocation() {
 		if (textFieldLocation == null) {
 			textFieldLocation = new JTextField();
-			if(breakthrough != null) {
+			if (breakthrough != null) {
 				textFieldLocation.addKeyListener(new KeyAdapter() {
 					@Override
 					public void keyReleased(KeyEvent arg0) {
@@ -274,42 +274,42 @@ public class PresentationForm extends JPanel {
 		Month month = Month.January;
 
 		switch (comboBoxMonths.getSelectedIndex()) {
-		case 0:
-			month = Month.January;
-			break;
-		case 1:
-			month = Month.February;
-			break;
-		case 2:
-			month = Month.March;
-			break;
-		case 3:
-			month = Month.April;
-			break;
-		case 4:
-			month = Month.May;
-			break;
-		case 5:
-			month = Month.June;
-			break;
-		case 6:
-			month = Month.July;
-			break;
-		case 7:
-			month = Month.August;
-			break;
-		case 8:
-			month = Month.September;
-			break;
-		case 9:
-			month = Month.Octuber;
-			break;
-		case 10:
-			month = Month.November;
-			break;
-		case 11:
-			month = Month.December;
-			break;
+			case 0:
+				month = Month.January;
+				break;
+			case 1:
+				month = Month.February;
+				break;
+			case 2:
+				month = Month.March;
+				break;
+			case 3:
+				month = Month.April;
+				break;
+			case 4:
+				month = Month.May;
+				break;
+			case 5:
+				month = Month.June;
+				break;
+			case 6:
+				month = Month.July;
+				break;
+			case 7:
+				month = Month.August;
+				break;
+			case 8:
+				month = Month.September;
+				break;
+			case 9:
+				month = Month.Octuber;
+				break;
+			case 10:
+				month = Month.November;
+				break;
+			case 11:
+				month = Month.December;
+				break;
 		}
 
 		return month;
@@ -342,7 +342,7 @@ public class PresentationForm extends JPanel {
 
 			setDays();
 
-			if(breakthrough != null) {
+			if (breakthrough != null) {
 				comboBoxDays.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						hasChanges();
@@ -365,8 +365,8 @@ public class PresentationForm extends JPanel {
 					"Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" }));
 			comboBoxMonths.setBackground(Color.WHITE);
 			comboBoxMonths.setFont(new Font("Segoe UI", Font.PLAIN, 15));
-			
-			if(breakthrough != null) {
+
+			if (breakthrough != null) {
 				comboBoxMonths.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						hasChanges();
@@ -388,15 +388,15 @@ public class PresentationForm extends JPanel {
 			spinnerYear.setBackground(Color.WHITE);
 			spinnerYear.setModel(new SpinnerNumberModel(Year.now().getValue(), 1, Year.now().getValue(), 1));
 			spinnerYear.setFont(new Font("Segoe UI", Font.PLAIN, 15));
-			
-			if(breakthrough != null) {
-				spinnerYear.addKeyListener(new KeyAdapter() {					
+
+			if (breakthrough != null) {
+				spinnerYear.addKeyListener(new KeyAdapter() {
 					@Override
 					public void keyTyped(KeyEvent arg0) {
 						hasChanges();
-					}					
+					}
 				});
-				spinnerYear.addChangeListener(new ChangeListener() {					
+				spinnerYear.addChangeListener(new ChangeListener() {
 					@Override
 					public void stateChanged(ChangeEvent arg0) {
 						hasChanges();
@@ -418,7 +418,7 @@ public class PresentationForm extends JPanel {
 			});
 			btnAgregar.setFont(new Font("Segoe UI", Font.BOLD, 15));
 
-			if(breakthrough != null)
+			if (breakthrough != null)
 				btnAgregar.setEnabled(false);
 		}
 		return btnAgregar;
@@ -525,6 +525,7 @@ public class PresentationForm extends JPanel {
 			spinnerYear.setValue(Year.now().getValue());
 		} else {
 			initForm();
+			btnAgregar.setEnabled(false);
 		}
 	}
 
@@ -549,9 +550,9 @@ public class PresentationForm extends JPanel {
 
 	private void submit() {
 		if (checkValidity()) {
-			String name = textFieldName.getText();
-			String ISBN = textFieldISBN.getText();
-			String location = textFieldLocation.getText();
+			String name = textFieldName.getText().trim();
+			String ISBN = textFieldISBN.getText().trim();
+			String location = textFieldLocation.getText().trim();
 
 			LocalDate date = getDate();
 
@@ -610,17 +611,17 @@ public class PresentationForm extends JPanel {
 	}
 
 	public void hasChanges() {
-
-		String name = textFieldName.getText();
-		String code = textFieldISBN.getText();
-		String local = textFieldLocation.getText();
-		int day = Integer.valueOf((String)comboBoxDays.getSelectedItem());
-		int month = comboBoxMonths.getSelectedIndex() +1;
+		String name = textFieldName.getText().trim();
+		String code = textFieldISBN.getText().trim();
+		String local = textFieldLocation.getText().trim();
+		int day = Integer.valueOf((String) comboBoxDays.getSelectedItem());
+		int month = comboBoxMonths.getSelectedIndex() + 1;
 		int year = (Integer) spinnerYear.getValue();
+
 		LocalDate date = LocalDate.of(year, month, day);
 
-		boolean differs = !breakthrough.getName().equals(name) || !breakthrough.getISBN().equals(code) 
-				|| !breakthrough.getLocation().equals(local) || breakthrough.getDate() != date;
+		boolean differs = !breakthrough.getName().equals(name) || !breakthrough.getISBN().equals(code)
+				|| !breakthrough.getLocation().equals(local) || breakthrough.getDate().equals(date);
 
 		btnAgregar.setEnabled(differs);
 	}
