@@ -82,7 +82,7 @@ public class Authentication {
 
 			reader.close();
 		} catch (Exception e) {
-			System.out.println("No se pudo encontrar la fuente del cï¿½digo de acceso");
+			System.out.println("No se pudo encontrar la fuente del código de acceso");
 		}
 
 		return correctCredentials;
