@@ -21,6 +21,7 @@ public class Main {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 			UIManager.put("Button.font", Constants.getLabelFont());
+			UIManager.put("MenuItem.font", Constants.getLabelFont().deriveFont(12));
 			UIManager.put("Label.font", Constants.getLabelFont());
 			UIManager.put("Panel.background", new Color(255, 255, 255));
 			UIManager.put("CheckBox.background", new Color(255, 255, 255));
