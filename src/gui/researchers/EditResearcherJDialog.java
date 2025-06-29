@@ -122,6 +122,14 @@ public class EditResearcherJDialog extends JDialog {
 					}
 				}
 			});
+			
+			ResearchLine line = faculty.findResearchLineByResearcher(researcher);
+			
+			// Si el profesor es instructor (tiene doctorado) o esta recibiendo algun curso (no tiene ni doctorado ni maestria)
+			// entonces no permitir cambiar la categoria cientifica
+			if (faculty.isInstructor((Profesor)researcher) || line.hasMatriculation((Profesor)researcher)) {
+				profesorForm_1.disableDegree();
+			}
 		} else {
 			studentForm_1.listenTo(listener);
 		}
