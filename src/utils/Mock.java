@@ -51,18 +51,18 @@ public class Mock {
 
 		//------------Añadir cursos a los planes de maestría------------------
 		line.getMasteryPlan().addCourse("Encriptación", "SHA512", (Profesor)faculty.findResearcher(profesorID), 2);
-		line.getMasteryPlan().addCourse("Detección del malware", "Troyano XD", (Profesor)faculty.findResearcher(profesorID2), 3);
-		line1.getMasteryPlan().addCourse("Inteligencia artificial", "IA", (Profesor)faculty.findResearcher(profesorID4), 7);
-		line2.getMasteryPlan().addCourse("Desarrollo de IDEs", "Entornos de desarrollo", (Profesor)faculty.findResearcher(profesorID5), 4);
-		line3.getMasteryPlan().addCourse("Desarrollo de SO", "Sistemas Operativos", (Profesor)faculty.findResearcher(profesorID6), 5);
+		line.getMasteryPlan().addCourse("Detección del malware", "Troyano XD", (Profesor)faculty.findResearcher(profesorID), 3);
+		line1.getMasteryPlan().addCourse("Inteligencia artificial", "IA", (Profesor)faculty.findResearcher(profesorID2), 7);
+		line2.getMasteryPlan().addCourse("Desarrollo de IDEs", "Entornos de desarrollo", (Profesor)faculty.findResearcher(profesorID4), 4);
+		line3.getMasteryPlan().addCourse("Desarrollo de SO", "Sistemas Operativos", (Profesor)faculty.findResearcher(profesorID5), 5);
 
 		//----------------Matricular a profesores-----------------
 		line.getMasteryPlan().matriculate((Profesor)faculty.findResearcher(profesorID3));
-		line3.getMasteryPlan().matriculate((Profesor)faculty.findResearcher(profesorID7));
-		line1.getMasteryPlan().matriculate((Profesor)faculty.findResearcher(profesorID9));
+		line4.getMasteryPlan().matriculate((Profesor)faculty.findResearcher(profesorID7));
+		line.getMasteryPlan().matriculate((Profesor)faculty.findResearcher(profesorID9));
 
 		//----------------Asignar notas a un profesor-----------
-		ArrayList<Matriculation> matriculations = line1.getMasteryPlan().findMatriculations((Profesor)faculty.findResearcher(profesorID9));
+		ArrayList<Matriculation> matriculations = line.getMasteryPlan().findMatriculations((Profesor)faculty.findResearcher(profesorID9));
 		
 		for (Matriculation m : matriculations) {
 			m.setMark(5);
@@ -75,13 +75,13 @@ public class Mock {
 		//----------------Asignar los temas de investigacion a los investigadores------------
 		line.getMatters().get(0).addResearcher(faculty.findResearcher(profesorID));
 		line.getMatters().get(0).addResearcher(faculty.findResearcher(profesorID9));
-		line.getMatters().get(1).addResearcher(faculty.findResearcher(profesorID2));
+		line1.getMatters().get(1).addResearcher(faculty.findResearcher(profesorID2));
 		line.getMatters().get(1).addResearcher(faculty.findResearcher(profesorID3));
-		line1.getMatters().get(0).addResearcher(faculty.findResearcher(profesorID4));
-		line2.getMatters().get(1).addResearcher(faculty.findResearcher(profesorID5));
-		line3.getMatters().get(0).addResearcher(faculty.findResearcher(profesorID6));
+		line2.getMatters().get(0).addResearcher(faculty.findResearcher(profesorID4));
+		line3.getMatters().get(0).addResearcher(faculty.findResearcher(profesorID5));
+		line4.getMatters().get(0).addResearcher(faculty.findResearcher(profesorID6));
 		line4.getMatters().get(0).addResearcher(faculty.findResearcher(profesorID8));
-		line3.getMatters().get(0).addResearcher(faculty.findResearcher(profesorID7));
+		line4.getMatters().get(0).addResearcher(faculty.findResearcher(profesorID7));
 		line.getMatters().get(1).addResearcher(faculty.findResearcher(ID1));
 		line3.getMatters().get(0).addResearcher(faculty.findResearcher(ID2));
 

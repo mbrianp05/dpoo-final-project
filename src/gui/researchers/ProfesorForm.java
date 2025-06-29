@@ -10,6 +10,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -23,8 +25,6 @@ import schooling.Degree;
 import schooling.ProfesorCategory;
 import utils.Constants;
 import utils.Validation;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 public class ProfesorForm extends JPanel {
 	private static final long serialVersionUID = 5814578189776579606L;
@@ -41,12 +41,12 @@ public class ProfesorForm extends JPanel {
 	private JPanel panel;
 	private JTextField textFieldName;
 	private JButton btnSubmit;
-	private ErrorLabel errorLabel;
+	private ErrorLabel rlblElNombreEs;
 
 	private OnProfesorFormActionTriggered listener;
 
 	private String[] researchMatters;
-
+	
 	/**
 	 * @wbp.parser.constructor
 	 */
@@ -62,6 +62,10 @@ public class ProfesorForm extends JPanel {
 		add(getPanel());
 	}
 
+	public void disableDegree() {
+		comboBoxDegree.setEnabled(false);
+	}
+	
 	public void listenTo(OnProfesorFormActionTriggered listener) {
 		this.listener = listener;
 	}
@@ -170,6 +174,7 @@ public class ProfesorForm extends JPanel {
 					}
 				});
 			}
+			
 		}
 
 		return comboBoxDegree;
@@ -221,7 +226,7 @@ public class ProfesorForm extends JPanel {
 	}
 
 	private void resetForm() {
-		errorLabel.setVisible(false);
+		rlblElNombreEs.setVisible(false);
 		textFieldName.setText("");
 
 		if (researchMatterComboBox.getModel().getSize() >= 0) {
@@ -235,27 +240,29 @@ public class ProfesorForm extends JPanel {
 	}
 
 	private void submit() {
-		if (Validation.notEmpty(textFieldName.getText())) {
+		if (Validation.notEmpty(textFieldName.getText()) && Validation.validName(textFieldName.getText())) {
 			String name = textFieldName.getText().trim();
 			Degree degree = getDegree();
 			ProfesorCategory category = getCategory();
 			String matter = getMatter();
 
 			if (profesor == null) {
+				System.out.println();
 				resetForm();
+			} else {
+				hasChanges();
 			}
 
 			if (listener != null) {
-				ProfesorFormData newData = new ProfesorFormData(name, matter, degree, category);
-				profesor = newData;
-				
+				ProfesorFormData newData = new ProfesorFormData(name, matter, degree, category);				
 				listener.actionPerformed(newData);
+				
+				if (profesor != null) profesor = newData;
 			}
 			
-			hasChanges();
-			errorLabel.setVisible(false);
+			rlblElNombreEs.setVisible(false);
 		} else {
-			errorLabel.setVisible(true);
+			rlblElNombreEs.setVisible(true);
 		}
 	}
 
@@ -344,13 +351,13 @@ public class ProfesorForm extends JPanel {
 
 			panel.add(getTextFieldName(), gbc_textFieldName);
 
-			GridBagConstraints gbc_errorLabel = new GridBagConstraints();
-			gbc_errorLabel.fill = GridBagConstraints.BOTH;
-			gbc_errorLabel.insets = new Insets(0, 0, 5, 0);
-			gbc_errorLabel.gridx = 0;
-			gbc_errorLabel.gridy = 2;
+			GridBagConstraints gbc_rlblElNombreEs = new GridBagConstraints();
+			gbc_rlblElNombreEs.fill = GridBagConstraints.BOTH;
+			gbc_rlblElNombreEs.insets = new Insets(0, 0, 5, 0);
+			gbc_rlblElNombreEs.gridx = 0;
+			gbc_rlblElNombreEs.gridy = 2;
 
-			panel.add(getErrorLabel(), gbc_errorLabel);
+			panel.add(getRlblElNombreEs(), gbc_rlblElNombreEs);
 
 			GridBagConstraints gbc_lblProfesorCategory = new GridBagConstraints();
 			gbc_lblProfesorCategory.anchor = GridBagConstraints.WEST;
@@ -433,14 +440,14 @@ public class ProfesorForm extends JPanel {
 		return textFieldName;
 	}
 
-	private ErrorLabel getErrorLabel() {
-		if (errorLabel == null) {
-			errorLabel = new ErrorLabel();
-			errorLabel.setVerticalAlignment(SwingConstants.TOP);
-			errorLabel.setText("El nombre es requerido");
-			errorLabel.setVisible(false);
+	private ErrorLabel getRlblElNombreEs() {
+		if (rlblElNombreEs == null) {
+			rlblElNombreEs = new ErrorLabel();
+			rlblElNombreEs.setVerticalAlignment(SwingConstants.TOP);
+			rlblElNombreEs.setText("El nombre es requerido y no puede contener n\u00FAmeros ni s\u00EDmbolos");
+			rlblElNombreEs.setVisible(false);
 		}
 
-		return errorLabel;
+		return rlblElNombreEs;
 	}
 }

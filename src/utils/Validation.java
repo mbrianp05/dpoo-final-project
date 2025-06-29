@@ -83,4 +83,16 @@ public class Validation {
 	public static boolean validPassword(String password) {
 		return password.length() > 8;
 	}
+	
+	public static boolean validName(String name) {
+		boolean isValid = true;
+		
+		for (int i = 0; i < name.length() && isValid; i++) {
+			char c = name.charAt(i);
+			
+			isValid = Character.isAlphabetic(c) || c == ' ';
+		}
+		
+		return isValid;
+	}
 }

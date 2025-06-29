@@ -33,6 +33,10 @@ public abstract class Researcher {
 		if (!Validation.notEmpty(name)) {
 			throw new IllegalArgumentException("Researcher's name cannot be empty");
 		}
+		
+		if (!Validation.validName(name)) {
+			throw new IllegalArgumentException("Researcher's name cannot contain numbers or symbols");
+		}
 
 		this.name = name;
 	}

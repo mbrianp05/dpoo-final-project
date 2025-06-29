@@ -41,7 +41,7 @@ public class StudentForm extends JPanel {
 	private JPanel panel;
 	private JTextField textFieldName;
 	private OnAddedResearcher listener;
-	private ErrorLabel errorLabel;
+	private ErrorLabel rlblElNombreEs;
 
 	public StudentForm() {
 		this(null);
@@ -83,7 +83,7 @@ public class StudentForm extends JPanel {
 	}
 
 	private void resetForm() {
-		errorLabel.setVisible(false);
+		rlblElNombreEs.setVisible(false);
 		textFieldName.setText("");
 
 		if (researchMatterComboBox.getModel().getSize() >= 0) {
@@ -94,7 +94,7 @@ public class StudentForm extends JPanel {
 	}
 
 	private void insert() {
-		if (Validation.notEmpty(textFieldName.getText())) {
+		if (Validation.notEmpty(textFieldName.getText()) && Validation.validName(textFieldName.getText())) {
 			int id = faculty.addStudent(textFieldName.getText().trim(), getMatter());
 
 			if (listener != null) {
@@ -103,12 +103,12 @@ public class StudentForm extends JPanel {
 
 			resetForm();
 		} else {
-			errorLabel.setVisible(true);
+			rlblElNombreEs.setVisible(true);
 		}
 	}
 
 	private void update() {
-		if (Validation.notEmpty(textFieldName.getText())) {
+		if (Validation.notEmpty(textFieldName.getText()) && Validation.validName(textFieldName.getText())) {
 			student.setName(textFieldName.getText().trim());
 
 			faculty.moveToOtherMatter(student.getID(), getMatter());
@@ -117,10 +117,11 @@ public class StudentForm extends JPanel {
 				listener.newResearcher(student.getID());
 			}
 
-			errorLabel.setVisible(false);
+			rlblElNombreEs.setVisible(false);
 			btnSubmit.setEnabled(false);
+			hasChanges();
 		} else {
-			errorLabel.setVisible(true);
+			rlblElNombreEs.setVisible(true);
 		}
 	}
 
@@ -206,12 +207,12 @@ public class StudentForm extends JPanel {
 			gbc_textFieldName.gridx = 0;
 			gbc_textFieldName.gridy = 1;
 			panel.add(getTextFieldName(), gbc_textFieldName);
-			GridBagConstraints gbc_errorLabel = new GridBagConstraints();
-			gbc_errorLabel.fill = GridBagConstraints.BOTH;
-			gbc_errorLabel.insets = new Insets(0, 0, 5, 0);
-			gbc_errorLabel.gridx = 0;
-			gbc_errorLabel.gridy = 2;
-			panel.add(getErrorLabel(), gbc_errorLabel);
+			GridBagConstraints gbc_rlblElNombreEs = new GridBagConstraints();
+			gbc_rlblElNombreEs.fill = GridBagConstraints.BOTH;
+			gbc_rlblElNombreEs.insets = new Insets(0, 0, 5, 0);
+			gbc_rlblElNombreEs.gridx = 0;
+			gbc_rlblElNombreEs.gridy = 2;
+			panel.add(getRlblElNombreEs(), gbc_rlblElNombreEs);
 			GridBagConstraints gbc_lblTemaDeInvestigacin = new GridBagConstraints();
 			gbc_lblTemaDeInvestigacin.anchor = GridBagConstraints.WEST;
 			gbc_lblTemaDeInvestigacin.insets = new Insets(0, 0, 5, 0);
@@ -254,23 +255,21 @@ public class StudentForm extends JPanel {
 	}
 
 	public void hasChanges() {
-
 		String name = textFieldName.getText();
 
-		boolean differ = !student.getName().equals(name) || researchMatterComboBox.getSelectedItem()
-				.toString() != faculty.findMatterOf(student.getID()).toString();
+		boolean differ = !student.getName().equals(name) || (String)researchMatterComboBox.getSelectedItem() != faculty.findMatterOf(student.getID()).getName();
 
 		btnSubmit.setEnabled(differ);
 
 	}
 
-	private ErrorLabel getErrorLabel() {
-		if (errorLabel == null) {
-			errorLabel = new ErrorLabel();
-			errorLabel.setVerticalAlignment(SwingConstants.TOP);
-			errorLabel.setText("El nombre es requerido");
-			errorLabel.setVisible(false);
+	private ErrorLabel getRlblElNombreEs() {
+		if (rlblElNombreEs == null) {
+			rlblElNombreEs = new ErrorLabel();
+			rlblElNombreEs.setVerticalAlignment(SwingConstants.TOP);
+			rlblElNombreEs.setText("El nombre es requerido y no puede contener n\u00FAmeros ni s\u00EDmbolos");
+			rlblElNombreEs.setVisible(false);
 		}
-		return errorLabel;
+		return rlblElNombreEs;
 	}
 }

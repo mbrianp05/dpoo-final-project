@@ -168,7 +168,7 @@ public class ResearchersTableView extends JPanel {
 	}
 
 	private void sendFeedback() {
-		JOptionPane.showMessageDialog(null, "ï¿½Se ha actualizado el investigador correctamente!", "Mensaje",
+		JOptionPane.showMessageDialog(null, "¿Se ha actualizado el investigador correctamente!", "Mensaje",
 				JOptionPane.PLAIN_MESSAGE);
 	}
 

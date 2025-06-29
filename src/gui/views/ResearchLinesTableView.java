@@ -348,15 +348,35 @@ public class ResearchLinesTableView extends JPanel {
 							f.getResearchLines().remove(line);
 
 							updateTable();
-
+		
 							JOptionPane.showMessageDialog(null, "Línea eliminada correctamente");
 						}
 					}
-					);
+			);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+
+	private void handleRemoval() {
+		Faculty faculty = Faculty.newInstance();
+
+		String researchLineName = (String)table.getValueAt(table.getSelectedRow(), 0);
+		ResearchLine line = faculty.findResearchLine(researchLineName);
+
+		if (faculty.getResearchLines().size() > 1) {
+			if (line.getResearchersInvolvedCount() == 1) {
+				int input = JOptionPane.showConfirmDialog(null, "Confirma tu desición de eliminar la línea");
+				if (input == JOptionPane.OK_OPTION) {
+					openChiefDialog();
+				}
+			} else {
+				JOptionPane.showMessageDialog(null, "Existen investigadores en esta línea. Asegúrate de moverlos a otra línea e intentálo después", "No se puede eliminar la línea", JOptionPane.ERROR_MESSAGE);
+			}
+		} else {
+			JOptionPane.showMessageDialog(null, "No se puede eliminar la única línea de investigación de la facultad", "No se puede eliminar la línea", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -366,19 +386,7 @@ public class ResearchLinesTableView extends JPanel {
 
 			btnRemove.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					Faculty faculty = Faculty.newInstance();
-					
-					String researchLineName = (String)table.getValueAt(table.getSelectedRow(), 0);
-					ResearchLine line = faculty.findResearchLine(researchLineName);
-
-					if (line.getResearchersInvolvedCount() == 1) {
-						int input = JOptionPane.showConfirmDialog(null, "Confirma tu desición de eliminar la línea");
-						if (input == JOptionPane.OK_OPTION) {
-							openChiefDialog();
-						}
-					} else {
-						JOptionPane.showMessageDialog(null, "Existen investigadores en esta línea. Asegúrate de moverlos a otra línea e intentálo después", "No se puede eliminar la línea", JOptionPane.ERROR_MESSAGE);
-					}
+					handleRemoval();
 				}
 			});
 
