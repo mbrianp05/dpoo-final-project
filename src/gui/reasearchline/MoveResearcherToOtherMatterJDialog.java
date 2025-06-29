@@ -88,11 +88,11 @@ public class MoveResearcherToOtherMatterJDialog extends JDialog {
 			contentPanel.add(okButton, gbc_okButton);
 			okButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
+					dispose();
+
 					if (listener != null) {
 						listener.moved((String)comboBox.getSelectedItem());
 					}
-					
-					dispose();
 				}
 			});
 			okButton.setActionCommand("OK");
