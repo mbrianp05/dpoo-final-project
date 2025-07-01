@@ -34,4 +34,8 @@ public final class ProfesorFormData {
 	public ProfesorCategory getCategory() {
 		return category;
 	}
+
+	public void setMatter(String matter) {
+		this.matter = matter;
+	}
 }

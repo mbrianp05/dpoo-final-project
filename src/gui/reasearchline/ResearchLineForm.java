@@ -690,7 +690,7 @@ public class ResearchLineForm extends JPanel {
 				});
 				multipleInput.listenTo(new OnUpdatedInput() {
 					@Override
-					public void updated(String newName) {
+					public void updated(String newName, String oldName) {
 						hasChanges();
 					}
 				});
@@ -707,10 +707,20 @@ public class ResearchLineForm extends JPanel {
 						if (chief != null) {
 							if (getChiefMatter().equals(item)) {
 								chief = null;
+								switchPanel("Add Chief");
 							}
 						}
 						
 						checkChiefButtonAvailability();
+					}
+				});
+				multipleInput.listenTo(new OnUpdatedInput() {
+					@Override
+					public void updated(String newName, String oldName) {
+						if (chief.getMatter().equals(oldName)) {
+							lblChiefMatter.setText(newName);
+							chief.setMatter(newName);
+						}
 					}
 				});
 				multipleInput.listenTo(new OnAddedInput() {

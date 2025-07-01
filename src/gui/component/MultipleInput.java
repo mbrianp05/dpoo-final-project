@@ -283,6 +283,7 @@ public class MultipleInput extends JPanel {
 
 					if (newInput != null) {
 						if (Validation.notEmpty(newInput)) {
+							String old = (String)comboBox.getSelectedItem();
 							int index = comboBox.getSelectedIndex();
 
 							values.set(index, newInput.trim());
@@ -290,7 +291,7 @@ public class MultipleInput extends JPanel {
 
 							comboBox.setSelectedIndex(index);
 							
-							if (updateListener != null) updateListener.updated(newInput);
+							if (updateListener != null) updateListener.updated(newInput, old);
 						} else {
 							JOptionPane.showMessageDialog(null, "El nuevo nombre no puede estar vacío", "Error", JOptionPane.ERROR_MESSAGE);
 						}

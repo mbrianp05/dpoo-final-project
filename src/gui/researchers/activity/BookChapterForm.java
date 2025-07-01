@@ -360,7 +360,7 @@ public class BookChapterForm extends JPanel {
 				});
 				authorsInput.listenTo(new OnUpdatedInput() {
 					@Override
-					public void updated(String newName) {
+					public void updated(String newName, String oldName) {
 						hasChanges();
 					}
 				});
@@ -388,7 +388,7 @@ public class BookChapterForm extends JPanel {
 				});
 				editorsInput.listenTo(new OnUpdatedInput() {
 					@Override
-					public void updated(String newName) {
+					public void updated(String newName, String oldName) {
 						hasChanges();
 					}
 				});

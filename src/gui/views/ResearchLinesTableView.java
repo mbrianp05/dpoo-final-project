@@ -331,6 +331,8 @@ public class ResearchLinesTableView extends JPanel {
 		ArrayList<String> matters = Faculty.newInstance().getResearchMattersNames();
 		final ResearchLine line = getTableModel().getShownResearchLines().get(table.getSelectedRow());
 
+		// Mover al jefe de la linea a otro tema de otras lineas
+		// Filtrar los temas de los demas lineas (excluir los temas de la linea que se va a borrar)
 		for (ResearchMatter m: line.getMatters()) {
 			if (matters.contains(m.getName())) matters.remove(m.getName());
 		}
@@ -342,17 +344,13 @@ public class ResearchLinesTableView extends JPanel {
 					new OnMovedChief() {
 						@Override
 						public void moved(String newMatter) {
-							Faculty f = Faculty.newInstance();
-
-							f.moveToOtherMatter(line.getChief().getID(), newMatter);
-							f.getResearchLines().remove(line);
+							Faculty.newInstance().removeLine(line, newMatter);
 
 							updateTable();
-		
 							JOptionPane.showMessageDialog(null, "Línea eliminada correctamente");
 						}
 					}
-			);
+					);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -366,17 +364,14 @@ public class ResearchLinesTableView extends JPanel {
 		String researchLineName = (String)table.getValueAt(table.getSelectedRow(), 0);
 		ResearchLine line = faculty.findResearchLine(researchLineName);
 
-		if (faculty.getResearchLines().size() > 1) {
-			if (line.getResearchersInvolvedCount() == 1) {
-				int input = JOptionPane.showConfirmDialog(null, "Confirma tu desición de eliminar la línea");
-				if (input == JOptionPane.OK_OPTION) {
-					openChiefDialog();
-				}
-			} else {
-				JOptionPane.showMessageDialog(null, "Existen investigadores en esta línea. Asegúrate de moverlos a otra línea e intentálo después", "No se puede eliminar la línea", JOptionPane.ERROR_MESSAGE);
+		if (faculty.canRemoveLine(line)) {
+			int input = JOptionPane.showConfirmDialog(null, "Confirma tu desición de eliminar la línea");
+			
+			if (input == JOptionPane.OK_OPTION) {
+				openChiefDialog();
 			}
 		} else {
-			JOptionPane.showMessageDialog(null, "No se puede eliminar la única línea de investigación de la facultad", "No se puede eliminar la línea", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Aún existen investigadores en la línea o es la única línea existente en la facultad", "No se puede eliminar la línea", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 

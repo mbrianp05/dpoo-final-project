@@ -487,7 +487,7 @@ public class Faculty {
 		boolean removible = true;
 
 		if (line != null) {
-			// Cuando se elimina el curso hay restarle los crï¿½ditos
+			// Cuando se elimina el curso hay restarle los créditos
 			// que aportaba el curso a los que habían aprobado
 			ArrayList<Matriculation> matrs = line.getMasteryPlan().findMatriculations(course);
 			
@@ -558,5 +558,15 @@ public class Faculty {
 		}
 
 		return line;
+	}
+
+	public boolean canRemoveLine(ResearchLine line) {
+		// Una linea se puede eliminar si y solo queda en ella el jefe de la linea y haya otras lineas en la facultad.
+		return getResearchLines().size() > 1 && line.getResearchersInvolvedCount() == 1;
+	}
+
+	public void removeLine(ResearchLine line, String newMatter) {
+		moveToOtherMatter(line.getChief().getID(), newMatter);
+		getResearchLines().remove(line);
 	}
 }
